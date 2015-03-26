@@ -1,0 +1,59 @@
+body {
+	font-size: 14px;
+}
+
+#main_toolbar {
+	background: #3A4450;
+	color: white;
+}
+
+#main_toolbar h1 {
+	font-size: 16px;
+	margin: 0;
+	line-height: 36px;
+}
+
+#main_toolbar .navbar-nav > li > a {
+	color: white;
+	padding: 8px;
+}
+
+#main_toolbar .dropdown-menu .divider {
+	margin: 5px 0;
+}
+
+#main_toolbar .navbar-nav > li > .dropdown-menu {
+	border-radius: 0;
+}
+
+#sidebar.fixed {
+	position: fixed;
+	left: 0;
+	top: 36px;
+	width: 220px;
+	bottom: 0;
+}
+
+#sidebar_tree.fixed {
+	position: fixed;
+	width: 300px;
+	left: 220px;
+	top: 36px;
+	bottom: 0;
+	overflow-y: auto;
+	border-right: 1px solid #dcdcdc;
+}
+
+#sidebar_tree .tree {
+	border: none;
+}
+
+#sidebar .list-group {
+	font-size: 1.2em;
+}
+
+#content {
+	left: 540px;
+	position: absolute;
+	padding: 10px;
+}

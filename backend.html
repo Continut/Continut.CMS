@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Continut CMS</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+
+	<link rel="stylesheet" href="media/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="media/fuelux/css/fuelux.css" />
+	<link rel="stylesheet" href="media/fonts/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="media/local/css/backend.css" />
+	
+	<script type="text/javascript" src="media/js/libs/jquery-1.11.2.js"></script>
+	<script type="text/javascript" src="media/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="media/fuelux/js/fuelux.js"></script>
+	
+	<script>
+		$(document).ready(function() {
+			$('#cms_tree').tree({
+				dataSource: function (options, callback) {
+					setTimeout(function () {
+						callback({
+							data: [
+								{
+									name: 'Homepage',
+									type: 'folder',
+									dataAttributes: {
+										id: 'folder1'
+									}
+								},
+								{
+									name: 'About us',
+									type: 'item',
+									dataAttributes: {
+										id: 'item1',
+										'data-icon': 'fa fa-file-o'
+									}
+								},
+								{
+									name: 'Sitemap',
+									type: 'folder',
+									dataAttributes: {
+										id: 'folder2',
+										'data-children': false
+									}
+								},
+								{
+									name: 'Downloads',
+									type: 'item',
+									dataAttributes: {
+										id: 'item2',
+										'data-icon': 'fa fa-download'
+									}
+								},
+								{
+									name: 'FAQ',
+									type: 'folder',
+									dataAttributes: {
+										id: 'folder3'
+									}
+								},
+								{
+									name: 'Discover our team',
+									type: 'item',
+									dataAttributes: {
+										id: 'item3',
+										'data-icon': 'fa fa-user'
+									}
+								},
+								{
+									name: 'Who we are',
+									type: 'folder',
+									dataAttributes: {
+										id: 'folder4'
+									}
+								},
+								{
+									name: 'Find a provider',
+									type: 'item',
+									dataAttributes: {
+										id: 'item4',
+										'data-icon': 'fa fa-file-o'
+									}
+								}
+							]
+						});
+					}, 400);
+				}
+		   });
+		});		
+	</script>
+</head>
+<body class="fuelux">
+	<div id="main_toolbar" class="collapse navbar-collapse">
+		<div class="pull-left">
+			<h1><i class="fa fa-cc"></i> Continut</h1>
+		</div>
+		<ul class="nav navbar-nav navbar-right">
+			<li>
+				<a href="#"><i class="fa fa-fw fa-cogs"></i> Settings</a>
+			</li>
+			<li role="presentation" class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false"><i class="fa fa-fw fa-user"></i> Gringo Deluxe <span class="caret"></span></a>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="#">User profile</a></li>
+					<li class="divider"></li>
+					<li><a href="#">Logout</a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	<div id="container" class="container-fluid">
+		<div id="sidebar" class="fixed">
+			<div class="list-group">
+				<a class="list-group-item" href="#"><i class="fa fa-fw fa-file-o"></i> Page</a>
+				<a class="list-group-item" href="#"><i class="fa fa-fw fa-list"></i> List</a>
+				<a class="list-group-item" href="#"><i class="fa fa-fw fa-camera-retro"></i> View</a>
+				<a class="list-group-item" href="#"><i class="fa fa-user fa-fw"></i> User Management <span class="pull-right fa fa-angle-down"></span></a>
+			</div>
+		</div>
+		<div id="sidebar_tree" class="fixed">
+			<ul class="tree tree-folder-select" role="tree" id="cms_tree">
+			  <li class="tree-branch hide" data-template="treebranch" role="treeitem" aria-expanded="false">
+				<div class="tree-branch-header">
+				  <button class="glyphicon icon-caret glyphicon-play"><span class="sr-only">Open</span></button>
+				  <button class="tree-branch-name">
+					<span class="glyphicon icon-folder glyphicon-folder-close"></span>
+					<span class="tree-label"></span>
+				  </button>
+				</div>
+				<ul class="tree-branch-children" role="group"></ul>
+				<div class="tree-loader" role="alert">Loading...</div>
+			  </li>
+			  <li class="tree-item hide" data-template="treeitem" role="treeitem">
+				<button class="tree-item-name">
+				  <span class="glyphicon icon-item"></span>
+				  <span class="tree-label"></span>
+				</button>
+			  </li>
+			</ul>
+		</div>
+		<div id="content">
+			<h2>H2 example</h2>
+			<p>Blabal paragraph</p>
+		</div>
+	</div>
+</body>
