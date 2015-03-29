@@ -52,7 +52,7 @@ body, html {
 }
 
 #sidebar_tree {
-	border-right: 1px solid #dcdcdc;
+
 }
 
 #sidebar_tree .tree {
@@ -70,7 +70,7 @@ body, html {
 }
 
 #content {
-	padding: 10px;
+	padding-top: 15px;
 }
 
 li a.helper-icon {
@@ -79,6 +79,8 @@ li a.helper-icon {
 
 .page-panel {
 	margin-top: 10px;
+	box-shadow: 0 0 4px #666;
+
 }
 
 /* jqtree */
@@ -112,6 +114,26 @@ ul.jqtree-tree li.jqtree-folder {
 	border-radius: 0;
 }
 
+.panel-heading {
+	padding: 10px;
+}
+
+.panel .panel-body {
+	padding: 10px;
+}
+
+.panel-backend-content {
+	background: #f5f5f5;
+	border-top: 1px solid #ddd;
+}
+
+.breadcrumb-page-tree {
+	font-size: 12px;
+	padding: 5px;
+	margin-bottom: 10px;
+	border-radius: 0;
+}
+
 .btn, .dropdown-menu {
 	border-radius: 0;
 	margin: 0;
@@ -123,4 +145,35 @@ ul.jqtree-tree li.jqtree-folder {
 .btn-backend:hover{
 	background-color: #3A4450;
 	color: white;
+}
+
+/* pep drag and drop */
+.content-drag-receiver {
+	height: 20px;
+	padding: 5px;
+	font-size: 10px;
+	margin: 5px 0;
+	background: transparent;
+}
+
+.content-drag-receiver.receiver-on {
+	background: brown;
+	color: white;
+}
+
+.content-drag-receiver.receiver-on.pep-dpa {
+	background: green;
+}
+
+.content-drag-receiver.receiver-on:after {
+	content: "drop here";
+}
+
+.content-drag-sender.pep-active {
+	position: absolute;
+	z-index: 9999;
+}
+
+.content-drag-sender.pep-active .panel-body {
+	display: none;
 }

@@ -20,81 +20,10 @@
 	<script type="text/javascript" src="media/bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="media/fuelux/js/fuelux.js"></script>
 	<script type="text/javascript" src="media/jqtree/js/tree.jquery.js"></script>
+	<script type="text/javascript" src="media/pep/js/jquery.pep.js"></script>
 	
 	<script>
 		$(document).ready(function() {
-			/*$('#cms_tree').tree({
-				dataSource: function (options, callback) {
-					setTimeout(function () {
-						callback({
-							data: [
-								{
-									name: 'Homepage',
-									type: 'folder',
-									dataAttributes: {
-										id: 'folder1'
-									}
-								},
-								{
-									name: 'About us',
-									type: 'item',
-									dataAttributes: {
-										id: 'item1',
-										'data-icon': 'fa fa-file-o'
-									}
-								},
-								{
-									name: 'Sitemap',
-									type: 'folder',
-									dataAttributes: {
-										id: 'folder2',
-										'data-children': false
-									}
-								},
-								{
-									name: 'Downloads',
-									type: 'item',
-									dataAttributes: {
-										id: 'item2',
-										'data-icon': 'fa fa-download'
-									}
-								},
-								{
-									name: 'FAQ',
-									type: 'folder',
-									dataAttributes: {
-										id: 'folder3'
-									}
-								},
-								{
-									name: 'Discover our team',
-									type: 'item',
-									dataAttributes: {
-										id: 'item3',
-										'data-icon': 'fa fa-user'
-									}
-								},
-								{
-									name: 'Who we are',
-									type: 'folder',
-									dataAttributes: {
-										id: 'folder4'
-									}
-								},
-								{
-									name: 'Find a provider',
-									type: 'item',
-									dataAttributes: {
-										id: 'item4',
-										'data-icon': 'fa fa-file-o'
-									}
-								}
-							]
-						});
-					}, 400);
-				}
-			});*/
-
 			var data = [
 				{
 					label: 'Getting started',
@@ -147,6 +76,7 @@
 				$tree.tree({
 					data: data,
 					dragAndDrop: true,
+					allowDragEventPropagation: false,
 					closedIcon: $('<i class="fa fa-fw fa-chevron-right"></i>'),
 					openedIcon: $('<i class="fa fa-fw fa-chevron-down"></i>'),
 					useContextMenu: false,
@@ -157,6 +87,39 @@
 					}
 				});
 				console.log($tree.tree('toJson'));
+
+				$('.content-drag-sender').pep({
+					droppable: '.content-drag-receiver',
+					elementsWithInteraction: '.panel-body',
+					place: false,
+					revert: true,
+					revertIf: function(ev, obj){
+						return !this.activeDropRegions.length;
+					},
+					//debug: true,
+					cssEaseDuration: 200,
+					rest: function (ev, obj) {
+						if ( this.activeDropRegions.length > 0 ) {
+							// get first drop region and set the element as it's child
+							var x = this.$el;
+							x.removeAttr('style');
+							$(this.activeDropRegions[0]).after(x);
+						}
+					},
+					start: function(ev, obj) {
+						$('.content-drag-receiver').each(function(index, item) {
+							if (!$(item).is($(obj.el).prev())) {
+								$(item).addClass('receiver-on');
+							}
+						});
+						//obj.noCenter = false;
+					},
+					stop: function(ev, ojb) {
+						$('.content-drag-receiver').each(function(index, item) {
+							$(item).removeClass('receiver-on');
+						});
+					}
+				});
 			});
 		});		
 	</script>
@@ -299,13 +262,45 @@
 				</ul>-->
 			</div>
 			<div id="content" class="col-md-9">
-				<div class="btn-group" role="group" aria-label="...">
-					<button type="button" class="btn btn-default"><i class="fa fa-fw fa-eye"></i> Page active</button>
-					<button type="button" class="btn btn-default"><i class="fa fa-fw fa-check"></i> Page shown in menu</button>
-					<button type="button" class="btn btn-danger"><i class="fa fa-fw fa-trash"></i> Delete page</button>
+				<div class="row">
+					<div class="col-sm-12">
+						<ol class="breadcrumb breadcrumb-page-tree">
+							<li><a href="#">Pagină de contact</a></li>
+							<li><a href="#">Ştiri</a></li>
+							<li class="active">Page déjà vu</li>
+						</ol>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-8">
+						<div class="btn-group" role="group">
+							<button type="button" class="btn btn-default"><i class="fa fa-fw fa-eye"></i> Page active</button>
+							<button type="button" class="btn btn-default"><i class="fa fa-fw fa-check"></i> Page shown in menu</button>
+							<button type="button" class="btn btn-danger"><i class="fa fa-fw fa-trash"></i> Delete page</button>
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<!--<div class="pull-right">
+							<label for="select_language"><a class="btn btn-sm btn-default" href=""><i class="fa fa-cog"></i></a> <span class="hidden-md">Preview profile</span> </label>
+							<div class="btn-group selectlist" data-initialize="selectlist" id="select_language">
+								<button class="btn btn-backend dropdown-toggle" data-toggle="dropdown" type="button">
+									<span class="selected-label"></span>
+									<span class="caret"></span>
+									<span class="sr-only">Toggle Dropdown</span>
+								</button>
+								<ul class="dropdown-menu dropdown-menu-right" role="menu">
+									<li data-value="1"><a href="#"><i class="fa fa-fw fa-desktop"></i> HD Desktop (1280x768)</a></li>
+									<li data-value="1"><a href="#"><i class="fa fa-fw fa-desktop"></i> Old Desktop (1024x768)</a></li>
+									<li data-value="2"><a href="#"><i class="fa fa-fw fa-tablet"></i> Tablet (up to 1024px width)</a></li>
+									<li data-value="3"><a href="#"><i class="fa fa-fw fa-mobile"></i> Phone (up to 600px width)</a></li>
+								</ul>
+								<input class="hidden hidden-field" name="mySelectlist" readonly="readonly" aria-hidden="true" type="text"/>
+							</div>
+						</div>-->
+					</div>
 				</div>
 				<div class="panel panel-warning page-panel">
-					<div class="panel-heading">Developing extensions for the backend</div>
+					<div class="panel-heading"><i class="fa fa-fw fa-file-o"></i> Developing extensions for the backend</div>
 					<div class="panel-body">
 						<p><small>Lorem ipsum dolor sit amec</small></p>
 						<div class="row">
@@ -313,7 +308,9 @@
 								<div class="panel panel-default">
 									<div class="panel-heading">Main content <span class="pull-right"><a class="btn btn-xs btn-warning" href=""><i class="fa fa-pencil fa-fw"></i></a></span></div>
 									<div class="panel-body">
+										<div class="content-drag-receiver"></div>
 										<p>Blabla, some content already created</p>
+										<div class="content-drag-receiver"></div>
 										<a class="btn btn-sm btn-success" href=""><i class="fa fa-plus fa-fw"></i></a>
 									</div>
 								</div>
@@ -322,6 +319,7 @@
 								<div class="panel panel-default">
 									<div class="panel-heading">Right sidebar <span class="pull-right"><a class="btn btn-xs btn-warning" href=""><i class="fa fa-pencil fa-fw"></i></a></span></div>
 									<div class="panel-body">
+										<div class="content-drag-receiver"></div>
 										<a class="btn btn-sm btn-success" href=""><i class="fa fa-plus fa-fw"></i></a>
 									</div>
 								</div>
@@ -330,24 +328,55 @@
 						<div class="row">
 							<div class="col-sm-4">
 								<div class="panel panel-default">
-									<div class="panel-heading">Container element <span class="pull-right"><a class="btn btn-xs btn-warning" href=""><i class="fa fa-pencil fa-fw"></i></a></span></div>
+									<div class="panel-heading">Left column<span class="pull-right"><a class="btn btn-xs btn-warning" href=""><i class="fa fa-pencil fa-fw"></i></a></span></div>
 									<div class="panel-body">
+										<div class="content-drag-receiver"></div>
+										<div class="panel panel-backend-content content-drag-sender">
+											<div class="panel-heading"><strong>Final contesters declared</strong> <span class="pull-right"><a class="btn btn-sm btn-warning" href=""><i class="fa fa-pencil fa-fw"></i></a></span></div>
+											<div class="panel-body hidden-xs">
+												The contest has now finished and the winners have been declared. Our lucky winners for 2015 are Master Blaster and his awesome 200 HP car mod. Seeing as how this was his first ...
+											</div>
+										</div>
+										<div class="content-drag-receiver"></div>
+										<div class="panel panel-backend-content content-drag-sender">
+											<div class="panel-heading"><strong></strong> <span class="pull-right"><a class="btn btn-sm btn-warning" href=""><i class="fa fa-pencil fa-fw"></i></a></span></div>
+											<div class="panel-body hidden-xs">
+												The contest has now finished and the winners have been declared. Our lucky winners for 2015 are Master Blaster and his awesome 200 HP car mod. Seeing as how this was his first ...
+											</div>
+										</div>
+										<div class="content-drag-receiver"></div>
 										<a class="btn btn-sm btn-success" href=""><i class="fa fa-plus fa-fw"></i></a>
 									</div>
 								</div>
 							</div>
 							<div class="col-sm-4">
 								<div class="panel panel-default">
-									<div class="panel-heading">Container element <span class="pull-right"><a class="btn btn-xs btn-warning" href=""><i class="fa fa-pencil fa-fw"></i></a></span></div>
+									<div class="panel-heading">Middle column<span class="pull-right"><a class="btn btn-xs btn-warning" href=""><i class="fa fa-pencil fa-fw"></i></a></span></div>
 									<div class="panel-body">
+										<div class="content-drag-receiver"></div>
 										<a class="btn btn-sm btn-success" href=""><i class="fa fa-plus fa-fw"></i></a>
 									</div>
 								</div>
 							</div>
 							<div class="col-sm-4">
 								<div class="panel panel-default">
-									<div class="panel-heading">Container element <span class="pull-right"><a class="btn btn-xs btn-warning" href=""><i class="fa fa-pencil fa-fw"></i></a></span></div>
+									<div class="panel-heading">Right column <span class="pull-right"><a class="btn btn-xs btn-warning" href=""><i class="fa fa-pencil fa-fw"></i></a></span></div>
 									<div class="panel-body">
+										<div class="content-drag-receiver"></div>
+										<div class="panel panel-backend-content content-drag-sender">
+											<div class="panel-heading"><strong>Final contesters declared</strong> <span class="pull-right"><a class="btn btn-sm btn-warning" href=""><i class="fa fa-pencil fa-fw"></i></a></span></div>
+											<div class="panel-body hidden-xs">
+												The contest has now finished and the winners have been declared. Our lucky winners for 2015 are Master Blaster and his awesome 200 HP car mod. Seeing as how this was his first ...
+											</div>
+										</div>
+										<div class="content-drag-receiver"></div>
+										<div class="panel panel-backend-content content-drag-sender">
+											<div class="panel-heading"><strong>Final contesters declared</strong> <span class="pull-right"><a class="btn btn-sm btn-warning" href=""><i class="fa fa-pencil fa-fw"></i></a></span></div>
+											<div class="panel-body hidden-xs">
+												The contest has now finished and the winners have been declared. Our lucky winners for 2015 are Master Blaster and his awesome 200 HP car mod. Seeing as how this was his first ...
+											</div>
+										</div>
+										<div class="content-drag-receiver"></div>
 										<a class="btn btn-sm btn-success" href=""><i class="fa fa-plus fa-fw"></i></a>
 									</div>
 								</div>
