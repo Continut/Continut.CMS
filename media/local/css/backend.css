@@ -52,7 +52,7 @@ body, html {
 }
 
 #sidebar_tree {
-
+	border-right: 1px solid #dcdcdc;
 }
 
 #sidebar_tree .tree {
@@ -106,6 +106,10 @@ ul.jqtree-tree li.jqtree-folder {
 }
 
 /* overwrite general styles */
+.form-control {
+	border-radius: 0;
+}
+
 .dropdown-menu {
 	box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.176);
 }
@@ -114,8 +118,14 @@ ul.jqtree-tree li.jqtree-folder {
 	border-radius: 0;
 }
 
+.panel-cms .panel-heading {
+	background: #3A4450;
+	color: white;
+}
+
 .panel-heading {
 	padding: 10px;
+	border-radius: 0;
 }
 
 .panel .panel-body {
