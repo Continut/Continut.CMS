@@ -22,11 +22,31 @@ namespace Core\Mvc\Controller {
 		 *
 		 * @var \Core\Mvc\Request
 		 */
-		protected $request;
+		protected $_request;
 
-		protected $response;
+		/**
+		 * @var string The extension this controller belongs to
+		 */
+		protected $_extension;
 
-		protected $arguments;
+		/**
+		 * @var string Type of the extension. Can be either 'Local', 'Community' or 'System'
+		 */
+		protected $_extensionType = 'Local';
+
+		/**
+		 * @var string Application scope, either 'Frontend' or 'Backend'
+		 */
+		protected $_scope = 'Frontend';
+
+		protected $_response;
+
+		protected $_arguments;
+
+		/**
+		 * @var \Core\Mvc\View\BaseView
+		 */
+		protected $_view;
 
 		/**
 		 * @var string The folder name where templates for this controller are stored
@@ -34,7 +54,8 @@ namespace Core\Mvc\Controller {
 		protected $templateStorage;
 
 		public function __construct() {
-			$this->request = new \Core\Mvc\Request();
+			$this->_view = new \Core\Mvc\View\BaseView();
+			$this->_request = new \Core\Mvc\Request();
 		}
 
 		/**
@@ -43,7 +64,33 @@ namespace Core\Mvc\Controller {
 		 * @return \Core\Mvc\Request
 		 */
 		public function getRequest() {
-			return $this->request;
+			return $this->_request;
+		}
+
+		/**
+		 * Set the controller's extension and scope
+		 *
+		 * @param        $extension
+		 * @param string $extensionType
+		 *
+		 * @return $this
+		 */
+		public function setExtension($extension, $extensionType = 'Local') {
+			$this->_extension = $extension;
+			$this->_extensionType = $extensionType;
+			return $this;
+		}
+
+		/**
+		 * Set Controller scope
+		 *
+		 * @param string $scope
+		 *
+		 * @return $this
+		 */
+		public function setScope($scope = 'Frontend') {
+			$this->_scope = $scope;
+			return $this;
 		}
 	}
 }

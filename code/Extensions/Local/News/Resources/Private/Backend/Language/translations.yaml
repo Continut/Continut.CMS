@@ -1,4 +1,4 @@
-# sample translations file for the frontend + backend
+# sample translations file for the backend
 en_US:
   backend:
     mainmenu:
@@ -8,10 +8,6 @@ en_US:
 	  list_news: Show all news
 	  add_author: Add author
 	  list_authors: Show all authors
-  frontend:
-    article:
-      details: Show article details
-	  archive: Show article archives
 
 ro_RO:
   backend:
@@ -22,7 +18,3 @@ ro_RO:
 	  list_news: Afișează toate articolele
 	  add_author: Adaugă autor
 	  list_authors: Afișează toți autorii
-  frontend:
-    article:
-      details: Afișează detaliile articolului
-	  archive: Afișează arhivele articolului

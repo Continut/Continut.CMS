@@ -14,8 +14,17 @@ namespace Core\Mvc\Controller {
 
 	/**
 	 * Frontend Controller base class
+	 *
 	 * @package Core\Mvc\Controller
 	 */
 	class FrontendController extends ActionController {
+
+		/**
+		 * Frontend constructor
+		 */
+		public function __construct() {
+			parent::__construct();
+			$this->setScope('Frontend');
+		}
 	}
 }

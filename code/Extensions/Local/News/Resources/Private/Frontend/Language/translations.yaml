@@ -1,0 +1,12 @@
+# sample translations file for the frontend
+en_US:
+  frontend:
+    article:
+      details: Show article details
+	  archive: Show article archives
+
+ro_RO:
+  frontend:
+    article:
+      details: Afișează detaliile articolului
+	  archive: Afișează arhivele articolului
