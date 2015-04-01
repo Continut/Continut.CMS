@@ -13,7 +13,16 @@ namespace Extensions\Local\News\Classes\Controllers {
 		}
 
 		public function showAction() {
-			$this->test = "I am being called from somewhere else";
+			$page = new \Extensions\Local\News\Classes\Domain\Model\Page();
+			$page = $page->findByUid(3);
+			var_dump($page); die();
+			/*$sth = \Core\Bootstrap::getInstance()->getDatabaseHandler()->query("SELECT * FROM sys_pages");
+			$sth->setFetchMode(\PDO::FETCH_CLASS, '\\Extensions\\Local\\News\\Classes\\Domain\\Model\\Page');
+			while($page = $sth->fetch()) {
+				echo 'parent: ';var_dump($page->getParent());
+				var_dump($page);
+			}
+			die();*/
 		}
 
 		public function render() {

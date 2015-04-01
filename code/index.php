@@ -19,6 +19,7 @@ require __DIR__ .'/Core/Bootstrap.php';
 
 \Core\Bootstrap::getInstance()
 	->loadConfiguration()
+	->connectToDatabase()
 	->startOutput();
 
 $request = new \Core\Mvc\Request();
@@ -28,6 +29,5 @@ $action = $request->getArgument('action');
 $controller = new $class();
 $controller->$action();
 
-\Core\Bootstrap::getInstance()->endOutput();
-var_dump($request->getArguments());
+\Core\Bootstrap::getInstance()->endOutput()->disconnectDatabase();
 $controller->render();

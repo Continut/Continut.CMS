@@ -24,6 +24,8 @@ namespace Core {
 		 */
 		static protected $instance;
 
+		protected $databaseHandler;
+
 		/**
 		 * Returns or creates a Bootstrap instance
 		 *
@@ -65,6 +67,40 @@ namespace Core {
 		public function endOutput() {
 			ob_end_clean();
 			return $this;
+		}
+
+		/**
+		 * Create a database handler and connect to the database
+		 *
+		 * @param string $type Database connection type: 'mysql', 'sqlite', etc...
+		 * @throws Exception
+		 */
+		public function connectToDatabase($type = 'mysql') {
+			try {
+				$this->databaseHandler = new \PDO('mysql:host=localhost;dbname=continutcms', 'root', '');
+				$this->databaseHandler->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+			}
+			catch (\PDOException $e) {
+				throw new \Core\Tools\Exception("Cannot connect to the database", 5);
+			}
+			return $this;
+		}
+
+		/**
+		 * Disconnect from database
+		 *
+		 * @return $this
+		 */
+		public function disconnectDatabase() {
+			$this->databaseHandler = NULL;
+			return $this;
+		}
+
+		/**
+		 * @return mixed
+		 */
+		public function getDatabaseHandler() {
+			return $this->databaseHandler;
 		}
 	}
 }
