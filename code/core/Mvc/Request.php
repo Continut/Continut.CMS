@@ -66,7 +66,7 @@ namespace Core\Mvc {
 		public function setController($controller)
 		{
 			if (empty($controller)) {
-				throw new \Core\Tools\Exception("No controller has been found. Are you sure a controller was passed as an argument?", 1);
+				throw new \Core\Tools\Exception("No controller has been found. Are you sure a controller was passed as an argument?", 40000001);
 			}
 			$this->controller = $controller;
 		}
@@ -92,7 +92,7 @@ namespace Core\Mvc {
 		public function setAction($action)
 		{
 			if (empty($action)) {
-				throw new \Core\Tools\Exception("No action has been found. Are you sure a controller action was passed as an argument?", 2);
+				throw new \Core\Tools\Exception("No action has been found. Are you sure a controller action was passed as an argument?", 40000002);
 			}
 			$this->action = $action;
 		}
@@ -127,7 +127,7 @@ namespace Core\Mvc {
 		 */
 		public function getArgument($argumentName) {
 			if (!isset($this->arguments[$argumentName])) {
-				throw new \Core\Tools\Exception("The supplied argument name does not exist", 3);
+				throw new \Core\Tools\Exception("The supplied argument name does not exist", 40000003);
 			}
 			return $this->arguments[$argumentName];
 		}

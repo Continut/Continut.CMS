@@ -1,0 +1,19 @@
+{
+  "News": {
+    "version": "0.0.1",
+    "name": "News extension",
+    "dependencies": {
+      "sys_backend": {
+        "version": "0.0.1"
+      }
+    },
+    "author": {
+      "web": "www.pixelplant.ch",
+      "name": "Radu Mogoş",
+      "email": "radu.mogos@pixelplant.ch"
+    },
+    "folder": "News",
+    "type": "Local",
+    "description": "Adds news functionality to the CMS"
+  }
+}

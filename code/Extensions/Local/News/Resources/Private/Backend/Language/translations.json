@@ -1,0 +1,28 @@
+{
+  "ro_RO": {
+    "backend": {
+      "submenu": {
+        "add_author": "Adaugă autor",
+        "add_news": "Adaugă articol",
+        "list_news": "Afişează toate articolele",
+        "list_authors": "Afişează toţi autorii"
+      },
+      "mainmenu": {
+        "news": "Articole"
+      }
+    }
+  },
+  "en_US": {
+    "backend": {
+      "submenu": {
+        "add_author": "Add author",
+        "add_news": "Add news",
+        "list_news": "Show all news",
+        "list_authors": "Show all authors"
+      },
+      "mainmenu": {
+        "news": "News"
+      }
+    }
+  }
+}

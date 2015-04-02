@@ -1,0 +1,14 @@
+{
+  "Backend": {
+    "version": "0.0.1",
+    "name": "CMS Backend",
+    "author": {
+      "web": "www.pixelplant.ch",
+      "name": "Radu Mogo\u0219",
+      "email": "radu.mogos@pixelplant.ch"
+    },
+    "folder": "Backend",
+    "type": "System",
+    "description": "Adds most of the Backend functionality of the CMS"
+  }
+}

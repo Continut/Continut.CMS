@@ -12,22 +12,18 @@
 
 // @TODO Move to own class
 function load_classes($class) {
-	include $class.'.php';
+	include $class.".php";
 }
 
-require __DIR__ .'/Core/Bootstrap.php';
+define ("__ROOTCMS__", __DIR__);
+define ("DS", DIRECTORY_SEPARATOR);
+require __ROOTCMS__ . DS . "Core" . DS . "Bootstrap.php";
 
 \Core\Bootstrap::getInstance()
+	->setEnvironment("DEVELOPMENT") // Change this to "PRODUCTION" before going LIVE
 	->loadConfiguration()
 	->connectToDatabase()
-	->startOutput();
-
-$request = new \Core\Mvc\Request();
-
-$class = 'Extensions\\Local\\'.$request->getArgument('extension').'\\Classes\\Controllers\\'.$request->getArgument('controller');
-$action = $request->getArgument('action');
-$controller = new $class();
-$controller->$action();
-
-\Core\Bootstrap::getInstance()->endOutput()->disconnectDatabase();
-$controller->render();
+	->startOutput()
+	->connectController()
+	->endOutput()
+	->disconnectDatabase();

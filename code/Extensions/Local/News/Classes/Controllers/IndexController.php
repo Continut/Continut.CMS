@@ -22,9 +22,5 @@ namespace Extensions\Local\News\Classes\Controllers {
 			$page = $page->findByUid(2);
 			var_dump($page); die();
 		}
-
-		public function render() {
-			echo $this->test;
-		}
 	}
 }

@@ -1,0 +1,21 @@
+File exceptions:
+1000xxxx
+  Access: 1100xxxx
+
+Database exceptions:
+2000xxxx
+
+20000001 - Cannot connect to the database. Please check username, password and host
+
+Code:
+3000xxxx
+
+30000001 - The PHP class you are trying to load does not exist
+30000002 - The action you are trying to call does not exist for this controller
+
+Cms:
+4000xxxx
+
+40000001 - No controller has been found. Are you sure a controller was passed as an argument?
+40000002 - No action has been found. Are you sure a controller action was passed as an argument?
+40000003 - The supplied argument name does not exist (when a request argument is retrieved

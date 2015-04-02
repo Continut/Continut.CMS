@@ -1,0 +1,18 @@
+{
+  "ro_RO": {
+    "frontend": {
+      "article": {
+        "details": "Afişează detaliile articolului",
+        "archive": "Afişează arhivele articolului"
+      }
+    }
+  },
+  "en_US": {
+    "frontend": {
+      "article": {
+        "details": "Show article details",
+        "archive": "Show article archives"
+      }
+    }
+  }
+}

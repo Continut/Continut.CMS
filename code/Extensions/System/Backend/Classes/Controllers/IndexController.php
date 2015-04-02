@@ -9,12 +9,15 @@
  * Project: Conţinut CMS
  */
 
-namespace System\Backend\Classes\Controllers {
+namespace Extensions\System\Backend\Classes\Controllers {
+	use \Core\Mvc\Controller\BackendController;
 
-	class IndexController
-	{
+	/**
+	 * Backend main controller
+	 * @package System\Backend\Classes\Controllers
+	 */
+	class IndexController extends BackendController {
 		public function indexAction() {
-			
 		}
 	}
 }

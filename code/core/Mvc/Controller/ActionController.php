@@ -68,6 +68,18 @@ namespace Core\Mvc\Controller {
 		}
 
 		/**
+		 * Set request object. Should only by called by system or bootstrap scripts
+		 *
+		 * @param $request
+		 *
+		 * @return $this
+		 */
+		public function setRequest($request) {
+			$this->_request = $request;
+			return $this;
+		}
+
+		/**
 		 * Set the controller's extension and scope
 		 *
 		 * @param        $extension
@@ -90,6 +102,15 @@ namespace Core\Mvc\Controller {
 		 */
 		public function setScope($scope = 'Frontend') {
 			$this->_scope = $scope;
+			return $this;
+		}
+
+		/**
+		 * Deals with final rendering, once the template is fetched and parsed
+		 *
+		 * @return $this
+		 */
+		public function render() {
 			return $this;
 		}
 	}
