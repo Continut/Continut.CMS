@@ -43,6 +43,7 @@ namespace Core {
 		 */
 		public static function createInstance($classToLoad) {
 			$class = $classToLoad;
+			self::$classMappings["\\Core\\Mvc\\Model\\Content"] = "\\Extensions\\Local\\News\\Classes\\Domain\\Model\\NewsContent";
 			if (array_key_exists($classToLoad, self::$classMappings)) {
 				$class = self::$classMappings[$classToLoad];
 			}

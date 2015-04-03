@@ -120,13 +120,17 @@ namespace Core\Mvc {
 		/**
 		 * Get argument value by name
 		 *
-		 * @param $argumentName
+		 * @param string $argumentName
+		 * @param mixed $defaultValue default value returned if argument is not set
 		 *
 		 * @return mixed
 		 * @throws \Core\Tools\Exception
 		 */
-		public function getArgument($argumentName) {
+		public function getArgument($argumentName, $defaultValue = NULL) {
 			if (!isset($this->arguments[$argumentName])) {
+				if (!is_null($defaultValue)) {
+					return $defaultValue;
+				}
 				throw new \Core\Tools\Exception("The supplied argument name does not exist", 40000003);
 			}
 			return $this->arguments[$argumentName];

@@ -10,6 +10,7 @@
  */
 
 namespace Core\Mvc\Controller {
+	use \Core\Utility;
 
 	/**
 	 * Base Controller Class, used by Frontend and Backend Controllers
@@ -54,8 +55,17 @@ namespace Core\Mvc\Controller {
 		protected $templateStorage;
 
 		public function __construct() {
-			$this->_view = new \Core\Mvc\View\BaseView();
-			$this->_request = new \Core\Mvc\Request();
+			$this->_view    = Utility::createInstance("\\Core\\Mvc\\View\\BaseView");
+			$this->_request = Utility::createInstance("\\Core\\Mvc\\Request");
+		}
+
+		/**
+		 * Get view instance
+		 *
+		 * @return \Core\Mvc\View\BaseView
+		 */
+		public function getView() {
+			return $this->_view;
 		}
 
 		/**
@@ -94,6 +104,20 @@ namespace Core\Mvc\Controller {
 		}
 
 		/**
+		 * @return string Extension name where this controller resides
+		 */
+		public function getExtension() {
+			return $this->_extension;
+		}
+
+		/**
+		 * @return string Extension type, be it Local or System
+		 */
+		public function getExtensionType() {
+			return $this->_extensionType;
+		}
+
+		/**
 		 * Set Controller scope
 		 *
 		 * @param string $scope
@@ -108,10 +132,10 @@ namespace Core\Mvc\Controller {
 		/**
 		 * Deals with final rendering, once the template is fetched and parsed
 		 *
-		 * @return $this
+		 * @return string
 		 */
-		public function render() {
-			return $this;
+		public function renderView() {
+			return $this->_view->render();
 		}
 	}
 }

@@ -27,8 +27,15 @@ namespace Core\Mvc\Model {
 		 */
 		protected $_tablename;
 
-		public function __constructor($tablename) {
-			$this->tablename = $tablename;
+		public function __construct() {
+			$this->setTablename();
+		}
+
+		/**
+		 * @return int Model's unique id in the database
+		 */
+		public function getUid() {
+			return $this->uid;
 		}
 
 		public function findByUid($uid) {

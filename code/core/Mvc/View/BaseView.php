@@ -75,14 +75,35 @@ namespace Core\Mvc\View {
 		}
 
 		/**
-		 * @return $this
+		 * @param string $template Template file to use
 		 */
-		public function render() {
-			return $this;
+		public function setTemplate($template) {
+			$this->_template = $template;
 		}
 
-		public function initializeView() {
-			require_once $this->_template;
+		/**
+		 * @return $this
+		 *
+		 * @throws \Core\Tools\Exception
+		 */
+		public function render() {
+			if (!empty($this->_variables)) {
+				extract($this->_variables);
+			}
+			if (!file_exists($this->_template)) {
+				throw new \Core\Tools\Exception("The specified template file does not exist", 10000001);
+			}
+			include_once $this->_template;
+			$view = ob_get_contents();
+			return $view;
+		}
+
+		public function useLayout($layoutName) {
+
+		}
+
+		public function renderPartial($partialName) {
+
 		}
 	}
 }

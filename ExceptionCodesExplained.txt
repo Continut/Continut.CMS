@@ -2,6 +2,8 @@ File exceptions:
 1000xxxx
   Access: 1100xxxx
 
+10000001 - The specified template file does not exist
+
 Database exceptions:
 2000xxxx
 

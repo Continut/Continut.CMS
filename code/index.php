@@ -10,13 +10,9 @@
  * Project: Conţinut CMS
  */
 
-// @TODO Move to own class
-function load_classes($class) {
-	include $class.".php";
-}
-
 define ("__ROOTCMS__", __DIR__);
 define ("DS", DIRECTORY_SEPARATOR);
+
 require __ROOTCMS__ . DS . "Core" . DS . "Bootstrap.php";
 
 \Core\Bootstrap::getInstance()
@@ -25,5 +21,5 @@ require __ROOTCMS__ . DS . "Core" . DS . "Bootstrap.php";
 	->connectToDatabase()
 	->startOutput()
 	->connectController()
-	->endOutput()
+	//->endOutput()
 	->disconnectDatabase();

@@ -57,14 +57,25 @@ namespace Core {
 		}
 
 		/**
+		 * A simple basic class loader so far
+		 * Class caching and mapping will be provided shortly
+		 *
+		 * @param string $class Namespace + classname to load
+		 */
+		public function loadClasses($class) {
+			include $class.".php";
+		}
+
+		/**
 		 * Loads all the core configurations, like the class mapper, etc
 		 *
 		 * @return $this
 		 */
 		public function loadConfiguration() {
 			// @TODO - move the load_classes method to a proper class that does Class caching
-			spl_autoload_register("load_classes", TRUE, FALSE);
+			spl_autoload_register(array($this, "loadClasses"), TRUE, FALSE);
 
+			// Load Local and System extensions configuration data
 			Utility::loadExtensionsConfigurationFromFolder(__ROOTCMS__ . DS . "Extensions" . DS . "Local");
 			Utility::loadExtensionsConfigurationFromFolder(__ROOTCMS__ . DS . "Extensions" . DS . "System");
 
@@ -100,25 +111,48 @@ namespace Core {
 		 */
 		public function connectController() {
 			$request = Utility::getRequest();
-			if ($request->hasArgument("extension")) {
-				$contextExtension  = $request->getArgument("extension");
-			} else {
-				$contextExtension = "Backend";
-			}
-			$contextController = $request->getArgument("controller") . "Controller";
-			if ($request->hasArgument("action")) {
-				$contextAction = $request->getArgument("action") . "Action";
-			} else {
-				$contextAction = "indexAction";
-			}
-			$extensionType     = Utility::getExtensionSettings($contextExtension)["type"];
+
+			$pageId = (int)$request->getArgument("pid", 0);
+			$page = Utility::createInstance("\\Core\\Mvc\\View\\Page");
+			$page = $page->findByUid($pageId);
+			$layout = Utility::createInstance("\\Core\\Mvc\\View\\BaseLayout");
+			$layout->setTemplate(__ROOTCMS__ . "/Extensions/Local/News/Resources/Private/Frontend/Layouts/Default.layout.php");
+			$page->setLayout($layout);
+			$pageView = $page->render();
+			$this->endOutput();
+			echo $pageView;
+			die();
+
+			// Get request argument values or switch to default values if not defined
+			$contextExtension  = $request->getArgument("_extension",  "Backend");
+			$contextController = $request->getArgument("_controller", "Index") . "Controller";
+			$contextAction     = $request->getArgument("_action",     "index") . "Action";
+
+			// Get the type of the extension from it's settings data
+			$extensionType = Utility::getExtensionSettings($contextExtension)["type"];
+
+			// Prepare the controller to load
 			$classToLoad = "Extensions\\$extensionType\\$contextExtension\\Classes\\Controllers\\$contextController";
+
+			// Instantiate the controller
 			$controller = Utility::createInstance($classToLoad);
+
+			// and call it's action method, if it exists
 			if (!method_exists($controller, $contextAction)) {
 				throw new \Core\Tools\Exception("The action you are trying to call does not exist for this controller", 30000002);
 			}
+
+			// pass the request object to the controller so that we have access to it inside our action
 			$controller->setRequest($request);
+
+			// then execute it's action
 			$controller->$contextAction();
+
+			$viewContent = $controller->getView()->render();
+
+			$this->endOutput();
+
+			echo $viewContent;
 
 			return $this;
 		}

@@ -12,9 +12,10 @@ namespace Extensions\Local\News\Classes\Controllers {
 		}
 
 		public function indexAction() {
-			$this->templateStorage = "Index";
-			include "/var/www/cms/code/Extensions/Local/News/Resources/Private/Templates/".$this->templateStorage."/Index.template.php";
-			$this->test = ob_get_contents();
+			$this->getView()->assignMultiple(["firstname" => "Gringo", "lastname" => "Deluxe"]);
+			$this->getView()->assign("country", "Romania");
+			$this->templateStorage = "Resources/Private";
+			$this->getView()->setTemplate(__ROOTCMS__ . DS . "Extensions" . DS . $this->getExtensionType() . DS . $this->getExtension() . DS . $this->templateStorage . DS ."Frontend/Templates/Index" . DS . "Index.template.php");
 		}
 
 		public function showAction() {
