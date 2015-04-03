@@ -14,14 +14,30 @@ namespace Core\Mvc\View {
 		/**
 		 * @var array List of elements added to container
 		 */
-		protected $_elements;
+		protected $_elements = [];
+
+		/**
+		 * @var array A container can have multiple subcontainers inside it
+		 */
+		protected $_containers = [];
+
+		/**
+		 * @var string Container template, if any
+		 */
+		protected $_template;
 
 		public function __construct() {
 
 		}
 
-		public function render() {
+		public function setTemplate($template) {
+			$this->_template = $template;
+		}
 
+		public function render() {
+			ob_start();
+			include($this->_template);
+			return ob_get_clean();
 		}
 
 		public function getElements() {
@@ -30,6 +46,21 @@ namespace Core\Mvc\View {
 
 		public function addElement($element) {
 			$this->_elements[$element->getUid()] = $element;
+		}
+
+		/**
+		 * Show all content from a container
+		 *
+		 * @param $id Id if the container to show
+		 */
+		public function showContainerId($id) {
+			$htmlElements = "";
+			if (isset($this->_containers[$id])) {
+				foreach ($this->_containers[$id]->getElements() as $element) {
+					$htmlElements .= $element->render();
+				}
+			}
+			echo "Container $id ".$htmlElements;
 		}
 
 	}

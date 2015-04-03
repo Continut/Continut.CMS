@@ -119,7 +119,7 @@ namespace Core {
 			$layout->setTemplate(__ROOTCMS__ . "/Extensions/Local/News/Resources/Private/Frontend/Layouts/Default.layout.php");
 			$page->setLayout($layout);
 			$pageView = $page->render();
-			$this->endOutput();
+			//$this->endOutput();
 			echo $pageView;
 			die();
 
@@ -149,8 +149,6 @@ namespace Core {
 			$controller->$contextAction();
 
 			$viewContent = $controller->getView()->render();
-
-			$this->endOutput();
 
 			echo $viewContent;
 

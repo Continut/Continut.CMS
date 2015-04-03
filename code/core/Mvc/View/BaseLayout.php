@@ -41,8 +41,9 @@ namespace Core\Mvc\View {
 		 * @return string
 		 */
 		public function render() {
+			ob_start();
 			include_once $this->_template;
-			return ob_get_contents();
+			return ob_get_clean();
 		}
 
 		/**

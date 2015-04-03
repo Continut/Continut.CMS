@@ -93,9 +93,9 @@ namespace Core\Mvc\View {
 			if (!file_exists($this->_template)) {
 				throw new \Core\Tools\Exception("The specified template file does not exist", 10000001);
 			}
-			include_once $this->_template;
-			$view = ob_get_contents();
-			return $view;
+			ob_start();
+			include($this->_template);
+			return ob_get_clean();
 		}
 
 		public function useLayout($layoutName) {

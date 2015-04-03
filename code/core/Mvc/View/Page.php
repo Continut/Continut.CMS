@@ -29,7 +29,7 @@ namespace Core\Mvc\View {
 			$this->_layout = $layout;
 			$content = Utility::createInstance("\\Core\\Mvc\\Model\\Content");
 			$content1 = $content->findByUid(1);
-			$content2 = $content->findByUid(2);
+			$content2 = $content->findByUid(3);
 			$container = Utility::createInstance("\\Core\\Mvc\\View\\BackendContainer");
 			$container->addElement($content1);
 			$container->addElement($content2);

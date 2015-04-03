@@ -21,7 +21,16 @@ namespace Extensions\Local\News\Classes\Controllers {
 		public function showAction() {
 			$page = new \Extensions\Local\News\Classes\Domain\Model\Page();
 			$page = $page->findByUid(2);
-			var_dump($page); die();
+			$this->templateStorage = "Resources/Private";
+			$this->getView()->setTemplate(__ROOTCMS__ . DS . "Extensions" . DS . $this->getExtensionType() . DS . $this->getExtension() . DS . $this->templateStorage . DS ."Frontend/Templates/Index" . DS . "Show.template.php");
+		}
+
+		public function backendConfigureAction() {
+
+		}
+
+		public function backendPreviewAction() {
+
 		}
 	}
 }

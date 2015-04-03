@@ -19,7 +19,7 @@ require __ROOTCMS__ . DS . "Core" . DS . "Bootstrap.php";
 	->setEnvironment("DEVELOPMENT") // Change this to "PRODUCTION" before going LIVE
 	->loadConfiguration()
 	->connectToDatabase()
-	->startOutput()
+	//->startOutput()
 	->connectController()
 	//->endOutput()
 	->disconnectDatabase();

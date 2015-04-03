@@ -14,6 +14,19 @@
     },
     "folder": "News",
     "type": "Local",
-    "description": "Adds news functionality to the CMS"
+    "description": "Adds news functionality to the CMS",
+    "plugins": {
+      "news": {
+        "label": "News plugin",
+        "execute": {
+          "controller": "Index",
+          "action": "backendConfigure"
+        },
+        "preview": {
+          "controller": "Index",
+          "action": "backendPreview"
+        }
+      }
+    }
   }
 }

@@ -35,26 +35,26 @@ namespace Core {
 		 * Generate an instance based on the sent class or map to an overwritten class stored in
 		 * the classMappings variable
 		 *
-		 * @param $classToLoad Full namespace and class name to load
+		 * @param string $classToLoad Full namespace and class name to load
 		 *
-		 * @throws \Core\Tools\Exception
+		 * @throws Tools\Exception
 		 *
 		 * @return mixed
 		 */
 		public static function createInstance($classToLoad) {
 			$class = $classToLoad;
-			self::$classMappings["\\Core\\Mvc\\Model\\Content"] = "\\Extensions\\Local\\News\\Classes\\Domain\\Model\\NewsContent";
+
 			if (array_key_exists($classToLoad, self::$classMappings)) {
 				$class = self::$classMappings[$classToLoad];
 			}
 			if (!file_exists($class.".php")) {
-				throw new \Core\Tools\Exception("The PHP class you are trying to load does not exist", 30000001);
+				throw new Tools\Exception("The PHP class you are trying to load does not exist: " . $classToLoad, 30000001);
 			}
 			return new $class();
 		}
 
 		/**
-		 * @return Core\Mvc\Request instace
+		 * @return Mvc\Request instace
 		 * @throws Tools\Exception
 		 */
 		public static function getRequest() {
@@ -67,7 +67,7 @@ namespace Core {
 		/**
 		 * Return subdirectories of a directory as an array
 		 *
-		 * @param $path string Parent directory to scan
+		 * @param string $path Parent directory to scan
 		 *
 		 * @return array
 		 */
@@ -101,7 +101,7 @@ namespace Core {
 		/**
 		 * Return the complete configuration of an extension
 		 *
-		 * @param $extensionName
+		 * @param string $extensionName
 		 *
 		 * @return mixed/null
 		 */
@@ -110,6 +110,64 @@ namespace Core {
 				return static::$extensionsConfiguration[$extensionName];
 			}
 			return NULL;
+		}
+
+		/**
+		 * Execute a plugin method
+		 *
+		 * @param string $contextExtension  Name of the extension to look for
+		 * @param string $contextController Controller name to execute
+		 * @param string $contextAction     The action to execute
+		 * @param mixed  $contextSettings   Additional settings to be passed to the plugin
+		 *
+		 * @return mixed
+		 * @throws Tools\Exception
+		 */
+		public static function callPlugin($contextExtension, $contextController, $contextAction, $contextSettings = []) {
+			$contextController .= "Controller";
+			$contextAction     .= "Action";
+
+			$extensionType = static::getExtensionSettings($contextExtension)["type"];
+			$classToLoad = "Extensions\\$extensionType\\$contextExtension\\Classes\\Controllers\\$contextController";
+
+			// Instantiate the controller
+			$controller = Utility::createInstance($classToLoad);
+
+			// and call it's action method, if it exists
+			if (!method_exists($controller, $contextAction)) {
+				throw new Tools\Exception("The action you are trying to call does not exist for this controller", 30000002);
+			}
+
+			// then execute it's action
+			$controller->$contextAction();
+
+			$viewContent = $controller->getView()->render();
+
+			return $viewContent;
+		}
+
+		/**
+		 * @param string $resourceName      Name of the resource to load (template filename, container filename, etc)
+		 * @param string $contextExtension  Name of the extension that holds the resource
+		 * @param string $resourcePlacement Placement of the resource, either in Backend or Frontend
+		 * @param string $resourceType      Type of resource (Template, Container, Partial, Layout) - in singular form
+		 *
+		 * @throws \Core\Tools\Exception
+		 *
+		 * @return string Absolute path to the resource to load
+		 */
+		public static function getResource($resourceName, $contextExtension, $resourcePlacement = "Frontend", $resourceType = "Template") {
+			$extensionType = static::getExtensionSettings($contextExtension)["type"];
+
+			$extension = "." . strtolower($resourceType) . ".php";
+			$resourceType = $resourceType . "s";
+			$resourcePath = __ROOTCMS__ . "/Extensions/$extensionType/$contextExtension/Resources/Private/$resourcePlacement/$resourceType/$resourceName$extension";
+
+			if (!file_exists($resourcePath)) {
+				throw new \Core\Tools\Exception("Resource cannot be found: " . $resourcePath);
+			}
+
+			return $resourcePath;
 		}
 	}
 
