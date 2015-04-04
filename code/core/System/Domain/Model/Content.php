@@ -23,7 +23,7 @@ namespace Core\System\Domain\Model {
 		 */
 		protected $_page;
 
-		public function setTablename() {
+		public function __construct() {
 			$this->_tablename = "sys_content";
 		}
 

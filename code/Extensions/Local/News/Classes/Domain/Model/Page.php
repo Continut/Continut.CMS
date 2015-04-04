@@ -20,7 +20,6 @@ namespace Extensions\Local\News\Classes\Domain\Model {
 
 		public function __construct() {
 			$this->_tablename = "sys_pages";
-			$this->is_visible = ($this->is_deleted) ? 'wow' : 'nay';
 		}
 
 		public function getTitle() {

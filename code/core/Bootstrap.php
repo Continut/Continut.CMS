@@ -112,46 +112,12 @@ namespace Core {
 		public function connectController() {
 			$request = Utility::getRequest();
 
-			/*$pageId = (int)$request->getArgument("pid", 0);
-			$page = Utility::createInstance("\\Core\\Mvc\\View\\PageView");
-			$layout = Utility::createInstance("\\Core\\Mvc\\View\\BaseLayout");
-			$layout->setTemplate(__ROOTCMS__ . "/Extensions/Local/News/Resources/Private/Frontend/Layouts/Default.layout.php");
-			$page->setLayout($layout);
-			$pageView = $page->render();
-			echo $pageView;
-			die();*/
-
 			// Get request argument values or switch to default values if not defined
 			$contextExtension  = $request->getArgument("_extension",  "Frontend");
-			$contextController = $request->getArgument("_controller", "Index") . "Controller";
-			$contextAction     = $request->getArgument("_action",     "index") . "Action";
+			$contextController = $request->getArgument("_controller", "Index");
+			$contextAction     = $request->getArgument("_action",     "index");
 
-			// Get the type of the extension from it's settings data
-			$extensionType = Utility::getExtensionSettings($contextExtension)["type"];
-
-			// Prepare the controller to load
-			$classToLoad = "Extensions\\$extensionType\\$contextExtension\\Classes\\Controllers\\$contextController";
-
-			// Instantiate the controller
-			$controller = Utility::createInstance($classToLoad);
-
-			// and call it's action method, if it exists
-			if (!method_exists($controller, $contextAction)) {
-				throw new \Core\Tools\Exception("The action you are trying to call does not exist for this controller", 30000002);
-			}
-
-			// pass the request object to the controller so that we have access to it inside our action
-			$controller->setRequest($request);
-
-			// then execute it's action
-			$viewContent = $controller->$contextAction();
-
-			// if no data was returned, then fetch the template linked to this action
-			if (empty($viewContent)) {
-				$viewContent = $controller->getView()->render();
-			}
-
-			echo $viewContent;
+			echo Utility::callPlugin($contextExtension, $contextController, $contextAction);
 
 			return $this;
 		}
@@ -176,6 +142,22 @@ namespace Core {
 			Utility::disconnectFromDatabase();
 
 			return $this;
+		}
+
+		/**
+		 * Start User session
+		 *
+		 * @return $this
+		 * @throws Tools\Exception
+		 */
+		public function startSession() {
+			$userSession = Utility::createInstance("\\Core\\System\\Session\\UserSession");
+			session_set_save_handler($userSession, true);
+			session_start();
+			$user = Utility::createInstance("\\Core\\System\\Session\\User");
+
+			return $this;
+
 		}
 
 		/**

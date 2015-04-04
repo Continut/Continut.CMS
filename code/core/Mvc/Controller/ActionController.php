@@ -26,6 +26,11 @@ namespace Core\Mvc\Controller {
 		protected $_request;
 
 		/**
+		 * @var \Core\System\Session\User Current session user
+		 */
+		protected $_user;
+
+		/**
 		 * @var string The extension this controller belongs to
 		 */
 		protected $_extension;
@@ -56,7 +61,15 @@ namespace Core\Mvc\Controller {
 
 		public function __construct() {
 			$this->_view    = Utility::createInstance("\\Core\\Mvc\\View\\BaseView");
-			$this->_request = Utility::createInstance("\\Core\\Mvc\\Request");
+			$this->_request = Utility::getRequest();
+			//$this->_user    = Utility::getUser();
+		}
+
+		/**
+		 * @return \Core\System\Session\User
+		 */
+		public function getUser() {
+			return $this->_user;
 		}
 
 		/**

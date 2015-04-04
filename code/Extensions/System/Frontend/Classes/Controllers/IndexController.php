@@ -17,7 +17,7 @@ namespace Extensions\System\Frontend\Classes\Controllers {
 
 		public function indexAction() {
 			// get page id request
-			$pageUid = (int)$this->getRequest()->getArgument("pid");
+			$pageUid = (int)$this->getRequest()->getArgument("pid", 1);
 
 			// load the pageview renderer
 			$pageView = Utility::createInstance("\\Core\\Mvc\\View\\PageView");

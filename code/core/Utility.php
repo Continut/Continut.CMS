@@ -179,9 +179,12 @@ namespace Core {
 			}
 
 			// then execute it's action
-			$controller->$contextAction();
+			$viewContent = $controller->$contextAction();
 
-			$viewContent = $controller->getView()->render();
+			// allow the action to return content, if not show it's template 
+			if (empty($viewContent)) {
+				$viewContent = $controller->getView()->render();
+			}
 
 			return $viewContent;
 		}
