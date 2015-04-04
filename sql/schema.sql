@@ -82,4 +82,59 @@ CREATE TABLE `sys_content` (
   `created_at` int(11) unsigned DEFAULT NULL COMMENT 'creation utc date',
   `modified_at` int(11) unsigned DEFAULT NULL COMMENT 'modification utc date',
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/* User sessions */
+
+CREATE TABLE `sys_user_sessions` (
+  `session_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'unique php session id',
+  `session_data` text COLLATE utf8_unicode_ci COMMENT 'session data',
+  `session_expires` int(11) unsigned NOT NULL DEFAULT '0',
+  `user_id` int(11) unsigned DEFAULT NULL,
+  `user_type` enum('FrontendUser','BackendUser') COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`session_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/* Frontend users */
+
+CREATE TABLE `sys_frontend_users` (
+  `uid` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `usergroup_id` int(11) DEFAULT NULL,
+  `is_deleted` tinyint(1) unsigned DEFAULT '0',
+  `is_active` tinyint(1) unsigned DEFAULT '1',
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/* Fronted usergroups */
+
+CREATE TABLE `sys_frontend_usergroups` (
+  `uid` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `access` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/* Backend users */
+
+CREATE TABLE `sys_backend_users` (
+  `uid` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'unique id',
+  `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'backend username',
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'backend encrypted password',
+  `is_deleted` tinyint(1) unsigned DEFAULT '0' COMMENT 'is the user deleted or not',
+  `is_active` tinyint(1) unsigned DEFAULT '1' COMMENT 'is the user active?',
+  `usergroup_id` int(10) unsigned DEFAULT NULL COMMENT 'Backend usergroup id',
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/* Backend usergroups */
+
+CREATE TABLE `sys_backend_usergroups` (
+  `uid` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'unique id',
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Backend usergroup name',
+  `access` text COLLATE utf8_unicode_ci COMMENT 'json group permissions',
+  `is_deleted` tinyint(1) DEFAULT '0' COMMENT 'is the usergroup deleted?',
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

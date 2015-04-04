@@ -30,8 +30,6 @@ namespace Core {
 		 */
 		protected $_environment = "DEVELOPMENT";
 
-		protected $databaseHandler;
-
 		/**
 		 * Returns or creates a Bootstrap instance
 		 *
@@ -151,20 +149,17 @@ namespace Core {
 		 * @throws Tools\Exception
 		 */
 		public function startSession() {
+			// Create our session handler
 			$userSession = Utility::createInstance("\\Core\\System\\Session\\UserSession");
+			session_name("ContinutCMS");
 			session_set_save_handler($userSession, true);
 			session_start();
+
+			// Create our Frontend or Backend user object
 			$user = Utility::createInstance("\\Core\\System\\Session\\User");
 
 			return $this;
 
-		}
-
-		/**
-		 * @return mixed
-		 */
-		public function getDatabaseHandler() {
-			return $this->databaseHandler;
 		}
 	}
 }
