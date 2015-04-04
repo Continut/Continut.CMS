@@ -10,6 +10,7 @@
  */
 
 namespace Core\Mvc\Model {
+	use Core\Utility;
 
 	/**
 	 * Class BaseModel
@@ -39,10 +40,14 @@ namespace Core\Mvc\Model {
 		}
 
 		public function findByUid($uid) {
-			$sth = \Core\Bootstrap::getInstance()->getDatabaseHandler()->prepare("SELECT * FROM $this->_tablename WHERE uid = :uid");
+			$sth = Utility::database()->prepare("SELECT * FROM $this->_tablename WHERE uid = :uid");
 			$sth->execute([':uid' => $uid]);
 			$sth->setFetchMode(\PDO::FETCH_CLASS, get_class($this));
 			return $sth->fetch();
+		}
+
+		public function save() {
+
 		}
 	}
 }

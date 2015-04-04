@@ -32,6 +32,11 @@ namespace Core {
 		static $request;
 
 		/**
+		 * @var \PDO Database handler
+		 */
+		static $databaseHandler;
+
+		/**
 		 * Generate an instance based on the sent class or map to an overwritten class stored in
 		 * the classMappings variable
 		 *
@@ -44,13 +49,43 @@ namespace Core {
 		public static function createInstance($classToLoad) {
 			$class = $classToLoad;
 
-			if (array_key_exists($classToLoad, self::$classMappings)) {
-				$class = self::$classMappings[$classToLoad];
+			if (array_key_exists($classToLoad, static::$classMappings)) {
+				$class = static::$classMappings[$classToLoad];
 			}
 			if (!file_exists($class.".php")) {
 				throw new Tools\Exception("The PHP class you are trying to load does not exist: " . $classToLoad, 30000001);
 			}
 			return new $class();
+		}
+
+		/**
+		 * Create a database handler and connect to the database
+		 *
+		 * @param string $type Database connection type: "mysql", "sqlite", etc...
+		 * @throws \Core\Tools\Exception
+		 */
+		public static function connectToDatabase($type = "mysql") {
+			try {
+				static::$databaseHandler = new \PDO("mysql:host=localhost;dbname=continutcms", "root", "");
+				static::$databaseHandler->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+			}
+			catch (\PDOException $e) {
+				throw new \Core\Tools\Exception("Cannot connect to the database. Please check username, password and host", 20000001);
+			}
+		}
+
+		/**
+		 * Disconnect from database
+		 */
+		public static function disconnectFromDatabase() {
+			static::$databaseHandler = NULL;
+		}
+
+		/**
+		 * @return \PDO
+		 */
+		public static function database() {
+			return static::$databaseHandler;
 		}
 
 		/**
@@ -90,10 +125,15 @@ namespace Core {
 		 * Loads all configuration files found in extensions residing in a certain folder
 		 *
 		 * @var string $path Absolute path in which to look for extensions configuration
+		 *
+		 * @throws Tools\Exception
 		 */
 		public static function loadExtensionsConfigurationFromFolder($path) {
 			$extensionFolders = static::getSubdirectories($path);
 			foreach ($extensionFolders as $folderPath => $folderName) {
+				if (!file_exists($folderPath . DS . "configuration.json")) {
+					throw new Tools\Exception("configuration.json file not found for extension " . $folderName);
+				}
 				static::$extensionsConfiguration = array_merge(static::$extensionsConfiguration, json_decode(file_get_contents($folderPath . DS . "configuration.json"), true));
 			}
 		}

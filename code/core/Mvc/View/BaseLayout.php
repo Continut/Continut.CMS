@@ -22,10 +22,29 @@ namespace Core\Mvc\View {
 		protected $_containers;
 
 		/**
+		 * @var PageView the Pageview this layout is linked to
+		 */
+		protected $_page = NULL;
+
+		/**
 		 * @param string $template Set layout template file
 		 */
 		public function setTemplate($template) {
 			$this->_template = $template;
+		}
+
+		/**
+		 * @param PageView $page Set the PageView this layout belongs to
+		 */
+		public function setPage($page) {
+			$this->_page = $page;
+		}
+
+		/**
+		 * @return PageView
+		 */
+		public function getPage() {
+			return $this->_page;
 		}
 
 		/**

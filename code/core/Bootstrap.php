@@ -73,7 +73,7 @@ namespace Core {
 		 */
 		public function loadConfiguration() {
 			// @TODO - move the load_classes method to a proper class that does Class caching
-			spl_autoload_register(array($this, "loadClasses"), TRUE, FALSE);
+			spl_autoload_register([$this, "loadClasses"], TRUE, FALSE);
 
 			// Load Local and System extensions configuration data
 			Utility::loadExtensionsConfigurationFromFolder(__ROOTCMS__ . DS . "Extensions" . DS . "Local");
@@ -112,19 +112,17 @@ namespace Core {
 		public function connectController() {
 			$request = Utility::getRequest();
 
-			$pageId = (int)$request->getArgument("pid", 0);
-			$page = Utility::createInstance("\\Core\\Mvc\\View\\Page");
-			$page = $page->findByUid($pageId);
+			/*$pageId = (int)$request->getArgument("pid", 0);
+			$page = Utility::createInstance("\\Core\\Mvc\\View\\PageView");
 			$layout = Utility::createInstance("\\Core\\Mvc\\View\\BaseLayout");
 			$layout->setTemplate(__ROOTCMS__ . "/Extensions/Local/News/Resources/Private/Frontend/Layouts/Default.layout.php");
 			$page->setLayout($layout);
 			$pageView = $page->render();
-			//$this->endOutput();
 			echo $pageView;
-			die();
+			die();*/
 
 			// Get request argument values or switch to default values if not defined
-			$contextExtension  = $request->getArgument("_extension",  "Backend");
+			$contextExtension  = $request->getArgument("_extension",  "Frontend");
 			$contextController = $request->getArgument("_controller", "Index") . "Controller";
 			$contextAction     = $request->getArgument("_action",     "index") . "Action";
 
@@ -146,9 +144,12 @@ namespace Core {
 			$controller->setRequest($request);
 
 			// then execute it's action
-			$controller->$contextAction();
+			$viewContent = $controller->$contextAction();
 
-			$viewContent = $controller->getView()->render();
+			// if no data was returned, then fetch the template linked to this action
+			if (empty($viewContent)) {
+				$viewContent = $controller->getView()->render();
+			}
 
 			echo $viewContent;
 
@@ -158,19 +159,11 @@ namespace Core {
 		/**
 		 * Create a database handler and connect to the database
 		 *
-		 * @param string $type Database connection type: "mysql", "sqlite", etc...
-		 * @throws \Core\Tools\Exception
-		 *
 		 * @return $this
 		 */
-		public function connectToDatabase($type = "mysql") {
-			try {
-				$this->databaseHandler = new \PDO("mysql:host=localhost;dbname=continutcms", "root", "");
-				$this->databaseHandler->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-			}
-			catch (\PDOException $e) {
-				throw new \Core\Tools\Exception("Cannot connect to the database. Please check username, password and host", 20000001);
-			}
+		public function connectToDatabase() {
+			Utility::connectToDatabase();
+
 			return $this;
 		}
 
@@ -179,8 +172,9 @@ namespace Core {
 		 *
 		 * @return $this
 		 */
-		public function disconnectDatabase() {
-			$this->databaseHandler = NULL;
+		public function disconnectFromDatabase() {
+			Utility::disconnectFromDatabase();
+
 			return $this;
 		}
 

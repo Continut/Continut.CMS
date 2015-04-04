@@ -1,0 +1,19 @@
+{
+  "Frontend": {
+    "version": "0.0.1",
+    "name": "Frontend rendering extension",
+    "dependencies": {
+      "sys_backend": {
+        "version": "0.0.1"
+      }
+    },
+    "author": {
+      "web": "www.pixelplant.ch",
+      "name": "Radu Mogoş",
+      "email": "radu.mogos@pixelplant.ch"
+    },
+    "folder": "Frontend",
+    "type": "System",
+    "description": "Renders all the frontend content for the CMS"
+  }
+}

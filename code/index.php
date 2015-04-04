@@ -22,4 +22,4 @@ require __ROOTCMS__ . DS . "Core" . DS . "Bootstrap.php";
 	//->startOutput()
 	->connectController()
 	//->endOutput()
-	->disconnectDatabase();
+	->disconnectFromDatabase();
