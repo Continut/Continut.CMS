@@ -35,11 +35,9 @@ namespace Core\System\Domain\Model {
 		}
 
 		/**
-		 * @param $page
-		 *
 		 * @return \Core\Mvc\View\PageViews
 		 */
-		public function getPage($page) {
+		public function getPage() {
 			return $this->_page;
 		}
 
@@ -68,6 +66,7 @@ namespace Core\System\Domain\Model {
 			$configuration = json_decode($this->getValue(), TRUE);
 
 			$container = Utility::createInstance("\\Core\\Mvc\\View\\BackendContainer");
+			$container->setLayout($this->getPage()->getLayout());
 			$container->setTemplate(
 				Utility::getResource(
 					$configuration["container"]["template"],

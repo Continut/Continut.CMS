@@ -26,41 +26,72 @@ namespace Core\Mvc\View {
 		 */
 		protected $_template;
 
-		public function __construct() {
+		/**
+		 * A container belongs to a layout
+		 *
+		 * @var BaseLayout
+		 */
+		protected $_layout;
 
+		/**
+		 * @param BaseLayout $layout
+		 */
+		public function setLayout($layout) {
+			$this->_layout = $layout;
 		}
 
+		/**
+		 * @return BaseLayout
+		 */
+		public function getLayout() {
+			return $this->_layout;
+		}
+
+		/**
+		 * Set container template name
+		 *
+		 * @param string $template
+		 */
 		public function setTemplate($template) {
 			$this->_template = $template;
 		}
 
+		/**
+		 * Render container template
+		 *
+		 * @return string
+		 */
 		public function render() {
 			ob_start();
 			include($this->_template);
 			return ob_get_clean();
 		}
 
+		/**
+		 * Get container elements
+		 *
+		 * @return array
+		 */
 		public function getElements() {
 			return $this->_elements;
 		}
 
+		/**
+		 * Add content element to container
+		 *
+		 * @param $element
+		 */
 		public function addElement($element) {
 			$this->_elements[$element->getUid()] = $element;
 		}
 
 		/**
-		 * Show all content from a container
+		 * Show all content from a child container, can be called recursively inside other containers
 		 *
 		 * @param $id Id if the container to show
 		 */
 		public function showContainerId($id) {
-			$htmlElements = "";
-			if (isset($this->_containers[$id])) {
-				foreach ($this->_containers[$id]->getElements() as $element) {
-					$htmlElements .= $element->render();
-				}
-			}
-			echo "Container $id ".$htmlElements;
+			$this->getLayout()->showContainerId($id);
 		}
 
 	}

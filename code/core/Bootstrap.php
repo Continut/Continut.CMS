@@ -61,7 +61,8 @@ namespace Core {
 		 * @param string $class Namespace + classname to load
 		 */
 		public function loadClasses($class) {
-			include $class.".php";
+			$class = __ROOTCMS__ . DS . str_replace("\\", DS, $class) . ".php";
+			include_once $class;
 		}
 
 		/**

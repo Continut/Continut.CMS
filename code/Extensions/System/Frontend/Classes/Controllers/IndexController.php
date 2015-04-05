@@ -26,13 +26,16 @@ namespace Extensions\System\Frontend\Classes\Controllers {
 			$contentCollection = Utility::createInstance("\\Extensions\\System\\Frontend\\Classes\\Domain\\Collection\\FrontendContentCollection");
 			$contentCollection->where("page_uid = :page_uid AND is_deleted = 0 AND is_visible = 1", [":page_uid" => $pageUid ] );
 
-			// create the container elements and make add their child elements insides
+			// create the container elements and add their children elements insides
 			$containers = [];
-			foreach ($contentCollection->getAll() as $element) {
-				if (!isset($containers[$element->set_uid])) {
-					$containers[$element->set_uid] = Utility::createInstance("\\Core\\Mvc\\View\\BackendContainer");
+			foreach ($contentCollection->getAll() as $content) {
+				$content->setPage($pageView);
+				// if a container does not exist, create it first
+				if (!isset($containers[$content->set_uid])) {
+					$containers[$content->set_uid] = Utility::createInstance("\\Core\\Mvc\\View\\BackendContainer");
 				}
-				$containers[$element->set_uid]->addElement($element);
+				// then attach it's elements
+				$containers[$content->set_uid]->addElement($content);
 			}
 
 			// -- this needs to be retrieved from the database, from the page settings

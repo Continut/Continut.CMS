@@ -52,7 +52,7 @@ namespace Core {
 			if (array_key_exists($classToLoad, static::$classMappings)) {
 				$class = static::$classMappings[$classToLoad];
 			}
-			if (!file_exists($class.".php")) {
+			if (!file_exists(__ROOTCMS__ . DS . $class . ".php")) {
 				throw new Tools\Exception("The PHP class you are trying to load does not exist: " . $classToLoad, 30000001);
 			}
 			return new $class();

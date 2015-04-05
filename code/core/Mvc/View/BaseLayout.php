@@ -34,6 +34,13 @@ namespace Core\Mvc\View {
 		}
 
 		/**
+		 * @return string
+		 */
+		public function getTemplate() {
+			return $this->_template;
+		}
+
+		/**
 		 * @param PageView $page Set the PageView this layout belongs to
 		 */
 		public function setPage($page) {
@@ -52,6 +59,16 @@ namespace Core\Mvc\View {
 		 */
 		public function setContainers($containers) {
 			$this->_containers = $containers;
+			/*foreach ($this->_containers as $container) {
+				$container->setLayout($this);
+			}*/
+		}
+
+		/**
+		 * @return array List of containers for this layout
+		 */
+		public function getContainers() {
+			return $this->_containers;
 		}
 
 		/**
@@ -71,7 +88,7 @@ namespace Core\Mvc\View {
 		 * @return string
 		 */
 		public function renderPartial($partial) {
-			echo "Needs to be implemented :)";
+			echo "Partials not yet implemented :)";
 		}
 
 		/**
