@@ -212,6 +212,47 @@ namespace Core {
 
 			return $resourcePath;
 		}
-	}
 
+		/**
+		 * Return a Public asset, be it a CSS file, JS file or anything inside Resources/Public
+		 * @param string $resourceName
+		 * @param string $contextExtension
+		 * @param string $additionalPath
+		 *
+		 * @return string
+		 * @throws Tools\Exception
+		 */
+		public static function getAssetPath($resourceName, $contextExtension, $additionalPath = "") {
+			$extensionType = static::getExtensionSettings($contextExtension)["type"];
+
+			$resourcePath = "Extensions/$extensionType/$contextExtension/Resources/Public/$additionalPath/$resourceName";
+
+			return $resourcePath;
+		}
+
+		/**
+		 * Inserts a key + value before a certain key in an associative array
+		 *
+		 * @param $array
+		 * @param $beforeKey
+		 * @param $newKey
+		 * @param $newValue
+		 *
+		 * @return array
+		 */
+		public static function arrayInsertBefore($array, $beforeKey, $newKey, $newValue) {
+			if (array_key_exists($beforeKey, $array)) {
+				$temp = [];
+				foreach ($array as $key => $value) {
+					if ($key === $beforeKey) {
+						$temp[$newKey] = $newValue;
+					}
+					$temp[$key] = $value;
+				}
+				return $temp;
+			}
+			return $array;
+		}
+
+	}
 }

@@ -34,6 +34,15 @@ namespace Core\System\Domain\Model {
 			$this->_page = $page;
 		}
 
+		/**
+		 * @param $page
+		 *
+		 * @return \Core\Mvc\View\PageViews
+		 */
+		public function getPage($page) {
+			return $this->_page;
+		}
+
 		public function render() {
 			$value = "";
 			switch ($this->getType()) {
