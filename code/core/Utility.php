@@ -139,13 +139,16 @@ namespace Core {
 		}
 
 		/**
-		 * Return the complete configuration of an extension
+		 * Return the complete configuration of an extension or the entire configuration of all extensions
 		 *
 		 * @param string $extensionName
 		 *
 		 * @return mixed/null
 		 */
-		public static function getExtensionSettings($extensionName) {
+		public static function getExtensionSettings($extensionName = "") {
+			if ($extensionName == "") {
+				return static::$extensionsConfiguration;
+			}
 			if (isset(static::$extensionsConfiguration[$extensionName])) {
 				return static::$extensionsConfiguration[$extensionName];
 			}
@@ -164,6 +167,8 @@ namespace Core {
 		 * @throws Tools\Exception
 		 */
 		public static function callPlugin($contextExtension, $contextController, $contextAction, $contextSettings = []) {
+			$templateAction     = $contextAction;
+			$templateController = $contextController;
 			$contextController .= "Controller";
 			$contextAction     .= "Action";
 
@@ -180,6 +185,10 @@ namespace Core {
 
 			// then execute it's action
 			$viewContent = $controller->$contextAction();
+
+			$contextScope = $controller->getScope();
+			$templateToLoad = __ROOTCMS__ . "/Extensions/$extensionType/$contextExtension/Resources/Private/$contextScope/Templates/$templateController/$templateAction.template.php";
+			$controller->getView()->setTemplate($templateToLoad);
 
 			// allow the action to return content, if not show it's template 
 			if (empty($viewContent)) {

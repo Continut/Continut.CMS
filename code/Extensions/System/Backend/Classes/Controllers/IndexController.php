@@ -11,13 +11,49 @@
 
 namespace Extensions\System\Backend\Classes\Controllers {
 	use \Core\Mvc\Controller\BackendController;
+	use Core\Utility;
 
 	/**
 	 * Backend main controller
 	 * @package System\Backend\Classes\Controllers
 	 */
 	class IndexController extends BackendController {
+
 		public function indexAction() {
+			$layout = Utility::createInstance("\\Core\\System\\View\\BackendLayout");
+			$layout->setTemplate(__ROOTCMS__ . "/Extensions/System/Backend/Resources/Private/Backend/Layouts/Default.layout.php");
+
+			$pageView = Utility::createInstance("\\Core\\System\\View\\BackendPageView");
+
+			$pageView->setLayout($layout);
+			$pageView->setTitle("Continut CMS Backend");
+
+			return $pageView->render();
+		}
+
+		/**
+		 * Render the Backend mainmenu based on configuration done in the configuration.json file of every extension
+		 * The backend menu items and submenu items are configured inside the "backend" key
+		 */
+		public function mainmenuAction() {
+			$allExtensionsSettings = Utility::getExtensionSettings();
+
+			$mainMenu = [];
+			$secondaryMenu = [];
+
+			foreach ($allExtensionsSettings as $extensionName => $configuration) {
+				if (isset($configuration["backend"])) {
+					if (isset($configuration["backend"]["mainMenu"])) {
+						$mainMenu = array_merge_recursive($mainMenu, $configuration["backend"]["mainMenu"]);
+					}
+					if (isset($configuration["backend"]["secondaryMenu"])) {
+						$secondaryMenu = array_merge_recursive($secondaryMenu, $configuration["backend"]["secondaryMenu"]);
+					}
+				}
+			}
+
+			$this->getView()->assign("mainMenu", $mainMenu);
+			$this->getView()->assign("secondaryMenu", $secondaryMenu);
 		}
 	}
 }

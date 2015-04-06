@@ -9,6 +9,56 @@
     },
     "folder": "Backend",
     "type": "System",
-    "description": "Adds most of the Backend functionality of the CMS"
+    "description": "Adds most of the Backend functionality of the CMS",
+    "backend": {
+      "mainMenu": {
+        "module_web": {
+          "label": "Web",
+          "icon": "fa fa-fw fa-globe",
+          "items": {
+            "page": {
+              "label": "Page",
+              "icon": "fa fa-fw fa-file-o",
+              "extension": "Backend",
+              "controller": "Backend/Page",
+              "action": "index"
+            },
+            "divider": "",
+            "recovery": {
+              "label": "History / Recovery",
+              "icon": "fa fa-fw fa-recycle",
+              "extension": "Backend",
+              "controller": "Backend/Recovery",
+              "action": "index"
+            }
+          }
+        },
+        "module_media": {
+          "label": "Media / Files",
+          "icon": "fa fa-fw fa-picture-o"
+        }
+      },
+      "secondaryMenu": {
+        "module_cache": {
+          "label": "Cache",
+          "icon": "fa fa-fw fa-hdd-o",
+          "items": {
+            "cache_content": {
+              "label": "Clear content cache",
+              "icon": "fa fa-fw fa-trash-o text-danger"
+            },
+            "cache_configuration": {
+              "label": "Clear configuration cache",
+              "icon": "fa fa-fw fa-ban text-danger"
+            },
+            "divider": "",
+            "cache_memcache": {
+              "label": "Clear memcache cache",
+              "icon": "fa fa-fw fa-angle-double-right text-danger"
+            }
+          }
+        }
+      }
+    }
   }
 }

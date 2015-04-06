@@ -1,4 +1,10 @@
 <?php
+$this->getPage()->addCssAsset(
+	[ "identifier" => "bootstrap",
+		"extension"  => "News",
+		"file"       => "bootstrap.css"
+	]
+);
 $this->getPage()->addJsAsset(
 	[
 		"identifier" => "bootstrap",
@@ -6,13 +12,7 @@ $this->getPage()->addJsAsset(
 		"file"       => "bootstrap.js"
 	]
 );
-$this->getPage()->addCssAsset(
-	[
-		"identifier" => "bootstrap",
-		"extension"  => "News",
-		"file"       => "bootstrap.css"
-	]
-); ?>
+?>
 
 <div class="container">
 	<div class="row">

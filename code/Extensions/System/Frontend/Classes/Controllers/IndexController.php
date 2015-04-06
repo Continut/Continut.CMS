@@ -20,7 +20,7 @@ namespace Extensions\System\Frontend\Classes\Controllers {
 			$pageUid = (int)$this->getRequest()->getArgument("pid", 1);
 
 			// Load the page model from the database
-			$page = Utility::createInstance("\\Extensions\\System\\Frontend\\Classes\\Domain\\Collection\\FrontendPageCollection")
+			$pageModel = Utility::createInstance("\\Extensions\\System\\Frontend\\Classes\\Domain\\Collection\\FrontendPageCollection")
 				->where("uid = :uid", ["uid" => $pageUid])
 				->getFirst();
 
@@ -53,8 +53,8 @@ namespace Extensions\System\Frontend\Classes\Controllers {
 			}
 
 			// -- this needs to be retrieved from the database, from the page settings
-			$layout = Utility::createInstance("\\Core\\Mvc\\View\\BaseLayout");
-			$layout->setTemplate(__ROOTCMS__ . $page->getLayout());
+			$layout = Utility::createInstance("\\Core\\System\\View\\FrontendLayout");
+			$layout->setTemplate(__ROOTCMS__ . $pageModel->getLayout());
 			$pageView->setLayout($layout);
 			// -- END
 
@@ -62,7 +62,7 @@ namespace Extensions\System\Frontend\Classes\Controllers {
 			//$pageView->getLayout()->setContainers($firstContainers, $containers);
 			$pageView->getLayout()->setElements($tree);
 
-			$pageView->setTitle($page->getTitle());
+			$pageView->setTitle($pageModel->getTitle());
 
 			// dump it all on screen
 			return $pageView->render();

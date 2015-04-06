@@ -22,27 +22,6 @@ namespace Core\Mvc\View {
 		protected $_page = NULL;
 
 		/**
-		 * Tree of elements to render by this layout
-		 *
-		 * @var mixed
-		 */
-		protected $_elements;
-
-		/**
-		 * @return mixed
-		 */
-		public function getElements() {
-			return $this->_elements;
-		}
-
-		/**
-		 * @param $elements
-		 */
-		public function setElements($elements) {
-			$this->_elements = $elements;
-		}
-
-		/**
 		 * Set layout template file
 		 *
 		 * @param string $template
@@ -92,25 +71,6 @@ namespace Core\Mvc\View {
 		 */
 		public function renderPartial($partial) {
 			echo "Partials not yet implemented :)";
-		}
-
-		/**
-		 * Show all content from a container
-		 *
-		 * @param $id Id if the container to show
-		 */
-		public function showContainerColumn($id) {
-			if (empty($this->_elements))
-				return;
-
-			$htmlElements = "";
-
-			foreach ($this->getElements() as $element) {
-				if ($element->getColumn() == $id) {
-					$htmlElements .= $element->render($element->children);
-				}
-			}
-			echo $htmlElements;
 		}
 	}
 

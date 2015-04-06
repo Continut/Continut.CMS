@@ -143,6 +143,15 @@ namespace Core\Mvc\Controller {
 		}
 
 		/**
+		 * Controller scope
+		 *
+		 * @return string
+		 */
+		public function getScope() {
+			return $this->_scope;
+		}
+
+		/**
 		 * Deals with final rendering, once the template is fetched and parsed
 		 *
 		 * @return string

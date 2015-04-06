@@ -91,7 +91,7 @@ namespace Core\Mvc\View {
 				extract($this->_variables);
 			}
 			if (!file_exists($this->_template)) {
-				throw new \Core\Tools\Exception("The specified template file does not exist", 10000001);
+				throw new \Core\Tools\Exception("The specified template file does not exist " . $this->_template, 10000001);
 			}
 			ob_start();
 			include($this->_template);

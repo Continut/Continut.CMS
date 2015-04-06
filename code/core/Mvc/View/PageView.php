@@ -18,14 +18,9 @@ namespace Core\Mvc\View {
 		protected $_layout;
 
 		/**
-		 * @var array List of JavaScript assets to include
+		 * @var array List of Css/JavaScript assets to include
 		 */
-		protected $_jsAssets;
-
-		/**
-		 * @var array List of Css assets to include
-		 */
-		protected $_cssAssets;
+		protected $_assets;
 
 		/**
 		 * @var string Page title
@@ -74,26 +69,19 @@ HER;
 		protected function _renderHeader() {
 			$header = "";
 
-			if ($this->_cssAssets) {
-				foreach ($this->_cssAssets as $css) {
-					$header .= $css;
-				}
-			}
-			if ($this->_jsAssets) {
-				foreach ($this->_jsAssets as $js) {
-					$header .= $js;
+			if ($this->_assets) {
+				foreach ($this->_assets as $assetType => $assetValues) {
+					foreach ($assetValues as $asset) {
+						$header .= $asset . "\n";
+					}
 				}
 			}
 
 			return $header;
 		}
 
-		public function getJsAssets() {
-			return $this->_jsAssets;
-		}
-
-		public function getCssAssets() {
-			return $this->_cssAssets;
+		public function getAssets() {
+			return $this->_assets;
 		}
 
 		/**
@@ -108,9 +96,9 @@ HER;
 			$assetPath = '<script type="text/javascript" src="' . Utility::getAssetPath($configuration["file"], $configuration["extension"], "JavaScript") . '"></script>';
 
 			if (isset($configuration["before"])) {
-				$this->_jsAssets = Utility::arrayInsertBefore($this->_jsAssets, $configuration["before"], $id, $assetPath);
+				$this->_assets["js"] = Utility::arrayInsertBefore($this->_assets["js"], $configuration["before"], $id, $assetPath);
 			} else {
-				$this->_jsAssets[$id] = $assetPath;
+				$this->_assets["js"][$id] = $assetPath;
 			}
 
 			return $this;
@@ -124,7 +112,7 @@ HER;
 		 * @return $this
 		 */
 		public function addCssAsset($configuration) {
-			$this->_cssAssets[$configuration["identifier"]] = '<link rel="stylesheet" type="text/css" href="' . Utility::getAssetPath($configuration["file"], $configuration["extension"], "Css") . '" />';
+			$this->_assets["css"][$configuration["identifier"]] = '<link rel="stylesheet" type="text/css" href="' . Utility::getAssetPath($configuration["file"], $configuration["extension"], "Css") . '" />';
 
 			return $this;
 		}
