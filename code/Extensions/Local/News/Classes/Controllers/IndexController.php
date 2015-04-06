@@ -19,8 +19,6 @@ namespace Extensions\Local\News\Classes\Controllers {
 		}
 
 		public function showAction() {
-			$page = new \Extensions\Local\News\Classes\Domain\Model\Page();
-			$page = $page->findByUid(2);
 			$this->templateStorage = "Resources/Private";
 			$this->getView()->setTemplate(__ROOTCMS__ . DS . "Extensions" . DS . $this->getExtensionType() . DS . $this->getExtension() . DS . $this->templateStorage . DS ."Frontend/Templates/Index" . DS . "Show.template.php");
 		}

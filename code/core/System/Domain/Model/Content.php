@@ -18,6 +18,8 @@ namespace Core\System\Domain\Model {
 
 		protected $type;
 
+		protected $parent_uid;
+
 		/**
 		 * @var \Core\Mvc\View\PageView Link to the parent PageView
 		 */
@@ -25,6 +27,32 @@ namespace Core\System\Domain\Model {
 
 		public function __construct() {
 			$this->_tablename = "sys_content";
+		}
+
+		/**
+		 * @return int Get the parent id of this content element
+		 */
+		public function getParentUid() {
+			return $this->parent_uid;
+		}
+
+		/**
+		 * @return int Get id of column where content is stored
+		 */
+		public function getColumn() {
+			return $this->column;
+		}
+
+		public function getTitle() {
+			return $this->title;
+		}
+
+		public function getType() {
+			return $this->type;
+		}
+
+		public function getValue() {
+			return $this->value;
 		}
 
 		/**
@@ -41,16 +69,43 @@ namespace Core\System\Domain\Model {
 			return $this->_page;
 		}
 
-		public function render() {
+		/**
+		 * Render the current element and optinally pass the children elements to render for containers
+		 *
+		 * @param $elements Children elements to render, only for containers
+		 *
+		 * @return mixed|string
+		 */
+		public function render($elements) {
 			$value = "";
 			switch ($this->getType()) {
-				case "content"   : $value = $this->getValue(); break;
+				case "content"   : $value = $this->getContentValue(); break;
 				case "plugin"    : $value = $this->getPluginValue(); break;
-				case "container" : $value = $this->getContainerValue(); break;
+				// container is a special case and it can render elements recursively
+				case "container" : $value = $this->getContainerValue($elements); break;
 			}
 			return $value;
 		}
 
+		/**
+		 * Outputs "regular" content, of type "content" in the database
+		 *
+		 * @return string
+		 */
+		public function getContentValue() {
+			$title = $this->getTitle();
+			if (!empty($title)) {
+				$title = "<h2>$title</h2>";
+			}
+			return $title.$this->getValue();
+		}
+
+		/**
+		 * Outputs "plugin" content
+		 *
+		 * @return string The output of the plugin call
+		 * @throws \Core\Tools\Exception
+		 */
 		public function getPluginValue() {
 			$configuration = json_decode($this->getValue(), TRUE);
 
@@ -62,11 +117,20 @@ namespace Core\System\Domain\Model {
 				);
 		}
 
-		public function getContainerValue() {
+		/**
+		 * Outputs "container" content
+		 *
+		 * @param $elements Chidren elements to render
+		 *
+		 * @return mixed
+		 * @throws \Core\Tools\Exception
+		 */
+		public function getContainerValue($elements) {
 			$configuration = json_decode($this->getValue(), TRUE);
 
 			$container = Utility::createInstance("\\Core\\Mvc\\View\\BackendContainer");
-			$container->setLayout($this->getPage()->getLayout());
+			//$container->setLayout($this->getPage()->getLayout());
+			$container->setElements($elements);
 			$container->setTemplate(
 				Utility::getResource(
 					$configuration["container"]["template"],
@@ -76,14 +140,6 @@ namespace Core\System\Domain\Model {
 					)
 			);
 			return $container->render();
-		}
-
-		public function getType() {
-			return $this->type;
-		}
-
-		public function getValue() {
-			return $this->value;
 		}
 	}
 

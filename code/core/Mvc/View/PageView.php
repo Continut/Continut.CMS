@@ -74,11 +74,15 @@ HER;
 		protected function _renderHeader() {
 			$header = "";
 
-			foreach ($this->getCssAssets() as $css) {
-				$header .= $css;
+			if ($this->_cssAssets) {
+				foreach ($this->_cssAssets as $css) {
+					$header .= $css;
+				}
 			}
-			foreach ($this->getJsAssets() as $js) {
-				$header .= $js;
+			if ($this->_jsAssets) {
+				foreach ($this->_jsAssets as $js) {
+					$header .= $js;
+				}
 			}
 
 			return $header;

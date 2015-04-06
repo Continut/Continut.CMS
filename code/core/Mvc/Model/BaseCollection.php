@@ -28,8 +28,25 @@ namespace Core\Mvc\Model {
 		 */
 		protected $_elements = [];
 
+		/**
+		 * Get all elements from the collection
+		 *
+		 * @return array
+		 */
 		public function getAll() {
 			return $this->_elements;
+		}
+
+		/**
+		 * Get first element from the collection
+		 *
+		 * @return null
+		 */
+		public function getFirst() {
+			if (!empty($this->_elements)) {
+				return $this->_elements[0];
+			}
+			return NULL;
 		}
 
 		public function add($element) {
@@ -53,7 +70,7 @@ namespace Core\Mvc\Model {
 		 * @param $conditions
 		 * @param $values
 		 *
-		 * @return array List of elements returned by where
+		 * @return $this
 		 */
 		public function where($conditions, $values) {
 			$sth = Utility::database()->prepare("SELECT * FROM $this->_tablename WHERE " . $conditions);
@@ -63,7 +80,7 @@ namespace Core\Mvc\Model {
 				$this->add($element);
 			}
 
-			return $this->_elements;
+			return $this;
 		}
 
 		/**

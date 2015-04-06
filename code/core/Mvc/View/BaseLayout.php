@@ -17,17 +17,35 @@ namespace Core\Mvc\View {
 		protected $_template;
 
 		/**
-		 * @var array List of containers defined for this layout
-		 */
-		protected $_containers;
-
-		/**
 		 * @var PageView the Pageview this layout is linked to
 		 */
 		protected $_page = NULL;
 
 		/**
-		 * @param string $template Set layout template file
+		 * Tree of elements to render by this layout
+		 *
+		 * @var mixed
+		 */
+		protected $_elements;
+
+		/**
+		 * @return mixed
+		 */
+		public function getElements() {
+			return $this->_elements;
+		}
+
+		/**
+		 * @param $elements
+		 */
+		public function setElements($elements) {
+			$this->_elements = $elements;
+		}
+
+		/**
+		 * Set layout template file
+		 *
+		 * @param string $template
 		 */
 		public function setTemplate($template) {
 			$this->_template = $template;
@@ -41,7 +59,9 @@ namespace Core\Mvc\View {
 		}
 
 		/**
-		 * @param PageView $page Set the PageView this layout belongs to
+		 * Set the PageView this layout belongs to
+		 *
+		 * @param PageView $page
 		 */
 		public function setPage($page) {
 			$this->_page = $page;
@@ -52,23 +72,6 @@ namespace Core\Mvc\View {
 		 */
 		public function getPage() {
 			return $this->_page;
-		}
-
-		/**
-		 * @param array $containers List of BackendContainer objects
-		 */
-		public function setContainers($containers) {
-			$this->_containers = $containers;
-			/*foreach ($this->_containers as $container) {
-				$container->setLayout($this);
-			}*/
-		}
-
-		/**
-		 * @return array List of containers for this layout
-		 */
-		public function getContainers() {
-			return $this->_containers;
 		}
 
 		/**
@@ -96,14 +99,18 @@ namespace Core\Mvc\View {
 		 *
 		 * @param $id Id if the container to show
 		 */
-		public function showContainerId($id) {
+		public function showContainerColumn($id) {
+			if (empty($this->_elements))
+				return;
+
 			$htmlElements = "";
-			if (isset($this->_containers[$id])) {
-				foreach ($this->_containers[$id]->getElements() as $element) {
-					$htmlElements .= $element->render();
+
+			foreach ($this->getElements() as $element) {
+				if ($element->getColumn() == $id) {
+					$htmlElements .= $element->render($element->children);
 				}
 			}
-			echo "Container $id ".$htmlElements;
+			echo $htmlElements;
 		}
 	}
 

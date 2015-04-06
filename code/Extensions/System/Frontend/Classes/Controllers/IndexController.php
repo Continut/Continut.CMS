@@ -19,6 +19,11 @@ namespace Extensions\System\Frontend\Classes\Controllers {
 			// get page id request
 			$pageUid = (int)$this->getRequest()->getArgument("pid", 1);
 
+			// Load the page model from the database
+			$page = Utility::createInstance("\\Extensions\\System\\Frontend\\Classes\\Domain\\Collection\\FrontendPageCollection")
+				->where("uid = :uid", ["uid" => $pageUid])
+				->getFirst();
+
 			// load the pageview renderer
 			$pageView = Utility::createInstance("\\Core\\Mvc\\View\\PageView");
 
@@ -26,26 +31,38 @@ namespace Extensions\System\Frontend\Classes\Controllers {
 			$contentCollection = Utility::createInstance("\\Extensions\\System\\Frontend\\Classes\\Domain\\Collection\\FrontendContentCollection");
 			$contentCollection->where("page_uid = :page_uid AND is_deleted = 0 AND is_visible = 1", [":page_uid" => $pageUid ] );
 
-			// create the container elements and add their children elements insides
-			$containers = [];
-			foreach ($contentCollection->getAll() as $content) {
-				$content->setPage($pageView);
-				// if a container does not exist, create it first
-				if (!isset($containers[$content->set_uid])) {
-					$containers[$content->set_uid] = Utility::createInstance("\\Core\\Mvc\\View\\BackendContainer");
+			// Build content tree
+			$children = [];
+
+			foreach($contentCollection->getAll() as $item) {
+				$item->setPage($pageView);
+				$children[ $item->getParentUid() ][] = $item;
+			}
+
+			foreach($contentCollection->getAll() as $item) {
+				if (isset($children[$item->getUid()])) {
+					$item->children = $children[ $item->getUid() ];
+				} else {
+					$item->children = [];
 				}
-				// then attach it's elements
-				$containers[$content->set_uid]->addElement($content);
+			}
+
+			$tree = NULL;
+			if (isset($children[0])) {
+				$tree = $children[0];
 			}
 
 			// -- this needs to be retrieved from the database, from the page settings
 			$layout = Utility::createInstance("\\Core\\Mvc\\View\\BaseLayout");
-			$layout->setTemplate(__ROOTCMS__ . "/Extensions/Local/News/Resources/Private/Frontend/Layouts/Default.layout.php");
+			$layout->setTemplate(__ROOTCMS__ . $page->getLayout());
 			$pageView->setLayout($layout);
 			// -- END
 
 			// send the containers to our layout for rendering
-			$pageView->getLayout()->setContainers($containers);
+			//$pageView->getLayout()->setContainers($firstContainers, $containers);
+			$pageView->getLayout()->setElements($tree);
+
+			$pageView->setTitle($page->getTitle());
 
 			// dump it all on screen
 			return $pageView->render();

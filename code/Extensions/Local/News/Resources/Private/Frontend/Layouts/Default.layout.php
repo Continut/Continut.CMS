@@ -20,16 +20,35 @@ $this->getPage()->addCssAsset(
 			<?php $this->renderPartial('Header/Nav'); ?>
 		</div>
 	</div>
-	<div class="well">
-		<?php $this->showContainerId(1); ?>
-	</div>
+		<div class="panel panel-danger">
+			<div class="panel-heading">
+				<div class="panel-title">HEADER</div>
+			</div>
+			<div class="panel-body">
+				<?php $this->showContainerColumn(1); ?>
+			</div>
+		</div>
 
 	<div style="row">
 		<div class="col-sm-6">
-			<?php $this->showContainerId(2); ?>
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<div class="panel-title">LEFT</div>
+				</div>
+				<div class="panel-body">
+					<?php $this->showContainerColumn(2); ?>
+				</div>
+			</div>
 		</div>
-		<div class="col-sm-6 well well-sm">
-			<?php $this->showContainerId(3); ?>
+		<div class="col-sm-6">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<div class="panel-title">RIGHT</div>
+				</div>
+				<div class="panel-body">
+					<?php $this->showContainerColumn(3); ?>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -49,5 +68,3 @@ $this->getPage()->addCssAsset(
 		"before"     => "bootstrap"
 	]
 ); ?>
-
-<?php $this->getPage()->setTitle("Ludicrous CMS"); ?>

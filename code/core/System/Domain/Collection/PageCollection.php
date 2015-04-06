@@ -15,7 +15,7 @@ namespace Core\System\Domain\Collection {
 	class PageCollection extends BaseCollection{
 		public function __construct() {
 			$this->_tablename = "sys_pages";
-			$this->_elementClass = "\\Extensions\\Local\\News\\Classes\\Domain\\Model\\Page";
+			$this->_elementClass = "\\Core\\System\\Domain\\Model\\Page";
 		}
 	}
 

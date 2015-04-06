@@ -2,19 +2,44 @@
   "News": {
     "version": "0.0.1",
     "name": "News extension",
-    "dependencies": {
-      "sys_backend": {
-        "version": "0.0.1"
-      }
-    },
+    "folder": "News",
+    "type": "Local",
+    "description": "Adds news functionality to the CMS",
     "author": {
       "web": "www.pixelplant.ch",
       "name": "Radu Mogoş",
       "email": "radu.mogos@pixelplant.ch"
     },
-    "folder": "News",
-    "type": "Local",
-    "description": "Adds news functionality to the CMS",
+    "dependencies": {
+      "sys_backend": {
+        "version": "0.0.1"
+      }
+    },
+    "backend": {
+      "mainmenu": {
+        "extension_news": {
+          "label": "News",
+          "items": {
+            "show_all": {
+              "label": "View all news",
+              "controller": "Backend/News",
+              "action": "showNews"
+            },
+            "add_new": {
+              "label": "Create new news",
+              "controller": "Backend/News",
+              "action": "createNews"
+            },
+            "empty": "separator",
+            "show_categories": {
+              "label": "View all news categories",
+              "controller": "Backend/News",
+              "action": "showCategories"
+            }
+          }
+        }
+      }
+    },
     "plugins": {
       "news": {
         "label": "News plugin",

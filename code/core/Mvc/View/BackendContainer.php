@@ -12,14 +12,9 @@ namespace Core\Mvc\View {
 
 	class BackendContainer {
 		/**
-		 * @var array List of elements added to container
+		 * @var array List of children elements added to container
 		 */
 		protected $_elements = [];
-
-		/**
-		 * @var array A container can have multiple subcontainers inside it
-		 */
-		protected $_containers = [];
 
 		/**
 		 * @var string Container template, if any
@@ -34,6 +29,11 @@ namespace Core\Mvc\View {
 		protected $_layout;
 
 		/**
+		 * @var string Container title
+		 */
+		protected $_title;
+
+		/**
 		 * @param BaseLayout $layout
 		 */
 		public function setLayout($layout) {
@@ -45,6 +45,14 @@ namespace Core\Mvc\View {
 		 */
 		public function getLayout() {
 			return $this->_layout;
+		}
+
+		public function setTitle($title) {
+			$this->_title = $title;
+		}
+
+		public function getTitle() {
+			return $this->_title;
 		}
 
 		/**
@@ -77,6 +85,15 @@ namespace Core\Mvc\View {
 		}
 
 		/**
+		 * Assign the list of elements that this container must render
+		 *
+		 * @param $elements array
+		 */
+		public function setElements($elements) {
+			$this->_elements = $elements;
+		}
+
+		/**
 		 * Add content element to container
 		 *
 		 * @param $element
@@ -90,8 +107,16 @@ namespace Core\Mvc\View {
 		 *
 		 * @param $id Id if the container to show
 		 */
-		public function showContainerId($id) {
-			$this->getLayout()->showContainerId($id);
+		public function showContainerColumn($id) {
+			$htmlElements = "";
+
+			foreach ($this->getElements() as $element) {
+				if ($element->getColumn() == $id) {
+					$htmlElements .= $element->render($element->children);
+				}
+			}
+
+			echo $htmlElements;
 		}
 
 	}
