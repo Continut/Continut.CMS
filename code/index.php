@@ -21,8 +21,8 @@ function convert($size)
 $memory_initial = memory_get_usage(false);
 $time_initial = microtime(true);
 
-define ("__ROOTCMS__", __DIR__);
-define ("DS", DIRECTORY_SEPARATOR);
+define("__ROOTCMS__", __DIR__);
+define("DS", DIRECTORY_SEPARATOR);
 
 require __ROOTCMS__ . DS . "Core" . DS . "Bootstrap.php";
 

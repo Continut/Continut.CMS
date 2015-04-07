@@ -1,17 +1,7 @@
 <?php
-$this->getPage()->addCssAsset(
-	[ "identifier" => "bootstrap",
-		"extension"  => "News",
-		"file"       => "bootstrap.css"
-	]
-);
-$this->getPage()->addJsAsset(
-	[
-		"identifier" => "bootstrap",
-		"extension"  => "News",
-		"file"       => "bootstrap.js"
-	]
-);
+$this->getPage()
+	->addCssAsset([ "identifier" => "bootstrap", "extension" => "News", "file" => "bootstrap.css" ])
+	->addJsAsset([ "identifier" => "bootstrap", "extension" => "News", "file" => "bootstrap.js" ]);
 ?>
 
 <div class="container">
@@ -53,18 +43,6 @@ $this->getPage()->addJsAsset(
 	</div>
 </div>
 
-<?php $this->getPage()->addCssAsset(
-	[
-		"identifier" => "bootstrap-theme",
-		"extension"  => "News",
-		"file"       => "bootstrap-theme.css"
-	]
-); ?>
-<?php $this->getPage()->addJsAsset(
-	[
-		"identifier" => "jquery",
-		"extension"  => "News",
-		"file"       => "jquery.js",
-		"before"     => "bootstrap"
-	]
-); ?>
+<?php $this->getPage()
+	->addCssAsset([ "identifier" => "bootstrap-theme", "extension"  => "News", "file" => "bootstrap-theme.css" ])
+	->addJsAsset([ "identifier" => "jquery", "extension"  => "News", "file" => "jquery.js", "before" => "bootstrap" ]); ?>

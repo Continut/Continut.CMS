@@ -34,7 +34,12 @@ namespace Core {
 		/**
 		 * @var \PDO Database handler
 		 */
-		static $databaseHandler;
+		static $databaseHandler = NULL;
+
+		/**
+		 * @var \Core\System\Cache\FileCache
+		 */
+		static $cacheHandler = NULL;
 
 		/**
 		 * Generate an instance based on the sent class or map to an overwritten class stored in
@@ -211,9 +216,9 @@ namespace Core {
 		public static function getResource($resourceName, $contextExtension, $resourcePlacement = "Frontend", $resourceType = "Template") {
 			$extensionType = static::getExtensionSettings($contextExtension)["type"];
 
-			$extension = "." . strtolower($resourceType) . ".php";
+			$resourceExtension = "." . strtolower($resourceType) . ".php";
 			$resourceType = $resourceType . "s";
-			$resourcePath = __ROOTCMS__ . "/Extensions/$extensionType/$contextExtension/Resources/Private/$resourcePlacement/$resourceType/$resourceName$extension";
+			$resourcePath = __ROOTCMS__ . "/Extensions/$extensionType/$contextExtension/Resources/Private/$resourcePlacement/$resourceType/$resourceName$resourceExtension";
 
 			if (!file_exists($resourcePath)) {
 				throw new \Core\Tools\Exception("Resource cannot be found: " . $resourcePath);
@@ -263,5 +268,17 @@ namespace Core {
 			return $array;
 		}
 
+		/**
+		 * Returns the current cache handler
+		 *
+		 * @return \Core\System\Cache\CacheInterface
+		 * @throws Tools\Exception
+		 */
+		public static function getCache() {
+			if (static::$cacheHandler === NULL) {
+				static::$cacheHandler = static::createInstance("\\Core\\System\\Cache\\FileCache");
+			}
+			return static::$cacheHandler;
+		}
 	}
 }
