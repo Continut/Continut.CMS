@@ -13,8 +13,14 @@ namespace Core\System\View {
 	use Core\Mvc\View\BaseLayout;
 
 	class BackendLayout extends BaseLayout {
+		protected $_content = NULL;
+
 		public function showContent() {
-			return "";
+			return $this->_content;
+		}
+
+		public function setContent($content) {
+			$this->_content = $content;
 		}
 	}
 

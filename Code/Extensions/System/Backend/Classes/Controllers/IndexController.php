@@ -19,16 +19,25 @@ namespace Extensions\System\Backend\Classes\Controllers {
 	 */
 	class IndexController extends BackendController {
 
-		public function indexAction() {
-			$layout = Utility::createInstance("\\Core\\System\\View\\BackendLayout");
+		public function dashboardAction() {
+			return "dashboard";
+		}
+
+		public function pageAction() {
+			$domainsCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\DomainCollection");
+			$domainsCollection->where("is_visible = :is_visible", ["is_visible" => 1]);
+
+			$this->getView()->assign("domains", $domainsCollection);
+			/*$layout = Utility::createInstance("\\Core\\System\\View\\BackendLayout");
 			$layout->setTemplate(__ROOTCMS__ . "/Extensions/System/Backend/Resources/Private/Backend/Layouts/Default.layout.php");
 
 			$pageView = Utility::createInstance("\\Core\\System\\View\\BackendPageView");
 
 			$pageView->setLayout($layout);
+
 			$pageView->setTitle("Continut CMS Backend");
 
-			return $pageView->render();
+			return $pageView->render();*/
 		}
 
 		/**

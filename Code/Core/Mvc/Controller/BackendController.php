@@ -11,6 +11,7 @@
 
 namespace Core\Mvc\Controller {
 	use \Core\Mvc\Controller\ActionController;
+	use Core\Utility;
 
 	/**
 	 * Backend Controller base class

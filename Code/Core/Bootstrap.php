@@ -121,6 +121,30 @@ namespace Core {
 			return $this;
 		}
 
+		public function connectBackendController() {
+			$layout = Utility::createInstance("\\Core\\System\\View\\BackendLayout");
+			$layout->setTemplate(__ROOTCMS__ . "/Extensions/System/Backend/Resources/Private/Backend/Layouts/Default.layout.php");
+
+			$pageView = Utility::createInstance("\\Core\\System\\View\\BackendPageView");
+
+			$pageView->setLayout($layout);
+
+			$request = Utility::getRequest();
+
+			// Get request argument values or switch to default values if not defined
+			$contextExtension  = $request->getArgument("_extension",  "Backend");
+			$contextController = $request->getArgument("_controller", "Index");
+			$contextAction     = $request->getArgument("_action",     "dashboard");
+
+			$content = Utility::callPlugin($contextExtension, $contextController, $contextAction);
+
+			$pageView->getLayout()->setContent($content);
+
+			echo $pageView->render();
+
+			return $this;
+		}
+
 		/**
 		 * Create a database handler and connect to the database
 		 *

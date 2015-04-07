@@ -95,6 +95,15 @@ namespace Core\Mvc\Model {
 
 			return $this;
 		}
+
+		/**
+		 * How many elements do we have in the collection?
+		 *
+		 * @return int
+		 */
+		public function count() {
+			return sizeof($this->_elements);
+		}
 	}
 
 }
