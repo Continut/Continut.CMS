@@ -138,3 +138,15 @@ CREATE TABLE `sys_backend_usergroups` (
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT 'is the usergroup deleted?',
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/* Cache table */
+
+CREATE TABLE `sys_cache` (
+  `uid` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'page',
+  `value` text COLLATE utf8_unicode_ci,
+  `key` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `expires_at` int(11) unsigned DEFAULT NULL,
+  `record_uid` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
