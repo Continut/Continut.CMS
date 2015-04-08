@@ -24,12 +24,14 @@
             "show_all": {
               "label": "View all news",
               "icon": "fa fa-fw fa-bars",
+              "extension": "News",
               "controller": "Backend/News",
               "action": "showNews"
             },
             "add_new": {
               "label": "Create new news",
               "icon": "fa fa-fw fa-plus",
+              "extension": "News",
               "controller": "Backend/News",
               "action": "createNews"
             },
@@ -37,6 +39,7 @@
             "show_categories": {
               "label": "View all news categories",
               "icon": "fa fa-fw fa-cubes",
+              "extension": "News",
               "controller": "Backend/News",
               "action": "showCategories"
             }
@@ -46,7 +49,10 @@
           "items": {
             "news_media": {
               "label": "From extension :)",
-              "icon": "fa fa-fw fa-eye"
+              "icon": "fa fa-fw fa-eye",
+              "extension": "News",
+              "controller": "Index",
+              "action": "index"
             }
           }
         }

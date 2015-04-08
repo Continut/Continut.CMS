@@ -20,8 +20,8 @@
               "label": "Page",
               "icon": "fa fa-fw fa-file-o",
               "extension": "Backend",
-              "controller": "Backend/Page",
-              "action": "index"
+              "controller": "Index",
+              "action": "page"
             },
             "divider": "",
             "recovery": {

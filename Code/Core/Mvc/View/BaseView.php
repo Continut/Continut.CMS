@@ -103,7 +103,10 @@ namespace Core\Mvc\View {
 		}
 
 		public function renderPartial($partialName) {
+		}
 
+		public function link($data) {
+			return "admin.php?" . http_build_query($data);
 		}
 	}
 }
