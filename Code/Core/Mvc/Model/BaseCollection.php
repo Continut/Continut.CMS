@@ -72,7 +72,7 @@ namespace Core\Mvc\Model {
 		 *
 		 * @return $this
 		 */
-		public function where($conditions, $values) {
+		public function where($conditions, $values = []) {
 			$sth = Utility::database()->prepare("SELECT * FROM $this->_tablename WHERE " . $conditions);
 			$sth->execute($values);
 			$sth->setFetchMode(\PDO::FETCH_CLASS, $this->_elementClass);

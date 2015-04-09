@@ -138,9 +138,14 @@ namespace Core {
 
 			$content = Utility::callPlugin($contextExtension, $contextController, $contextAction);
 
-			$pageView->getLayout()->setContent($content);
+			// If it's an AJAX request, ignore layout rendering
+			if (!Utility::getRequest()->isAjax()) {
+				$pageView->getLayout()->setContent($content);
 
-			echo $pageView->render();
+				echo $pageView->render();
+			} else {
+				echo $content;
+			}
 
 			return $this;
 		}

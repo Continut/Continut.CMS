@@ -131,7 +131,8 @@ namespace Core\Mvc {
 				if (!is_null($defaultValue)) {
 					return $defaultValue;
 				}
-				throw new \Core\Tools\Exception("The supplied argument name does not exist", 40000003);
+				return FALSE;
+				//throw new \Core\Tools\Exception("The supplied argument name does not exist", 40000003);
 			}
 			return $this->arguments[$argumentName];
 		}
@@ -188,6 +189,15 @@ namespace Core\Mvc {
 		public function setFormat($format)
 		{
 			$this->format = $format;
+		}
+
+		/**
+		 * Check if it's an AJAX Request. Should work at least with jQuery
+		 *
+		 * @return bool
+		 */
+		public function isAjax() {
+			return (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
 		}
 
 	}

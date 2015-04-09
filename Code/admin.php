@@ -32,5 +32,5 @@ require __ROOTCMS__ . DS . "Core" . DS . "Bootstrap.php";
 	->connectBackendController();
 
 // Show estimative memory usage
-echo "mem: " . convert(memory_get_usage(false) - $memory_initial) . "<br/>";
-echo "exec: " . round((microtime(true) - $time_initial) , 4) . " sec";
+//echo "mem: " . convert(memory_get_usage(false) - $memory_initial) . "<br/>";
+//echo "exec: " . round((microtime(true) - $time_initial) , 4) . " sec";

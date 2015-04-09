@@ -28,16 +28,21 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			$domainsCollection->where("is_visible = :is_visible", ["is_visible" => 1]);
 
 			$this->getView()->assign("domains", $domainsCollection);
-			/*$layout = Utility::createInstance("\\Core\\System\\View\\BackendLayout");
-			$layout->setTemplate(__ROOTCMS__ . "/Extensions/System/Backend/Resources/Private/Backend/Layouts/Default.layout.php");
+		}
 
-			$pageView = Utility::createInstance("\\Core\\System\\View\\BackendPageView");
+		public function pageTreeAction() {
+			$pagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection");
 
-			$pageView->setLayout($layout);
+			$domainUid = $this->getRequest()->getArgument("domain_uid", 0);
+			if (!$domainUid) {
+				$pagesCollection->where("domain_uid IS NULL");
+			} else {
+				$pagesCollection->where("domain_uid = :domain_uid", [":domain_uid" => $domainUid]);
+			}
 
-			$pageView->setTitle("Continut CMS Backend");
+			return json_encode($pagesCollection->buildTree(), JSON_UNESCAPED_UNICODE);
 
-			return $pageView->render();*/
+			//$this->getView()->assign("pages", $pagesCollection);
 		}
 
 		/**

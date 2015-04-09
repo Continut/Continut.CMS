@@ -49,6 +49,13 @@ namespace Core\System\Domain\Model {
 		protected $domain_uid = 0;
 
 		/**
+		 * Used for Json encoding
+		 *
+		 * @var string
+		 */
+		public $label;
+
+		/**
 		 * @var string Layout used by this Page
 		 */
 		protected $layout;

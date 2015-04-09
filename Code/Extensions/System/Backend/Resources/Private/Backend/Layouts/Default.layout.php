@@ -4,6 +4,7 @@ $this->getPage()
 	->addCssAsset( [ "identifier" => "fuelux", "extension" => "Backend", "file" => "fuelux/fuelux.css" ])
 	->addCssAsset( [ "identifier" => "fontawesome", "extension" => "Backend", "file" => "fontawesome/font-awesome.css" ])
 	->addCssAsset( [ "identifier" => "flagicons", "extension" => "Backend", "file" => "flagicons/flag-icon.css" ])
+	->addCssAsset( [ "identifier" => "jqtree", "extension" => "Backend", "file" => "jqtree/jqtree.css" ])
 	->addCssAsset( [ "identifier" => "local", "extension" => "Backend", "file" => "local/backend.css" ]);
 $this->getPage()
 	->addJsAsset( [ "identifier" => "jquery", "extension"  => "Backend", "file" => "jquery/jquery-1.11.2.js" ])

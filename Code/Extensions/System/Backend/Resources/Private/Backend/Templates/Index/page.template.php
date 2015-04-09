@@ -20,6 +20,17 @@
 							</ul>
 							<input class="hidden hidden-field" name="mySelectlist" readonly="readonly" aria-hidden="true" type="text"/>
 						</div>
+							<script type="text/javascript">
+								$('#select_website').on('changed.fu.selectlist', function (event, data) {
+									$.ajax({
+										url: '<?= $this->link(["_extension" => "Backend", "_controller" => "Index", "_action" => "pageTree"]) ?>',
+										data: { domain_uid: data.value }
+									})
+									.done(function( data ) {
+										$('#cms_tree').tree('loadData', $.parseJSON(data));
+									});
+								});
+							</script>
 						<?php else: ?>
 							<p>Using global domain <a href="" class="btn btn-sm btn-success"><i class="fa fa-fw fa-plus"></i> 	</a></p>
 						<?php endif ?>
@@ -46,6 +57,35 @@
 		</div>
 		<p><small><strong>Currently browsing:</strong> www.twannberg.ch</small></p>
 		<div id="cms_tree"></div>
+		<script type="text/javascript">
+			$.getJSON(
+				'<?= $this->link(["_extension" => "Backend", "_controller" => "Index", "_action" => "pageTree"]) ?>',
+				function(data) {
+					$('#cms_tree').tree({
+						data: data,
+						dragAndDrop: true,
+						allowDragEventPropagation: false,
+						closedIcon: $('<i class="fa fa-fw fa-chevron-right"></i>'),
+						openedIcon: $('<i class="fa fa-fw fa-chevron-down"></i>'),
+						useContextMenu: false,
+						slide: false,
+						onCreateLi: function(node, $li) {
+							// Add 'icon' span before title
+							$li.find('.jqtree-title').before('<i class="fa tree-icon fa-fw fa-file-o"></i> ');
+						}
+
+					});
+				}
+			);
+			/*$('#cms_tree').tree(
+				'loadDataFromUrl',
+				'<?= $this->link(["_extension" => "Backend", "_controller" => "Index", "_action" => "pageTree"]) ?>',
+				null,
+				function() {
+					alert('data loaded');
+				}
+			);*/
+		</script>
 	</div>
 	<div id="content" class="col-md-9"></div>
 </div>

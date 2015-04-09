@@ -17,6 +17,29 @@ namespace Core\System\Domain\Collection {
 			$this->_tablename = "sys_pages";
 			$this->_elementClass = "\\Core\\System\\Domain\\Model\\Page";
 		}
+
+		public function buildTree() {
+			$children = [];
+			foreach ($this->getAll() as $item) {
+				$item->label = $item->getTitle();
+				$children[$item->getParentUid()][] = $item;
+			}
+
+			foreach ($this->getAll() as $item) {
+				if (isset($children[$item->getUid()])) {
+					$item->children = $children[$item->getUid()];
+				} else {
+					$item->children = [];
+				}
+			}
+
+			$tree = [];
+			if (isset($children[0])) {
+				$tree = $children[0];
+			}
+
+			return $tree;
+		}
 	}
 
 }
