@@ -123,10 +123,9 @@ namespace Core {
 
 		public function connectBackendController() {
 			$layout = Utility::createInstance("\\Core\\System\\View\\BackendLayout");
-			$layout->setTemplate(__ROOTCMS__ . "/Extensions/System/Backend/Resources/Private/Backend/Layouts/Default.layout.php");
+			$layout->setTemplate("/Extensions/System/Backend/Resources/Private/Backend/Layouts/Default.layout.php");
 
 			$pageView = Utility::createInstance("\\Core\\System\\View\\BackendPageView");
-
 			$pageView->setLayout($layout);
 
 			$request = Utility::getRequest();

@@ -47,8 +47,6 @@ namespace Core\Mvc\Controller {
 
 		protected $_response;
 
-		protected $_arguments;
-
 		/**
 		 * @var \Core\Mvc\View\BaseView
 		 */
@@ -58,6 +56,11 @@ namespace Core\Mvc\Controller {
 		 * @var string The folder name where templates for this controller are stored
 		 */
 		protected $templateStorage;
+
+		/**
+		 * @var array Settings, in case the controller belongs to a plugin
+		 */
+		public $settings;
 
 		public function __construct() {
 			$this->_view    = Utility::createInstance("\\Core\\Mvc\\View\\BaseView");
@@ -82,15 +85,6 @@ namespace Core\Mvc\Controller {
 		}
 
 		/**
-		 * Get request object
-		 *
-		 * @return \Core\Mvc\Request
-		 */
-		public function getRequest() {
-			return $this->_request;
-		}
-
-		/**
 		 * Set request object. Should only by called by system or bootstrap scripts
 		 *
 		 * @param $request
@@ -99,7 +93,17 @@ namespace Core\Mvc\Controller {
 		 */
 		public function setRequest($request) {
 			$this->_request = $request;
+
 			return $this;
+		}
+
+		/**
+		 * Get request object
+		 *
+		 * @return \Core\Mvc\Request
+		 */
+		public function getRequest() {
+			return $this->_request;
 		}
 
 		/**
@@ -113,6 +117,7 @@ namespace Core\Mvc\Controller {
 		public function setExtension($extension, $extensionType = 'Local') {
 			$this->_extension = $extension;
 			$this->_extensionType = $extensionType;
+
 			return $this;
 		}
 
@@ -121,6 +126,17 @@ namespace Core\Mvc\Controller {
 		 */
 		public function getExtension() {
 			return $this->_extension;
+		}
+
+		/**
+		 * @param string Set extension type
+		 *
+		 * @return $this
+		 */
+		public function setExtensionType($extensionType) {
+			$this->_extensionType = $extensionType;
+
+			return $this;
 		}
 
 		/**
@@ -139,6 +155,7 @@ namespace Core\Mvc\Controller {
 		 */
 		public function setScope($scope = 'Frontend') {
 			$this->_scope = $scope;
+
 			return $this;
 		}
 

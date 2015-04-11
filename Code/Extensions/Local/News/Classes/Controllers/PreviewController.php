@@ -18,7 +18,7 @@ namespace Extensions\Local\News\Classes\Controllers {
 		}
 
 		public function backendPreviewAction() {
-
+			$this->getView()->assign('limit', $this->settings["limit"]);
 		}
 	}
 

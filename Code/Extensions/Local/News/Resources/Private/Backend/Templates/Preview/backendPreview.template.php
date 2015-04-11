@@ -1,5 +1,5 @@
-<strong>Showing: </strong> maximum <?= $settings["limit"] ?> news
-<?php for ($i = 1; $i <= $settings["limit"]; $i++): ?>
+<strong>Showing: </strong> maximum <?= $limit ?> news
+<?php for ($i = 1; $i <= $limit; $i++): ?>
 <div class="media">
 	<div class="media-left">
 		<a href="#">

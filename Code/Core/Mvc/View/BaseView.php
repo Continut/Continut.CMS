@@ -87,14 +87,15 @@ namespace Core\Mvc\View {
 		 * @throws \Core\Tools\Exception
 		 */
 		public function render() {
+			$fullpath = __ROOTCMS__ . $this->_template;
+			if (!is_file($fullpath)) {
+				throw new \Core\Tools\Exception("The specified template file does not exist " . $this->_template, 10000001);
+			}
 			if (!empty($this->_variables)) {
 				extract($this->_variables);
 			}
-			if (!file_exists($this->_template)) {
-				throw new \Core\Tools\Exception("The specified template file does not exist " . $this->_template, 10000001);
-			}
 			ob_start();
-			include($this->_template);
+			include($fullpath);
 			return ob_get_clean();
 		}
 

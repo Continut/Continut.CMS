@@ -182,6 +182,7 @@ namespace Core {
 
 			// Instantiate the controller
 			$controller = Utility::createInstance($classToLoad);
+			$controller->settings = $contextSettings;
 
 			// and call it's action method, if it exists
 			if (!method_exists($controller, $contextAction)) {
@@ -192,8 +193,7 @@ namespace Core {
 			$viewContent = $controller->$contextAction();
 
 			$contextScope = $controller->getScope();
-			$templateToLoad = __ROOTCMS__ . "/Extensions/$extensionType/$contextExtension/Resources/Private/$contextScope/Templates/$templateController/$templateAction.template.php";
-			$controller->getView()->assign('settings', $contextSettings);
+			$templateToLoad = "/Extensions/$extensionType/$contextExtension/Resources/Private/$contextScope/Templates/$templateController/$templateAction.template.php";
 			$controller->getView()->setTemplate($templateToLoad);
 
 			// allow the action to return content, if not show it's template 

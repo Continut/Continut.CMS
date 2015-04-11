@@ -39,13 +39,20 @@ namespace Core\Mvc\View {
 			return $this;
 		}
 
+		public function setLayoutFromTemplate($template) {
+			$this->_layout = Utility::createInstance("\\Core\\System\\View\\FrontendLayout");
+			$this->_layout
+				->setPage($this)
+				->setTemplate($template);
+		}
+
 		public function getLayout() {
 			return $this->_layout;
 		}
 
 		public function render() {
 			$pageContent = $this->_layout->render();
-			$pageHeader  = $this->_renderHeader();
+			$pageHeader  = $this->renderHeader();
 			$pageTitle   = $this->getTitle();
 
 			$main = <<<HER
@@ -66,7 +73,7 @@ HER;
 			return $main;
 		}
 
-		protected function _renderHeader() {
+		public function renderHeader() {
 			$header = "";
 
 			if ($this->_assets) {

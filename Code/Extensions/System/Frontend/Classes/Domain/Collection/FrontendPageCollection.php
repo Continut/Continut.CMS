@@ -13,10 +13,6 @@ namespace Extensions\System\Frontend\Classes\Domain\Collection {
 	use Core\System\Domain\Collection\PageCollection;
 
 	class FrontendPageCollection extends PageCollection{
-		/*public function __construct() {
-			$this->_tablename = "sys_pages";
-			$this->_elementClass = "\\Core\\System\\Domain\\Model\\Page";
-		}*/
 	}
 
 }

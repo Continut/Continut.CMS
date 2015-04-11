@@ -37,11 +37,7 @@ namespace Extensions\System\Frontend\Classes\Controllers {
 
 				$contentTree = $contentCollection->buildTree();
 
-				// -- this needs to be retrieved from the database, from the page settings
-				$layout = Utility::createInstance("\\Core\\System\\View\\FrontendLayout");
-				$layout->setTemplate($pageModel->getLayout());
-				$pageView->setLayout($layout);
-				// -- END
+				$pageView->setLayoutFromTemplate($pageModel->getFrontendLayout());
 
 				// send the containers to our layout for rendering
 				//$pageView->getLayout()->setContainers($firstContainers, $containers);

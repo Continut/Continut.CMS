@@ -27,9 +27,13 @@ namespace Core\Mvc\View {
 		 * Set layout template file
 		 *
 		 * @param string $template
+		 *
+		 * @return $this
 		 */
 		public function setTemplate($template) {
 			$this->_template = $template;
+
+			return $this;
 		}
 
 		/**
@@ -43,9 +47,13 @@ namespace Core\Mvc\View {
 		 * Set the PageView this layout belongs to
 		 *
 		 * @param PageView $page
+		 *
+		 * @return $this
 		 */
 		public function setPage($page) {
 			$this->_page = $page;
+
+			return $this;
 		}
 
 		/**

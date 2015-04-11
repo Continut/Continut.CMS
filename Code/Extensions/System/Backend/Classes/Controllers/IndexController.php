@@ -78,27 +78,30 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			$pageUid = (int)$this->getRequest()->getArgument("page_uid", 0);
 			$pageModel = $pagesCollection->where("uid = :uid", ["uid" => $pageUid])->getFirst();
 
+			$breadcrumbs = [];
+			if ($pageModel->getCachedPath()) {
+				$breadcrumbs = $pagesCollection
+					->where("uid IN (" . $pageModel->getCachedPath() . ") ORDER BY uid ASC")
+					->getAll();
+			}
+
 			$contentCollection = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
 			$contentCollection->where("page_uid = :page_uid AND is_deleted = 0 AND is_visible = 1", [":page_uid" => $pageUid]);
 
 			$contentTree = $contentCollection->buildTree();
-			// TEST
-			// -- this needs to be retrieved from the database, from the page settings
-			$layout = Utility::createInstance("\\Core\\System\\View\\FrontendLayout");
-			$layout->setTemplate($pageModel->getBackendLayout());
+
 			$pageView = Utility::createInstance("\\Core\\Mvc\\View\\PageView");
-			$pageView->setLayout($layout);
-			// -- END
+			$pageView->setLayoutFromTemplate($pageModel->getBackendLayout());
 
 			// send the containers to our layout for rendering
 			//$pageView->getLayout()->setContainers($firstContainers, $containers);
 			$pageView->getLayout()->setElements($contentTree);
 
 			$containers = $pageView->render();
-			// TEST
 
 			$this->getView()->assign("page", $pageModel);
 			$this->getView()->assign("containers", $containers);
+			$this->getView()->assign("breadcrumbs", $breadcrumbs);
 		}
 
 		/**

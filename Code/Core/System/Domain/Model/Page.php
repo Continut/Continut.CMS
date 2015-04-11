@@ -51,7 +51,12 @@ namespace Core\System\Domain\Model {
 		/**
 		 * @var string Layout used by this Page
 		 */
-		protected $layout;
+		protected $frontend_layout;
+
+		/**
+		 * @var string Cached path used for breadcrumb (List of comma separated values of parent uids)
+		 */
+		protected $cached_path;
 
 		/**
 		 * @var string Backend layout
@@ -82,12 +87,16 @@ namespace Core\System\Domain\Model {
 			return $this->parent;
 		}
 
-		public function getLayout() {
-			return $this->layout;
+		public function getFrontendLayout() {
+			return $this->frontend_layout;
 		}
 
 		public function getBackendLayout() {
 			return $this->backend_layout;
+		}
+
+		public function getCachedPath() {
+			return $this->cached_path;
 		}
 	}
 }

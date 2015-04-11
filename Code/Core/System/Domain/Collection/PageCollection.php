@@ -58,25 +58,28 @@ namespace Core\System\Domain\Collection {
 			$children = [];
 
 			foreach ($this->getAll() as $item) {
-				$data        = new \stdClass();
-				$data->id    = $item->getUid();
-				$data->label = $item->getTitle();
-				$data->type  = "file";
-				$children[$item->getParentUid()][] = $data;
+				$data           = new \stdClass();
+				$data->id       = $item->getUid();
+				$data->parentId = $item->getParentUid();
+				$data->label    = $item->getTitle();
+				$data->type     = "file";
+				$children[$data->parentId][] = $data;
+			}
+
+			foreach ($children as $child) {
+				foreach ($child as $data) {
+					if (isset($children[ $data->id ])) {
+						$data->type = "folder";
+						$data->children = $children[ $data->id ];
+					} else {
+						$data->children = [];
+					}
+				}
 			}
 
 			$tree = [];
 			if (isset($children[0])) {
 				$tree = $children[0];
-			}
-
-			foreach ($tree as $data) {
-				if (isset( $children[ $data->id] )) {
-					$data->type = "folder";
-					$data->children = $children[$data->id];
-				} else {
-					$data->children = [];
-				}
 			}
 
 			return $tree;

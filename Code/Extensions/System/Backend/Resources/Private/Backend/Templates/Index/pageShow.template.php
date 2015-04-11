@@ -1,8 +1,9 @@
 <div class="row">
 	<div class="col-sm-12">
 		<ol class="breadcrumb breadcrumb-page-tree">
-			<li><a href="#">Pagină de contact</a></li>
-			<li><a href="#">Ştiri</a></li>
+			<?php foreach ($breadcrumbs as $breadcrumb): ?>
+				<li><a class="page-link" href="#" data-page-uid="<?= $breadcrumb->getUid() ?>"><?= $breadcrumb->getTitle(); ?></a></li>
+			<?php endforeach ?>
 			<li class="active"><?= $page->getTitle() ?></li>
 		</ol>
 	</div>
@@ -25,3 +26,14 @@
 		<?= $containers ?>
 	</div>
 </div>
+<script type="text/javascript">
+	$('.page-link').on('click', function() {
+		$.ajax({
+			url: '<?= $this->link(["_extension" => "Backend", "_controller" => "Index", "_action" => "pageShow"]) ?>',
+			data: { page_uid: $(this).data('page-uid') }
+		})
+			.done(function( data ) {
+				$('#content').html(data);
+			});
+	});
+</script>
