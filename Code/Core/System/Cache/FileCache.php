@@ -21,6 +21,7 @@ namespace Core\System\Cache {
 		protected $_lifetime = 3600;
 
 		public function getByUid($uid, $type) {
+			return NULL;
 			$filename = __ROOTCMS__ . self::CACHE_DIR . $type . "_" . $uid;
 			if (file_exists($filename)) {
 				return file_get_contents($filename);

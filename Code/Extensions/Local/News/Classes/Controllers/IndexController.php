@@ -23,12 +23,5 @@ namespace Extensions\Local\News\Classes\Controllers {
 			$this->getView()->setTemplate(__ROOTCMS__ . DS . "Extensions" . DS . $this->getExtensionType() . DS . $this->getExtension() . DS . $this->templateStorage . DS ."Frontend/Templates/Index" . DS . "Show.template.php");
 		}
 
-		public function backendConfigureAction() {
-
-		}
-
-		public function backendPreviewAction() {
-
-		}
 	}
 }

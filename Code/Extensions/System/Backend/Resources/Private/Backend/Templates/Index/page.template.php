@@ -27,9 +27,11 @@
 										data: { domain_uid: data.value }
 									})
 									.done(function( data ) {
-										$('#cms_tree').tree('loadData', $.parseJSON(data));
+										console.log("apelat");
+										$('#cms_tree').tree('loadData', $.parseJSON(data).pages);
 									});
 								});
+								$('#select_website').selectlist(0);
 							</script>
 						<?php else: ?>
 							<p>Using global domain <a href="" class="btn btn-sm btn-success"><i class="fa fa-fw fa-plus"></i> 	</a></p>
@@ -55,7 +57,6 @@
 				</form>
 			</div>
 		</div>
-		<p><small><strong>Currently browsing:</strong> www.twannberg.ch</small></p>
 		<div id="cms_tree"></div>
 		<script type="text/javascript">
 			$.getJSON(
@@ -71,20 +72,33 @@
 						slide: false,
 						onCreateLi: function(node, $li) {
 							// Add 'icon' span before title
-							$li.find('.jqtree-title').before('<i class="fa tree-icon fa-fw fa-file-o"></i> ');
+							switch (node.type) {
+								case "folder" : $li.find('.jqtree-title').before('<i class="fa tree-icon fa-fw fa-folder-o"></i> '); break;
+								default: $li.find('.jqtree-title').before('<i class="fa tree-icon fa-fw fa-file-o"></i> ');
+							}
 						}
 
 					});
+					$('#cms_tree').bind(
+						'tree.click',
+						function (event) {
+							// once a node is clicked, load the corresponding page in the right side
+							$.ajax({
+								url: '<?= $this->link(["_extension" => "Backend", "_controller" => "Index", "_action" => "pageShow"]) ?>',
+								data: { page_uid: event.node.id },
+								beforeSend: function (xhr) {
+									$(event.node.element).find('.jqtree-element').append('<span class="pull-right fa fa-spinner fa-pulse"></span>');
+								}
+							})
+							.done(function( data ) {
+								$('#content').html(data);
+								$(event.node.element).find('.fa-spinner').remove();
+							});
+						}
+					);
 				}
 			);
-			/*$('#cms_tree').tree(
-				'loadDataFromUrl',
-				'<?= $this->link(["_extension" => "Backend", "_controller" => "Index", "_action" => "pageTree"]) ?>',
-				null,
-				function() {
-					alert('data loaded');
-				}
-			);*/
+
 		</script>
 	</div>
 	<div id="content" class="col-md-9"></div>

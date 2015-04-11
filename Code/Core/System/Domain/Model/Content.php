@@ -25,10 +25,6 @@ namespace Core\System\Domain\Model {
 		 */
 		protected $_page;
 
-		public function __construct() {
-			$this->_tablename = "sys_content";
-		}
-
 		/**
 		 * @return int Get the parent id of this content element
 		 */
@@ -97,7 +93,7 @@ namespace Core\System\Domain\Model {
 			if (!empty($title)) {
 				$title = "<h2>$title</h2>";
 			}
-			return $title.$this->getValue();
+			return $title . $this->getValue();
 		}
 
 		/**

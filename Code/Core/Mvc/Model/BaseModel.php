@@ -24,30 +24,10 @@ namespace Core\Mvc\Model {
 		protected $uid;
 
 		/**
-		 * @var string name of the table the model is associated to
-		 */
-		protected $_tablename;
-
-		public function __construct() {
-			$this->setTablename();
-		}
-
-		/**
 		 * @return int Model's unique id in the database
 		 */
 		public function getUid() {
 			return $this->uid;
-		}
-
-		public function findByUid($uid) {
-			$sth = Utility::database()->prepare("SELECT * FROM $this->_tablename WHERE uid = :uid");
-			$sth->execute([':uid' => $uid]);
-			$sth->setFetchMode(\PDO::FETCH_CLASS, get_class($this));
-			return $sth->fetch();
-		}
-
-		public function save() {
-
 		}
 	}
 }

@@ -193,6 +193,7 @@ namespace Core {
 
 			$contextScope = $controller->getScope();
 			$templateToLoad = __ROOTCMS__ . "/Extensions/$extensionType/$contextExtension/Resources/Private/$contextScope/Templates/$templateController/$templateAction.template.php";
+			$controller->getView()->assign('settings', $contextSettings);
 			$controller->getView()->setTemplate($templateToLoad);
 
 			// allow the action to return content, if not show it's template 

@@ -5,16 +5,20 @@
  * For more details, consult the LICENSE.txt file supplied with the project
  
  * Author: Radu Mogoş <radu.mogos@pixelplant.ch>
- * Date: 07.04.2015 @ 22:46
+ * Date: 11.04.2015 @ 18:48
  * Project: Conţinut CMS
  */
-namespace Core\System\Domain\Model {
+namespace Extensions\Local\News\Classes\Controllers {
 
-	use Core\Mvc\Model\BaseModel;
+	use Core\Mvc\Controller\BackendController;
 
-	class Domain extends BaseModel {
-		public function getTitle() {
-			return $this->title;
+	class PreviewController extends BackendController {
+		public function backendConfigureAction() {
+
+		}
+
+		public function backendPreviewAction() {
+
 		}
 	}
 

@@ -10,6 +10,8 @@
  */
 namespace Core\Mvc\View {
 
+	use Core\Tools\Exception;
+
 	class BaseLayout {
 		/**
 		 * @var string Layout template to use
@@ -59,9 +61,15 @@ namespace Core\Mvc\View {
 		 * @return string
 		 */
 		public function render() {
-			ob_start();
-			include_once $this->_template;
-			return ob_get_clean();
+			$fullpath = __ROOTCMS__ . $this->_template;
+			if (!is_file($fullpath)) {
+				return "No layout has been specified for this page. You need to assing a layout to this page if you want
+				 to be able to add/edit content elements";
+			} else {
+				ob_start();
+				include_once $fullpath;
+				return ob_get_clean();
+			}
 		}
 
 		/**

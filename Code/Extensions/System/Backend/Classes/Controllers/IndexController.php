@@ -19,30 +19,86 @@ namespace Extensions\System\Backend\Classes\Controllers {
 	 */
 	class IndexController extends BackendController {
 
+		/**
+		 * Main dashboard action
+		 *
+		 * @return string
+		 */
 		public function dashboardAction() {
 			return "dashboard";
 		}
 
+		/**
+		 * Called when the pagetree is shown for the page module
+		 *
+		 * @throws \Core\Tools\Exception
+		 */
 		public function pageAction() {
 			$domainsCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\DomainCollection");
-			$domainsCollection->where("is_visible = :is_visible", ["is_visible" => 1]);
+			$domainsCollection->where("is_visible = :is_visible ORDER BY sorting ASC", ["is_visible" => 1]);
 
 			$this->getView()->assign("domains", $domainsCollection);
 		}
 
+		/**
+		 * Called when the pagetree changes or needs to be shown for the first time. Responds with a JSON string of the pagetree
+		 *
+		 * @return string
+		 * @throws \Core\Tools\Exception
+		 */
 		public function pageTreeAction() {
 			$pagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection");
 
 			$domainUid = $this->getRequest()->getArgument("domain_uid", 0);
 			if (!$domainUid) {
-				$pagesCollection->where("domain_uid IS NULL");
-			} else {
-				$pagesCollection->where("domain_uid = :domain_uid", [":domain_uid" => $domainUid]);
+				// get the domains collection
+				$domainsCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\DomainCollection");
+				// and fetch the first visible domain, ordered by sorting
+				$domainUid = $domainsCollection->where("is_visible = :is_visible ORDER BY sorting ASC", ["is_visible" => 1])
+					->getFirst()
+					->getUid();
 			}
+			// get all the pages that belong to this domain
+			$pagesCollection->where("domain_uid = :domain_uid", ["domain_uid" => $domainUid]);
 
-			return json_encode($pagesCollection->buildTree(), JSON_UNESCAPED_UNICODE);
+			$languagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\LanguageCollection");
+			$languagesCollection->where("domain_uid = :domain_uid", ["domain_uid" => $domainUid]);
+
+			$pagesData = [
+				"pages" => $pagesCollection->buildJsonTree(),
+				"languages" => $languagesCollection->toSimplifiedArray()];
+
+			return json_encode($pagesData, JSON_UNESCAPED_UNICODE);
 
 			//$this->getView()->assign("pages", $pagesCollection);
+		}
+
+		public function pageShowAction() {
+			$pagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection");
+			$pageUid = (int)$this->getRequest()->getArgument("page_uid", 0);
+			$pageModel = $pagesCollection->where("uid = :uid", ["uid" => $pageUid])->getFirst();
+
+			$contentCollection = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
+			$contentCollection->where("page_uid = :page_uid AND is_deleted = 0 AND is_visible = 1", [":page_uid" => $pageUid]);
+
+			$contentTree = $contentCollection->buildTree();
+			// TEST
+			// -- this needs to be retrieved from the database, from the page settings
+			$layout = Utility::createInstance("\\Core\\System\\View\\FrontendLayout");
+			$layout->setTemplate($pageModel->getBackendLayout());
+			$pageView = Utility::createInstance("\\Core\\Mvc\\View\\PageView");
+			$pageView->setLayout($layout);
+			// -- END
+
+			// send the containers to our layout for rendering
+			//$pageView->getLayout()->setContainers($firstContainers, $containers);
+			$pageView->getLayout()->setElements($contentTree);
+
+			$containers = $pageView->render();
+			// TEST
+
+			$this->getView()->assign("page", $pageModel);
+			$this->getView()->assign("containers", $containers);
 		}
 
 		/**

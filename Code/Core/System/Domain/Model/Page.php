@@ -49,20 +49,14 @@ namespace Core\System\Domain\Model {
 		protected $domain_uid = 0;
 
 		/**
-		 * Used for Json encoding
-		 *
-		 * @var string
-		 */
-		public $label;
-
-		/**
 		 * @var string Layout used by this Page
 		 */
 		protected $layout;
 
-		public function __construct() {
-			$this->_tablename = "sys_pages";
-		}
+		/**
+		 * @var string Backend layout
+		 */
+		protected $backend_layout;
 
 		public function getTitle() {
 			return $this->title;
@@ -90,6 +84,10 @@ namespace Core\System\Domain\Model {
 
 		public function getLayout() {
 			return $this->layout;
+		}
+
+		public function getBackendLayout() {
+			return $this->backend_layout;
 		}
 	}
 }

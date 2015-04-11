@@ -12,9 +12,24 @@ namespace Core\System\Domain\Model {
 
 	use Core\Mvc\Model\BaseModel;
 
-	class Domain extends BaseModel {
+	class Language extends BaseModel {
+
+		/**
+		 * Get language title
+		 *
+		 * @return string
+		 */
 		public function getTitle() {
 			return $this->title;
+		}
+
+		/**
+		 * Get language iso3 code
+		 *
+		 * @return string
+		 */
+		public function getLanguageIso3() {
+			return $this->language_iso_3;
 		}
 	}
 

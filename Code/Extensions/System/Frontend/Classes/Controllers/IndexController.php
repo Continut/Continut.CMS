@@ -35,36 +35,17 @@ namespace Extensions\System\Frontend\Classes\Controllers {
 				$contentCollection = Utility::createInstance("\\Extensions\\System\\Frontend\\Classes\\Domain\\Collection\\FrontendContentCollection");
 				$contentCollection->where("page_uid = :page_uid AND is_deleted = 0 AND is_visible = 1", [":page_uid" => $pageUid]);
 
-				// Build content tree
-				$children = [];
-
-				foreach ($contentCollection->getAll() as $item) {
-					$item->setPage($pageView);
-					$children[$item->getParentUid()][] = $item;
-				}
-
-				foreach ($contentCollection->getAll() as $item) {
-					if (isset($children[$item->getUid()])) {
-						$item->children = $children[$item->getUid()];
-					} else {
-						$item->children = [];
-					}
-				}
-
-				$tree = NULL;
-				if (isset($children[0])) {
-					$tree = $children[0];
-				}
+				$contentTree = $contentCollection->buildTree();
 
 				// -- this needs to be retrieved from the database, from the page settings
 				$layout = Utility::createInstance("\\Core\\System\\View\\FrontendLayout");
-				$layout->setTemplate(__ROOTCMS__ . $pageModel->getLayout());
+				$layout->setTemplate($pageModel->getLayout());
 				$pageView->setLayout($layout);
 				// -- END
 
 				// send the containers to our layout for rendering
 				//$pageView->getLayout()->setContainers($firstContainers, $containers);
-				$pageView->getLayout()->setElements($tree);
+				$pageView->getLayout()->setElements($contentTree);
 
 				$pageView->setTitle($pageModel->getTitle());
 

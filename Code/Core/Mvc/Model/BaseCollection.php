@@ -49,11 +49,25 @@ namespace Core\Mvc\Model {
 			return NULL;
 		}
 
+		/**
+		 * Manually add an element
+		 *
+		 * @param $element
+		 *
+		 * @return $this
+		 */
 		public function add($element) {
 			$this->_elements[] = $element;
 			return $this;
 		}
 
+		/**
+		 * Manually remove an element
+		 *
+		 * @param $elementToRemove
+		 *
+		 * @return $this
+		 */
 		public function remove($elementToRemove) {
 			foreach ($this->_elements as $element) {
 				if ($element === $elementToRemove) {
@@ -94,7 +108,7 @@ namespace Core\Mvc\Model {
 			}
 
 			return $this;
-		}
+			}
 
 		/**
 		 * How many elements do we have in the collection?

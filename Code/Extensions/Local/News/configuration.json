@@ -62,11 +62,11 @@
       "news": {
         "label": "News plugin",
         "execute": {
-          "controller": "Index",
+          "controller": "Preview",
           "action": "backendConfigure"
         },
         "preview": {
-          "controller": "Index",
+          "controller": "Preview",
           "action": "backendPreview"
         }
       }
