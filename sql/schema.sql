@@ -12,16 +12,21 @@ CREATE TABLE `sys_pages` (
   `is_visible` tinyint(1) DEFAULT '0' COMMENT 'is the page visible?',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT 'is the page deleted?',
   `domain_uid` int(11) DEFAULT NULL COMMENT 'the domain this page belongs to',
+  `frontend_layout` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'layout template to be used by this page',
+  `backend_layout` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'layout used in the backend',
+  `cached_path` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'cached breadcrumb path',
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /* System domains */
 
 CREATE TABLE `sys_domains` (
   `uid` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'the domain uid',
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'the domain label',
+  `is_visible` tinyint(1) unsigned DEFAULT '1' COMMENT 'is the domain active?',
+  `sorting` int(11) unsigned DEFAULT '0' COMMENT 'sorting order of the domains',
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /* System domain urls */
 
@@ -76,13 +81,17 @@ CREATE TABLE `sys_file_metadata` (
 CREATE TABLE `sys_content` (
   `uid` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'unique id',
   `page_uid` int(11) unsigned DEFAULT NULL COMMENT 'id of page where content is stored',
-  `set_uid` int(11) unsigned DEFAULT NULL COMMENT 'id of set where template and fields are stored',
+  `type` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'element type: plugin or content',
+  `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Title of the content element',
+  `column` int(11) unsigned DEFAULT NULL COMMENT 'id of column where template and fields are stored',
+  `parent_uid` int(11) unsigned DEFAULT '0' COMMENT 'currently only used for containers, for recursivity, stores the uid of the parent container it belongs to',
+  `value` text COLLATE utf8_unicode_ci,
   `is_visible` tinyint(1) unsigned DEFAULT '1' COMMENT 'is content visible on page?',
   `is_deleted` tinyint(1) unsigned DEFAULT '0' COMMENT 'is content deleted on the page? (user for history purposes)',
   `created_at` int(11) unsigned DEFAULT NULL COMMENT 'creation utc date',
   `modified_at` int(11) unsigned DEFAULT NULL COMMENT 'modification utc date',
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /* User sessions */
 
