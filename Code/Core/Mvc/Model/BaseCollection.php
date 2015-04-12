@@ -79,6 +79,17 @@ namespace Core\Mvc\Model {
 		}
 
 		/**
+		 * Empty the collection
+		 *
+		 * @return $this
+		 */
+		public function reset() {
+			$this->_elements = [];
+
+			return $this;
+		}
+
+		/**
 		 * Do a where on the collection
 		 *
 		 * @param $conditions
@@ -105,7 +116,25 @@ namespace Core\Mvc\Model {
 		 */
 		public function save() {
 			foreach ($this->_elements as $element) {
-				$element->save();
+				$dataMapper = $element->dataMapper();
+				$listOfFields = implode(",", array_keys($dataMapper));
+				// element does not exist, insert it
+				if (is_null($element->getUid())) {
+					foreach ($dataMapper as $key => $value) {
+						$listOfValues[] = ":" . $key;
+					}
+					$listOfValues = implode(",", $listOfValues);
+					$sth = Utility::database()->prepare("INSERT INTO $this->_tablename ($listOfFields) VALUES ($listOfValues)");
+				// element exists, update it
+				} else {
+					foreach ($dataMapper as $key => $value) {
+						$listOfValues[] = $key . "= :" . $key;
+					}
+					$listOfValues = implode(",", $listOfValues);
+					$sth = Utility::database()->prepare("UPDATE $this->_tablename SET $listOfValues WHERE uid = :uid");
+					$dataMapper["uid"] = $element->getUid();
+				}
+				$sth->execute($dataMapper);
 			}
 
 			return $this;

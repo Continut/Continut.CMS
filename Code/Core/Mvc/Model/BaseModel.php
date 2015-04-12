@@ -29,5 +29,15 @@ namespace Core\Mvc\Model {
 		public function getUid() {
 			return $this->uid;
 		}
+
+		/**
+		 * Simple datamapper used for the database
+		 * @return array
+		 */
+		public function dataMapper() {
+			return [
+				"uid" => $this->uid
+			];
+		}
 	}
 }

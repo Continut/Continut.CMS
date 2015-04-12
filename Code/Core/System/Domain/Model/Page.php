@@ -63,6 +63,24 @@ namespace Core\System\Domain\Model {
 		 */
 		protected $backend_layout;
 
+		/**
+		 * Simple datamapper used for the database
+		 * @return array
+		 */
+		public function dataMapper() {
+			return [
+				"parent_uid"      => $this->parent_uid,
+				"title"           => $this->title,
+				"language_iso3"   => $this->language_iso3,
+				"cached_path"     => $this->cached_path,
+				"domain_uid"      => $this->domain_uid,
+				"is_deleted"      => $this->is_deleted,
+				"is_visible"      => $this->is_visible,
+				"frontend_layout" => $this->frontend_layout,
+				"backend_layout"  => $this->backend_layout
+			];
+		}
+
 		public function getTitle() {
 			return $this->title;
 		}
@@ -71,6 +89,16 @@ namespace Core\System\Domain\Model {
 			return $this->language_iso3;
 		}
 
+		/**
+		 * @param $parentUid
+		 */
+		public function setParentUid($parentUid) {
+			$this->parent_uid = $parentUid;
+		}
+
+		/**
+		 * @return int
+		 */
 		public function getParentUid() {
 			return $this->parent_uid;
 		}

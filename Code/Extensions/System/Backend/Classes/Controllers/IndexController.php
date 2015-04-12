@@ -128,5 +128,29 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			$this->getView()->assign("mainMenu", $mainMenu);
 			$this->getView()->assign("secondaryMenu", $secondaryMenu);
 		}
+
+		/**
+		 * Saves a page's parentUid once it is moved in the tree
+		 *
+		 * @return string
+		 * @throws \Core\Tools\Exception
+		 */
+		public function pageTreeMoveAction() {
+			$pageUid = (int)$this->getRequest()->getArgument("movedId");
+
+			$pagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection");
+			$pageModel = $pagesCollection->where("uid = :uid", ["uid" => $pageUid])->getFirst();
+
+			if ($pageModel) {
+				$newParentUid = (int)$this->getRequest()->getArgument("newParentId");
+				$pageModel->setParentUid($newParentUid);
+				$pagesCollection
+					->reset()
+					->add($pageModel)
+					->save();
+			}
+
+			return "executed";
+		}
 	}
 }

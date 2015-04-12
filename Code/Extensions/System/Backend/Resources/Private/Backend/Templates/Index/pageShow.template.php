@@ -32,8 +32,8 @@
 			url: '<?= $this->link(["_extension" => "Backend", "_controller" => "Index", "_action" => "pageShow"]) ?>',
 			data: { page_uid: $(this).data('page-uid') }
 		})
-			.done(function( data ) {
-				$('#content').html(data);
-			});
+		.done(function( data ) {
+			$('#content').html(data);
+		});
 	});
 </script>

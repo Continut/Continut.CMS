@@ -80,20 +80,37 @@
 
 					});
 					$('#cms_tree').bind(
-						'tree.click',
+						'tree.select',
 						function (event) {
 							// once a node is clicked, load the corresponding page in the right side
-							$.ajax({
-								url: '<?= $this->link(["_extension" => "Backend", "_controller" => "Index", "_action" => "pageShow"]) ?>',
-								data: { page_uid: event.node.id },
-								beforeSend: function (xhr) {
-									$(event.node.element).find('.jqtree-element').append('<span class="pull-right fa fa-spinner fa-pulse"></span>');
+							if (event.node) {
+								$.ajax({
+									url: '<?= $this->link(["_extension" => "Backend", "_controller" => "Index", "_action" => "pageShow"]) ?>',
+									data: {page_uid: event.node.id},
+									beforeSend: function (xhr) {
+										$(event.node.element).find('.jqtree-element').append('<span class="pull-right fa fa-spinner fa-pulse"></span>');
+									}
+								})
+									.done(function (data) {
+										$('#content').html(data);
+										$(event.node.element).find('.fa-spinner').remove();
+									});
+							}
+						}
+					);
+					$('#cms_tree').bind(
+						'tree.move',
+						function(event) {
+							event.preventDefault();
+							event.move_info.do_move();
+							$.post(
+								'<?= $this->link(["_extension" => "Backend", "_controller" => "Index", "_action" => "pageTreeMove"]) ?>',
+								{
+									movedId: event.move_info.moved_node.id,
+									newParentId: event.move_info.target_node.id,
+									position: event.move_info.position
 								}
-							})
-							.done(function( data ) {
-								$('#content').html(data);
-								$(event.node.element).find('.fa-spinner').remove();
-							});
+							);
 						}
 					);
 				}
