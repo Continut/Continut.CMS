@@ -10,6 +10,7 @@
  */
 
 namespace Core\Mvc\View {
+	use Core\Utility;
 
 	/**
 	 * Class BaseView
@@ -106,8 +107,8 @@ namespace Core\Mvc\View {
 		public function renderPartial($partialName) {
 		}
 
-		public function link($data) {
-			return "admin.php?" . http_build_query($data);
+		public function helper($helperName) {
+			return Utility::helper($helperName);
 		}
 	}
 }

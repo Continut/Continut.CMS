@@ -19,9 +19,9 @@ namespace Extensions\System\Frontend\Classes\Controllers {
 			// get page id request
 			$pageUid = (int)$this->getRequest()->getArgument("pid", 1);
 
-			if ($cache = Utility::getCache()->getByUid($pageUid, "page")) {
+			/*if ($cache = Utility::getCache()->getByUid($pageUid, "page")) {
 				return $cache;
-			} else {
+			} else {*/
 
 				// Load the page model from the database
 				$pageModel = Utility::createInstance("\\Extensions\\System\\Frontend\\Classes\\Domain\\Collection\\FrontendPageCollection")
@@ -47,8 +47,8 @@ namespace Extensions\System\Frontend\Classes\Controllers {
 
 				// dump it all on screen
 				$cache = $pageView->render();
-				Utility::getCache()->setByUid($pageUid, "page", $cache);
-			}
+				//Utility::getCache()->setByUid($pageUid, "page", $cache);
+			//}
 			return $cache;
 		}
 	}

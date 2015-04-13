@@ -50,7 +50,7 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			$pagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection");
 
 			$domainUid = $this->getRequest()->getArgument("domain_uid", 0);
-			if (!$domainUid) {
+			if ($domainUid == 0) {
 				// get the domains collection
 				$domainsCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\DomainCollection");
 				// and fetch the first visible domain, ordered by sorting

@@ -10,7 +10,6 @@
  */
 
 namespace Core {
-	use \Core\Utility;
 
 	/**
 	 * Main Class that bootstraps the system
@@ -43,18 +42,6 @@ namespace Core {
 		}
 
 		/**
-		 * Set current running environment
-		 *
-		 * @param $environment
-		 *
-		 * @return $this
-		 */
-		public function setEnvironment($environment) {
-			$this->_environment = $environment;
-			return $this;
-		}
-
-		/**
 		 * A simple basic class loader so far
 		 * Class caching and mapping will be provided shortly
 		 *
@@ -66,14 +53,28 @@ namespace Core {
 		}
 
 		/**
+		 * Set current running environment
+		 *
+		 * @param string $applicationScope
+		 * @param string $environment
+		 *
+		 * @return $this
+		 */
+		public function setEnvironment($applicationScope, $environment) {
+			// @TODO - move the load_classes method to a proper class that does Class caching
+			spl_autoload_register([$this, "loadClasses"], TRUE, FALSE);
+
+			Utility::setApplicationScope($applicationScope);
+			$this->_environment = $environment;
+			return $this;
+		}
+
+		/**
 		 * Loads all the core configurations, like the class mapper, etc
 		 *
 		 * @return $this
 		 */
 		public function loadConfiguration() {
-			// @TODO - move the load_classes method to a proper class that does Class caching
-			spl_autoload_register([$this, "loadClasses"], TRUE, FALSE);
-
 			// Load Local and System extensions configuration data
 			Utility::loadExtensionsConfigurationFromFolder(__ROOTCMS__ . DS . "Extensions" . DS . "Local");
 			Utility::loadExtensionsConfigurationFromFolder(__ROOTCMS__ . DS . "Extensions" . DS . "System");

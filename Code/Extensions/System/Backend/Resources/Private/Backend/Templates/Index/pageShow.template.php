@@ -29,7 +29,7 @@
 <script type="text/javascript">
 	$('.page-link').on('click', function() {
 		$.ajax({
-			url: '<?= $this->link(["_extension" => "Backend", "_controller" => "Index", "_action" => "pageShow"]) ?>',
+			url: '<?= $this->helper("Url")->linkToAction("Backend", "Index", "pageShow") ?>',
 			data: { page_uid: $(this).data('page-uid') }
 		})
 		.done(function( data ) {

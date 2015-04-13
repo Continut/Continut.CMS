@@ -19,9 +19,7 @@ namespace Core {
 		 * @var array List of class mappings defined in extension configuration
 		 */
 		static $classMappings = [];
-
-
-		/**
+				/**
 		 * @var array Array storing all the extension's configuration
 		 */
 		static $extensionsConfiguration = [];
@@ -40,6 +38,20 @@ namespace Core {
 		 * @var \Core\System\Cache\FileCache
 		 */
 		static $cacheHandler = NULL;
+
+		/**
+		 * @var array List of helpers loaded
+		 */
+		static $helpers = [];
+
+		/**
+		 * @var string Application scope, Frontend or Backend
+		 */
+		static $applicationScope;
+
+		const SCOPE_BACKEND = "Backend";
+
+		const SCOPE_FRONTEND = "Frontend";
 
 		/**
 		 * Generate an instance based on the sent class or map to an overwritten class stored in
@@ -61,6 +73,20 @@ namespace Core {
 				throw new Tools\Exception("The PHP class you are trying to load does not exist: " . $classToLoad, 30000001);
 			}
 			return new $class();
+		}
+
+		/**
+		 * @return string
+		 */
+		public static function getApplicationScope() {
+			return static::$applicationScope;
+		}
+
+		/**
+		 * @param $applicationScope
+		 */
+		public static function setApplicationScope($applicationScope) {
+			static::$applicationScope = $applicationScope;
 		}
 
 		/**
@@ -280,6 +306,18 @@ namespace Core {
 				static::$cacheHandler = static::createInstance("\\Core\\System\\Cache\\FileCache");
 			}
 			return static::$cacheHandler;
+		}
+
+		/**
+		 * Return a helper by name
+		 *
+		 * @param $helperName
+		 */
+		public static function helper($helperName) {
+			if (!isset(static::$helpers[$helperName])) {
+				static::$helpers[$helperName] = static::createInstance("\\Core\\System\\Helper\\$helperName");
+			}
+			return static::$helpers[$helperName];
 		}
 	}
 }

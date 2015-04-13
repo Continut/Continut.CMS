@@ -15,7 +15,7 @@
 				<li class="divider"></li>
 				<?php else: ?>
 				<li>
-					<a href="<?= $this->link(["_controller" => $submenuItem["controller"], "_action" => $submenuItem["action"], "_extension" => $submenuItem["extension"] ]) ?>">
+					<a href="<?= $this->helper("Url")->linkToAction($submenuItem["extension"], $submenuItem["controller"], $submenuItem["action"]) ?>">
 						<?php if (isset($submenuItem["icon"])): ?>
 							<i class="<?= $submenuItem["icon"] ?>"></i>
 						<?php endif ?>

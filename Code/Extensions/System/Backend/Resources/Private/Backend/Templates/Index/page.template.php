@@ -23,7 +23,7 @@
 							<script type="text/javascript">
 								$('#select_website').on('changed.fu.selectlist', function (event, data) {
 									$.ajax({
-										url: '<?= $this->link(["_extension" => "Backend", "_controller" => "Index", "_action" => "pageTree"]) ?>',
+										url: '<?= $this->helper("Url")->linkToAction("Backend", "Index", "pageTree") ?>',
 										data: { domain_uid: data.value }
 									})
 									.done(function( data ) {
@@ -31,7 +31,7 @@
 										$('#cms_tree').tree('loadData', $.parseJSON(data).pages);
 									});
 								});
-								$('#select_website').selectlist(0);
+								//$('#select_website').selectlist('selectByIndex', 0);
 							</script>
 						<?php else: ?>
 							<p>Using global domain <a href="" class="btn btn-sm btn-success"><i class="fa fa-fw fa-plus"></i> 	</a></p>
@@ -60,10 +60,10 @@
 		<div id="cms_tree"></div>
 		<script type="text/javascript">
 			$.getJSON(
-				'<?= $this->link(["_extension" => "Backend", "_controller" => "Index", "_action" => "pageTree"]) ?>',
+				'<?= $this->helper("Url")->linkToAction("Backend", "Index", "pageTree") ?>',
 				function(data) {
 					$('#cms_tree').tree({
-						data: data,
+						data: data.pages,
 						dragAndDrop: true,
 						allowDragEventPropagation: false,
 						closedIcon: $('<i class="fa fa-fw fa-chevron-right"></i>'),
@@ -85,7 +85,7 @@
 							// once a node is clicked, load the corresponding page in the right side
 							if (event.node) {
 								$.ajax({
-									url: '<?= $this->link(["_extension" => "Backend", "_controller" => "Index", "_action" => "pageShow"]) ?>',
+									url: '<?= $this->helper("Url")->linkToAction("Backend", "Index", "pageShow") ?>',
 									data: {page_uid: event.node.id},
 									beforeSend: function (xhr) {
 										$(event.node.element).find('.jqtree-element').append('<span class="pull-right fa fa-spinner fa-pulse"></span>');
@@ -104,7 +104,7 @@
 							event.preventDefault();
 							event.move_info.do_move();
 							$.post(
-								'<?= $this->link(["_extension" => "Backend", "_controller" => "Index", "_action" => "pageTreeMove"]) ?>',
+								'<?= $this->helper("Url")->linkToAction("Backend", "Index", "pageTreeMove") ?>',
 								{
 									movedId: event.move_info.moved_node.id,
 									newParentId: event.move_info.target_node.id,

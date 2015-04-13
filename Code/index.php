@@ -27,14 +27,11 @@ define("DS", DIRECTORY_SEPARATOR);
 require __ROOTCMS__ . DS . "Core" . DS . "Bootstrap.php";
 
 \Core\Bootstrap::getInstance()
-	->setEnvironment("DEVELOPMENT") // Change this to "PRODUCTION" before going LIVE
+	->setEnvironment("Frontend", "DEVELOPMENT") // Change this to "PRODUCTION" before going LIVE
 	->loadConfiguration()
 	->connectToDatabase()
 	->startSession()
-	//->startOutput()
 	->connectController();
-	//->endOutput()
-	//->disconnectFromDatabase();
 
 // Show estimative memory usage
 echo "mem: " . convert(memory_get_usage(false) - $memory_initial) . "<br/>";
