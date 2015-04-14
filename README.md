@@ -12,20 +12,19 @@ I hope you will have as much fun using Conţinut CMS as I had developing it.
 
 ### How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+1. Git clone the project: `git clone https://pixelplant@bitbucket.org/pixelplant/continut-cms.git`
+2. Import the database schema using your favourite MySql client. The sql file is located inside `Sql/schema.sql`
+3. Configure the database connection using the MySql username, password and host that you have setup.
+4. Access the frontend by calling the file index.php
+5. Access the backend by calling the file admin.php
+
+This should be it. **You're good to go** :)
 
 ### Contribution guidelines ###
 
-* Writing tests
-* Code review
+* Code beautification (for PHPStorm users)
 * Other guidelines
 
-### Who do I talk to? ###
+### How and with who do I get in touch? ###
 
-* Repo owner or admin
-* Other community or team contact
+* Radu Mogoş (cms@pixelplant.ch)
