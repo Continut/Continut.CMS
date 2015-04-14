@@ -159,3 +159,14 @@ CREATE TABLE `sys_cache` (
   `record_uid` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/* System languages per domain */
+
+CREATE TABLE `sys_languages` (
+  `uid` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'unique id',
+  `domain_uid` int(11) unsigned NOT NULL COMMENT 'the domain this language belongs to',
+  `language_iso_3` varchar(3) COLLATE utf8_unicode_ci NOT NULL COMMENT 'iso3 code of the language',
+  `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'title shown in the dropdowns',
+  `sorting` int(11) unsigned DEFAULT NULL COMMENT 'display order of languages',
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
