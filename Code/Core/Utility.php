@@ -72,7 +72,7 @@ namespace Core {
 			if (!file_exists(__ROOTCMS__ . DS . $class . ".php")) {
 				throw new Tools\Exception("The PHP class you are trying to load does not exist: " . $classToLoad, 30000001);
 			}
-			return new $class();
+			return new $classToLoad();
 		}
 
 		/**
