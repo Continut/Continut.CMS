@@ -7,31 +7,27 @@
 					<div class="col-sm-7 col-md-12 col-lg-7">
 						<label for="select_website"><a class="btn btn-sm btn-default" href=""><i class="fa fa-cog"></i></a> <span class="hidden-md">Website \ Domain</span></label>
 						<?php if ($domains->count() > 0): ?>
-						<div class="btn-group selectlist" data-initialize="selectlist" id="select_website">
-							<button class="btn btn-backend dropdown-toggle" data-toggle="dropdown" type="button">
-								<span class="selected-label"></span>
-								<span class="caret"></span>
-								<span class="sr-only">Toggle Dropdown</span>
-							</button>
-							<ul class="dropdown-menu" role="menu">
+							<select id="select_website" class="selectpicker" data-width="100%">
 								<?php foreach ($domains->getAll() as $domain): ?>
-									<li data-value="<?= $domain->getUid() ?>"><a href="#"><?= $domain->getTitle() ?></a></li>
+									<option value="<?= $domain->getUid() ?>"><?= $domain->getTitle() ?></option>
 								<?php endforeach ?>
-							</ul>
-							<input class="hidden hidden-field" name="mySelectlist" readonly="readonly" aria-hidden="true" type="text"/>
-						</div>
+							</select>
 							<script type="text/javascript">
-								$('#select_website').on('changed.fu.selectlist', function (event, data) {
+								$('#select_website').on('change', function (event) {
 									$.ajax({
 										url: '<?= $this->helper("Url")->linkToAction("Backend", "Index", "pageTree") ?>',
-										data: { domain_uid: data.value }
+										data: { domain_uid: this.value }
 									})
-									.done(function( data ) {
-										console.log("apelat");
-										$('#cms_tree').tree('loadData', $.parseJSON(data).pages);
-									});
+										.done(function( data ) {
+											var $languages = $('#select_language');
+											$languages.empty();
+											$.each($.parseJSON(data).languages, function (value, key) {
+												$languages.append($("<option data-icon='flag-icon flag-icon-" + key.flag + "'></option>").attr("value", value).text(key.title));
+											});
+											$languages.selectpicker('refresh');
+											$('#cms_tree').tree('loadData', $.parseJSON(data).pages);
+										});
 								});
-								//$('#select_website').selectlist('selectByIndex', 0);
 							</script>
 						<?php else: ?>
 							<p>Using global domain <a href="" class="btn btn-sm btn-success"><i class="fa fa-fw fa-plus"></i> 	</a></p>
@@ -39,7 +35,9 @@
 					</div>
 					<div class="col-sm-5 col-md-12 col-lg-5">
 						<label for="select_language"><a class="btn btn-sm btn-default" href=""><i class="fa fa-cog"></i></a> <span class="hidden-md">Language</span></label>
-						<div class="btn-group selectlist" data-initialize="selectlist" id="select_language">
+						<select id="select_language" class="selectpicker" data-width="100%">
+						</select>
+						<!--<div class="btn-group selectlist" data-initialize="selectlist" id="select_language">
 							<button class="btn btn-backend dropdown-toggle" data-toggle="dropdown" type="button">
 								<span class="selected-label"></span>
 								<span class="caret"></span>
@@ -52,7 +50,7 @@
 								<li data-value="3"><a href="#"><i class="flag-icon flag-icon-ru"></i> русский</a></li>
 							</ul>
 							<input class="hidden hidden-field" name="mySelectlist" readonly="readonly" aria-hidden="true" type="text"/>
-						</div>
+						</div>-->
 					</div>
 				</form>
 			</div>

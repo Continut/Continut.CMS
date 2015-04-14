@@ -165,8 +165,9 @@ CREATE TABLE `sys_cache` (
 CREATE TABLE `sys_languages` (
   `uid` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'unique id',
   `domain_uid` int(11) unsigned NOT NULL COMMENT 'the domain this language belongs to',
-  `language_iso_3` varchar(3) COLLATE utf8_unicode_ci NOT NULL COMMENT 'iso3 code of the language',
+  `language_iso3` varchar(3) COLLATE utf8_unicode_ci NOT NULL COMMENT 'iso3 code of the language',
   `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'title shown in the dropdowns',
   `sorting` int(11) unsigned DEFAULT NULL COMMENT 'display order of languages',
+  `flag` varchar(2) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'country flag to use in the backend',
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

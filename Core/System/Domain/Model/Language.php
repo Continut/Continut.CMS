@@ -15,6 +15,21 @@ namespace Core\System\Domain\Model {
 	class Language extends BaseModel {
 
 		/**
+		 * @var string
+		 */
+		protected $title;
+
+		/**
+		 * @var string
+		 */
+		protected $language_iso3;
+
+		/**
+		 * @var string
+		 */
+		protected $flag;
+
+		/**
 		 * Get language title
 		 *
 		 * @return string
@@ -29,7 +44,16 @@ namespace Core\System\Domain\Model {
 		 * @return string
 		 */
 		public function getLanguageIso3() {
-			return $this->language_iso_3;
+			return $this->language_iso3;
+		}
+
+		/**
+		 * Get menu flag
+		 *
+		 * @return mixed
+		 */
+		public function getFlag() {
+			return $this->flag;
 		}
 	}
 

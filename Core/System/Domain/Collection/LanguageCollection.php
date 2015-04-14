@@ -25,7 +25,10 @@ namespace Core\System\Domain\Collection {
 		public function toSimplifiedArray() {
 			$data = [];
 			foreach ($this->getAll() as $language) {
-				$data[$language->getLanguageIso3()] = $language->getTitle();
+				$data[$language->getLanguageIso3()] = [
+					"title" => $language->getTitle(),
+					"flag"  => $language->getFlag()
+				];
 			}
 			return $data;
 		}
