@@ -27,7 +27,7 @@ define("DS", DIRECTORY_SEPARATOR);
 require __ROOTCMS__ . DS . "Core" . DS . "Bootstrap.php";
 
 \Core\Bootstrap::getInstance()
-	->setEnvironment("Frontend", "DEVELOPMENT") // Change this to "PRODUCTION" before going LIVE
+	->setEnvironment("Frontend", "Development") // Change this to "Production" before going LIVE
 	->loadConfiguration()
 	->connectToDatabase()
 	->startSession()

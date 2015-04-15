@@ -49,6 +49,11 @@ namespace Core {
 		 */
 		static $applicationScope;
 
+		/**
+		 * @var string Application environment, Development, Test or Production
+		 */
+		static $applicationEnvironment;
+
 		const SCOPE_BACKEND = "Backend";
 
 		const SCOPE_FRONTEND = "Frontend";
@@ -84,20 +89,26 @@ namespace Core {
 
 		/**
 		 * @param $applicationScope
+		 * @param $applicationEnvironment
 		 */
-		public static function setApplicationScope($applicationScope) {
+		public static function setApplicationScope($applicationScope, $applicationEnvironment) {
 			static::$applicationScope = $applicationScope;
+			static::$applicationEnvironment = $applicationEnvironment;
 		}
 
 		/**
 		 * Create a database handler and connect to the database
 		 *
-		 * @param string $type Database connection type: "mysql", "sqlite", etc...
 		 * @throws \Core\Tools\Exception
 		 */
-		public static function connectToDatabase($type = "mysql") {
+		public static function connectToDatabase() {
 			try {
-				static::$databaseHandler = new \PDO("mysql:host=localhost;dbname=continutcms", "root", "");
+				require_once (__ROOTCMS__ . "/Extensions/configuration.php");
+				static::$databaseHandler = new \PDO(
+					$config[static::$applicationEnvironment]["Database"]["Connection"],
+					$config[static::$applicationEnvironment]["Database"]["Username"],
+					$config[static::$applicationEnvironment]["Database"]["Password"]
+				);
 				static::$databaseHandler->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 			}
 			catch (\PDOException $e) {

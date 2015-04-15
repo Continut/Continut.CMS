@@ -25,11 +25,6 @@ namespace Core {
 		static protected $_instance;
 
 		/**
-		 * @var string Current running environment, "DEVELOPMENT" or "PRODUCTION"
-		 */
-		protected $_environment = "DEVELOPMENT";
-
-		/**
 		 * Returns or creates a Bootstrap instance
 		 *
 		 * @return Boostrap
@@ -64,8 +59,7 @@ namespace Core {
 			// @TODO - move the load_classes method to a proper class that does Class caching
 			spl_autoload_register([$this, "loadClasses"], TRUE, FALSE);
 
-			Utility::setApplicationScope($applicationScope);
-			$this->_environment = $environment;
+			Utility::setApplicationScope($applicationScope, $environment);
 			return $this;
 		}
 

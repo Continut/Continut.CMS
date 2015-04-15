@@ -14,7 +14,35 @@ I hope you will have as much fun using Conţinut CMS as I had developing it.
 
 1. Git clone the project: `git clone https://pixelplant@bitbucket.org/pixelplant/continut-cms.git`
 2. Import the database schema using your favourite MySql client. The sql file is located inside `Sql/schema.sql`
-3. Configure the database connection using the MySql username, password and host that you have setup.
+3. Create a file called **configuration.php** inside the **Extensions** folder, so the file path would be *Extensions/configuration.php*. 
+Inside this file place the following lines
+
+		$config = [
+    		"Development" => [
+    			"Database" => [
+    				"Connection" => "mysql:host=localhost;dbname=continutcms",
+    				"Username"   => "root",
+    				"Password"   => ""
+    			]
+    		],
+    		"Test" => [
+    			"Database" => [
+    				"Connection" => "mysql:host=localhost;dbname=continutcms",
+    				"Username"   => "root",
+    				"Password"   => ""
+    			]
+    		],
+    		"Production" => [
+    			"Database" => [
+    				"Connection" => "mysql:host=localhost;dbname=continutcms",
+    				"Username"   => "root",
+    				"Password"   => ""
+    			]
+    		]
+    	];
+    
+3. Configure the database connection using the MySql username, password and host that you have setup. By default the index.php
+and admin.php files use the **Development** environment, so you can place your database **Connection** string, **Username** and **Password** in that section.
 4. Access the frontend by calling the file index.php
 5. Access the backend by calling the file admin.php
 
