@@ -22,7 +22,7 @@ This should be it. **You're good to go** :)
 
 ### Contribution guidelines ###
 
-* [Code beautification](Documentation\Readme\Code.md) (for PHPStorm users)
+* [Code beautification](Documentation/Readme/Code.md) (for PHPStorm users)
 * Other guidelines
 
 ### How and with who do I get in touch? ###
