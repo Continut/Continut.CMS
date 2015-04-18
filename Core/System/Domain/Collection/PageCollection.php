@@ -63,6 +63,15 @@ namespace Core\System\Domain\Collection {
 				$data->parentId = $item->getParentUid();
 				$data->label    = $item->getTitle();
 				$data->type     = "file";
+				$data->state    = "normal";
+				if (!$item->getIsVisible()) {
+					$data->state = "hidden-frontend";
+					if (!$item->getIsInMenu()) {
+						$data->state = "hidden-both";
+					}
+				} elseif (!$item->getIsInMenu()) {
+					$data->state = "hidden-menu";
+				}
 				$children[$data->parentId][] = $data;
 			}
 

@@ -5,7 +5,7 @@
 			<div class="row">
 				<form class="form">
 					<div class="col-sm-7 col-md-12 col-lg-7">
-						<label for="select_website"><a class="btn btn-sm btn-default" href=""><i class="fa fa-cog"></i></a> <span class="hidden-md">Website \ Domain</span></label>
+						<label for="select_website"><a class="btn btn-sm btn-default" href=""><i class="fa fa-cog"></i></a> <span class="hidden-md"><?= $this->__("backend.pageTree.domain.label") ?></span></label>
 						<?php if ($domains->count() > 0): ?>
 							<select id="select_website" class="selectpicker" data-width="100%">
 								<?php foreach ($domains->getAll() as $domain): ?>
@@ -26,6 +26,7 @@
 											});
 											$languages.selectpicker('refresh');
 											$('#cms_tree').tree('loadData', $.parseJSON(data).pages);
+											$('#content').empty();
 										});
 								});
 							</script>
@@ -34,23 +35,24 @@
 						<?php endif ?>
 					</div>
 					<div class="col-sm-5 col-md-12 col-lg-5">
-						<label for="select_language"><a class="btn btn-sm btn-default" href=""><i class="fa fa-cog"></i></a> <span class="hidden-md">Language</span></label>
+						<label for="select_language"><a class="btn btn-sm btn-default" href=""><i class="fa fa-cog"></i></a> <span class="hidden-md"><?= $this->__("backend.pageTree.language.label") ?></span></label>
 						<select id="select_language" class="selectpicker" data-width="100%">
 						</select>
-						<!--<div class="btn-group selectlist" data-initialize="selectlist" id="select_language">
-							<button class="btn btn-backend dropdown-toggle" data-toggle="dropdown" type="button">
-								<span class="selected-label"></span>
-								<span class="caret"></span>
-								<span class="sr-only">Toggle Dropdown</span>
-							</button>
-							<ul class="dropdown-menu" role="menu">
-								<li data-value="1"><a href="#"><i class="flag-icon flag-icon-gb"></i> English</a></li>
-								<li data-value="2"><a href="#"><i class="flag-icon flag-icon-ro"></i> Română</a></li>
-								<li data-value="3"><a href="#"><i class="flag-icon flag-icon-fr"></i> Français</a></li>
-								<li data-value="3"><a href="#"><i class="flag-icon flag-icon-ru"></i> русский</a></li>
-							</ul>
-							<input class="hidden hidden-field" name="mySelectlist" readonly="readonly" aria-hidden="true" type="text"/>
-						</div>-->
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="row tree-filter">
+			<div class="col-xs-4">
+				<a href="" class="btn btn-success"><i class="fa fa-fw fa-plus"></i> New page</a>
+			</div>
+			<div class="col-xs-8">
+				<form class="form-inline" method="post">
+					<div class="form-group entire-area">
+						<div class="input-group entire-area">
+							<div class="input-group-addon"><i class="fa fa-fw fa-file"></i></div>
+							<input type="text" class="form-control" id="search" placeholder="Search page" />
+						</div>
 					</div>
 				</form>
 			</div>
@@ -70,10 +72,18 @@
 						slide: false,
 						onCreateLi: function(node, $li) {
 							// Add 'icon' span before title
-							switch (node.type) {
-								case "folder" : $li.find('.jqtree-title').before('<i class="fa tree-icon fa-fw fa-folder-o"></i> '); break;
-								default: $li.find('.jqtree-title').before('<i class="fa tree-icon fa-fw fa-file-o"></i> ');
+							var iconClass = 'fa-file';
+							if (node.type == "folder") {
+								iconClass = 'fa-folder';
 							}
+							var pageIcon = '';
+							switch (node.state) {
+								case "hidden-frontend": pageIcon = '<i class="fa fa-lg tree-icon fa-fw ' + iconClass + ' fa-disabled"></i> '; break;
+								case "hidden-both":     pageIcon = '<span class="fa-stack"><i class="fa fa-lg tree-icon fa-fw ' + iconClass + ' fa-disabled"></i><i class="fa fa-eye-slash fa-stack-1x text-danger"></i></span> '; break;
+								case "hidden-menu":     pageIcon = '<span class="fa-stack"><i class="fa fa-lg tree-icon fa-fw ' + iconClass + '"></i><i class="fa fa-eye-slash fa-stack-1x text-danger"></i></span> '; break;
+								default:                pageIcon = '<i class="fa fa-lg tree-icon fa-fw ' + iconClass + '"></i> ';
+							}
+							$li.find('.jqtree-title').before(pageIcon);
 						}
 
 					});
@@ -86,7 +96,7 @@
 									url: '<?= $this->helper("Url")->linkToAction("Backend", "Index", "pageShow") ?>',
 									data: {page_uid: event.node.id},
 									beforeSend: function (xhr) {
-										$(event.node.element).find('.jqtree-element').append('<span class="pull-right fa fa-spinner fa-pulse"></span>');
+										$(event.node.element).find('.jqtree-element').eq(0).append('<span class="pull-right fa fa-spinner fa-pulse"></span>');
 									}
 								})
 									.done(function (data) {

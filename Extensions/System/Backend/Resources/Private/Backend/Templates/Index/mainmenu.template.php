@@ -6,7 +6,7 @@
 				<?php if (isset($menuItem["icon"])): ?>
 					<i class="<?= $menuItem["icon"] ?>"></i>
 				<?php endif ?>
-				<?= $menuItem["label"] ?>
+				<?= $this->__($menuItem["label"]) ?>
 				<span class="caret"></span>
 			</a>
 			<ul class="dropdown-menu" role="menu">
@@ -19,7 +19,7 @@
 						<?php if (isset($submenuItem["icon"])): ?>
 							<i class="<?= $submenuItem["icon"] ?>"></i>
 						<?php endif ?>
-						<?= $submenuItem["label"] ?>
+						<?= $this->__($submenuItem["label"]) ?>
 					</a>
 				</li>
 				<?php endif ?>
@@ -32,7 +32,7 @@
 				<?php if (isset($menuItem["icon"])): ?>
 					<i class="<?= $menuItem["icon"] ?>"></i>
 				<?php endif ?>
-				<?= $menuItem["label"] ?>
+				<?= $this->__($menuItem["label"]) ?>
 			</a>
 		</li>
 	<?php endif ?>
@@ -47,7 +47,7 @@
 				<?php if (isset($menuItem["icon"])): ?>
 					<i class="<?= $menuItem["icon"] ?>"></i>
 				<?php endif ?>
-				<?= $menuItem["label"] ?>
+				<?= $this->__($menuItem["label"]) ?>
 				<span class="caret"></span>
 			</a>
 			<ul class="dropdown-menu" role="menu">
@@ -60,7 +60,7 @@
 								<?php if (isset($submenuItem["icon"])): ?>
 									<i class="<?= $submenuItem["icon"] ?>"></i>
 								<?php endif ?>
-								<?= $submenuItem["label"] ?>
+								<?= $this->__($submenuItem["label"]) ?>
 							</a>
 						</li>
 					<?php endif ?>
@@ -73,7 +73,7 @@
 				<?php if (isset($menuItem["icon"])): ?>
 					<i class="<?= $menuItem["icon"] ?>"></i>
 				<?php endif ?>
-				<?= $menuItem["label"] ?>
+				<?= $this->__($menuItem["label"]) ?>
 			</a>
 		</li>
 	<?php endif ?>

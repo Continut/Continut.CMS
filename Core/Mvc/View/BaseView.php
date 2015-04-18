@@ -76,10 +76,21 @@ namespace Core\Mvc\View {
 		}
 
 		/**
+		 * Set View template file
+		 *
 		 * @param string $template Template file to use
 		 */
 		public function setTemplate($template) {
 			$this->_template = $template;
+		}
+
+		/**
+		 * Get View template file
+		 *
+		 * @return string
+		 */
+		public function getTemplate() {
+			return $this->_template;
 		}
 
 		/**
@@ -104,11 +115,40 @@ namespace Core\Mvc\View {
 
 		}
 
-		public function renderPartial($partialName) {
+		/**
+		 * Render a partial template file
+		 *
+		 * @param string $extensionName Name of the extension where the partial is located
+		 * @param string $partialFilename Relative Path and complete filename of the partial
+		 * @param array  $variables List of variables to pass on to the partial
+		 */
+		public function partial($extensionName, $partialFilename, $variables = []) {
+			$partialView = Utility::createInstance("Core\\Mvc\\View\\BaseView");
+			$partialView->assignMultiple($variables);
+			$partialView->setTemplate(Utility::getTemplateFileFromPath($extensionName, "Partials", $partialFilename));
+			return $partialView->render();
 		}
 
+		/**
+		 * Call a helper to access it's methods
+		 *
+		 * @param string $helperName
+		 *
+		 * @return mixed
+		 */
 		public function helper($helperName) {
 			return Utility::helper($helperName);
+		}
+
+		/**
+		 * Returns a localized label by its key
+		 *
+		 * @param string $labelKey
+		 *
+		 * @return string
+		 */
+		public function __($labelKey) {
+			return Utility::helper("Localization")->translate($labelKey);
 		}
 	}
 }

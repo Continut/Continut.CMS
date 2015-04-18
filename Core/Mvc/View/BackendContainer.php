@@ -47,10 +47,16 @@ namespace Core\Mvc\View {
 			return $this->_layout;
 		}
 
+		/**
+		 * @param string $title
+		 */
 		public function setTitle($title) {
 			$this->_title = $title;
 		}
 
+		/**
+		 * @return string
+		 */
 		public function getTitle() {
 			return $this->_title;
 		}

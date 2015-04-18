@@ -35,9 +35,7 @@ namespace Core\Mvc\Model {
 		 * @return array
 		 */
 		public function dataMapper() {
-			return [
-				"uid" => $this->uid
-			];
+			return [];
 		}
 	}
 }

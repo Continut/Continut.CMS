@@ -1,11 +1,8 @@
 		<div class="row">
-			<div class="col-sm-12">
-				<h1><?= $this->getPage()->getTitle(); ?></h1>
-			</div>
 			<div class="col-sm-8">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<div class="panel-title">Left column</div>
+						<div class="panel-title"><?= $this->__("backend.themeBootstrap.layout.container.leftColumn") ?></div>
 					</div>
 					<div class="panel-body">
 						<?php $this->showContainerColumn(1); ?>
@@ -16,7 +13,7 @@
 			<div class="col-sm-4">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<div class="panel-title">Right column</div>
+						<div class="panel-title"><?= $this->__("backend.themeBootstrap.layout.container.rightColumn") ?></div>
 					</div>
 					<div class="panel-body">
 						<?php $this->showContainerColumn(2); ?>

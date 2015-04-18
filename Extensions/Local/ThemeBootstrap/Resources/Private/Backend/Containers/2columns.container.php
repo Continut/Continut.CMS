@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col-sm-6">
+	<div class="col-xs-12 col-sm-6">
 		<div class="panel panel-warning">
 			<div class="panel-heading">
 				<div class="panel-title">LEFT</div>
@@ -9,7 +9,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-sm-6">
+	<div class="col-xs-12 col-sm-6">
 		<div class="panel panel-warning">
 			<div class="panel-heading">
 				<div class="panel-title">RIGHT</div>

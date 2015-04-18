@@ -39,6 +39,11 @@ namespace Core\System\Domain\Model {
 		protected $is_visible = TRUE;
 
 		/**
+		 * @var bool Is our page shown in frontend menus?
+		 */
+		protected $is_in_menu = TRUE;
+
+		/**
 		 * @var boor Has our Page been deleted?
 		 */
 		protected $is_deleted = FALSE;
@@ -75,14 +80,101 @@ namespace Core\System\Domain\Model {
 				"cached_path"     => $this->cached_path,
 				"domain_uid"      => $this->domain_uid,
 				"is_deleted"      => $this->is_deleted,
+				"is_in_menu"      => $this->is_in_menu,
 				"is_visible"      => $this->is_visible,
 				"frontend_layout" => $this->frontend_layout,
 				"backend_layout"  => $this->backend_layout
 			];
 		}
 
+		/**
+		 * @return boolean
+		 */
+		public function getIsInMenu()
+		{
+			return $this->is_in_menu;
+		}
+
+		/**
+		 * @param boolean $is_in_menu
+		 *
+		 * @return $this
+		 */
+		public function setIsInMenu($is_in_menu)
+		{
+			$this->is_in_menu = $is_in_menu;
+
+			return $this;
+		}
+
+		/**
+		 * @return boolean
+		 */
+		public function getIsVisible()
+		{
+			return $this->is_visible;
+		}
+
+		/**
+		 * @param boolean $is_visible
+		 */
+		public function setIsVisible($is_visible)
+		{
+			$this->is_visible = $is_visible;
+		}
+
+		/**
+		 * @return boor
+		 */
+		public function getIsDeleted()
+		{
+			return $this->is_deleted;
+		}
+
+		/**
+		 * @param boor $is_deleted
+		 */
+		public function setIsDeleted($is_deleted)
+		{
+			$this->is_deleted = $is_deleted;
+		}
+
+		/**
+		 * @return int
+		 */
+		public function getDomainUid()
+		{
+			return $this->domain_uid;
+		}
+
+		/**
+		 * @param int $domain_uid
+		 */
+		public function setDomainUid($domain_uid)
+		{
+			$this->domain_uid = $domain_uid;
+		}
+
+		/**
+		 * Return page title
+		 *
+		 * @return string
+		 */
 		public function getTitle() {
 			return $this->title;
+		}
+
+		/**
+		 * Set page title
+		 *
+		 * @param $title
+		 *
+		 * @return $this
+		 */
+		public function setTitle($title) {
+			$this->title = $title;
+
+			return $this;
 		}
 
 		public function getLanguageIso3() {
@@ -91,9 +183,13 @@ namespace Core\System\Domain\Model {
 
 		/**
 		 * @param $parentUid
+		 *
+		 * @return $this
 		 */
 		public function setParentUid($parentUid) {
 			$this->parent_uid = $parentUid;
+
+			return $this;
 		}
 
 		/**
@@ -103,6 +199,12 @@ namespace Core\System\Domain\Model {
 			return $this->parent_uid;
 		}
 
+		/**
+		 * Get parent PageModel
+		 *
+		 * @return mixed
+		 * @throws \Core\Tools\Exception
+		 */
 		public function getParent() {
 			if ($this->parent_uid) {
 				if (empty($this->parent)) {
@@ -115,14 +217,41 @@ namespace Core\System\Domain\Model {
 			return $this->parent;
 		}
 
+		/**
+		 * Set this page's parent
+		 *
+		 * @param \Core\System\Domain\Model\Page $parent
+		 *
+		 * @return $this
+		 */
+		public function setParent($parent) {
+			$this->parent = $parent;
+
+			return $this;
+		}
+
+		/**
+		 * Layout to be used in the frontend
+		 * @return string
+		 */
 		public function getFrontendLayout() {
 			return $this->frontend_layout;
 		}
 
+		/**
+		 * Layout to be used in the Backend preview
+		 *
+		 * @return string
+		 */
 		public function getBackendLayout() {
 			return $this->backend_layout;
 		}
 
+		/**
+		 * Returns comma separated list of breadcrumb page ids
+		 *
+		 * @return string
+		 */
 		public function getCachedPath() {
 			return $this->cached_path;
 		}

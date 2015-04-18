@@ -120,7 +120,7 @@ namespace Core {
 			$layout = Utility::createInstance("\\Core\\System\\View\\BackendLayout");
 			$layout->setTemplate("/Extensions/System/Backend/Resources/Private/Backend/Layouts/Default.layout.php");
 
-			$pageView = Utility::createInstance("\\Core\\System\\View\\BackendPageView");
+			$pageView = Utility::createInstance("\\Core\\Mvc\\View\\PageView");
 			$pageView->setLayout($layout);
 
 			$request = Utility::getRequest();

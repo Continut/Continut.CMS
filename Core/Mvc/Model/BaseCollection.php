@@ -110,6 +110,23 @@ namespace Core\Mvc\Model {
 		}
 
 		/**
+		 * Return 1 record by uid
+		 *
+		 * @param $uid
+		 *
+		 * @return mixed
+		 */
+		public function findByUid($uid) {
+			$sth = Utility::database()->prepare("SELECT * FROM $this->_tablename WHERE uid = :uid");
+			$sth->execute(["uid" => $uid]);
+			$sth->setFetchMode(\PDO::FETCH_CLASS, $this->_elementClass);
+
+			$element = $sth->fetch();
+
+			return $element;
+		}
+
+		/**
 		 * Save all the collection elements
 		 *
 		 * @return $this

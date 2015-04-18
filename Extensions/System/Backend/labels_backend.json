@@ -1,0 +1,61 @@
+{
+  "Backend": {
+    "en_US": {
+      "backend.page.visibleInFrontend": "Page visible in Frontend",
+      "backend.page.notVisibleInFrontend": "Page not visible in Frontend",
+      "backend.page.visibleInMenu": "Page shown in menus",
+      "backend.page.notVisibleInMenu": "Page not shown in menus",
+      "backend.page.deletePage": "Delete page",
+      "backend.content.addNew": "Add new content element",
+      "backend.pageTree.domain.label": "Website \\ Domain",
+      "backend.pageTree.language.label": "Language",
+      "backend.layout.noLayoutSpecified": "No layout has been specified for this page. You need to assing a layout to this page if you want to be able to add/edit content elements.",
+      "backend.menu.web": "Web",
+      "backend.menu.web.page": "Page",
+      "backend.menu.web.history": "History / Restore",
+      "backend.menu.media": "Media",
+      "backend.menu.cache": "Cache",
+      "backend.menu.cache.clearContent": "Clear content cache",
+      "backend.menu.cache.clearConfiguration": "Clear configuration cache",
+      "backend.menu.cache.clearMemcache": "Clear Memcache cache"
+    },
+    "ro_RO": {
+      "backend.page.visibleInFrontend": "Pagina este vizibilă în Frontend",
+      "backend.page.notVisibleInFrontend": "Pagina nu este vizibilă în Frontend",
+      "backend.page.visibleInMenu": "Pagina este afişată în meniuri",
+      "backend.page.notVisibleInMenu": "Pagina nu este afişată în meniuri",
+      "backend.page.deletePage": "Ştergeţi pagina",
+      "backend.content.addNew": "Adaugă un element de conţinut",
+      "backend.pageTree.domain.label": "Site web \\ Domeniu",
+      "backend.pageTree.language.label": "Limbă",
+      "backend.layout.noLayoutSpecified": "Pentru această pagină nu a fost specificat nici un layout. Trebuie să setaţi un layout pentru această pagină dacă doriţi să puteţi adăuga/edita elemente de conţinut.",
+      "backend.menu.web": "Web",
+      "backend.menu.web.page": "Pagină",
+      "backend.menu.web.history": "Istoric / Restaurare",
+      "backend.menu.media": "Media",
+      "backend.menu.cache": "Cache",
+      "backend.menu.cache.clearContent": "Şterge cache-ul pentru conţinut",
+      "backend.menu.cache.clearConfiguration": "Şterge cache-ul pentru configurare",
+      "backend.menu.cache.clearMemcache": "Şterge cache-ul Memcache"
+    },
+    "fr_FR": {
+      "backend.page.visibleInFrontend": "Page visible dans le Frontend",
+      "backend.page.notVisibleInFrontend": "Page cachée dans le Frontend",
+      "backend.page.visibleInMenu": "Page affichée dans les menus",
+      "backend.page.notVisibleInMenu": "Page cachée dans les menus",
+      "backend.page.deletePage": "Supprimer la page",
+      "backend.content.addNew": "Nouveau element de contenu",
+      "backend.pageTree.domain.label": "Site web \\ Domaine",
+      "backend.pageTree.language.label": "Langue",
+      "backend.layout.noLayoutSpecified": "Aucun layout n'est specifie pour cette page. Un layout doit être assigné au page si vous voulez ajoutez/modifiez les elements de contenu.",
+      "backend.menu.web": "Web",
+      "backend.menu.web.page": "Page",
+      "backend.menu.web.history": "Historique / Restauration",
+      "backend.menu.media": "Media",
+      "backend.menu.cache": "Cache",
+      "backend.menu.cache.clearContent": "Suppression cache pour le contenu",
+      "backend.menu.cache.clearConfiguration": "Suppression cache pour la configuration",
+      "backend.menu.cache.clearMemcache": "Suppression cache Memcache"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "ThemeBootstrap": {
+    "en_US": {
+      "backend.themeBootstrap.layout.container.header": "Header section",
+      "backend.themeBootstrap.layout.container.leftColumn": "Left column",
+      "backend.themeBootstrap.layout.container.rightColumn": "Right column"
+    },
+    "ro_RO": {
+      "backend.themeBootstrap.layout.container.header": "Secţiunea antet",
+      "backend.themeBootstrap.layout.container.leftColumn": "Coloana din stînga",
+      "backend.themeBootstrap.layout.container.rightColumn": "Coloana din dreapta"
+    },
+    "fr_FR": {
+      "backend.themeBootstrap.layout.container.header": "Section entet",
+      "backend.themeBootstrap.layout.container.leftColumn": "Colonne gauche",
+      "backend.themeBootstrap.layout.container.rightColumn": "Colonne droite"
+    }
+  }
+}

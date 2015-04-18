@@ -1,0 +1,1 @@
+<p>This is a <strong>TEST</strong> partial</p>

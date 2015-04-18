@@ -11,9 +11,20 @@
 namespace Core\System\View {
 
 	use Core\Mvc\View\PageView;
+	use Core\Utility;
 
 	class BackendPageView extends PageView {
 
+		public function setLayoutFromTemplate($template) {
+			$this->_layout = Utility::createInstance("\\Core\\System\\View\\BackendLayout");
+			$this->_layout
+				->setPage($this)
+				->setTemplate($template);
+		}
+
+		public function render() {
+			return $this->getLayout()->render();
+		}
 	}
 
 }

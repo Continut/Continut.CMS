@@ -26,7 +26,7 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 				$title = "<div class='panel-heading'><strong>$title</strong></div>";
 			}
 			$value = $this->truncate(strip_tags($this->getValue()), 200);
-			return "<div class='panel panel-backend-content'>" . $title . "<div class='panel-body hidden-xs'>$value</div></div>";
+			return "<div class='panel panel-backend-content'>" . $title . "<div class='panel-body'>$value</div></div>";
 		}
 
 		/**
@@ -58,7 +58,7 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 					" | Action: " . $configuration["plugin"]["controller"] .
 					"->" . $configuration["plugin"]["action"];
 			}
-			return "<div class='panel panel-backend-content'>" . $title . "<div class='panel-body hidden-xs'>$value</div></div>";
+			return "<div class='panel panel-backend-content'>" . $title . "<div class='panel-body'>$value</div></div>";
 		}
 
 		/**
@@ -90,7 +90,7 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 			);
 			$value = $container->render();
 
-			return $title . "<div class='panel-body hidden-xs'>$value</div>";;
+			return $title . "<div class='panel-body'>$value</div>";;
 		}
 
 		private function truncate($text, $chars = 25) {

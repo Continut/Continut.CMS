@@ -176,6 +176,8 @@ namespace Core {
 				if (!file_exists($folderPath . DS . "configuration.json")) {
 					throw new Tools\Exception("configuration.json file not found for extension " . $folderName);
 				}
+				// also load localizations for the extension, if available
+				static::helper("Localization")->loadLabelsFromFile($folderPath . DS . "labels_" . strtolower(static::$applicationScope) .  ".json");
 				static::$extensionsConfiguration = array_merge(static::$extensionsConfiguration, json_decode(file_get_contents($folderPath . DS . "configuration.json"), true));
 			}
 		}
@@ -239,6 +241,11 @@ namespace Core {
 			}
 
 			return $viewContent;
+		}
+
+		public static function getTemplateFileFromPath($extensionName, $type = "Templates", $pathToFile = "") {
+			$extensionType = static::getExtensionSettings($extensionName)["type"];
+			return "/Extensions/$extensionType/$extensionName/Resources/Private/Frontend/$type/$pathToFile";
 		}
 
 		/**

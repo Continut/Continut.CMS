@@ -99,14 +99,7 @@ HER;
 		 * @return $this
 		 */
 		public function addJsAsset($configuration) {
-			$id = $configuration["identifier"];
-			$assetPath = '<script type="text/javascript" src="' . Utility::getAssetPath($configuration["file"], $configuration["extension"], "JavaScript") . '"></script>';
-
-			if (isset($configuration["before"])) {
-				$this->_assets["js"] = Utility::arrayInsertBefore($this->_assets["js"], $configuration["before"], $id, $assetPath);
-			} else {
-				$this->_assets["js"][$id] = $assetPath;
-			}
+			$this->addAsset($configuration, "JavaScript");
 
 			return $this;
 		}
@@ -119,9 +112,42 @@ HER;
 		 * @return $this
 		 */
 		public function addCssAsset($configuration) {
-			$this->_assets["css"][$configuration["identifier"]] = '<link rel="stylesheet" type="text/css" href="' . Utility::getAssetPath($configuration["file"], $configuration["extension"], "Css") . '" />';
+			$this->addAsset($configuration, "Css");
 
 			return $this;
+		}
+
+		/**
+		 * Add an asset by type. Currently only supports Css and Javascript files
+		 *
+		 * @param $configuration
+		 * @param $type
+		 *
+		 */
+		protected function addAsset($configuration, $type) {
+			if (isset($configuration["external"]) && $configuration["external"] == TRUE) {
+				$filePath = $configuration["file"];
+			} else {
+				$filePath = Utility::getAssetPath($configuration["file"], $configuration["extension"], $type);
+			}
+
+			$id = $configuration["identifier"];
+
+			if ($type == "Css") {
+				$this->_assets[$type][$id] = '<link rel="stylesheet" type="text/css" href="' . $filePath . '" />';
+			}
+			if ($type == "JavaScript") {
+				$this->_assets[$type][$id] = '<script type="text/javascript" src="' . $filePath . '"></script>';
+			}
+
+			if (isset($configuration["before"])) {
+				$this->_assets[$type] = Utility::arrayInsertBefore(
+					$this->_assets[$type],
+					$configuration["before"],
+					$id,
+					$this->_assets[$type][$id]
+				);
+			}
 		}
 
 		/**

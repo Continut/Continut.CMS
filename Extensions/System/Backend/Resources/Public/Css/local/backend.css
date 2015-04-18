@@ -69,6 +69,14 @@ body, html {
 	font-size: 1.2em;
 }
 
+.tree-filter {
+	margin-top: 10px;
+}
+
+.entire-area {
+	width: 100%;
+}
+
 #content {
 	padding-top: 15px;
 }
@@ -106,7 +114,8 @@ ul.jqtree-tree li.jqtree-folder {
 }
 
 /* overwrite general styles */
-.form-control {
+.form-control,
+.input-group-addon {
 	border-radius: 0;
 }
 
@@ -186,4 +195,13 @@ ul.jqtree-tree li.jqtree-folder {
 
 .content-drag-sender.pep-active .panel-body {
 	display: none;
+}
+
+/* fontawesome */
+.fa-disabled {
+	color: #dcdcdc;
+}
+
+.jqtree-selected > .jqtree-element > .fa-disabled {
+	color: white;
 }

@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-sm-4">
-		<div class="panel panel-success">
+		<div class="panel panel-warning">
 			<div class="panel-heading">
 				<div class="panel-title">LEFT</div>
 			</div>
@@ -10,7 +10,7 @@
 		</div>
 	</div>
 	<div class="col-sm-4">
-		<div class="panel panel-success">
+		<div class="panel panel-warning">
 			<div class="panel-heading">
 				<div class="panel-title">CENTER</div>
 			</div>
@@ -20,7 +20,7 @@
 		</div>
 	</div>
 	<div class="col-sm-4">
-		<div class="panel panel-success">
+		<div class="panel panel-warning">
 			<div class="panel-heading">
 				<div class="panel-title">RIGHT</div>
 			</div>

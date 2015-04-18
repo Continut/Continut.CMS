@@ -13,11 +13,11 @@
     "backend": {
       "mainMenu": {
         "module_web": {
-          "label": "Web",
+          "label": "backend.menu.web",
           "icon": "fa fa-fw fa-globe",
           "items": {
             "page": {
-              "label": "Page",
+              "label": "backend.menu.web.page",
               "icon": "fa fa-fw fa-file-o",
               "extension": "Backend",
               "controller": "Index",
@@ -25,7 +25,7 @@
             },
             "divider": "",
             "recovery": {
-              "label": "History / Recovery",
+              "label": "backend.menu.web.history",
               "icon": "fa fa-fw fa-recycle",
               "extension": "Backend",
               "controller": "Backend/Recovery",
@@ -34,26 +34,26 @@
           }
         },
         "module_media": {
-          "label": "Media / Files",
+          "label": "backend.menu.media",
           "icon": "fa fa-fw fa-picture-o"
         }
       },
       "secondaryMenu": {
         "module_cache": {
-          "label": "Cache",
+          "label": "backend.menu.cache",
           "icon": "fa fa-fw fa-hdd-o",
           "items": {
             "cache_content": {
-              "label": "Clear content cache",
+              "label": "backend.menu.cache.clearContent",
               "icon": "fa fa-fw fa-trash-o text-danger"
             },
             "cache_configuration": {
-              "label": "Clear configuration cache",
+              "label": "backend.menu.cache.clearConfiguration",
               "icon": "fa fa-fw fa-ban text-danger"
             },
             "divider": "",
             "cache_memcache": {
-              "label": "Clear memcache cache",
+              "label": "backend.menu.cache.clearMemcache",
               "icon": "fa fa-fw fa-angle-double-right text-danger"
             }
           }

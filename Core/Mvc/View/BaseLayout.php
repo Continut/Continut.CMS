@@ -12,11 +12,7 @@ namespace Core\Mvc\View {
 
 	use Core\Tools\Exception;
 
-	class BaseLayout {
-		/**
-		 * @var string Layout template to use
-		 */
-		protected $_template;
+	class BaseLayout extends BaseView {
 
 		/**
 		 * @var PageView the Pageview this layout is linked to
@@ -24,23 +20,24 @@ namespace Core\Mvc\View {
 		protected $_page = NULL;
 
 		/**
-		 * Set layout template file
+		 * Tree of elements to render by this layout
 		 *
-		 * @param string $template
-		 *
-		 * @return $this
+		 * @var mixed
 		 */
-		public function setTemplate($template) {
-			$this->_template = $template;
+		protected $_elements;
 
-			return $this;
+		/**
+		 * @return mixed
+		 */
+		public function getElements() {
+			return $this->_elements;
 		}
 
 		/**
-		 * @return string
+		 * @param $elements
 		 */
-		public function getTemplate() {
-			return $this->_template;
+		public function setElements($elements) {
+			$this->_elements = $elements;
 		}
 
 		/**
@@ -71,8 +68,7 @@ namespace Core\Mvc\View {
 		public function render() {
 			$fullpath = __ROOTCMS__ . $this->_template;
 			if (!is_file($fullpath)) {
-				return "No layout has been specified for this page. You need to assing a layout to this page if you want
-				 to be able to add/edit content elements";
+				return $this->__("backend.layout.noLayoutSpecified");
 			} else {
 				ob_start();
 				include_once $fullpath;
@@ -81,12 +77,22 @@ namespace Core\Mvc\View {
 		}
 
 		/**
-		 * @param string $partial Renders a partial
+		 * Show all content from a container
 		 *
-		 * @return string
+		 * @param $id Id if the container to show
 		 */
-		public function renderPartial($partial) {
-			echo "Partials not yet implemented :)";
+		public function showContainerColumn($id) {
+			if (empty($this->_elements))
+				return;
+
+			$htmlElements = "";
+
+			foreach ($this->getElements() as $element) {
+				if ($element->getColumn() == $id) {
+					$htmlElements .= $element->render($element->children);
+				}
+			}
+			echo $htmlElements;
 		}
 	}
 
