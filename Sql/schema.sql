@@ -1,12 +1,8 @@
-/* Create our database */
-
-CREATE DATABASE `continutcms`; /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */
-
 /* System pages */
 
 CREATE TABLE `sys_pages` (
   `uid` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'page unique id',
-  `parent_uid` int(11) unsigned DEFAULT NULL COMMENT 'the parent page uid',
+  `parent_uid` int(11) unsigned DEFAULT 0 COMMENT 'the parent page uid',
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'page title',
   `language_iso3` varchar(3) COLLATE utf8_unicode_ci NOT NULL COMMENT 'iso3 code for the language',
   `is_visible` tinyint(1) DEFAULT '0' COMMENT 'is the page visible?',
