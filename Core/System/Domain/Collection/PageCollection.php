@@ -90,9 +90,6 @@ namespace Core\System\Domain\Collection {
 			if (sizeof($children) > 0) {
 				$tree = reset($children);
 			}
-			/*if (isset($children[0])) {
-				$tree = $children[0];
-			}*/
 
 			return $tree;
 		}

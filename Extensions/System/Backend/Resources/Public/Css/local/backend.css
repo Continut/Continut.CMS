@@ -91,7 +91,32 @@ li a.helper-icon {
 .page-panel {
 	margin-top: 10px;
 	box-shadow: 0 0 4px #666;
+}
 
+.panel-hidden {
+	opacity: 0.5;
+}
+
+/* create new element wizard */
+.tab-elements .media-object {
+	float: left;
+	margin-right: 10px;
+}
+
+.tab-elements a {
+	color: inherit;
+	overflow: hidden;
+}
+
+.tab-elements p {
+	font-size: 12px;
+	line-height: 1.2em;
+	margin-bottom: 5px;
+}
+
+.tab-elements p.title {
+	font-weight: bold;
+	font-size: 14px;
 }
 
 /* jqtree */
@@ -167,6 +192,10 @@ ul.jqtree-tree li.jqtree-folder {
 .btn-backend:hover{
 	background-color: #3A4450;
 	color: white;
+}
+
+.btn-sm, .btn-group-sm > .btn {
+	border-radius: 0;
 }
 
 /* pep drag and drop */

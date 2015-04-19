@@ -23,7 +23,9 @@
               "controller": "Index",
               "action": "page"
             },
-            "divider": "",
+            "divider": {
+              "type": "divider"
+            },
             "recovery": {
               "label": "backend.menu.web.history",
               "icon": "fa fa-fw fa-recycle",
@@ -32,6 +34,82 @@
               "action": "index"
             }
           }
+        },
+        "module_users": {
+          "label": "backend.menu.users",
+          "icon": "fa fa-fw fa-users",
+          "items": {
+            "header_backend": {
+              "label": "backend.menu.users.backend.header",
+              "type": "header"
+            },
+            "backend_users_all": {
+              "label": "backend.menu.users.backend.all",
+              "icon": "fa fa-fw fa-users",
+              "extension": "Backend",
+              "controller": "Users",
+              "action": "test"
+            },
+            "backend_user_add": {
+              "label": "backend.menu.users.backend.add",
+              "icon": "fa fa-fw fa-plus",
+              "extension": "Backend",
+              "controller": "Users",
+              "action": "test"
+            },
+            "backend_usergroup_all": {
+              "label": "backend.menu.usergroups.backend.all",
+              "icon": "fa fa-fw fa-users",
+              "extension": "Backend",
+              "controller": "Users",
+              "action": "test"
+            },
+            "backend_usergroup_add": {
+              "label": "backend.menu.usergroups.backend.add",
+              "icon": "fa fa-fw fa-plus",
+              "extension": "Backend",
+              "controller": "Users",
+              "action": "test"
+            },
+            "divider_groups": {
+              "type": "divider"
+            },
+            "header_frontend": {
+              "label": "backend.menu.users.frontend.header",
+              "type": "header"
+            },
+            "frontend_users_all": {
+              "label": "backend.menu.users.frontend.all",
+              "icon": "fa fa-fw fa-users",
+              "extension": "Backend",
+              "controller": "Users",
+              "action": "test"
+            },
+            "frontend_user_add": {
+              "label": "backend.menu.users.frontend.add",
+              "icon": "fa fa-fw fa-plus",
+              "extension": "Backend",
+              "controller": "Users",
+              "action": "test"
+            },
+            "frontend_usergroup_all": {
+              "label": "backend.menu.usergroups.frontend.all",
+              "icon": "fa fa-fw fa-users",
+              "extension": "Backend",
+              "controller": "Users",
+              "action": "test"
+            },
+            "frontend_usergroup_add": {
+              "label": "backend.menu.usergroups.frontend.add",
+              "icon": "fa fa-fw fa-plus",
+              "extension": "Backend",
+              "controller": "Users",
+              "action": "test"
+            }
+          },
+          "extension": "Backend",
+          "controller": "Users",
+          "action": ""
         },
         "module_media": {
           "label": "backend.menu.media",
@@ -51,7 +129,9 @@
               "label": "backend.menu.cache.clearConfiguration",
               "icon": "fa fa-fw fa-ban text-danger"
             },
-            "divider": "",
+            "divider": {
+              "type": "divider"
+            },
             "cache_memcache": {
               "label": "backend.menu.cache.clearMemcache",
               "icon": "fa fa-fw fa-angle-double-right text-danger"

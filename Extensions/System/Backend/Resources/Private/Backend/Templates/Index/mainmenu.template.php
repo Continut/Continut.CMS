@@ -11,8 +11,10 @@
 			</a>
 			<ul class="dropdown-menu" role="menu">
 			<?php foreach ($menuItem["items"] as $identifier => $submenuItem): ?>
-				<?php if ($identifier == "divider"): ?>
+				<?php if (isset($submenuItem["type"]) && ($submenuItem["type"] == "divider")): ?>
 				<li class="divider"></li>
+				<?php elseif (isset($submenuItem["type"]) && ($submenuItem["type"] == "header")): ?>
+					<li class="dropdown-header" role="presentation"><?= $this->__($submenuItem["label"]) ?></li>
 				<?php else: ?>
 				<li>
 					<a href="<?= $this->helper("Url")->linkToAction($submenuItem["extension"], $submenuItem["controller"], $submenuItem["action"]) ?>">
@@ -52,7 +54,7 @@
 			</a>
 			<ul class="dropdown-menu" role="menu">
 				<?php foreach ($menuItem["items"] as $identifier => $submenuItem): ?>
-					<?php if ($identifier == "divider"): ?>
+					<?php if (isset($submenu["type"]) && $submenuItem["type"] == "divider"): ?>
 						<li class="divider"></li>
 					<?php else: ?>
 						<li>

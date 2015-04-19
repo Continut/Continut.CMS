@@ -150,5 +150,9 @@ namespace Core\Mvc\View {
 		public function __($labelKey) {
 			return Utility::helper("Localization")->translate($labelKey);
 		}
+
+		public function publicAsset($assetName, $extension) {
+			return Utility::getAssetPath($assetName, $extension);
+		}
 	}
 }

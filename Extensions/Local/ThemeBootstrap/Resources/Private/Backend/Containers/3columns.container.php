@@ -5,7 +5,7 @@
 				<div class="panel-title">LEFT</div>
 			</div>
 			<div class="panel-body">
-				<?php $this->showContainerColumn(4); ?>
+				<?= $this->showContainerColumn(4); ?>
 			</div>
 		</div>
 	</div>
@@ -15,7 +15,7 @@
 				<div class="panel-title">CENTER</div>
 			</div>
 			<div class="panel-body">
-				<?php $this->showContainerColumn(5); ?>
+				<?= $this->showContainerColumn(5); ?>
 			</div>
 		</div>
 	</div>
@@ -25,7 +25,7 @@
 				<div class="panel-title">RIGHT</div>
 			</div>
 			<div class="panel-body">
-				<?php $this->showContainerColumn(6); ?>
+				<?= $this->showContainerColumn(6); ?>
 			</div>
 		</div>
 	</div>

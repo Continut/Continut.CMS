@@ -70,4 +70,11 @@
 				$('#page-visibility-menu').html(data);
 			});
 	});
+	$('.content-wizard').on('click', function(e) {
+		e.preventDefault();
+		BootstrapDialog.show({
+			title: '<?= $this->__("backend.content.wizard.create.title") ?>',
+			message: $('<div></div>').load('<?= $this->helper("Url")->linkToAction("Backend", "Content", "wizard") ?>')
+		})
+	});
 </script>

@@ -9,7 +9,7 @@
 			<div class="panel-body">
 				<div class="content-drag-receiver"></div>
 				<?php $this->showContainerColumn(1); ?>
-				<a class="btn btn-sm btn-success" href=""><i class="fa fa-plus fa-fw"></i> <?= $this->__("backend.content.addNew") ?></a>
+				<a class="btn btn-sm btn-success content-wizard" title="<?= $this->__("backend.content.addNew") ?>" href=""><i class="fa fa-plus fa-fw"></i></a>
 			</div>
 		</div>
 	</div>
@@ -23,7 +23,7 @@
 			</div>
 			<div class="panel-body">
 				<?php $this->showContainerColumn(2); ?>
-				<a class="btn btn-sm btn-success" href=""><i class="fa fa-plus fa-fw"></i> <?= $this->__("backend.content.addNew") ?></a>
+				<a class="btn btn-sm btn-success content-wizard" title="<?= $this->__("backend.content.addNew") ?>" href=""><i class="fa fa-plus fa-fw"></i></a>
 			</div>
 		</div>
 	</div>
@@ -34,7 +34,7 @@
 			</div>
 			<div class="panel-body">
 				<?php $this->showContainerColumn(3); ?>
-				<a class="btn btn-sm btn-success" href=""><i class="fa fa-plus fa-fw"></i> <?= $this->__("backend.content.addNew") ?></a>
+				<a class="btn btn-sm btn-success content-wizard" title="<?= $this->__("backend.content.addNew") ?>" href=""><i class="fa fa-plus fa-fw"></i></a>
 			</div>
 		</div>
 	</div>

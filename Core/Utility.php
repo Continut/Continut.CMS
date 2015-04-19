@@ -276,15 +276,14 @@ namespace Core {
 		 * Return a Public asset, be it a CSS file, JS file or anything inside Resources/Public
 		 * @param string $resourceName
 		 * @param string $contextExtension
-		 * @param string $additionalPath
 		 *
 		 * @return string
 		 * @throws Tools\Exception
 		 */
-		public static function getAssetPath($resourceName, $contextExtension, $additionalPath = "") {
+		public static function getAssetPath($resourceName, $contextExtension) {
 			$extensionType = static::getExtensionSettings($contextExtension)["type"];
 
-			$resourcePath = "Extensions/$extensionType/$contextExtension/Resources/Public/$additionalPath/$resourceName";
+			$resourcePath = "Extensions/$extensionType/$contextExtension/Resources/Public/$resourceName";
 
 			return $resourcePath;
 		}

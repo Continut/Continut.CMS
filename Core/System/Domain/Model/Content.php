@@ -20,6 +20,8 @@ namespace Core\System\Domain\Model {
 
 		protected $parent_uid;
 
+		protected $is_visible;
+
 		/**
 		 * @var \Core\Mvc\View\PageView Link to the parent PageView
 		 */
@@ -63,6 +65,22 @@ namespace Core\System\Domain\Model {
 		 */
 		public function getPage() {
 			return $this->_page;
+		}
+
+		/**
+		 * @return mixed
+		 */
+		public function getIsVisible()
+		{
+			return $this->is_visible;
+		}
+
+		/**
+		 * @param mixed $is_visible
+		 */
+		public function setIsVisible($is_visible)
+		{
+			$this->is_visible = $is_visible;
 		}
 
 		/**

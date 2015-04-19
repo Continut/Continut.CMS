@@ -21,12 +21,9 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 		 * @return string
 		 */
 		public function getContentValue() {
-			$title = $this->getTitle();
-			if (!empty($title)) {
-				$title = "<div class='panel-heading'><strong>$title</strong></div>";
-			}
-			$value = $this->truncate(strip_tags($this->getValue()), 200);
-			return "<div class='panel panel-backend-content'>" . $title . "<div class='panel-body'>$value</div></div>";
+			$title = $this->getContentTitle();
+			$value = Utility::helper('String')->truncate(Utility::helper('String')->stripTags($this->getValue()), 200);
+			return $this->formatBlock("content", $title, $value);
 		}
 
 		/**
@@ -36,10 +33,8 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 		 * @throws \Core\Tools\Exception
 		 */
 		public function getPluginValue() {
-			$title = $this->getTitle();
-			if (!empty($title)) {
-				$title = "<div class='panel-heading'><strong>$title</strong></div>";
-			}
+			$title = $this->getContentTitle();
+
 			$configuration = json_decode($this->getValue(), TRUE);
 
 			$extensionSettings = Utility::getExtensionSettings($configuration["plugin"]["extension"]);
@@ -58,7 +53,7 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 					" | Action: " . $configuration["plugin"]["controller"] .
 					"->" . $configuration["plugin"]["action"];
 			}
-			return "<div class='panel panel-backend-content'>" . $title . "<div class='panel-body'>$value</div></div>";
+			return $this->formatBlock("plugin", $title, $value);
 		}
 
 		/**
@@ -70,10 +65,7 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 		 * @throws \Core\Tools\Exception
 		 */
 		public function getContainerValue($elements) {
-			$title = $this->getTitle();
-			if (!empty($title)) {
-				$title = "<div class='panel-heading'><strong>$title</strong></div>";
-			}
+			$title = $this->getContentTitle();
 
 			$configuration = json_decode($this->getValue(), TRUE);
 
@@ -90,21 +82,78 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 			);
 			$value = $container->render();
 
-			return $title . "<div class='panel-body'>$value</div>";;
+			return $this->formatBlock("container", $title, $value);
 		}
 
-		private function truncate($text, $chars = 25) {
-			$initialText = $text;
-			$text = $text . " ";
-			$text = mb_substr($text, 0, $chars);
-			$text = mb_substr($text, 0, mb_strrpos($text, " "));
-			if (mb_strlen($text) < mb_strlen($initialText)) {
-				if ((mb_strlen($text) == 0) && mb_strlen($initialText) > 0) {
-					$text = mb_substr($initialText, 0, $chars);
-				}
-				$text = $text . "...";
+		/**
+		 * Returns the title of a content element or a dummy text, if no title is defined
+		 *
+		 * @return string
+		 */
+		protected function getContentTitle() {
+			$title = $this->getTitle();
+
+			if ($title == "") {
+				$title = Utility::helper("Localization")->translate("backend.content.noTitle");
 			}
-			return $text;
+
+			return $title;
+		}
+
+		/**
+		 * Renders the backend editable part of a content element
+		 *
+		 * @param string $type    The type of content element we're formating
+		 * @param string $title   The title of the content element, if any
+		 * @param string $content The content of the element
+		 *
+		 * @return string
+		 */
+		protected function formatBlock($type, $title, $content) {
+			$linkToEdit   = sprintf('<a title="%s" class="btn btn-default content-operation-link" href="%s"><i class="fa fa-pencil fa-fw"></i></a>',
+				Utility::helper("Localization")->translate("backend.content.operation.edit"),
+				Utility::helper("Url")->linkToAction("Backend", "Content", "edit", ["uid" => $this->getUid()])
+			);
+
+			$linkToDelete = sprintf('<a title="%s" class="btn btn-danger content-operation-link" href="%s"><i class="fa fa-trash-o fa-fw"></i></a>',
+				Utility::helper("Localization")->translate("backend.content.operation.delete"),
+				Utility::helper("Url")->linkToAction("Backend", "Content", "delete", ["uid" => $this->getUid()])
+			);
+
+			$linkToCopy   = sprintf('<a title="%s" class="btn btn-default content-operation-link" href="%s"><i class="fa fa-copy fa-fw"></i></a>',
+				Utility::helper("Localization")->translate("backend.content.operation.copy"),
+				Utility::helper("Url")->linkToAction("Backend", "Content", "copy", ["uid" => $this->getUid()])
+			);
+
+			$linkToHide   = sprintf('<a title="%s" class="btn btn-default content-operation-link" href="%s"><i class="fa fa-eye fa-fw"></i></a>',
+				Utility::helper("Localization")->translate("backend.content.operation.hide"),
+				Utility::helper("Url")->linkToAction("Backend", "Content", "toggleVisibility", ["uid" => $this->getUid(), "show" => 0])
+			);
+
+			$linkToShow   = sprintf('<a title="%s" class="btn btn-default content-operation-link" href="%s"><i class="fa fa-eye-slash text-danger fa-fw"></i></a>',
+				Utility::helper("Localization")->translate("backend.content.operation.show"),
+				Utility::helper("Url")->linkToAction("Backend", "Content", "toggleVisibility", ["uid" => $this->getUid(), "show" => 1])
+			);
+
+			if ($this->getIsVisible()) {
+				$visibilityLink = $linkToHide;
+				$visibilityClass = "panel-visible";
+			} else {
+				$visibilityLink = $linkToShow;
+				$visibilityClass = "panel-hidden";
+				$title .= Utility::helper("Localization")->translate("backend.content.headerIsHidden");
+			}
+
+			$operationLinks = sprintf('<div class="btn-group btn-group-sm pull-right" role="group" aria-label="Element actions">%s</div>',
+				$linkToEdit . $linkToCopy . $visibilityLink . $linkToDelete);
+
+			$moveElementLink = sprintf('<a class="btn btn-default btn-sm drag-controller" title="%s"><i class="fa fa-fw fa-arrows"></i></a>',
+				Utility::helper("Localization")->translate("backend.content.operation.move")
+			);
+
+			$overallWrap = '<div class="panel panel-backend-content %s"><div class="panel-heading">%s <strong>%s</strong>%s</div><div class="panel-body">%s</div></div>';
+
+			return sprintf($overallWrap, $visibilityClass, $moveElementLink, $title, $operationLinks, $content);
 		}
 	}
 

@@ -35,7 +35,9 @@
               "controller": "Backend/News",
               "action": "createNews"
             },
-            "divider": "",
+            "divider": {
+              "type": "divider"
+            },
             "show_categories": {
               "label": "View all news categories",
               "icon": "fa fa-fw fa-cubes",

@@ -10,6 +10,8 @@
  */
 namespace Core\Mvc\View {
 
+	use Core\Utility;
+
 	class BackendContainer {
 		/**
 		 * @var array List of children elements added to container
@@ -33,6 +35,8 @@ namespace Core\Mvc\View {
 		 */
 		protected $_title;
 
+		protected $_uid;
+
 		/**
 		 * @param BaseLayout $layout
 		 */
@@ -48,10 +52,35 @@ namespace Core\Mvc\View {
 		}
 
 		/**
+		 * @return mixed
+		 */
+
+		public function getUid()
+		{
+			return $this->_uid;
+		}
+
+		/**
+		 * @param mixed $uid
+		 *
+		 * @return $this
+		 */
+		public function setUid($uid)
+		{
+			$this->_uid = $uid;
+
+			return $this;
+		}
+
+		/**
 		 * @param string $title
+		 *
+		 * @return $this
 		 */
 		public function setTitle($title) {
 			$this->_title = $title;
+
+			return $this;
 		}
 
 		/**
@@ -94,24 +123,34 @@ namespace Core\Mvc\View {
 		 * Assign the list of elements that this container must render
 		 *
 		 * @param $elements array
+		 *
+		 * @return $this
 		 */
 		public function setElements($elements) {
 			$this->_elements = $elements;
+
+			return $this;
 		}
 
 		/**
 		 * Add content element to container
 		 *
 		 * @param $element
+		 *
+		 * @return $this
 		 */
 		public function addElement($element) {
 			$this->_elements[$element->getUid()] = $element;
+
+			return $this;
 		}
 
 		/**
 		 * Show all content from a child container, can be called recursively inside other containers
 		 *
 		 * @param $id Id if the container to show
+		 *
+		 * @return string
 		 */
 		public function showContainerColumn($id) {
 			$htmlElements = "";
@@ -122,7 +161,18 @@ namespace Core\Mvc\View {
 				}
 			}
 
-			echo $htmlElements;
+			return $htmlElements;
+		}
+
+		/**
+		 * Returns a localized label by its key
+		 *
+		 * @param string $labelKey
+		 *
+		 * @return string
+		 */
+		public function __($labelKey) {
+			return Utility::helper("Localization")->translate($labelKey);
 		}
 
 	}
