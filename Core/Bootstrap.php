@@ -60,6 +60,10 @@ namespace Core {
 			spl_autoload_register([$this, "loadClasses"], TRUE, FALSE);
 
 			Utility::setApplicationScope($applicationScope, $environment);
+			// Set multibyte encoding to utf-8 and use the mb_ functions for proper multilanguage handling
+			// see: http://php.net/manual/en/ref.mbstring.php
+			mb_internal_encoding("UTF-8");
+
 			return $this;
 		}
 

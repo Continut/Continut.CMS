@@ -37,16 +37,21 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			$domainsCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\DomainCollection");
 			$domainsCollection->where("is_visible = :is_visible ORDER BY sorting ASC", ["is_visible" => 1]);
 
+			$languagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\LanguageCollection");
+			$languagesCollection->where("domain_uid = :domain_uid ORDER BY sorting ASC", ["domain_uid" => $domainsCollection->getFirst()->getUid()]);
+
 			$this->getView()->assign("domains", $domainsCollection);
+			$this->getView()->assign("languages", $languagesCollection);
 		}
 
 		/**
 		 * Called when the pagetree changes or needs to be shown for the first time. Responds with a JSON string of the pagetree
 		 *
+		 * @param string $term Search term to use
 		 * @return string
 		 * @throws \Core\Tools\Exception
 		 */
-		public function pageTreeAction() {
+		public function pageTreeAction($term = "") {
 			$pagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection");
 
 			$domainUid = $this->getRequest()->getArgument("domain_uid", 0);
@@ -59,7 +64,14 @@ namespace Extensions\System\Backend\Classes\Controllers {
 					->getUid();
 			}
 			// get all the pages that belong to this domain
-			$pagesCollection->where("domain_uid = :domain_uid", ["domain_uid" => $domainUid]);
+			if (mb_strlen($term) > 0) {
+				$pagesCollection->where("domain_uid = :domain_uid AND title LIKE :title", [
+					"domain_uid" => $domainUid,
+					"title" => "%$term%"
+				]);
+			} else {
+				$pagesCollection->where("domain_uid = :domain_uid", ["domain_uid" => $domainUid]);
+			}
 
 			$languagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\LanguageCollection");
 			$languagesCollection->where("domain_uid = :domain_uid", ["domain_uid" => $domainUid]);
@@ -70,6 +82,12 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			];
 
 			return json_encode($pagesData, JSON_UNESCAPED_UNICODE);
+		}
+
+		public function searchPageTreeAction() {
+			$term = $this->getRequest()->getArgument("query", "");
+
+			return $this->pageTreeAction($term);
 		}
 
 		/**

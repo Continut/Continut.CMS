@@ -96,9 +96,12 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 		private function truncate($text, $chars = 25) {
 			$initialText = $text;
 			$text = $text . " ";
-			$text = substr($text, 0, $chars);
-			$text = substr($text, 0, strrpos($text, " "));
-			if (strlen($text) < strlen($initialText)) {
+			$text = mb_substr($text, 0, $chars);
+			$text = mb_substr($text, 0, mb_strrpos($text, " "));
+			if (mb_strlen($text) < mb_strlen($initialText)) {
+				if ((mb_strlen($text) == 0) && mb_strlen($initialText) > 0) {
+					$text = mb_substr($initialText, 0, $chars);
+				}
 				$text = $text . "...";
 			}
 			return $text;

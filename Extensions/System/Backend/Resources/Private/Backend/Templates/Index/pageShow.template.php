@@ -25,6 +25,9 @@
 					<i class="fa fa-fw fa-eye-slash text-danger"></i> <?= $this->__("backend.page.notVisibleInMenu") ?>
 				<?php endif; ?>
 			</button>
+			<button type="button" class="btn btn-default" id="page-refresh">
+				<i class="fa fa-fw fa-refresh"></i> <?= $this->__("backend.page.refresh") ?>
+			</button>
 		</div>
 	</div>
 	<div class="col-sm-4">
