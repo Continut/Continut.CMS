@@ -53,7 +53,7 @@ namespace Core\System\Helper {
 				$labels = json_decode(file_get_contents($file), TRUE);
 				foreach ($labels as $extensionName => $languages) {
 					foreach ($languages as $languageCode => $language) {
-						if ($languageCode == "ro_RO") {
+						if ($languageCode == "fr_FR") {
 							$this->_translationLabels = array_merge_recursive($this->_translationLabels, $language);
 						}
 					}

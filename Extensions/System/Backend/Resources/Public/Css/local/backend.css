@@ -97,6 +97,14 @@ li a.helper-icon {
 	opacity: 0.5;
 }
 
+.panel-media {
+	margin-top: 20px;
+}
+
+.panel-media h2.title {
+	margin: 0 20px 0 0;
+}
+
 /* create new element wizard */
 .tab-elements .media-object {
 	float: left;

@@ -30,7 +30,7 @@
 		</li>
 	<?php else: ?>
 		<li>
-			<a href="#">
+			<a href="<?= $this->helper("Url")->linkToAction($menuItem["extension"], $menuItem["controller"], $menuItem["action"]) ?>">
 				<?php if (isset($menuItem["icon"])): ?>
 					<i class="<?= $menuItem["icon"] ?>"></i>
 				<?php endif ?>
@@ -54,7 +54,7 @@
 			</a>
 			<ul class="dropdown-menu" role="menu">
 				<?php foreach ($menuItem["items"] as $identifier => $submenuItem): ?>
-					<?php if (isset($submenu["type"]) && $submenuItem["type"] == "divider"): ?>
+					<?php if (isset($submenuItem["type"]) && $submenuItem["type"] == "divider"): ?>
 						<li class="divider"></li>
 					<?php else: ?>
 						<li>

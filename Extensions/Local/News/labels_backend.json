@@ -1,0 +1,19 @@
+{
+  "News": {
+    "en_US": {
+      "backend.news.header": "News",
+      "backend.news.showAll": "View all news",
+      "backend.news.createNew": "Create new news"
+    },
+    "ro_RO": {
+      "backend.news.header": "Ştiri/Articole",
+      "backend.news.showAll": "Afişează toate ştirile",
+      "backend.news.createNew": "Creare articol nou"
+    },
+    "fr_FR": {
+      "backend.news.header": "Articles",
+      "backend.news.showAll": "Afficher toutes les articles",
+      "backend.news.createNew": "Ajout d'un nouveau article"
+    }
+  }
+}

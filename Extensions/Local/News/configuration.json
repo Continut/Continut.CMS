@@ -18,43 +18,22 @@
     "backend": {
       "mainMenu": {
         "extension_news": {
-          "label": "News",
+          "label": "backend.news.header",
           "icon": "fa fa-fw fa-newspaper-o",
           "items": {
             "show_all": {
-              "label": "View all news",
+              "label": "backend.news.showAll",
               "icon": "fa fa-fw fa-bars",
               "extension": "News",
               "controller": "Backend/News",
               "action": "showNews"
             },
             "add_new": {
-              "label": "Create new news",
+              "label": "backend.news.createNew",
               "icon": "fa fa-fw fa-plus",
               "extension": "News",
               "controller": "Backend/News",
               "action": "createNews"
-            },
-            "divider": {
-              "type": "divider"
-            },
-            "show_categories": {
-              "label": "View all news categories",
-              "icon": "fa fa-fw fa-cubes",
-              "extension": "News",
-              "controller": "Backend/News",
-              "action": "showCategories"
-            }
-          }
-        },
-        "module_media": {
-          "items": {
-            "news_media": {
-              "label": "From extension :)",
-              "icon": "fa fa-fw fa-eye",
-              "extension": "News",
-              "controller": "Index",
-              "action": "index"
             }
           }
         }

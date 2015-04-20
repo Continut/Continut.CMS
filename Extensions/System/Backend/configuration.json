@@ -113,7 +113,10 @@
         },
         "module_media": {
           "label": "backend.menu.media",
-          "icon": "fa fa-fw fa-picture-o"
+          "icon": "fa fa-fw fa-picture-o",
+          "extension": "Backend",
+          "controller": "Media",
+          "action": "index"
         }
       },
       "secondaryMenu": {
@@ -129,7 +132,7 @@
               "label": "backend.menu.cache.clearConfiguration",
               "icon": "fa fa-fw fa-ban text-danger"
             },
-            "divider": {
+            "divider_cache": {
               "type": "divider"
             },
             "cache_memcache": {

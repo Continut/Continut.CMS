@@ -98,7 +98,7 @@
       "backend.content.addNew": "Nouveau element de contenu",
       "backend.content.noTitle": "-- Aucun titre --",
       "backend.content.headerIsHidden": " (Cet element est pour l'instant desactivé)",
-      "backend.content.operation.edit": "Modifie l'element de contenu",
+      "backend.content.operation.edit": "Modifier l'element de contenu",
       "backend.content.operation.delete": "Supprimer l'element de contenu",
       "backend.content.operation.unlink": "Supprimer la reference de l'element",
       "backend.content.operation.copy": "Copier l'element de contenu",
