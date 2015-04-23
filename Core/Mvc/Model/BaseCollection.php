@@ -135,6 +135,7 @@ namespace Core\Mvc\Model {
 			foreach ($this->_elements as $element) {
 				$dataMapper = $element->dataMapper();
 				$listOfFields = implode(",", array_keys($dataMapper));
+				$listOfValues = [];
 				// element does not exist, insert it
 				if (is_null($element->getUid())) {
 					foreach ($dataMapper as $key => $value) {

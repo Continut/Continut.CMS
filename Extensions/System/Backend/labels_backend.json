@@ -110,7 +110,7 @@
       "backend.pageTree.domain.label": "Site web \\ Domaine",
       "backend.pageTree.language.label": "Langue",
       "backend.pageTree.findPage": "Filtrer page",
-      "backend.layout.noLayoutSpecified": "Aucun layout n'est specifie pour cette page. Un layout doit être assigné au page si vous voulez ajoutez/modifiez les elements de contenu.",
+      "backend.layout.noLayoutSpecified": "Aucun layout n'est specifie pour cette page. Un layout doit être assigné au page si vous voulez ajouter/modifier les elements de contenu.",
       "backend.menu.web": "Web",
       "backend.menu.web.page": "Page",
       "backend.menu.web.history": "Historique / Restauration",

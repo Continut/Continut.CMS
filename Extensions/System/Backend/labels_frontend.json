@@ -1,5 +1,13 @@
 {
   "Backend": {
-
+    "en_US": {
+      "backend.layout.noLayoutSpecified": "Pentru această pagină nu a fost specificat nici un layout. Trebuie să setaţi un layout pentru această pagină dacă doriţi să puteţi adăuga/edita elemente de conţinut."
+    },
+    "ro_RO": {
+      "backend.layout.noLayoutSpecified": "No layout has been specified for this page. You need to assing a layout to this page if you want to be able to add/edit content elements."
+    },
+    "fr_FR": {
+      "backend.layout.noLayoutSpecified": "Aucun layout n'est specifie pour cette page. Un layout doit être assigné au page si vous voulez ajouter/modifier les elements de contenu."
+    }
   }
 }

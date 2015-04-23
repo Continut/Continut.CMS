@@ -49,6 +49,23 @@ namespace Core\System\Helper {
 			}
 			return $index . "?" . http_build_query($params);
 		}
+
+		/**
+		 * Frontend link to a page by using it's id
+		 *
+		 * @param int $pageUid Uid of the page to link to
+		 *
+		 * @return string
+		 */
+		public function linkToPage($pageUid) {
+			$params = [
+				"_extension" => "Frontend",
+				"_controller" => "Index",
+				"_action" => "index",
+				"pid" => $pageUid
+			];
+			return $this->linkTo($params);
+		}
 	}
 
 }

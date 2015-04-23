@@ -59,18 +59,18 @@ namespace Extensions\System\Backend\Classes\Controllers {
 				// get the domains collection
 				$domainsCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\DomainCollection");
 				// and fetch the first visible domain, ordered by sorting
-				$domainUid = $domainsCollection->where("is_visible = :is_visible ORDER BY sorting ASC", ["is_visible" => 1])
+				$domainUid = $domainsCollection->where("is_visible = 1 ORDER BY sorting ASC")
 					->getFirst()
 					->getUid();
 			}
 			// get all the pages that belong to this domain
 			if (mb_strlen($term) > 0) {
-				$pagesCollection->where("domain_uid = :domain_uid AND title LIKE :title", [
+				$pagesCollection->where("domain_uid = :domain_uid AND title LIKE :title ORDER BY sorting ASC", [
 					"domain_uid" => $domainUid,
 					"title" => "%$term%"
 				]);
 			} else {
-				$pagesCollection->where("domain_uid = :domain_uid", ["domain_uid" => $domainUid]);
+				$pagesCollection->where("domain_uid = :domain_uid ORDER BY sorting ASC", ["domain_uid" => $domainUid]);
 			}
 
 			$languagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\LanguageCollection");
@@ -213,6 +213,10 @@ namespace Extensions\System\Backend\Classes\Controllers {
 		public function pageTreeMoveAction() {
 			// We get the id of the page that has been drag & dropped
 			$pageUid = (int)$this->getRequest()->getArgument("movedId");
+			// move type can be "after", "before" or "inside"
+			$moveType = $this->getRequest()->getArgument("position");
+			// new parent to move into, or after
+			$newParentUid = (int)$this->getRequest()->getArgument("newParentId");
 
 			// Then we load it's Page Model
 			$pagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection");
@@ -220,8 +224,66 @@ namespace Extensions\System\Backend\Classes\Controllers {
 
 			// If the page is valid, we change it's parentUid field and then save the value
 			if ($pageModel) {
-				$newParentUid = (int)$this->getRequest()->getArgument("newParentId");
-				$pageModel->setParentUid($newParentUid);
+				switch ($moveType) {
+					// if it's moved inside a page then it's easy, we just get it's parent
+					case "inside":
+						$pageModel->setParentUid($newParentUid);
+						// for jqTree INSIDE is actually when it will be the first child of this parent
+						// so we need to get the current sorting of it's child, if any, and update the sorting
+						$firstChild = $pagesCollection->where("parent_uid = :parent_uid ORDER BY sorting ASC", ["parent_uid" => $newParentUid])
+							->getFirst();
+						// if we found the first child, get it's sorting and increment the rest
+						if ($firstChild) {
+							$pageModel->setSorting($firstChild->getSorting());
+							// then we increment by 1 the sorting of all the other pages AFTER this one
+							$pagesToModify = $pagesCollection->where("sorting >= :sorting_value", ["sorting_value" => $pageModel->getSorting()]);
+							foreach ($pagesToModify->getAll() as $page) {
+								$page->setSorting($page->getSorting() + 1);
+							}
+							$pagesToModify->save();
+						}
+						// if it does not have any children, we can get the last sorting value and increment it by one
+						else
+						{
+							$highestSorting = $pagesCollection->where("is_deleted = 0 ORDER BY sorting DESC")->getFirst();
+							$pageModel->setSorting($highestSorting->getSorting() + 1);
+						}
+						break;
+					// if it's after we need to check if it's on the same level or another one
+					case "after":
+						$otherPage = $pagesCollection->where("uid = :uid", ["uid" => $newParentUid])
+							->getFirst();
+						// if it's on a different level, set the new parent
+						if ($otherPage->getParentUid() != $pageModel->getParentUid()) {
+							$pageModel->setParentUid($otherPage->getParentUid());
+						}
+						// it will be placed AFTER the element, so we increase it's sorting by 1
+						$pageModel->setSorting($otherPage->getSorting() + 1);
+
+						// then we increment by 1 the sorting of all the other pages AFTER this one
+						$pagesToModify = $pagesCollection->where("sorting >= :sorting_value", ["sorting_value" => $pageModel->getSorting()]);
+						foreach ($pagesToModify->getAll() as $page) {
+							$page->setSorting($page->getSorting() + 1);
+						}
+						$pagesToModify->save();
+
+						break;
+					case "before":
+						$otherPage = $pagesCollection->where("uid = :uid", ["uid" => $newParentUid])
+							->getFirst();
+						if ($otherPage->getParentUid() != $pageModel->getParentUid()) {
+							$pageModel->setParentUid($otherPage->getParentUid());
+						} else {
+							$pageModel->setSorting($otherPage->getSorting());
+							// then we increment by 1 the sorting of all the other pages AFTER this one
+							$pagesToModify = $pagesCollection->where("sorting >= :sorting_value", ["sorting_value" => $pageModel->getSorting()]);
+							foreach ($pagesToModify->getAll() as $page) {
+								$page->setSorting($page->getSorting() + 1);
+							}
+							$pagesToModify->save();
+						}
+						break;
+				}
 				$pagesCollection
 					->reset()
 					->add($pageModel)

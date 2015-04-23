@@ -69,6 +69,11 @@ namespace Core\System\Domain\Model {
 		protected $backend_layout;
 
 		/**
+		 * @var int Sorting order
+		 */
+		protected $sorting;
+
+		/**
 		 * Simple datamapper used for the database
 		 * @return array
 		 */
@@ -83,7 +88,8 @@ namespace Core\System\Domain\Model {
 				"is_in_menu"      => $this->is_in_menu,
 				"is_visible"      => $this->is_visible,
 				"frontend_layout" => $this->frontend_layout,
-				"backend_layout"  => $this->backend_layout
+				"backend_layout"  => $this->backend_layout,
+				"sorting"         => $this->sorting
 			];
 		}
 
@@ -105,6 +111,22 @@ namespace Core\System\Domain\Model {
 			$this->is_in_menu = $is_in_menu;
 
 			return $this;
+		}
+
+		/**
+		 * @return int
+		 */
+		public function getSorting()
+		{
+			return $this->sorting;
+		}
+
+		/**
+		 * @param int $sorting
+		 */
+		public function setSorting($sorting)
+		{
+			$this->sorting = $sorting;
 		}
 
 		/**

@@ -34,6 +34,20 @@ namespace Core\System\Helper {
 		}
 
 		/**
+		 * @return array
+		 */
+		public function getTranslationLabels() {
+			return $this->_translationLabels;
+		}
+
+		/**
+		 * @param $translationLabels
+		 */
+		public function setTranslationLabels($translationLabels) {
+			$this->_translationLabels = $translationLabels;
+		}
+
+		/**
 		 * Adds a translated label to the global list
 		 *
 		 * @param string $key

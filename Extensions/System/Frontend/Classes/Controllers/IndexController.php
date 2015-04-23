@@ -25,8 +25,12 @@ namespace Extensions\System\Frontend\Classes\Controllers {
 
 				// Load the page model from the database
 				$pageModel = Utility::createInstance("\\Extensions\\System\\Frontend\\Classes\\Domain\\Collection\\FrontendPageCollection")
-					->where("uid = :uid", ["uid" => $pageUid])
+					->where("uid = :uid AND is_visible = 1 AND is_deleted = 0", ["uid" => $pageUid])
 					->getFirst();
+
+				if (!$pageModel) {
+					throw new \Exception("The page you are looking for does not exist, is disabled or has been deleted.");
+				}
 
 				// load the pageview renderer
 				$pageView = Utility::createInstance("\\Core\\Mvc\\View\\PageView");

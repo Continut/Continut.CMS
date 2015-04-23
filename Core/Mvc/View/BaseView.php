@@ -140,6 +140,10 @@ namespace Core\Mvc\View {
 			return Utility::helper($helperName);
 		}
 
+		public function plugin($extensionName, $controller, $action) {
+			return Utility::callPlugin($extensionName, $controller, $action);
+		}
+
 		/**
 		 * Returns a localized label by its key
 		 *

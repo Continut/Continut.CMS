@@ -7,6 +7,7 @@ $this->getPage()
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12">
+				<?= $this->plugin("ThemeBootstrap", "Menu", "showMenu"); ?>
 				<h1><?= $this->getPage()->getTitle(); ?></h1>
 			</div>
 			<div class="col-sm-8">

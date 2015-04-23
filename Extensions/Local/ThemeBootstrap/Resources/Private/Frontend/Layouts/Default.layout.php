@@ -7,6 +7,7 @@ $this->getPage()
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12">
+			<?= $this->plugin("ThemeBootstrap", "Menu", "showMenu"); ?>
 			<?= $this->partial('ThemeBootstrap', 'Index/index.partial.php'); ?>
 		</div>
 	</div>
