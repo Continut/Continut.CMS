@@ -105,15 +105,15 @@
 						onCreateLi: function(node, $li) {
 							// Add 'icon' span before title
 							var iconClass = 'fa-file';
-							if (node.type == "folder") {
+							/*if (node.type == "folder") {
 								iconClass = 'fa-folder';
-							}
+							}*/
 							var pageIcon = '';
 							switch (node.state) {
-								case "hidden-frontend": pageIcon = '<i class="fa fa-lg tree-icon fa-fw ' + iconClass + ' fa-disabled"></i> '; break;
+								case "hidden-frontend": pageIcon = '<span class="fa-stack"><i class="fa fa-lg tree-icon fa-fw ' + iconClass + ' fa-disabled"></i><i class="fa fa-stack-1x"></i></span> '; break;
 								case "hidden-both":     pageIcon = '<span class="fa-stack"><i class="fa fa-lg tree-icon fa-fw ' + iconClass + ' fa-disabled"></i><i class="fa fa-eye-slash fa-stack-1x text-danger"></i></span> '; break;
 								case "hidden-menu":     pageIcon = '<span class="fa-stack"><i class="fa fa-lg tree-icon fa-fw ' + iconClass + '"></i><i class="fa fa-eye-slash fa-stack-1x text-danger"></i></span> '; break;
-								default:                pageIcon = '<i class="fa fa-lg tree-icon fa-fw ' + iconClass + '"></i> ';
+								default:                pageIcon = '<span class="fa-stack"><i class="fa fa-lg tree-icon fa-fw ' + iconClass + '"></i><i class="fa fa-stack-1x"></i></span> ';
 							}
 							$li.find('.jqtree-title').before(pageIcon);
 						}

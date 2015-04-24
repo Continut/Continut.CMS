@@ -153,8 +153,10 @@ namespace Extensions\System\Backend\Classes\Controllers {
 				->add($pageModel)
 				->save();
 
-			$this->getView()->assign("page", $pageModel);
-			//return json_encode(["visible" => $pageModel->getIsVisible()]);
+			return json_encode([
+				"visible" => $pageModel->getIsVisible(),
+				"pid" => $pageModel->getUid()
+			]);
 		}
 
 		/**
@@ -176,7 +178,11 @@ namespace Extensions\System\Backend\Classes\Controllers {
 				->add($pageModel)
 				->save();
 
-			$this->getView()->assign("page", $pageModel);
+			//$this->getView()->assign("page", $pageModel);
+			return json_encode([
+				"isInMenu" => $pageModel->getIsInMenu(),
+				"pid" => $pageModel->getUid()
+			]);
 		}
 
 		/**

@@ -12,18 +12,12 @@
 	<div class="col-sm-8">
 		<div class="btn-group" role="group">
 			<button type="button" class="btn btn-default" id="page-visibility-frontend">
-				<?php if ($page->getIsVisible()) : ?>
-					<i class="fa fa-fw fa-check"></i> <?= $this->__("backend.page.visibleInFrontend") ?>
-				<?php else: ?>
-					<i class="fa fa-fw fa-close text-danger"></i> <?= $this->__("backend.page.notVisibleInFrontend") ?>
-				<?php endif ?>
+				<span class="element-visible <?= $page->getIsVisible() ? "" : "hide" ?>"><i class="fa fa-fw fa-check"></i> <?= $this->__("backend.page.visibleInFrontend") ?></span>
+				<span class="element-hide <?= $page->getIsVisible() ? "hide" : "" ?>"><i class="fa fa-fw fa-close text-danger"></i> <?= $this->__("backend.page.notVisibleInFrontend") ?></span>
 			</button>
 			<button type="button" class="btn btn-default" id="page-visibility-menu">
-				<?php if ($page->getIsInMenu()) : ?>
-					<i class="fa fa-fw fa-eye"></i> <?= $this->__("backend.page.visibleInMenu") ?>
-				<?php else: ?>
-					<i class="fa fa-fw fa-eye-slash text-danger"></i> <?= $this->__("backend.page.notVisibleInMenu") ?>
-				<?php endif; ?>
+				<span class="element-visible <?= $page->getIsInMenu() ? "" : "hide" ?>"><i class="fa fa-fw fa-eye"></i> <?= $this->__("backend.page.visibleInMenu") ?></span>
+				<span class="element-hide <?= $page->getIsInMenu() ? "hide" : "" ?>"><i class="fa fa-fw fa-eye-slash text-danger"></i> <?= $this->__("backend.page.notVisibleInMenu") ?></span>
 			</button>
 			<button type="button" class="btn btn-default" id="page-refresh">
 				<i class="fa fa-fw fa-refresh"></i> <?= $this->__("backend.page.refresh") ?>
@@ -55,19 +49,39 @@
 	$('#page-visibility-frontend').on('click', function() {
 		$.ajax({
 			url: '<?= $this->helper("Url")->linkToAction("Backend", "Index", "pageToggleVisibility") ?>',
-			data: { page_uid: <?= $page->getUid() ?> }
+			data: { page_uid: <?= $page->getUid() ?> },
+			dataType: 'json'
 		})
 			.done(function( data ) {
-				$('#page-visibility-frontend').html(data);
+				var node = $('#cms_tree').tree('getNodeById', data.pid);
+				if (data.visible) {
+					$('#page-visibility-frontend .element-visible').removeClass("hide");
+					$('#page-visibility-frontend .element-hide').addClass("hide");
+					$(node.element).find(".fa-lg").first().removeClass("fa-disabled");
+				} else {
+					$('#page-visibility-frontend .element-visible').addClass("hide");
+					$('#page-visibility-frontend .element-hide').removeClass("hide");
+					$(node.element).find(".fa-lg").first().addClass("fa-disabled");
+				}
 			});
 	});
 	$('#page-visibility-menu').on('click', function() {
 		$.ajax({
 			url: '<?= $this->helper("Url")->linkToAction("Backend", "Index", "pageToggleMenu") ?>',
-			data: { page_uid: <?= $page->getUid() ?> }
+			data: { page_uid: <?= $page->getUid() ?> },
+			dataType: 'json'
 		})
 			.done(function( data ) {
-				$('#page-visibility-menu').html(data);
+				var node = $('#cms_tree').tree('getNodeById', data.pid);
+				if (data.isInMenu) {
+					$('#page-visibility-menu .element-visible').removeClass("hide");
+					$('#page-visibility-menu .element-hide').addClass("hide");
+					$(node.element).find(".fa-stack-1x").first().removeClass("fa-eye-slash text-danger");
+				} else {
+					$('#page-visibility-menu .element-visible').addClass("hide");
+					$('#page-visibility-menu .element-hide').removeClass("hide");
+					$(node.element).find(".fa-stack-1x").first().addClass("fa-eye-slash text-danger");
+				}
 			});
 	});
 	$('.content-wizard').on('click', function(e) {
