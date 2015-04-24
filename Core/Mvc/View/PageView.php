@@ -128,7 +128,7 @@ HER;
 			if (isset($configuration["external"]) && $configuration["external"] == TRUE) {
 				$filePath = $configuration["file"];
 			} else {
-				$filePath = Utility::getAssetPath($type . DS . $configuration["file"], $configuration["extension"]);
+				$filePath = Utility::getAssetPath($type . "/" . $configuration["file"], $configuration["extension"]);
 			}
 
 			$id = $configuration["identifier"];
