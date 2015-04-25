@@ -11,6 +11,7 @@ CREATE TABLE `sys_pages` (
   `frontend_layout` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'layout template to be used by this page',
   `backend_layout` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'layout used in the backend',
   `cached_path` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'cached breadcrumb path',
+  `sorting` int(11) unsigned DEFAULT '0',
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

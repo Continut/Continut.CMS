@@ -68,7 +68,7 @@
 				oldSearch = term;
 				searchPageSpinner.removeClass("fa-file").addClass("fa-spinner fa-pulse");
 				$.ajax({
-						url: '<?= $this->helper("Url")->linkToAction("Backend", "Index", "searchPageTree") ?>',
+						url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "searchTree") ?>',
 						data: {query: term, domain_uid: $('#select_website').val() }
 					}
 				).done(function (data) {
@@ -92,7 +92,7 @@
 			});
 
 			$.getJSON(
-				'<?= $this->helper("Url")->linkToAction("Backend", "Index", "pageTree") ?>',
+				'<?= $this->helper("Url")->linkToAction("Backend", "Page", "tree") ?>',
 				function(data) {
 					$('#cms_tree').tree({
 						data: data.pages,
@@ -125,7 +125,7 @@
 							// once a node is clicked, load the corresponding page in the right side
 							if (event.node) {
 								$.ajax({
-									url: '<?= $this->helper("Url")->linkToAction("Backend", "Index", "pageShow") ?>',
+									url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "show") ?>',
 									data: {page_uid: event.node.id},
 									beforeSend: function (xhr) {
 										$(event.node.element).find('.jqtree-element').eq(0).append('<span class="pull-right fa fa-spinner fa-pulse"></span>');
@@ -144,7 +144,7 @@
 							event.preventDefault();
 							event.move_info.do_move();
 							$.post(
-								'<?= $this->helper("Url")->linkToAction("Backend", "Index", "pageTreeMove") ?>',
+								'<?= $this->helper("Url")->linkToAction("Backend", "Page", "treeMove") ?>',
 								{
 									movedId: event.move_info.moved_node.id,
 									newParentId: event.move_info.target_node.id,

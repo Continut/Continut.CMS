@@ -126,7 +126,7 @@ namespace Core {
 		/**
 		 * @return \PDO
 		 */
-		public static function database() {
+		public static function getDatabase() {
 			return static::$databaseHandler;
 		}
 

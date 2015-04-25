@@ -99,7 +99,7 @@ namespace Core\Mvc\Model {
 		 */
 		public function where($conditions, $values = []) {
 			$this->_elements = [];
-			$sth = Utility::database()->prepare("SELECT * FROM $this->_tablename WHERE " . $conditions);
+			$sth = Utility::getDatabase()->prepare("SELECT * FROM $this->_tablename WHERE " . $conditions);
 			$sth->execute($values);
 			$sth->setFetchMode(\PDO::FETCH_CLASS, $this->_elementClass);
 			while ($element = $sth->fetch()) {
@@ -117,7 +117,7 @@ namespace Core\Mvc\Model {
 		 * @return mixed
 		 */
 		public function findByUid($uid) {
-			$sth = Utility::database()->prepare("SELECT * FROM $this->_tablename WHERE uid = :uid");
+			$sth = Utility::getDatabase()->prepare("SELECT * FROM $this->_tablename WHERE uid = :uid");
 			$sth->execute(["uid" => $uid]);
 			$sth->setFetchMode(\PDO::FETCH_CLASS, $this->_elementClass);
 
@@ -142,21 +142,30 @@ namespace Core\Mvc\Model {
 						$listOfValues[] = ":" . $key;
 					}
 					$listOfValues = implode(",", $listOfValues);
-					$sth = Utility::database()->prepare("INSERT INTO $this->_tablename ($listOfFields) VALUES ($listOfValues)");
+					$sth = Utility::getDatabase()->prepare("INSERT INTO $this->_tablename ($listOfFields) VALUES ($listOfValues)");
 				// element exists, update it
 				} else {
 					foreach ($dataMapper as $key => $value) {
 						$listOfValues[] = $key . "= :" . $key;
 					}
 					$listOfValues = implode(",", $listOfValues);
-					$sth = Utility::database()->prepare("UPDATE $this->_tablename SET $listOfValues WHERE uid = :uid");
+					$sth = Utility::getDatabase()->prepare("UPDATE $this->_tablename SET $listOfValues WHERE uid = :uid");
 					$dataMapper["uid"] = $element->getUid();
 				}
 				$sth->execute($dataMapper);
 			}
 
 			return $this;
+		}
+
+		public function delete() {
+			foreach ($this->_elements as $element) {
+				if (!is_null($element->getUid)) {
+					$sth = Utility::getDatabase()->prepare("DELETE FROM $this->_tablename WHERE uid = :uid");
+					$sth->execute(["uid" => $element->getUid()]);
+				}
 			}
+		}
 
 		/**
 		 * How many elements do we have in the collection?

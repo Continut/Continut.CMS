@@ -26,7 +26,7 @@
 	</div>
 	<div class="col-sm-4">
 		<div class="btn-group pull-right" role="group">
-			<button type="button" class="btn btn-danger"><i class="fa fa-fw fa-trash"></i> <?= $this->__("backend.page.deletePage") ?></button>
+			<button type="button" class="btn btn-danger" id="page-delete"><i class="fa fa-fw fa-trash"></i> <?= $this->__("backend.page.deletePage") ?></button>
 		</div>
 	</div>
 </div>
@@ -39,7 +39,7 @@
 <script type="text/javascript">
 	$('.page-link').on('click', function() {
 		$.ajax({
-			url: '<?= $this->helper("Url")->linkToAction("Backend", "Index", "pageShow") ?>',
+			url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "show") ?>',
 			data: { page_uid: $(this).data('page-uid') }
 		})
 		.done(function( data ) {
@@ -48,7 +48,7 @@
 	});
 	$('#page-visibility-frontend').on('click', function() {
 		$.ajax({
-			url: '<?= $this->helper("Url")->linkToAction("Backend", "Index", "pageToggleVisibility") ?>',
+			url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "toggleVisibility") ?>',
 			data: { page_uid: <?= $page->getUid() ?> },
 			dataType: 'json'
 		})
@@ -67,7 +67,7 @@
 	});
 	$('#page-visibility-menu').on('click', function() {
 		$.ajax({
-			url: '<?= $this->helper("Url")->linkToAction("Backend", "Index", "pageToggleMenu") ?>',
+			url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "toggleMenu") ?>',
 			data: { page_uid: <?= $page->getUid() ?> },
 			dataType: 'json'
 		})
@@ -83,6 +83,19 @@
 					$(node.element).find(".fa-stack-1x").first().addClass("fa-eye-slash text-danger");
 				}
 			});
+	});
+	$('#page-delete').on('click', function() {
+		BootstrapDialog.confirm('Are you sure you want to delete this page?', function(result){
+			// if user confirms, send delete request
+			if(result) {
+				$.getJSON({
+					url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "delete") ?>',
+					data: { page_uid: <?= $page->getUid() ?> }
+				}).done(function (data) {
+					console.log(data);
+				});
+			}
+		});
 	});
 	$('.content-wizard').on('click', function(e) {
 		e.preventDefault();

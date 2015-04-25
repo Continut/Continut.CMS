@@ -24,10 +24,11 @@ namespace Core\System\Domain\Collection {
 
 		/**
 		 * Build a tree out of the returned pages
+		 * Optionally return only the children for a certain child uid
 		 *
 		 * @return array
 		 */
-		public function buildTree() {
+		public function buildTree($childUid = 0) {
 			$children = [];
 			foreach ($this->getAll() as $item) {
 				$children[$item->getParentUid()][] = $item;
@@ -42,8 +43,12 @@ namespace Core\System\Domain\Collection {
 			}
 
 			$tree = [];
-			if (isset($children[0])) {
-				$tree = $children[0];
+			if (sizeof($children) > 0) {
+				if ($childUid > 0) {
+					$tree = $children[$childUid];
+				} else {
+					$tree = reset($children);
+				}
 			}
 
 			return $tree;

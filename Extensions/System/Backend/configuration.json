@@ -20,8 +20,8 @@
               "label": "backend.menu.web.page",
               "icon": "fa fa-fw fa-file-o",
               "extension": "Backend",
-              "controller": "Index",
-              "action": "page"
+              "controller": "Page",
+              "action": "index"
             },
             "divider": {
               "type": "divider"

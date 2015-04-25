@@ -45,7 +45,7 @@ namespace Core\System\Session {
 		 * @return mixed
 		 */
 		public function read($sessionId) {
-			$sth = Utility::database()->prepare("SELECT session_data FROM $this->_tablename WHERE session_id = :session_id AND session_expires >= :expire_time");
+			$sth = Utility::getDatabase()->prepare("SELECT session_data FROM $this->_tablename WHERE session_id = :session_id AND session_expires >= :expire_time");
 			$sth->execute([
 				":session_id" => $sessionId,
 				":expire_time" => time()
@@ -67,12 +67,12 @@ namespace Core\System\Session {
 		public function write($sessionId, $sessionData) {
 			$newExpiryDate = time() + $this->_lifetime;
 
-			$sth = Utility::database()->prepare("SELECT * FROM $this->_tablename WHERE session_id = :session_id");
+			$sth = Utility::getDatabase()->prepare("SELECT * FROM $this->_tablename WHERE session_id = :session_id");
 			$sth->execute([":session_id" => $sessionId]);
 			$sth->setFetchMode(\PDO::FETCH_ASSOC);
 
 			if ($sth->rowCount() > 0) {
-				$sth = Utility::database()->prepare("UPDATE $this->_tablename SET session_expires = :session_expires, session_data = :session_data WHERE session_id = :session_id");
+				$sth = Utility::getDatabase()->prepare("UPDATE $this->_tablename SET session_expires = :session_expires, session_data = :session_data WHERE session_id = :session_id");
 				$sth->execute(
 					[
 						":session_expires" => $newExpiryDate,
@@ -83,7 +83,7 @@ namespace Core\System\Session {
 					return TRUE;
 				}
 			} else {
-				$sth = Utility::database()->prepare("INSERT INTO $this->_tablename (session_id, session_expires, session_data) VALUES (:session_id, :session_expires, :session_data)");
+				$sth = Utility::getDatabase()->prepare("INSERT INTO $this->_tablename (session_id, session_expires, session_data) VALUES (:session_id, :session_expires, :session_data)");
 				$sth->execute(
 						[
 							":session_id"      => $sessionId,
@@ -108,7 +108,7 @@ namespace Core\System\Session {
 		 * @return bool
 		 */
 		public function destroy($sessionId) {
-			$sth = Utility::database()->prepare("DELETE FROM $this->_tablename WHERE session_id = :session_id");
+			$sth = Utility::getDatabase()->prepare("DELETE FROM $this->_tablename WHERE session_id = :session_id");
 			$sth->execute([":session_id" => $sessionId]);
 
 			return ($sth->rowCount() > 0);
@@ -122,7 +122,7 @@ namespace Core\System\Session {
 		 * @return bool
 		 */
 		public function gc($maxLifetime) {
-			$sth = Utility::database()->prepare("DELETE FROM $this->_tablename WHERE session_expires < :current_time");
+			$sth = Utility::getDatabase()->prepare("DELETE FROM $this->_tablename WHERE session_expires < :current_time");
 			$sth->execute([":current_time" => time()]);
 
 			return ($sth->rowCount() > 0);
