@@ -14,18 +14,59 @@ namespace Core\System\Domain\Model {
 
 	class Content extends BaseModel {
 
+		/**
+		 * @var string value of the content element
+		 */
 		protected $value;
 
+		/**
+		 * @var string type of content element
+		 */
 		protected $type;
 
+		/**
+		 * @var int The uid of this element's parent
+		 */
 		protected $parent_uid;
 
+		/**
+		 * @var bool Is the content element visible?
+		 */
 		protected $is_visible;
+
+		/**
+		 * @var bool Is the content element deleted?
+		 */
+		protected $is_deleted;
+
+		/**
+		 * @var int Column id
+		 */
+		protected $column_id;
 
 		/**
 		 * @var \Core\Mvc\View\PageView Link to the parent PageView
 		 */
 		protected $_page;
+
+		/**
+		 * Datamapper for this model
+		 *
+		 * @return array
+		 */
+		public function dataMapper() {
+			return [
+				"page_uid"    => $this->page_uid,
+				"type"        => $this->type,
+				"title"       => $this->title,
+				"column_id"      => $this->column_id,
+				"parent_uid"  => $this->parent_uid,
+				"value"       => $this->value,
+				"is_deleted"  => $this->is_deleted,
+				"is_visible"  => $this->is_visible,
+				"sorting"     => $this->sorting
+			];
+		}
 
 		/**
 		 * @return int Get the parent id of this content element
@@ -35,14 +76,54 @@ namespace Core\System\Domain\Model {
 		}
 
 		/**
-		 * @return int Get id of column where content is stored
+		 * Set parent uid
+		 *
+		 * @param int $parentUid
+		 *
+		 * @return $this
 		 */
-		public function getColumn() {
-			return $this->column;
+		public function setParentUid($parentUid) {
+			$this->parent_uid = $parentUid;
+
+			return $this;
 		}
 
+		/**
+		 * @return int Get id of column where content is stored
+		 */
+		public function getColumnId() {
+			return $this->column_id;
+		}
+
+		/**
+		 * Set column id
+		 *
+		 * @param $columnId
+		 *
+		 * @return $this
+		 */
+		public function setColumnId($columnId) {
+			$this->column_id = $columnId;
+
+			return $this;
+		}
+
+		/**
+		 * @return mixed
+		 */
 		public function getTitle() {
 			return $this->title;
+		}
+
+		/**
+		 * @param $title
+		 *
+		 * @return $this
+		 */
+		public function setTitle($title) {
+			$this->title = $title;
+
+			return $this;
 		}
 
 		public function getType() {
@@ -81,6 +162,22 @@ namespace Core\System\Domain\Model {
 		public function setIsVisible($is_visible)
 		{
 			$this->is_visible = $is_visible;
+		}
+
+		/**
+		 * @return boolean
+		 */
+		public function isIsDeleted()
+		{
+			return $this->is_deleted;
+		}
+
+		/**
+		 * @param boolean $is_deleted
+		 */
+		public function setIsDeleted($is_deleted)
+		{
+			$this->is_deleted = $is_deleted;
 		}
 
 		/**
@@ -143,6 +240,7 @@ namespace Core\System\Domain\Model {
 			$configuration = json_decode($this->getValue(), TRUE);
 
 			$container = Utility::createInstance("\\Core\\Mvc\\View\\BackendContainer");
+			$container->setUid($this->getUid());
 			//$container->setLayout($this->getPage()->getLayout());
 			$container->setElements($elements);
 			$container->setTemplate(

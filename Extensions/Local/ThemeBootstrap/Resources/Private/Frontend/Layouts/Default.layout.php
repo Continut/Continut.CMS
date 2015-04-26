@@ -16,7 +16,7 @@ $this->getPage()
 				<div class="panel-title">HEADER</div>
 			</div>
 			<div class="panel-body">
-				<?php $this->showContainerColumn(1); ?>
+				<?= $this->showContainerColumn(1); ?>
 			</div>
 		</div>
 
@@ -27,7 +27,7 @@ $this->getPage()
 					<div class="panel-title">LEFT</div>
 				</div>
 				<div class="panel-body">
-					<?php $this->showContainerColumn(2); ?>
+					<?= $this->showContainerColumn(2); ?>
 				</div>
 			</div>
 		</div>
@@ -37,7 +37,7 @@ $this->getPage()
 					<div class="panel-title">RIGHT</div>
 				</div>
 				<div class="panel-body">
-					<?php $this->showContainerColumn(3); ?>
+					<?= $this->showContainerColumn(3); ?>
 				</div>
 			</div>
 		</div>

@@ -156,12 +156,12 @@ namespace Core\Mvc\View {
 			$htmlElements = "";
 
 			foreach ($this->getElements() as $element) {
-				if ($element->getColumn() == $id) {
+				if ($element->getColumnId() == $id) {
 					$htmlElements .= $element->render($element->children);
 				}
 			}
 
-			return $htmlElements;
+			return sprintf('<div data-parent="%s" data-id="%s" class="container-receiver">%s</div>', $this->getUid(), $id, $htmlElements);
 		}
 
 		/**

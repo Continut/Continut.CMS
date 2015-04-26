@@ -79,7 +79,9 @@ namespace Core\Mvc\View {
 		/**
 		 * Show all content from a container
 		 *
-		 * @param $id Id if the container to show
+		 * @param int $id Id if the container to show
+		 *
+		 * @return string
 		 */
 		public function showContainerColumn($id) {
 			if (empty($this->_elements))
@@ -88,11 +90,11 @@ namespace Core\Mvc\View {
 			$htmlElements = "";
 
 			foreach ($this->getElements() as $element) {
-				if ($element->getColumn() == $id) {
+				if ($element->getColumnId() == $id) {
 					$htmlElements .= $element->render($element->children);
 				}
 			}
-			echo $htmlElements;
+			return $htmlElements;
 		}
 	}
 

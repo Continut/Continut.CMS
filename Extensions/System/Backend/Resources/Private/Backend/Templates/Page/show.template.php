@@ -85,23 +85,83 @@
 			});
 	});
 	$('#page-delete').on('click', function() {
-		BootstrapDialog.confirm('Are you sure you want to delete this page?', function(result){
-			// if user confirms, send delete request
-			if(result) {
-				$.getJSON({
-					url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "delete") ?>',
-					data: { page_uid: <?= $page->getUid() ?> }
-				}).done(function (data) {
-					console.log(data);
-				});
+		BootstrapDialog.confirm({
+			message: '<?= $this->__("backend.page.deletePage.confirm") ?>',
+			title: '<?= $this->__("backend.page.deletePage") ?>',
+			type: BootstrapDialog.TYPE_DANGER,
+			callback: function(result) {
+				// if user confirms, send delete request
+				if(result) {
+					$.getJSON({
+						url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "delete") ?>',
+						data: { page_uid: <?= $page->getUid() ?> }
+					}).done(function (data) {
+						console.log(data);
+					});
+				}
 			}
 		});
 	});
+
 	$('.content-wizard').on('click', function(e) {
 		e.preventDefault();
 		BootstrapDialog.show({
 			title: '<?= $this->__("backend.content.wizard.create.title") ?>',
 			message: $('<div></div>').load('<?= $this->helper("Url")->linkToAction("Backend", "Content", "wizard") ?>')
 		})
+	});
+
+	$('.content-operation-link').on('click', function(ev) {
+		ev.preventDefault();
+
+		var url = $(this).attr('href');
+
+		$.getJSON(url, function(data) {
+			if (data.operation == "delete") {
+				$('#panel-backend-content-' + data.uid).remove();
+			}
+		});
+	});
+
+	$('.content-drag-sender').pep({
+		useCSSTranslation: true,
+		droppable: '.content-drag-receiver',
+		elementsWithInteraction: '.panel-body',
+		place: false,
+		revert: true,
+		revertIf: function(ev, obj){
+			return !this.activeDropRegions.length;
+		},
+		cssEaseDuration: 200,
+		rest: function (ev, obj) {
+			if ( this.activeDropRegions.length > 0 ) {
+				// get first drop region and set the element as it's child
+				var target = $(this.activeDropRegions[0]).closest('.container-receiver');
+				if (target) {
+					$.getJSON('<?= $this->helper("Url")->linkToAction("Backend", "Content", "updateContainer") ?>',
+						{ parent_uid: target.data('parent'), column_id: target.data('id'), uid: this.$el.data('id') })
+						.done( function (data) {
+						if (data.status == "ok") {
+
+						}
+					});
+					$(this.activeDropRegions[0]).after(this.$el);
+					obj.cssX = 0;
+					obj.cssY = 0;
+					this.$el.removeAttr('style');
+				}
+			}
+			$('.content-drag-receiver').remove();
+		},
+		start: function(ev, obj) {
+			$('.container-receiver').prepend($('<div class="content-drag-receiver receiver-on"></div>'));
+			$('.panel-backend-content').each(function(index, item) {
+				if (!$(item).is(obj.$el)) {
+					$(item).after($('<div class="content-drag-receiver receiver-on"></div>'));
+				}
+			});
+		},
+		stop: function(ev, obj) {
+		}
 	});
 </script>

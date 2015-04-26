@@ -22,6 +22,17 @@ namespace Core\System\View {
 		public function setContent($content) {
 			$this->_content = $content;
 		}
+
+		/**
+		 * Show all content from a container and wrap it in a special class, for backend drag & drop
+		 *
+		 * @param int $id Id if the container to show
+		 *
+		 * @return string
+		 */
+		public function showContainerColumn($id) {
+			return sprintf('<div data-id="%s" data-parent="0" class="container-receiver">%s</div>', $id, parent::showContainerColumn($id));
+		}
 	}
 
 }

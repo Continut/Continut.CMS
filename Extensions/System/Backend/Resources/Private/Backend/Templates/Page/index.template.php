@@ -14,7 +14,7 @@
 						<script type="text/javascript">
 							$('#select_website').on('change', function (event) {
 								$.ajax({
-									url: '<?= $this->helper("Url")->linkToAction("Backend", "Index", "pageTree") ?>',
+									url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "tree") ?>',
 									data: { domain_uid: this.value }
 								})
 									.done(function( data ) {

@@ -71,6 +71,7 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 
 			$container = Utility::createInstance("\\Core\\Mvc\\View\\BackendContainer");
 			//$container->setLayout($this->getPage()->getLayout());
+			$container->setUid($this->getuid());
 			$container->setElements($elements);
 			$container->setTemplate(
 				Utility::getResource(
@@ -151,9 +152,9 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 				Utility::helper("Localization")->translate("backend.content.operation.move")
 			);
 
-			$overallWrap = '<div class="panel panel-backend-content %s"><div class="panel-heading">%s <strong>%s</strong>%s</div><div class="panel-body">%s</div></div>';
+			$overallWrap = '<div id="panel-backend-content-%s" data-id="%s" class="panel panel-backend-content content-drag-sender %s"><div class="panel-heading">%s <strong>%s</strong>%s</div><div class="panel-body">%s</div></div>';
 
-			return sprintf($overallWrap, $visibilityClass, $moveElementLink, $title, $operationLinks, $content);
+			return sprintf($overallWrap, $this->getUid(), $this->getUid(), $visibilityClass, $moveElementLink, $title, $operationLinks, $content);
 		}
 	}
 

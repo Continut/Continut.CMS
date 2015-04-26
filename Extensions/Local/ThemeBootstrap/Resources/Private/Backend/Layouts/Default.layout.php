@@ -7,8 +7,7 @@
 				</div>
 			</div>
 			<div class="panel-body">
-				<div class="content-drag-receiver"></div>
-				<?php $this->showContainerColumn(1); ?>
+				<?= $this->showContainerColumn(1); ?>
 				<a class="btn btn-sm btn-success content-wizard" title="<?= $this->__("backend.content.addNew") ?>" href=""><i class="fa fa-plus fa-fw"></i></a>
 			</div>
 		</div>
@@ -22,7 +21,7 @@
 				<div class="panel-title"><?= $this->__("backend.themeBootstrap.layout.container.leftColumn") ?></div>
 			</div>
 			<div class="panel-body">
-				<?php $this->showContainerColumn(2); ?>
+				<?= $this->showContainerColumn(2); ?>
 				<a class="btn btn-sm btn-success content-wizard" title="<?= $this->__("backend.content.addNew") ?>" href=""><i class="fa fa-plus fa-fw"></i></a>
 			</div>
 		</div>
@@ -33,7 +32,7 @@
 				<div class="panel-title"><?= $this->__("backend.themeBootstrap.layout.container.rightColumn") ?></div>
 			</div>
 			<div class="panel-body">
-				<?php $this->showContainerColumn(3); ?>
+				<?= $this->showContainerColumn(3); ?>
 				<a class="btn btn-sm btn-success content-wizard" title="<?= $this->__("backend.content.addNew") ?>" href=""><i class="fa fa-plus fa-fw"></i></a>
 			</div>
 		</div>
