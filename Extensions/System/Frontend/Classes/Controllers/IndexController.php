@@ -41,7 +41,7 @@ namespace Extensions\System\Frontend\Classes\Controllers {
 
 				$contentTree = $contentCollection->buildTree();
 
-				$pageView->setLayoutFromTemplate($pageModel->getFrontendLayout());
+				$pageView->setLayoutFromTemplate(__ROOTCMS__ . $pageModel->getFrontendLayout());
 
 				// send the containers to our layout for rendering
 				//$pageView->getLayout()->setContainers($firstContainers, $containers);

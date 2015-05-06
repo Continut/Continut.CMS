@@ -66,12 +66,11 @@ namespace Core\Mvc\View {
 		 * @return string
 		 */
 		public function render() {
-			$fullpath = __ROOTCMS__ . $this->_template;
-			if (!is_file($fullpath)) {
+			if (!is_file($this->_template)) {
 				return $this->__("backend.layout.noLayoutSpecified");
 			} else {
 				ob_start();
-				include_once $fullpath;
+				include_once $this->_template;
 				return ob_get_clean();
 			}
 		}

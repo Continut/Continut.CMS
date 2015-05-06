@@ -23,12 +23,16 @@ namespace Core\System\Helper {
 		 * Return a translated label, if found, otherwise return the label key
 		 *
 		 * @param string $label
+		 * @param array  *$parameters
 		 *
 		 * @return string
 		 */
-		public function translate($label) {
+		public function translate($label, $parameters = []) {
 			if (isset($this->_translationLabels[$label])) {
-				return $this->_translationLabels[$label];
+				if (empty($parameters)) {
+					return $this->_translationLabels[ $label ];
+				}
+				return $this->sprintfWithParameters($this->_translationLabels[ $label ], $parameters);
 			}
 			return $label;
 		}
@@ -67,12 +71,35 @@ namespace Core\System\Helper {
 				$labels = json_decode(file_get_contents($file), TRUE);
 				foreach ($labels as $extensionName => $languages) {
 					foreach ($languages as $languageCode => $language) {
-						if ($languageCode == "fr_FR") {
+						if ($languageCode == "ro_RO") {
 							$this->_translationLabels = array_merge_recursive($this->_translationLabels, $language);
 						}
 					}
 				}
 			}
+		}
+
+		/**
+		 * Allows us to use named parameters for vsprintf calls
+		 *
+		 * @param string $text
+		 * @param array  $parameters
+		 *
+		 * @return string
+		 */
+		public function sprintfWithParameters($text, $parameters) {
+			$matchesCount = preg_match_all('/%\((.*?)\)/', $text, $matches, PREG_SET_ORDER);
+			if ($matchesCount == 0) {
+				return $text;
+			}
+
+			$values = [];
+			foreach($matches as $match) {
+				$values[] = $parameters[$match[1]];
+			}
+
+			$text = preg_replace('/%\((.*?)\)/', '%s', $text);
+			return vsprintf($text, $values);
 		}
 	}
 

@@ -5,20 +5,12 @@
  * For more details, consult the LICENSE.txt file supplied with the project
  
  * Author: Radu Mogoş <radu.mogos@pixelplant.ch>
- * Date: 04.04.2015 @ 20:46
+ * Date: 27.04.2015 @ 22:27
  * Project: Conţinut CMS
  */
-namespace Core\System\Session {
+namespace Core\System\Domain\Model {
 
-	class User {
-		/**
-		 * @var UserSession Current usersession data
-		 */
-		protected $_session;
-
-		public function __construct() {
-
-		}
+	class FrontendUser extends User {
 	}
 
 }

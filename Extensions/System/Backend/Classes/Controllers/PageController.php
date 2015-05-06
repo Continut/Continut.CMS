@@ -15,6 +15,11 @@ namespace Extensions\System\Backend\Classes\Controllers {
 
 	class PageController extends BackendController {
 
+		public function __construct() {
+			parent::__construct();
+			$this->setLayoutTemplate(Utility::getResource("Default", "Backend", "Backend", "Layout"));
+		}
+
 		/**
 		 * Called when the pagetree is shown for the page module
 		 *
@@ -102,7 +107,7 @@ namespace Extensions\System\Backend\Classes\Controllers {
 
 			// A PageView is the model that we use to load a layout and render the elements
 			$pageView = Utility::createInstance("\\Core\\System\\View\\BackendPageView");
-			$pageView->setLayoutFromTemplate($pageModel->getBackendLayout());
+			$pageView->setLayoutFromTemplate(__ROOTCMS__ . $pageModel->getBackendLayout());
 
 			// Send the tree of elements to this page's layout
 			$pageView->getLayout()->setElements($contentTree);

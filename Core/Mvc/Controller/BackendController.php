@@ -14,11 +14,12 @@ namespace Core\Mvc\Controller {
 	use Core\Utility;
 
 	/**
-	 * Backend Controller base class
+	 * Backend Controller base class. Always extends AuthenticatedController since anything in the Backend
+	 * is only accessible if a user is connected
 	 *
 	 * @package Core\Mvc\Controller
 	 */
-	class BackendController extends ActionController {
+	class BackendController extends AuthenticatedController {
 
 		/**
 		 * Backend constructor
@@ -26,6 +27,10 @@ namespace Core\Mvc\Controller {
 		public function __construct() {
 			parent::__construct();
 			$this->setScope('Backend');
+		}
+
+		public function loginAction() {
+			return "Login dude";
 		}
 	}
 }

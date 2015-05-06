@@ -99,7 +99,7 @@ namespace Core\Mvc\View {
 		 * @throws \Core\Tools\Exception
 		 */
 		public function render() {
-			$fullpath = __ROOTCMS__ . $this->_template;
+			$fullpath = $this->_template;
 			if (!is_file($fullpath)) {
 				throw new \Core\Tools\Exception("The specified template file does not exist " . $this->_template, 10000001);
 			}
@@ -147,12 +147,13 @@ namespace Core\Mvc\View {
 		/**
 		 * Returns a localized label by its key
 		 *
-		 * @param string $labelKey
+		 * @param string $labelKey   Label key to translate
+		 * @param array  $parameters List of parameters to replace in the final string
 		 *
 		 * @return string
 		 */
-		public function __($labelKey) {
-			return Utility::helper("Localization")->translate($labelKey);
+		public function __($labelKey, $parameters = []) {
+			return Utility::helper("Localization")->translate($labelKey, $parameters);
 		}
 
 		public function publicAsset($assetName, $extension) {

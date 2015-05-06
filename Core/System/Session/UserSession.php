@@ -131,6 +131,41 @@ namespace Core\System\Session {
 		public function close() {
 			$this->gc(ini_get('session.gc_maxlifetime'));
 		}
+
+		/**
+		 * Set a certain session value
+		 *
+		 * @param string $name  Name of key to use
+		 * @param mixed  $value Value to store for this key
+		 */
+		public function set($name, $value) {
+			$_SESSION[$name] = $value;
+		}
+
+		/**
+		 * Get the value of a certain session key
+		 *
+		 * @param string $name Name of the session variable to return
+		 *
+		 * @return mixed
+		 */
+		public function get($name) {
+			if (isset($_SESSION[$name])) {
+				return $_SESSION[$name];
+			}
+			return NULL;
+		}
+
+		/**
+		 * Unset a session variable, if it is already set
+		 *
+		 * @param string $name Name of the variable to unset
+		 */
+		public function remove($name) {
+			if (isset($_SESSION[$name])) {
+				unset($_SESSION[ $name ]);
+			}
+		}
 	}
 
 }

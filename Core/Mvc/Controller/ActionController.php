@@ -62,6 +62,21 @@ namespace Core\Mvc\Controller {
 		 */
 		public $settings;
 
+		/**
+		 * @var \Core\System\Session\UserSession Reference to the current user session
+		 */
+		protected $_session;
+
+		/**
+		 * @var string Layout template file, if not using the one by default
+		 */
+		protected $_layoutTemplate = NULL;
+
+		/**
+		 * @var string Action to call on the controller, by default it is "index"
+		 */
+		protected $_action = "index";
+
 		public function __construct() {
 			$this->_view    = Utility::createInstance("\\Core\\Mvc\\View\\BaseView");
 			$this->_request = Utility::getRequest();
@@ -76,12 +91,79 @@ namespace Core\Mvc\Controller {
 		}
 
 		/**
+		 * @return string
+		 */
+		public function getLayoutTemplate()
+		{
+			return $this->_layoutTemplate;
+		}
+
+		/**
+		 * @param string $layoutTemplate
+		 */
+		public function setLayoutTemplate($layoutTemplate)
+		{
+			$this->_layoutTemplate = $layoutTemplate;
+		}
+
+		/**
+		 * @return string
+		 */
+		public function getAction()
+		{
+			return $this->_action;
+		}
+
+		/**
+		 * @param string $action
+		 */
+		public function setAction($action)
+		{
+			$this->_action = $action;
+		}
+
+		/**
 		 * Get view instance
 		 *
 		 * @return \Core\Mvc\View\BaseView
 		 */
 		public function getView() {
 			return $this->_view;
+		}
+
+		/**
+		 * Returns the final render from the action called, or it's rendered template
+		 *
+		 * @return string
+		 * @throws \Core\Tools\Exception
+		 */
+		public function getRenderOutput() {
+			$action = $this->_action;
+			$viewContent = $this->$action();
+
+			if (empty($viewContent)) {
+				$viewContent = $this->_view->render();
+			}
+
+			return $viewContent;
+		}
+
+		/**
+		 * Get user session
+		 *
+		 * @return \Core\System\Session\UserSession
+		 */
+		public function getSession() {
+			return Utility::getSession();
+		}
+
+		/**
+		 * If an user_id is stored in our session it means that our user is connected
+		 *
+		 * @return bool
+		 */
+		public function isConnected() {
+			return $this->getSession()->get("user_id");
 		}
 
 		/**
@@ -175,6 +257,15 @@ namespace Core\Mvc\Controller {
 		 */
 		public function renderView() {
 			return $this->_view->render();
+		}
+
+		/**
+		 * Redirect call to another controller/action
+		 * @param string $to
+		 * @param int    $status
+		 */
+		public function redirect($to, $status = 301) {
+			header("Location: $to", true, $status);
 		}
 	}
 }

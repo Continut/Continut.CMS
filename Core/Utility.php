@@ -40,6 +40,11 @@ namespace Core {
 		static $cacheHandler = NULL;
 
 		/**
+		 * @var \Core\System\Session\UserSession Current user session data
+		 */
+		static $session = NULL;
+
+		/**
 		 * @var array List of helpers loaded
 		 */
 		static $helpers = [];
@@ -142,6 +147,15 @@ namespace Core {
 		}
 
 		/**
+		 * Return currentu user session
+		 * 
+		 * @return System\Session\UserSession
+		 */
+		public static function getSession() {
+			return static::$session;
+		}
+
+		/**
 		 * Return subdirectories of a directory as an array
 		 *
 		 * @param string $path Parent directory to scan
@@ -200,7 +214,7 @@ namespace Core {
 		}
 
 		/**
-		 * Execute a plugin method
+		 * Execute a plugin method and return it's output as a string
 		 *
 		 * @param string $contextExtension  Name of the extension to look for
 		 * @param string $contextController Controller name to execute
@@ -211,6 +225,23 @@ namespace Core {
 		 * @throws Tools\Exception
 		 */
 		public static function callPlugin($contextExtension, $contextController, $contextAction, $contextSettings = []) {
+			$controller = static::getController($contextExtension, $contextController, $contextAction, $contextSettings);
+
+			return $controller->getRenderOutput();
+		}
+
+		/**
+		 * Call a controller and return it's reference
+		 *
+		 * @param string $contextExtension  Name of the extension to look for
+		 * @param string $contextController Controller name to execute
+		 * @param string $contextAction     The action to execute
+		 * @param mixed  $contextSettings   Additional settings to be passed to the plugin
+		 *
+		 * @return mixed
+		 * @throws Tools\Exception
+		 */
+		public static function getController($contextExtension, $contextController, $contextAction, $contextSettings = []) {
 			$templateAction     = $contextAction;
 			$templateController = $contextController;
 			$contextController .= "Controller";
@@ -229,23 +260,21 @@ namespace Core {
 			}
 
 			// then execute it's action
-			$viewContent = $controller->$contextAction();
+			$controller->setAction($contextAction);
 
 			$contextScope = $controller->getScope();
-			$templateToLoad = "/Extensions/$extensionType/$contextExtension/Resources/Private/$contextScope/Templates/$templateController/$templateAction.template.php";
-			$controller->getView()->setTemplate($templateToLoad);
+			$controller
+				->getView()
+				->setTemplate(
+					static::getResource("$templateController/$templateAction", $contextExtension, $contextScope, "Template")
+				);
 
-			// allow the action to return content, if not show it's template 
-			if (empty($viewContent)) {
-				$viewContent = $controller->getView()->render();
-			}
-
-			return $viewContent;
+			return $controller;
 		}
 
-		public static function getTemplateFileFromPath($extensionName, $type = "Templates", $pathToFile = "") {
+		public static function getTemplateFileFromPath($extensionName, $type = "Templates", $pathToFile = "", $scope = "Frontend") {
 			$extensionType = static::getExtensionSettings($extensionName)["type"];
-			return "/Extensions/$extensionType/$extensionName/Resources/Private/Frontend/$type/$pathToFile";
+			return __ROOTCMS__ . "/Extensions/$extensionType/$extensionName/Resources/Private/$scope/$type/$pathToFile";
 		}
 
 		/**
@@ -265,9 +294,9 @@ namespace Core {
 			$resourceType = $resourceType . "s";
 			$resourcePath = __ROOTCMS__ . "/Extensions/$extensionType/$contextExtension/Resources/Private/$resourcePlacement/$resourceType/$resourceName$resourceExtension";
 
-			if (!file_exists($resourcePath)) {
+			/*if (!file_exists($resourcePath)) {
 				throw new \Core\Tools\Exception("Resource cannot be found: " . $resourcePath);
-			}
+			}*/
 
 			return $resourcePath;
 		}

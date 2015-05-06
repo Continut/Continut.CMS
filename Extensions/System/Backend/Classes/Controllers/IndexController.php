@@ -11,13 +11,18 @@
 
 namespace Extensions\System\Backend\Classes\Controllers {
 	use \Core\Mvc\Controller\BackendController;
-	use Core\Utility;
+	use \Core\Utility;
 
 	/**
 	 * Backend main controller
 	 * @package System\Backend\Classes\Controllers
 	 */
 	class IndexController extends BackendController {
+
+		public function __construct() {
+			parent::__construct();
+			$this->setLayoutTemplate(Utility::getResource("Default", "Backend", "Backend", "Layout"));
+		}
 
 		/**
 		 * Main dashboard action

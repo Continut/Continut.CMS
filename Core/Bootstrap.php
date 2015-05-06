@@ -134,15 +134,18 @@ namespace Core {
 			$contextController = $request->getArgument("_controller", "Index");
 			$contextAction     = $request->getArgument("_action",     "dashboard");
 
-			$content = Utility::callPlugin($contextExtension, $contextController, $contextAction);
+			$controller = Utility::getController($contextExtension, $contextController, $contextAction);
 
-			// If it's an AJAX request, ignore layout rendering
+			// If it's not an AJAX request, load layout and pageview then render it otherwise just return directly the response
 			if (!Utility::getRequest()->isAjax()) {
-				$pageView->getLayout()->setContent($content);
+				if ($controller->getLayoutTemplate()) {
+					$pageView->getLayout()->setTemplate($controller->getLayoutTemplate());
+				}
+				$pageView->getLayout()->setContent($controller->getRenderOutput());
 
 				echo $pageView->render();
 			} else {
-				echo $content;
+				echo $controller->getRenderOutput();
 			}
 
 			return $this;
@@ -183,8 +186,7 @@ namespace Core {
 			session_set_save_handler($userSession, true);
 			session_start();
 
-			// Create our Frontend or Backend user object
-			$user = Utility::createInstance("\\Core\\System\\Session\\User");
+			Utility::$session = $userSession;
 
 			return $this;
 
