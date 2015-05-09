@@ -23,7 +23,7 @@ namespace Core\System\Helper {
 		 * Return a translated label, if found, otherwise return the label key
 		 *
 		 * @param string $label
-		 * @param array  *$parameters
+		 * @param array  $parameters
 		 *
 		 * @return string
 		 */

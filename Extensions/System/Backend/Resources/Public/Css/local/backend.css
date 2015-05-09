@@ -249,3 +249,28 @@ ul.jqtree-tree li.jqtree-folder {
 .jqtree-selected > .jqtree-element > .fa-stack > .fa-disabled {
 	color: white;
 }
+
+/* flash messages */
+.alert {
+	border-radius: 0;
+}
+
+.flash-error {
+	background: #b92c28;
+	color: white;
+}
+
+.flash-success {
+	background: seagreen;
+	color: white;
+}
+
+.flash-warning {
+	background: darkorange;
+	color: #333;
+}
+
+.flash-info {
+	background: dodgerblue;
+	color: #231f20;
+}

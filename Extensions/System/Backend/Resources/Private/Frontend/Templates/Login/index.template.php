@@ -7,9 +7,7 @@
 					<div class="panel panel-cms page-panel">
 						<div class="panel-heading"><?= $this->__("login.header") ?></div>
 						<div class="panel-body">
-							<div class="alert alert-danger">
-								<p>Unfortunatelly the login details you have provided <strong>were not correct</strong>. Please try again or contact your system administrator if you do not remember your login credentials!</p>
-							</div>
+							<?= $this->helper("Session")->showFlashMessages(\Core\System\Session\UserSession::FLASH_ERROR); ?>
 							<form method="post" action="<?= $this->helper("Url")->linkToAction("Backend", "Login", "checkLogin") ?>">
 								<div class="form-group">
 									<label for="cms_username"><span class="fa fa-fw fa-user-secret"></span> <?= $this->__("login.username") ?></label>

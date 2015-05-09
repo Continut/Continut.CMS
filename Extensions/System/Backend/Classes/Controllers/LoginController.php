@@ -11,6 +11,7 @@
 namespace Extensions\System\Backend\Classes\Controllers {
 
 	use Core\Mvc\Controller\FrontendController;
+	use Core\System\Session\UserSession;
 	use Core\Utility;
 
 	class LoginController extends FrontendController {
@@ -37,6 +38,7 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			)->getFirst();
 
 			if (!$backendUser) {
+				$this->getSession()->addFlashMessage(Utility::helper("Localization")->translate("login.error.incorrect"), UserSession::FLASH_ERROR);
 				$this->redirect(Utility::helper("Url")->linkToAction("Backend", "Login", "index"));
 			}
 

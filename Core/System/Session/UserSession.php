@@ -20,6 +20,19 @@ namespace Core\System\Session {
 		 */
 		protected $_lifetime = 3600;
 
+		/**
+		 * @var array List of flashmessages to show
+		 */
+		protected $_flashMessages = [];
+
+		const FLASH_ERROR   = "error";
+		const FLASH_WARNING = "warning";
+		const FLASH_SUCCESS = "success";
+		const FLASH_INFO    = "info";
+		const FLASH_NOTICE  = "notice";
+
+		const FLASH_KEY = "flash.messages";
+
 		public function __construct() {
 			$this->_tablename = "sys_user_sessions";
 		}
@@ -157,6 +170,17 @@ namespace Core\System\Session {
 		}
 
 		/**
+		 * Checks if a session key exists
+		 *
+		 * @param $name
+		 *
+		 * @return bool
+		 */
+		public function has($name) {
+			return isset($_SESSION[$name]);
+		}
+
+		/**
 		 * Unset a session variable, if it is already set
 		 *
 		 * @param string $name Name of the variable to unset
@@ -165,6 +189,42 @@ namespace Core\System\Session {
 			if (isset($_SESSION[$name])) {
 				unset($_SESSION[ $name ]);
 			}
+		}
+
+		public function addFlashMessage($value, $type = self::FLASH_SUCCESS) {
+			$this->_flashMessages = $this->get(self::FLASH_KEY);
+			$this->_flashMessages[$type][] = $value;
+			$this->set(self::FLASH_KEY, $this->_flashMessages);
+		}
+
+		public function getFlashMessages($type = self::FLASH_SUCCESS) {
+			if (isset($this->get(self::FLASH_KEY)[$type])) {
+				return $this->get(self::FLASH_KEY)[$type];
+			}
+			return null;
+		}
+
+		public function getAllFlashMessages() {
+			return $this->get(self::FLASH_KEY);
+		}
+
+		public function clearFlashMessages($type = self::FLASH_SUCCESS) {
+			$this->_flashMessages = $this->get(self::FLASH_KEY);
+			if (isset($this->_flashMessages[$type])) {
+				unset($this->_flashMessages[$type]);
+				$this->set(self::FLASH_KEY, $this->_flashMessages);
+			}
+			if (empty($this->_flashMessages)) {
+				$this->remove(self::FLASH_KEY);
+			}
+		}
+
+		public function clearAllFlashMessages() {
+			$this->clearFlashMessages(self::FLASH_ERROR);
+			$this->clearFlashMessages(self::FLASH_WARNING);
+			$this->clearFlashMessages(self::FLASH_NOTICE);
+			$this->clearFlashMessages(self::FLASH_SUCCESS);
+			$this->clearFlashMessages(self::FLASH_INFO);
 		}
 	}
 
