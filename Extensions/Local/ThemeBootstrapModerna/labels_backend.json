@@ -1,0 +1,22 @@
+{
+  "ThemeBootstrap": {
+    "en_US": {
+      "backend.themeBootstrapModerna.layout.container.header": "Header section",
+      "backend.themeBootstrapModerna.layout.container.leftColumn": "Left column",
+      "backend.themeBootstrapModerna.layout.container.rightColumn": "Right column",
+      "backend.themeBootstrapModerna.layout.container.main": "Main content"
+    },
+    "ro_RO": {
+      "backend.themeBootstrapModerna.layout.container.header": "Secţiunea antet",
+      "backend.themeBootstrapModerna.layout.container.leftColumn": "Coloana din stînga",
+      "backend.themeBootstrapModerna.layout.container.rightColumn": "Coloana din dreapta",
+      "backend.themeBootstrapModerna.layout.container.main": "Conţinut principal"
+    },
+    "fr_FR": {
+      "backend.themeBootstrapModerna.layout.container.header": "Section entête",
+      "backend.themeBootstrapModerna.layout.container.leftColumn": "Colonne gauche",
+      "backend.themeBootstrapModerna.layout.container.rightColumn": "Colonne droite",
+      "backend.themeBootstrapModerna.layout.container.main": "Contenu principal"
+    }
+  }
+}

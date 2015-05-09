@@ -1,0 +1,19 @@
+{
+  "ThemeBootstrapModerna": {
+    "version": "0.0.1",
+    "name": "Moderna - Bootstrap Theme",
+    "folder": "ThemeBootstrapModerna",
+    "type": "Local",
+    "description": "A complete bootstrap responsive theme that you can use for your website",
+    "author": {
+      "web": "www.pixelplant.ch",
+      "name": "Radu Mogoş",
+      "email": "radu.mogos@pixelplant.ch"
+    },
+    "dependencies": {
+      "sys_backend": {
+        "version": "0.0.1"
+      }
+    }
+  }
+}

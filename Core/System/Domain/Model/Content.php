@@ -204,11 +204,22 @@ namespace Core\System\Domain\Model {
 		 * @return string
 		 */
 		public function getContentValue() {
-			$title = $this->getTitle();
-			if (!empty($title)) {
-				$title = "<h2>$title</h2>";
-			}
-			return $title . $this->getValue();
+			$configuration = json_decode($this->getValue(), TRUE);
+
+			$variables = $configuration["content"]["data"];
+			// we overwrite the title, if such a variable exists, with the value of the column "title" in the content table
+			$variables["title"] = $this->getTitle();
+
+			$view = Utility::createInstance("Core\\Mvc\\View\\BaseView");
+			$view->setTemplate(Utility::getResource(
+				$configuration["content"]["template"],
+				$configuration["content"]["extension"],
+				"Frontend",
+				"Content"
+			));
+			$view->assignMultiple($variables);
+
+			return $view->render();
 		}
 
 		/**

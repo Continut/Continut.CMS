@@ -1,0 +1,13 @@
+{
+  "ThemeBootstrap": {
+    "en_US": {
+      "box.learn.more": "Learn more"
+    },
+    "ro_RO": {
+      "box.learn.more": "Detalii"
+    },
+    "fr_FR": {
+      "box.learn.more": "Plus infos"
+    }
+  }
+}
