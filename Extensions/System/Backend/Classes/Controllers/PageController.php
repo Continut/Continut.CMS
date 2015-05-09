@@ -100,7 +100,7 @@ namespace Extensions\System\Backend\Classes\Controllers {
 
 			// Load the content collection model and then find all the content elements that belong to this page_uid
 			$contentCollection = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
-			$contentCollection->where("page_uid = :page_uid AND is_deleted = 0", [":page_uid" => $pageUid]);
+			$contentCollection->where("page_uid = :page_uid AND is_deleted = 0 ORDER BY sorting ASC", [":page_uid" => $pageUid]);
 
 			// Since content elements can have containers and be recursive, we need to build a Tree object to handle them
 			$contentTree = $contentCollection->buildTree();

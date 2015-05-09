@@ -252,7 +252,6 @@ namespace Core\System\Domain\Model {
 
 			$container = Utility::createInstance("\\Core\\Mvc\\View\\BackendContainer");
 			$container->setUid($this->getUid());
-			//$container->setLayout($this->getPage()->getLayout());
 			$container->setElements($elements);
 			$container->setTemplate(
 				Utility::getResource(

@@ -22,7 +22,20 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 		 */
 		public function getContentValue() {
 			$title = $this->getContentTitle();
-			$value = Utility::helper('String')->truncate(Utility::helper('String')->stripTags($this->getValue()), 200);
+
+			$configuration = json_decode($this->getValue(), TRUE);
+			$variables = $configuration["content"]["data"];
+			$view = Utility::createInstance("Core\\Mvc\\View\\BaseView");
+			$view->setTemplate(Utility::getResource(
+				$configuration["content"]["template"],
+				$configuration["content"]["extension"],
+				"Backend",
+				"Content"
+			));
+			$view->assignMultiple($variables);
+
+			//$value = Utility::helper('String')->truncate(Utility::helper('String')->stripTags($this->getValue()), 200);
+			$value = $view->render();
 			return $this->formatBlock("content", $title, $value);
 		}
 
@@ -116,22 +129,25 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 				Utility::helper("Url")->linkToAction("Backend", "Content", "edit", ["uid" => $this->getUid()])
 			);
 
-			$linkToDelete = sprintf('<a title="%s" class="btn btn-danger content-operation-link" href="%s"><i class="fa fa-trash-o fa-fw"></i></a>',
+			$linkToDelete = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-trash-o fa-fw"></i> %s</a>',
 				Utility::helper("Localization")->translate("backend.content.operation.delete"),
-				Utility::helper("Url")->linkToAction("Backend", "Content", "delete", ["uid" => $this->getUid()])
+				Utility::helper("Url")->linkToAction("Backend", "Content", "delete", ["uid" => $this->getUid()]),
+				Utility::helper("Localization")->translate("backend.content.operation.delete")
 			);
 
-			$linkToCopy   = sprintf('<a title="%s" class="btn btn-default content-operation-link" href="%s"><i class="fa fa-copy fa-fw"></i></a>',
+			$linkToCopy   = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-copy fa-fw"></i> %s</a>',
 				Utility::helper("Localization")->translate("backend.content.operation.copy"),
-				Utility::helper("Url")->linkToAction("Backend", "Content", "copy", ["uid" => $this->getUid()])
+				Utility::helper("Url")->linkToAction("Backend", "Content", "copy", ["uid" => $this->getUid()]),
+				Utility::helper("Localization")->translate("backend.content.operation.copy")
 			);
 
-			$linkToHide   = sprintf('<a title="%s" class="btn btn-default content-operation-link" href="%s"><i class="fa fa-eye fa-fw"></i></a>',
+			$linkToHide   = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-eye fa-fw"></i> %s</a>',
 				Utility::helper("Localization")->translate("backend.content.operation.hide"),
-				Utility::helper("Url")->linkToAction("Backend", "Content", "toggleVisibility", ["uid" => $this->getUid(), "show" => 0])
+				Utility::helper("Url")->linkToAction("Backend", "Content", "toggleVisibility", ["uid" => $this->getUid(), "show" => 0]),
+				Utility::helper("Localization")->translate("backend.content.operation.hide")
 			);
 
-			$linkToShow   = sprintf('<a title="%s" class="btn btn-default content-operation-link" href="%s"><i class="fa fa-eye-slash text-danger fa-fw"></i></a>',
+			$linkToShow   = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-eye-slash text-danger fa-fw"></i></a>',
 				Utility::helper("Localization")->translate("backend.content.operation.show"),
 				Utility::helper("Url")->linkToAction("Backend", "Content", "toggleVisibility", ["uid" => $this->getUid(), "show" => 1])
 			);
@@ -145,16 +161,17 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 				$title .= Utility::helper("Localization")->translate("backend.content.headerIsHidden");
 			}
 
-			$operationLinks = sprintf('<div class="btn-group btn-group-sm pull-right" role="group" aria-label="Element actions">%s</div>',
-				$linkToEdit . $linkToCopy . $visibilityLink . $linkToDelete);
+			$operationLinks = sprintf('<div class="btn-group btn-group-sm pull-right" role="group" aria-label="Element actions">%s<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button><ul class="dropdown-menu" role="menu"><li>%s</li><li>%s</li><li>%s</li></div>',
+				$linkToEdit, $linkToCopy, $visibilityLink, $linkToDelete);
 
-			$moveElementLink = sprintf('<a class="btn btn-default btn-sm drag-controller" title="%s"><i class="fa fa-fw fa-arrows"></i></a>',
+			// not used so far, in stand by
+			/*$moveElementLink = sprintf('<a class="btn btn-default btn-sm drag-controller" title="%s"><i class="fa fa-fw fa-arrows"></i></a>',
 				Utility::helper("Localization")->translate("backend.content.operation.move")
-			);
+			);*/
 
-			$overallWrap = '<div id="panel-backend-content-%s" data-id="%s" class="panel panel-backend-content content-drag-sender %s"><div class="panel-heading">%s <strong>%s</strong>%s</div><div class="panel-body">%s</div></div>';
+			$overallWrap = '<div id="panel-backend-content-%s" data-id="%s" class="panel panel-backend-content content-drag-sender %s"><div class="panel-heading"><strong>%s</strong>%s</div><div class="panel-body">%s</div></div>';
 
-			return sprintf($overallWrap, $this->getUid(), $this->getUid(), $visibilityClass, $moveElementLink, $title, $operationLinks, $content);
+			return sprintf($overallWrap, $this->getUid(), $this->getUid(), $visibilityClass, $title, $operationLinks, $content);
 		}
 	}
 

@@ -16,15 +16,25 @@ namespace Extensions\System\Backend\Classes\Controllers {
 
 	class LoginController extends FrontendController {
 
+		/**
+		 * The login controller uses a different layout
+		 */
 		public function __construct() {
 			parent::__construct();
 			$this->setLayoutTemplate(Utility::getResource("Default", "Backend", "Frontend", "Layout"));
 		}
 
+		/**
+		 * Shows the login form
+		 */
 		public function indexAction() {
-
 		}
 
+		/**
+		 * Checks the login data and connects the user to the backend or redirects to the login form if the credentials are incorrect
+		 *
+		 * @throws \Core\Tools\Exception
+		 */
 		public function checkLoginAction() {
 			$username = $this->getRequest()->getArgument("cms_username");
 			$password = $this->getRequest()->getArgument("cms_password");
@@ -48,6 +58,14 @@ namespace Extensions\System\Backend\Classes\Controllers {
 
 			// and we redirect them to the dashboard
 			$this->redirect(Utility::helper("Url")->linkToAction("Backend", "Index", "dashboard"));
+		}
+
+		/**
+		 * Clicking the Logout link destroys the session and reshows the login form
+		 */
+		public function logoutAction() {
+			session_destroy();
+			$this->redirect(Utility::helper("Url")->linkToAction("Backend", "Login", "index"));
 		}
 	}
 

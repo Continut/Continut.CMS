@@ -37,7 +37,7 @@ namespace Extensions\System\Frontend\Classes\Controllers {
 
 				// get all elements from the database that belong to this page and are not hidden or deleted
 				$contentCollection = Utility::createInstance("\\Extensions\\System\\Frontend\\Classes\\Domain\\Collection\\FrontendContentCollection");
-				$contentCollection->where("page_uid = :page_uid AND is_deleted = 0 AND is_visible = 1", [":page_uid" => $pageUid]);
+				$contentCollection->where("page_uid = :page_uid AND is_deleted = 0 AND is_visible = 1 ORDER BY sorting ASC", [":page_uid" => $pageUid]);
 
 				$contentTree = $contentCollection->buildTree();
 

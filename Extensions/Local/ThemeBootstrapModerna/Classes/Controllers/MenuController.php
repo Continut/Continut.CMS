@@ -27,6 +27,23 @@ namespace Extensions\Local\ThemeBootstrapModerna\Classes\Controllers {
 		public function showFooterAction() {
 
 		}
+
+		public function showBreadcrumbAction() {
+			$pagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection");
+
+			$pageUid = (int)$this->getRequest()->getArgument("pid", 0);
+			$pageModel = $pagesCollection->where("uid = :uid", ["uid" => $pageUid])->getFirst();
+
+			$breadcrumbs = [];
+			if ($pageModel->getCachedPath()) {
+				$breadcrumbs = $pagesCollection
+					->where("uid IN (" . $pageModel->getCachedPath() . ") ORDER BY uid ASC")
+					->getAll();
+			}
+
+			$this->getView()->assign("breadcrumbs", $breadcrumbs);
+			$this->getView()->assign("page", $pageModel);
+		}
 	}
 
 }

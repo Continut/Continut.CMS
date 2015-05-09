@@ -20,8 +20,10 @@ $this->getPage()
 <div id="wrapper">
 	<?= $this->plugin("ThemeBootstrapModerna", "Menu", "showMenu"); ?>
 </div>
-<section id="inner-headline">
-	<?= $this->plugin("ThemeBootstrapModerna", "Menu", "showBreadcrumb"); ?>
+<section class="callaction">
+	<div class="container">
+		<?= $this->showContainerColumn(2); ?>
+	</div>
 </section>
 <section id="content">
 	<div class="container">

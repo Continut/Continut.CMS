@@ -4,19 +4,40 @@
       "backend.themeBootstrapModerna.layout.container.header": "Header section",
       "backend.themeBootstrapModerna.layout.container.leftColumn": "Left column",
       "backend.themeBootstrapModerna.layout.container.rightColumn": "Right column",
-      "backend.themeBootstrapModerna.layout.container.main": "Main content"
+      "backend.themeBootstrapModerna.layout.container.main": "Main content",
+      "backend.themeBootstrapModerna.layout.container.callAction": "Call action area",
+      "backend.themeBootstrapModerna.layout.container.column1": "Column 1",
+      "backend.themeBootstrapModerna.layout.container.column2": "Column 2",
+      "backend.themeBootstrapModerna.layout.container.column3": "Column 3",
+      "backend.themeBootstrapModerna.layout.container.column4": "Column 4",
+      "backend.themeBootstrapModerna.layout.container.columnWide": "Column 100% wide",
+      "backend.themeBootstrapModerna.content.box.learg.more": "Learn more"
     },
     "ro_RO": {
       "backend.themeBootstrapModerna.layout.container.header": "Secţiunea antet",
       "backend.themeBootstrapModerna.layout.container.leftColumn": "Coloana din stînga",
       "backend.themeBootstrapModerna.layout.container.rightColumn": "Coloana din dreapta",
-      "backend.themeBootstrapModerna.layout.container.main": "Conţinut principal"
+      "backend.themeBootstrapModerna.layout.container.main": "Conţinut principal",
+      "backend.themeBootstrapModerna.layout.container.callAction": "Zonă introducere",
+      "backend.themeBootstrapModerna.layout.container.column1": "Coloana 1",
+      "backend.themeBootstrapModerna.layout.container.column2": "Coloana 2",
+      "backend.themeBootstrapModerna.layout.container.column3": "Coloana 3",
+      "backend.themeBootstrapModerna.layout.container.column4": "Coloana 4",
+      "backend.themeBootstrapModerna.layout.container.columnWide": "Coloană ce ocupă 100% din spaţiu",
+      "backend.themeBootstrapModerna.content.box.learg.more": "Detalii"
     },
     "fr_FR": {
       "backend.themeBootstrapModerna.layout.container.header": "Section entête",
       "backend.themeBootstrapModerna.layout.container.leftColumn": "Colonne gauche",
       "backend.themeBootstrapModerna.layout.container.rightColumn": "Colonne droite",
-      "backend.themeBootstrapModerna.layout.container.main": "Contenu principal"
+      "backend.themeBootstrapModerna.layout.container.main": "Contenu principal",
+      "backend.themeBootstrapModerna.layout.container.callAction": "Zone introduction",
+      "backend.themeBootstrapModerna.layout.container.column1": "Colonne 1",
+      "backend.themeBootstrapModerna.layout.container.column2": "Colonne 2",
+      "backend.themeBootstrapModerna.layout.container.column3": "Colonne 3",
+      "backend.themeBootstrapModerna.layout.container.column4": "Colonne 4",
+      "backend.themeBootstrapModerna.layout.container.columnWide": "Colonne à 100% largeur",
+      "backend.themeBootstrapModerna.content.box.learg.more": "Plus d'info"
     }
   }
 }

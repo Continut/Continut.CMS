@@ -7,7 +7,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="index.html"><span>M</span>oderna</a>
+				<a class="navbar-brand" href="<?= $this->helper("Url")->linkToPage(1) ?>"><span>M</span>oderna</a>
 			</div>
 			<div class="navbar-collapse collapse ">
 				<?php if ($pageTree): ?>
