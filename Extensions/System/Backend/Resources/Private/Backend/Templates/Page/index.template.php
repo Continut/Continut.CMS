@@ -146,9 +146,9 @@
 							$.post(
 								'<?= $this->helper("Url")->linkToAction("Backend", "Page", "treeMove") ?>',
 								{
-									movedId: event.move_info.moved_node.id,
+									movedId:     event.move_info.moved_node.id,
 									newParentId: event.move_info.target_node.id,
-									position: event.move_info.position
+									position:    event.move_info.position
 								}
 							);
 						}

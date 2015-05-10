@@ -55,6 +55,11 @@ namespace Core\System\Domain\Model {
 		protected $reference_uid;
 
 		/**
+		 * @var int Field used for the sorting order of content elements
+		 */
+		protected $sorting;
+
+		/**
 		 * @var \Core\Mvc\View\PageView Link to the parent PageView
 		 */
 		protected $_pageView;
@@ -96,6 +101,22 @@ namespace Core\System\Domain\Model {
 			$this->parent_uid = $parentUid;
 
 			return $this;
+		}
+
+		/**
+		 * @return int
+		 */
+		public function getSorting()
+		{
+			return $this->sorting;
+		}
+
+		/**
+		 * @param int $sorting
+		 */
+		public function setSorting($sorting)
+		{
+			$this->sorting = $sorting;
 		}
 
 		/**

@@ -137,9 +137,10 @@
 			if ( this.activeDropRegions.length > 0 ) {
 				// get first drop region and set the element as it's child
 				var target = $(this.activeDropRegions[0]).closest('.container-receiver');
+				var beforeId = target.prevObject.next(".panel-backend-content").data('id');
 				if (target) {
 					$.getJSON('<?= $this->helper("Url")->linkToAction("Backend", "Content", "updateContainer") ?>',
-						{ parent_uid: target.data('parent'), column_id: target.data('id'), uid: this.$el.data('id') })
+						{ parent_uid: target.data('parent'), column_id: target.data('id'), uid: this.$el.data('id'), before_uid: beforeId })
 						.done( function (data) {
 						if (data.status == "ok") {
 

@@ -66,7 +66,7 @@ namespace Core\System\Domain\Collection {
 				$data           = new \stdClass();
 				$data->id       = $item->getUid();
 				$data->parentId = $item->getParentUid();
-				$data->label    = $item->getTitle();
+				$data->label    = $item->getTitle() . " [id: $data->id]";
 				$data->type     = "file";
 				$data->state    = "normal";
 				if (!$item->getIsVisible()) {

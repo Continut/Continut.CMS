@@ -28,6 +28,9 @@ namespace Extensions\System\Backend\Classes\Controllers {
 		 * Shows the login form
 		 */
 		public function indexAction() {
+			if ($this->isConnected()) {
+				$this->redirect(Utility::helper("Url")->linkToAction("Backend", "Index", "dashboard"));
+			}
 		}
 
 		/**

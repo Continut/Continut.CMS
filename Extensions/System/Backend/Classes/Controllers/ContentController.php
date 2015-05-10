@@ -18,6 +18,12 @@ namespace Extensions\System\Backend\Classes\Controllers {
 		public function wizardAction() {
 		}
 
+		/**
+		 * Delete a content element in the backend
+		 *
+		 * @return string
+		 * @throws \Core\Tools\Exception
+		 */
 		public function deleteAction() {
 			$uid = (int)$this->getRequest()->getArgument("uid");
 
@@ -37,13 +43,40 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			]);
 		}
 
+		/**
+		 * Update content element's container once it is dragged & dropped
+		 *
+		 * @return string
+		 * @throws \Core\Tools\Exception
+		 */
 		public function updateContainerAction() {
 			$newParent = (int)$this->getRequest()->getArgument("parent_uid");
 			$newColumn = (int)$this->getRequest()->getArgument("column_id");
 			$uid       = (int)$this->getRequest()->getArgument("uid");
+			$beforeUid = (int)$this->getRequest()->getArgument("before_uid");
 
 			$contentCollection = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
 			$contentElement = $contentCollection->where("uid = :uid AND is_deleted = 0", ["uid" => $uid])->getFirst();
+
+			// the element was either added before one, ar at the very end of a container, in which case the $beforeUid is not present
+			if ($beforeUid) {
+				$otherElement = $contentCollection->where("uid = :uid", ["uid" => $beforeUid])
+					->getFirst();
+				$contentElement->setSorting($otherElement->getSorting());
+				$elementsToModify = $contentCollection->where("sorting >= :sorting_value", ["sorting_value" => $otherElement->getSorting()]);
+				foreach ($elementsToModify->getAll() as $element) {
+					$element->setSorting($element->getSorting() + 1);
+				}
+				$elementsToModify->save();
+			} else {
+				$otherElement = $contentCollection->where("column_id = :column_id AND parent_uid = :parent_uid ORDER BY sorting DESC", ["column_id" => $newColumn, "parent_uid" => $newParent])
+					->getFirst();
+				if ($otherElement) {
+					$contentElement->setSorting($otherElement->getSorting() + 1);
+				} else {
+					$contentElement->setSorting(1);
+				}
+			}
 
 			$contentElement
 				->setParentUid($newParent)
