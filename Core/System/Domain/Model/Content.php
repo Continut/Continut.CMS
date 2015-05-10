@@ -45,9 +45,19 @@ namespace Core\System\Domain\Model {
 		protected $column_id;
 
 		/**
+		 * @var int Id of the page where the element is stored
+		 */
+		protected $page_uid;
+
+		/**
+		 * @var int The reference uid, if this is a reference content element
+		 */
+		protected $reference_uid;
+
+		/**
 		 * @var \Core\Mvc\View\PageView Link to the parent PageView
 		 */
-		protected $_page;
+		protected $_pageView;
 
 		/**
 		 * Datamapper for this model
@@ -89,6 +99,38 @@ namespace Core\System\Domain\Model {
 		}
 
 		/**
+		 * @return int
+		 */
+		public function getPageUid()
+		{
+			return $this->page_uid;
+		}
+
+		/**
+		 * @param int $page_uid
+		 */
+		public function setPageUid($page_uid)
+		{
+			$this->page_uid = $page_uid;
+		}
+
+		/**
+		 * @return int
+		 */
+		public function getReferenceUid()
+		{
+			return $this->reference_uid;
+		}
+
+		/**
+		 * @param int $reference_uid
+		 */
+		public function setReferenceUid($reference_uid)
+		{
+			$this->reference_uid = $reference_uid;
+		}
+
+		/**
 		 * @return int Get id of column where content is stored
 		 */
 		public function getColumnId() {
@@ -126,8 +168,18 @@ namespace Core\System\Domain\Model {
 			return $this;
 		}
 
+		/**
+		 * @return string
+		 */
 		public function getType() {
 			return $this->type;
+		}
+
+		/**
+		 * @param string $type
+		 */
+		public function setType($type) {
+			$this->type = $type;
 		}
 
 		public function getValue() {
@@ -135,17 +187,17 @@ namespace Core\System\Domain\Model {
 		}
 
 		/**
-		 * @param $page
+		 * @param $pageView
 		 */
-		public function setPage($page) {
-			$this->_page = $page;
+		public function setPageView($pageView) {
+			$this->_pageView = $pageView;
 		}
 
 		/**
 		 * @return \Core\Mvc\View\PageViews
 		 */
 		public function getPage() {
-			return $this->_page;
+			return $this->_pageView;
 		}
 
 		/**
@@ -192,6 +244,7 @@ namespace Core\System\Domain\Model {
 			switch ($this->getType()) {
 				case "content"   : $value = $this->getContentValue(); break;
 				case "plugin"    : $value = $this->getPluginValue(); break;
+				case "reference" : $value = $this->getReferenceValue(); break;
 				// container is a special case and it can render elements recursively
 				case "container" : $value = $this->getContainerValue($elements); break;
 			}
@@ -239,6 +292,31 @@ namespace Core\System\Domain\Model {
 				);
 		}
 
+		public function getReferenceValue() {
+			$reference = (int)$this->getReferenceUid();
+			$value = "";
+			if ($reference > 0) {
+				// Load the content collection model and then find all the content elements that belong to this page_uid
+				$contentCollection = Utility::createInstance("\\Extensions\\System\\Frontend\\Classes\\Domain\\Collection\\FrontendContentCollection");
+				$referencedContent = $contentCollection
+					->where("is_deleted = 0 AND uid = :uid ORDER BY sorting ASC", [":uid" => $reference])
+					->getFirst();
+				// set the element's id to the reference id, so that we do not modify the original
+				$referencedContent->setUid($this->getUid());
+				if ($referencedContent) {
+					if ($referencedContent->getType() != "container") {
+						$value = $referencedContent->render(null);
+					} else {
+						$contentCollection
+							->where("page_uid = :page_uid", ["page_uid" => $referencedContent->getPageUid()]);
+						$elements = $contentCollection->findChildrenForUid($reference);
+						$value = $referencedContent->render($elements->children);
+					}
+				}
+			}
+			return $value;
+		}
+
 		/**
 		 * Outputs "container" content
 		 *
@@ -250,7 +328,7 @@ namespace Core\System\Domain\Model {
 		public function getContainerValue($elements) {
 			$configuration = json_decode($this->getValue(), TRUE);
 
-			$container = Utility::createInstance("\\Core\\Mvc\\View\\BackendContainer");
+			$container = Utility::createInstance("\\Core\\Mvc\\View\\Container");
 			$container->setUid($this->getUid());
 			$container->setElements($elements);
 			$container->setTemplate(

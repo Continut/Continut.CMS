@@ -50,6 +50,39 @@ namespace Core\System\Domain\Collection {
 
 			return $tree;
 		}
+
+		/**
+		 * Returns the entire tree for a leaf with a certain uid
+		 *
+		 * @param int $uid
+		 *
+		 * @return mixed
+		 */
+		public function findChildrenForUid($uid) {
+			$tree = $this->buildTree();
+
+			return $this->browseChildren($tree, $uid);
+		}
+
+		/**
+		 * Called recursively by findChildrenForUid
+		 *
+		 * @param $elements
+		 * @param $uid
+		 *
+		 * @return mixed
+		 */
+		protected function browseChildren($elements, $uid) {
+			if ($elements) {
+				foreach ($elements as $child) {
+					if ($child->getUid() == $uid) {
+						return $child;
+					} else {
+						$this->browseChildren($child->children, $uid);
+					}
+				}
+			}
+		}
 	}
 
 }

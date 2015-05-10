@@ -12,7 +12,7 @@ namespace Core\Mvc\View {
 
 	use Core\Utility;
 
-	class BackendContainer {
+	class Container {
 		/**
 		 * @var array List of children elements added to container
 		 */
@@ -161,7 +161,7 @@ namespace Core\Mvc\View {
 				}
 			}
 
-			return sprintf('<div data-parent="%s" data-id="%s" class="container-receiver">%s</div>', $this->getUid(), $id, $htmlElements);
+			return $htmlElements;
 		}
 
 		/**

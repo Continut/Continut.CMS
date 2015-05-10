@@ -69,6 +69,36 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 			return $this->formatBlock("plugin", $title, $value);
 		}
 
+		public function getReferenceValue() {
+			$reference = (int)$this->getReferenceUid();
+			$value = "";
+			if ($reference > 0) {
+				// Load the content collection model and then find all the content elements that belong to this page_uid
+				$contentCollection = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\ReferenceContentCollection");
+				$referencedContent = $contentCollection
+					->where("is_deleted = 0 AND uid = :uid ORDER BY sorting ASC", [":uid" => $reference])
+					->getFirst();
+				// set the element's id to the reference id, so that we do not modify the original
+				$referencedContent->setUid($this->getUid());
+				//$referencedContent->setType("reference");
+				if ($referencedContent) {
+					if ($referencedContent->getType() != "container") {
+						$value = $referencedContent->render(null);
+					} else {
+						$contentCollection
+							->where("page_uid = :page_uid", ["page_uid" => $referencedContent->getPageUid()]);
+						$elements = $contentCollection->findChildrenForUid($reference);
+						$value = $referencedContent->render($elements->children);
+					}
+				}
+			}
+
+			return sprintf('<div class="content-type-reference"><p class="reference-title"><i class="fa fa-fw fa-chain"></i> %s</p>%s</div>',
+				Utility::helper("Localization")->translate("backend.content.reference.info", ["content_id" => $referencedContent->getUid(), "page_id" => $referencedContent->getPageUid()]),
+				$value
+			);
+		}
+
 		/**
 		 * Outputs "container" content
 		 *
@@ -82,7 +112,7 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 
 			$configuration = json_decode($this->getValue(), TRUE);
 
-			$container = Utility::createInstance("\\Core\\Mvc\\View\\BackendContainer");
+			$container = Utility::createInstance("\\Core\\System\\View\\BackendContainer");
 			//$container->setLayout($this->getPage()->getLayout());
 			$container->setUid($this->getuid());
 			$container->setElements($elements);
@@ -169,9 +199,9 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 				Utility::helper("Localization")->translate("backend.content.operation.move")
 			);*/
 
-			$overallWrap = '<div id="panel-backend-content-%s" data-id="%s" class="panel panel-backend-content content-drag-sender %s"><div class="panel-heading"><strong>%s</strong>%s</div><div class="panel-body">%s</div></div>';
+			$overallWrap = '<div id="panel-backend-content-%s content-type-%s" data-id="%s" class="panel panel-backend-content content-drag-sender %s"><div class="panel-heading"><strong>%s</strong>%s</div><div class="panel-body">%s</div></div>';
 
-			return sprintf($overallWrap, $this->getUid(), $this->getUid(), $visibilityClass, $title, $operationLinks, $content);
+			return sprintf($overallWrap, $this->getUid(), $this->getType(), $this->getUid(), $visibilityClass, $title, $operationLinks, $content);
 		}
 	}
 

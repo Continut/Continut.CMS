@@ -31,6 +31,13 @@ namespace Core\Mvc\Model {
 		}
 
 		/**
+		 * @param int $uid new uid to use
+		 */
+		public function setUid($uid) {
+			$this->uid = $uid;
+		}
+
+		/**
 		 * Simple datamapper used for the database
 		 * @return array
 		 */

@@ -105,6 +105,19 @@ li a.helper-icon {
 	margin: 0 20px 0 0;
 }
 
+.content-type-reference {
+	opacity: 0.9;
+	background-color: gray;
+	background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.5) 35px, rgba(255,255,255,.5) 70px);
+	padding: 5px 10px;
+}
+
+.reference-title {
+	padding: 0 3px;
+	color: white;
+	background: black;
+}
+
 /* create new element wizard */
 .tab-elements .media-object {
 	float: left;
@@ -171,7 +184,6 @@ ul.jqtree-tree li.jqtree-folder {
 .panel-heading {
 	padding: 10px;
 	border-radius: 0;
-	overflow: hidden;
 }
 
 .panel .panel-body {
