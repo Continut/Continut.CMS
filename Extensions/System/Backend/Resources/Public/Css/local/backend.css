@@ -224,6 +224,25 @@ ul.jqtree-tree li.jqtree-folder {
 	border-radius: 0;
 }
 
+/* dashboard */
+.panel-dashboard {
+	background: #dcdcdc;
+	border: none;
+}
+
+.panel-dashboard .panel-heading {
+	background: #3a4450;
+	color: white;
+	border-bottom: 1px solid white;
+}
+
+.list-element {
+	padding: 5px;
+	overflow: hidden;
+	margin-bottom: 1px;
+	background: rgba(255, 255, 255, 0.5);
+}
+
 /* drag and drop */
 .content-drag-receiver {
 	height: 15px;

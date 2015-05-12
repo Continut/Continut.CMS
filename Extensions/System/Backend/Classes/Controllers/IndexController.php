@@ -30,7 +30,6 @@ namespace Extensions\System\Backend\Classes\Controllers {
 		 * @return string
 		 */
 		public function dashboardAction() {
-			return "dashboard";
 		}
 
 		/**
