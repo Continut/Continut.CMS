@@ -191,7 +191,7 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 				$title .= Utility::helper("Localization")->translate("backend.content.headerIsHidden");
 			}
 
-			$operationLinks = sprintf('<div class="btn-group btn-group-sm pull-right" role="group" aria-label="Element actions">%s<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button><ul class="dropdown-menu" role="menu"><li>%s</li><li>%s</li><li>%s</li></div>',
+			$operationLinks = sprintf('<div class="btn-group btn-group-sm pull-right no-pep" role="group" aria-label="Element actions">%s<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button><ul class="dropdown-menu" role="menu"><li>%s</li><li>%s</li><li>%s</li></div>',
 				$linkToEdit, $linkToCopy, $visibilityLink, $linkToDelete);
 
 			// not used so far, in stand by
@@ -199,7 +199,7 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 				Utility::helper("Localization")->translate("backend.content.operation.move")
 			);*/
 
-			$overallWrap = '<div id="panel-backend-content-%s content-type-%s" data-id="%s" class="panel panel-backend-content content-drag-sender %s"><div class="panel-heading"><strong>%s</strong>%s</div><div class="panel-body">%s</div></div>';
+			$overallWrap = '<div id="panel-backend-content-%s content-type-%s" data-id="%s" class="panel panel-backend-content content-drag-sender %s"><div class="panel-heading"><strong>%s</strong>%s</div><div class="panel-body no-pep">%s</div></div>';
 
 			return sprintf($overallWrap, $this->getUid(), $this->getType(), $this->getUid(), $visibilityClass, $title, $operationLinks, $content);
 		}

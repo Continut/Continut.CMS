@@ -26,14 +26,14 @@
 				<p>Elements to review and validate before they are shown on the website:</p>
 				<div class="list-element"><i class="fa fa-fw fa-file-o"></i> Page: <strong>Our solutions [id: 100]</strong> created by <strong><a href="">Gringo Deluxe</a></strong> today at 10:32
 					<div class="btn-group btn-group-justified">
-						<a class="btn btn-sm btn-primary" href=""><i class="fa fa-fw fa-eye"></i> View</a>
+						<a class="btn btn-sm btn-default" href=""><i class="fa fa-fw fa-eye"></i> View</a>
 						<a class="btn btn-sm btn-success" href=""><i class="fa fa-fw fa-thumbs-up"></i> Validate</a>
 						<a class="btn btn-sm btn-danger" href=""><i class="fa fa-fw fa-thumbs-down"></i> Refuse</a>
 					</div>
 				</div>
 				<div class="list-element"><i class="fa fa-fw fa-file-text-o"></i> Content: <strong>Winners of the Odissey competition [id: 422]</strong> created by <strong><a href="">Gringo Deluxe</a></strong> on the 24th june at 09:22
 					<div class="btn-group btn-group-justified">
-						<a class="btn btn-sm btn-primary" href=""><i class="fa fa-fw fa-eye"></i> View</a>
+						<a class="btn btn-sm btn-default" href=""><i class="fa fa-fw fa-eye"></i> View</a>
 						<a class="btn btn-sm btn-success" href=""><i class="fa fa-fw fa-thumbs-up"></i> Validate</a>
 						<a class="btn btn-sm btn-danger" href=""><i class="fa fa-fw fa-thumbs-down"></i> Refuse</a>
 					</div>

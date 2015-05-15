@@ -126,7 +126,7 @@
 	$('.content-drag-sender').pep({
 		useCSSTranslation: true,
 		droppable: '.content-drag-receiver',
-		elementsWithInteraction: '.panel-body',
+		elementsWithInteraction: '.no-pep',
 		place: false,
 		revert: true,
 		revertIf: function(ev, obj){
