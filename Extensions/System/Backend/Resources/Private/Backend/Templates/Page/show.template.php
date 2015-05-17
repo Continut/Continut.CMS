@@ -120,6 +120,9 @@
 			if (data.operation == "delete") {
 				$('#panel-backend-content-' + data.uid).remove();
 			}
+			if (data.operation == "edit") {
+				$('#content').html(data.html);
+			}
 		});
 	});
 

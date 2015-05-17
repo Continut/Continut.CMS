@@ -310,3 +310,12 @@ ul.jqtree-tree li.jqtree-folder {
 	background: dodgerblue;
 	color: #231f20;
 }
+
+/* content editing/wizard */
+.form-content {
+	margin: 10px 0;
+}
+
+.form-control.rte {
+	height: auto;
+}

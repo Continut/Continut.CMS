@@ -43,6 +43,33 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			]);
 		}
 
+		public function editAction() {
+			$uid = (int)$this->getRequest()->getArgument("uid");
+
+			$contentCollection = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
+			$contentElement = $contentCollection->where("uid = :uid AND is_deleted = 0", ["uid" => $uid])->getFirst();
+
+			$this->getView()->assign("element", $contentElement);
+
+			$data = json_decode($contentElement->getValue(), TRUE);
+			$wizardData = $data[$contentElement->getType()];
+
+			$wizard = Utility::createInstance("Core\\Mvc\\View\\BaseView");
+			$wizard->setTemplate(Utility::getResource($wizardData["template"], $wizardData["extension"], "Frontend", "Wizard"));
+			if (!isset($wizardData["data"]["title"])) {
+				$wizardData["data"]["title"] = $contentElement->getTitle();
+			}
+			$wizard->assignMultiple($wizardData["data"]);
+
+			$this->getView()->assign("content", $wizard->render());
+
+			return json_encode([
+				"uid"       => $contentElement->getUid(),
+				"html"      => $this->getView()->render(),
+				"operation" => "edit"
+			]);
+		}
+
 		/**
 		 * Update content element's container once it is dragged & dropped
 		 *

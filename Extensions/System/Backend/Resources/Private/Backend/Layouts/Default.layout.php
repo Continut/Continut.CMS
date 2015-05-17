@@ -15,6 +15,8 @@ $this->getPage()
 	->addJsAsset( [ "identifier" => "bootstrap-dialog", "extension"  => "Backend", "file" => "bootstrap-dialog/bootstrap-dialog.min.js" ])
 	->addJsAsset( [ "identifier" => "tree", "extension"  => "Backend", "file" => "jqtree/tree.jquery.js" ])
 	->addJsAsset( [ "identifier" => "pep", "extension"  => "Backend", "file" => "pep/jquery.pep.js" ])
+	->addJsAsset( [ "identifier" => "wysiwyg", "extension"  => "Backend", "file" => "bootstrap-wysiwyg/bootstrap-wysiwyg.min.js" ])
+	->addJsAsset( [ "identifier" => "hotkeys", "extension"  => "Backend", "file" => "bootstrap-wysiwyg/jquery.hotkeys.js" ])
 	->addJsAsset( [ "identifier" => "local", "extension"  => "Backend", "file" => "local/backend.js" ]);
 ?>
 <div id="main_toolbar" class="collapse navbar-collapse">
