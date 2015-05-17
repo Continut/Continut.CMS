@@ -29,6 +29,15 @@ HER;
 			return $html;
 		}
 
+		/**
+		 * Simple textarea field
+		 *
+		 * @param $name
+		 * @param $label
+		 * @param $value
+		 *
+		 * @return string
+		 */
 		public function textareaField($name, $label, $value) {
 			$html = <<<HER
 			<label for="field_$name">$label</label>
@@ -37,6 +46,14 @@ HER;
 			return $html;
 		}
 
+		/**
+		 * RTE field
+		 * @param $name
+		 * @param $label
+		 * @param $value
+		 *
+		 * @return string
+		 */
 		public function rteField($name, $label, $value) {
 			$html = <<<HER
 			<label for="field_$name">$label</label>
@@ -76,6 +93,38 @@ HER;
 			</script>
 HER;
 			return $html;
+		}
+
+		/**
+		 * Select field
+		 *
+		 * @param string $name
+		 * @param string $label
+		 * @param array  $values
+		 * @param mixed  $selectedValue
+		 *
+		 * @return string
+		 */
+		public function selectField($name, $label, $values, $selectedValue = null) {
+
+			foreach ($values as $key => $title) {
+				if ($key == $selectedValue) {
+					$options[] = "<option selected value='$key'>$title</option>";
+				} else {
+					$options[] = "<option value='$key'>$title</option>";
+				}
+			}
+			$optionsSelect = implode("\n", $options);
+
+			$html = <<<HER
+				<label for="field_$name">$label</label>
+				<select name="$name" id="field_$name" class="form-control selectpicker">
+				$optionsSelect
+				</select>
+HER;
+
+			return $html;
+
 		}
 	}
 
