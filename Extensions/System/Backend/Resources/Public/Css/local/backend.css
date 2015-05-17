@@ -319,3 +319,10 @@ ul.jqtree-tree li.jqtree-folder {
 .form-control.rte {
 	height: auto;
 }
+
+.wysihtml5-command-active,
+.wysihtml5-action-active,
+.wysihtml5-source-view {
+	box-shadow: 0 0 4px gray inset;
+	background: #dcdcdc;
+}
