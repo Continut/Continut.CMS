@@ -1,5 +1,5 @@
 {
-  "ThemeBootstrap": {
+  "ThemeBootstrapModerna": {
     "en_US": {
       "backend.themeBootstrapModerna.layout.container.header": "Header section",
       "backend.themeBootstrapModerna.layout.container.leftColumn": "Left column",
@@ -11,7 +11,14 @@
       "backend.themeBootstrapModerna.layout.container.column3": "Column 3",
       "backend.themeBootstrapModerna.layout.container.column4": "Column 4",
       "backend.themeBootstrapModerna.layout.container.columnWide": "Column 100% wide",
-      "backend.themeBootstrapModerna.content.box.learg.more": "Learn more"
+      "backend.themeBootstrapModerna.content.box.learn.more": "Learn more",
+      "backend.wizard.title": "Title",
+      "backend.wizard.containers.spaceUsage": "Space usage per columns",
+      "backend.wizard.containers.usage.4_1": "25% column 1, 25% column 2, 25% column 3, 25% column 4",
+      "backend.wizard.containers.usage.2_1": "8% left, 92% right",
+      "backend.wizard.containers.usage.2_2": "16% left, 84% right",
+      "backend.wizard.containers.info": "This is an element of type container, in which you can add up to %(count) columns of content",
+      "backend.wizard.containers.info.footer": "Containers can embed other containers or any other content type"
     },
     "ro_RO": {
       "backend.themeBootstrapModerna.layout.container.header": "Secţiunea antet",
@@ -24,7 +31,14 @@
       "backend.themeBootstrapModerna.layout.container.column3": "Coloana 3",
       "backend.themeBootstrapModerna.layout.container.column4": "Coloana 4",
       "backend.themeBootstrapModerna.layout.container.columnWide": "Coloană ce ocupă 100% din spaţiu",
-      "backend.themeBootstrapModerna.content.box.learg.more": "Detalii"
+      "backend.themeBootstrapModerna.content.box.learn.more": "Detalii",
+      "backend.wizard.title": "Titlu",
+      "backend.wizard.containers.spaceUsage": "Utilizare spaţiu de către coloane",
+      "backend.wizard.containers.usage.4_1": "25% coloana 1, 25% coloana 2, 25% coloana 3, 25% coloana 4",
+      "backend.wizard.containers.usage.2_1": "8% în stînga, 92% în dreapta",
+      "backend.wizard.containers.usage.2_2": "16% în stînga, 84% în dreapta",
+      "backend.wizard.containers.info": "Acesta este un element de tip container, în care puteţi adăuga pînă la %(count) coloane de conţinut",
+      "backend.wizard.containers.info.footer": "Containerele pot conţine la rîndul lor alte alte containere sau elemente de conţinut"
     },
     "fr_FR": {
       "backend.themeBootstrapModerna.layout.container.header": "Section entête",
@@ -37,7 +51,14 @@
       "backend.themeBootstrapModerna.layout.container.column3": "Colonne 3",
       "backend.themeBootstrapModerna.layout.container.column4": "Colonne 4",
       "backend.themeBootstrapModerna.layout.container.columnWide": "Colonne à 100% largeur",
-      "backend.themeBootstrapModerna.content.box.learg.more": "Plus d'info"
+      "backend.themeBootstrapModerna.content.box.learn.more": "Plus d'info",
+      "backend.wizard.title": "Titre",
+      "backend.wizard.containers.spaceUsage": "Utilisation d'espace par les colonnes",
+      "backend.wizard.containers.usage.4_1": "25% colonne 1, 25% colonne 2, 25% colonne 3, 25% colonne 4",
+      "backend.wizard.containers.usage.2_1": "8% à gauche, 92% à droite",
+      "backend.wizard.containers.usage.2_2": "16% à gauche, 84% à droite",
+      "backend.wizard.containers.info": "Ceci est un element de type container, qui peut avoir jusqu'au %(count) colonnes de contenu",
+      "backend.wizard.containers.info.footer": "Les containers peut inclure des autres containers ou des autres types de contenu"
     }
   }
 }

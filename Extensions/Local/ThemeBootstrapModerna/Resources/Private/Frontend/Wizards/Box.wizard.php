@@ -1,5 +1,5 @@
 <div class="form-group">
-	<?= $this->helper("Wizard")->textField("title", "Title", $title) ?>
+	<?= $this->helper("Wizard")->textField("title", $this->__("backend.wizard.title"), $title) ?>
 </div>
 <div class="row">
 	<div class="col-md-6">
