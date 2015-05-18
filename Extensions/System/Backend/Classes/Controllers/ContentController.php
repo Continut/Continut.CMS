@@ -55,7 +55,8 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			$wizardData = $data[$contentElement->getType()];
 
 			$wizard = Utility::createInstance("Core\\Mvc\\View\\BaseView");
-			$wizard->setTemplate(Utility::getResource($wizardData["template"], $wizardData["extension"], "Frontend", "Wizard"));
+			$wizardTemplate = ucfirst($contentElement->getType()) . "s/" . $wizardData["template"];
+			$wizard->setTemplate(Utility::getResource($wizardTemplate, $wizardData["extension"], "Frontend", "Wizard"));
 			if (!isset($wizardData["data"]["title"])) {
 				$wizardData["data"]["title"] = $contentElement->getTitle();
 			}
