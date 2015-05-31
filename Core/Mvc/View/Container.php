@@ -38,6 +38,11 @@ namespace Core\Mvc\View {
 		protected $_uid;
 
 		/**
+		 * @var array Template variables
+		 */
+		protected $_variables;
+
+		/**
 		 * @param BaseLayout $layout
 		 */
 		public function setLayout($layout) {
@@ -105,6 +110,9 @@ namespace Core\Mvc\View {
 		 * @return string
 		 */
 		public function render() {
+			if (!empty($this->_variables)) {
+				extract($this->_variables);
+			}
 			ob_start();
 			include($this->_template);
 			return ob_get_clean();
@@ -173,6 +181,10 @@ namespace Core\Mvc\View {
 		 */
 		public function __($labelKey) {
 			return Utility::helper("Localization")->translate($labelKey);
+		}
+
+		public function assignMultiple($variables) {
+			$this->_variables = $variables;
 		}
 
 	}

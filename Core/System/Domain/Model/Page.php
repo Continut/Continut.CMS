@@ -277,5 +277,13 @@ namespace Core\System\Domain\Model {
 		public function getCachedPath() {
 			return $this->cached_path;
 		}
+
+		/**
+		 * @param string $cached_path
+		 */
+		public function setCachedPath($cached_path)
+		{
+			$this->cached_path = $cached_path;
+		}
 	}
 }

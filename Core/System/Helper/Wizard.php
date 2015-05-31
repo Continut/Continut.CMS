@@ -13,6 +13,11 @@ namespace Core\System\Helper {
 	class Wizard {
 
 		/**
+		 * @var string Field prefix used in the backend form
+		 */
+		protected $prefix = "data";
+
+		/**
 		 * Shows a simple text field with a label in a wizard
 		 *
 		 * @param        $name
@@ -22,9 +27,10 @@ namespace Core\System\Helper {
 		 * @return string
 		 */
 		public function textField($name, $label, $value = "") {
+			$fieldName = $this->prefix . "[$name]";
 			$html = <<<HER
 			<label for="field_$name">$label</label>
-			<input id="field_$name" type="text" class="form-control" value="$value" />
+			<input id="field_$name" type="text" class="form-control" value="$value" name="$fieldName"/>
 HER;
 			return $html;
 		}
@@ -39,9 +45,10 @@ HER;
 		 * @return string
 		 */
 		public function textareaField($name, $label, $value) {
+			$fieldName = $this->prefix . "[$name]";
 			$html = <<<HER
 			<label for="field_$name">$label</label>
-			<textarea id="field_$name" class="form-control" rows="5">$value</textarea>
+			<textarea id="field_$name" name="$fieldName" class="form-control" rows="5">$value</textarea>
 HER;
 			return $html;
 		}
@@ -55,6 +62,7 @@ HER;
 		 * @return string
 		 */
 		public function rteField($name, $label, $value) {
+			$fieldName = $this->prefix . "[$name]";
 			$html = <<<HER
 			<label for="field_$name">$label</label>
 			<div class="rte-toolbar" id="rte_toolbar_$name">
@@ -83,7 +91,7 @@ HER;
 				</select>
 			  	<a class="btn btn-default" data-wysihtml5-action="change_view"><i class="fa fa-fw fa-code"></i></a>
 			</div>
-			<div id="field_$name" class="form-control rte">$value</div>
+			<textarea id="field_$name" name="$fieldName" class="form-control rte">$value</textarea>
 			<script type="text/javascript">
 			var editor_$name = new wysihtml5.Editor('field_$name', {
 				toolbar: 'rte_toolbar_$name',
@@ -106,7 +114,7 @@ HER;
 		 * @return string
 		 */
 		public function selectField($name, $label, $values, $selectedValue = null) {
-
+			$fieldName = $this->prefix . "[$name]";
 			foreach ($values as $key => $title) {
 				if ($key == $selectedValue) {
 					$options[] = "<option selected value='$key'>$title</option>";
@@ -118,7 +126,7 @@ HER;
 
 			$html = <<<HER
 				<label for="field_$name">$label</label>
-				<select name="$name" id="field_$name" class="form-control selectpicker">
+				<select name="$fieldName" id="field_$name" class="form-control selectpicker">
 				$optionsSelect
 				</select>
 HER;

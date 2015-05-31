@@ -3,17 +3,23 @@
     "en_US": {
       "backend.news.header": "News",
       "backend.news.showAll": "View all news",
-      "backend.news.createNew": "Create new news"
+      "backend.news.createNew": "Create new news",
+      "backend.news.pluginInfo": "The News plugin allows you to create and to display news, articles or blog posts on your website",
+      "backend.news.pluginManual": "A written manual as well as introduction videos are available in order to get you started real quick"
     },
     "ro_RO": {
       "backend.news.header": "Ştiri/Articole",
       "backend.news.showAll": "Afişează toate ştirile",
-      "backend.news.createNew": "Creare articol nou"
+      "backend.news.createNew": "Creare articol nou",
+      "backend.news.pluginInfo": "Extensia de ştiri vă permite să afişaţi ştiri, articole sau postări de blog pe site-ul dumneavoastră",
+      "backend.news.pluginManual": "Un manual de utilizare precum şi videoclipuri de utilizare sunt disponibile şi vă permit să exploraţi complet extensia"
     },
     "fr_FR": {
       "backend.news.header": "Articles",
       "backend.news.showAll": "Afficher toutes les articles",
-      "backend.news.createNew": "Ajout d'un nouveau article"
+      "backend.news.createNew": "Ajout d'un nouveau article",
+      "backend.news.pluginInfo": "L'extension News vous permet d'afficher des nouveautes, articles ou textes blog sur votre site web",
+      "backend.news.pluginManual": "Un manuel ecrit et des videos d'introduction sont disponibles si vous n'êtes pas à l'aise avec l'outil"
     }
   }
 }

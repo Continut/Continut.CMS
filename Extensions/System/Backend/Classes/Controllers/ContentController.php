@@ -72,6 +72,36 @@ namespace Extensions\System\Backend\Classes\Controllers {
 		}
 
 		/**
+		 * Saves the changes made to a content element in the backend
+		 *
+		 * @return string
+		 * @throws \Core\Tools\Exception
+		 */
+		public function updateAction() {
+			$uid  = (int)$this->getRequest()->getArgument("uid");
+			$data = $this->getRequest()->getArgument("data", null);
+			if ($data && $uid > 0) {
+				$contentCollection = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
+				$content = $contentCollection->findByUid($uid);
+				$values = json_decode($content->getValue(), TRUE);
+				if (isset($data["title"])) {
+					$content->setTitle($data["title"]);
+					unset($data["title"]);
+				}
+				$values[$content->getType()]["data"] = $data;
+				$content->setValue(json_encode($values));
+				$contentCollection
+					->reset()
+					->add($content)
+					->save();
+			}
+
+			return json_encode([
+				"status" => "ok"
+			]);
+		}
+
+		/**
 		 * Update content element's container once it is dragged & dropped
 		 *
 		 * @return string

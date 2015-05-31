@@ -320,6 +320,10 @@ ul.jqtree-tree li.jqtree-folder {
 	height: auto;
 }
 
+.ajax-text {
+	display: inline-block;
+}
+
 .wysihtml5-command-active,
 .wysihtml5-action-active,
 .wysihtml5-source-view {

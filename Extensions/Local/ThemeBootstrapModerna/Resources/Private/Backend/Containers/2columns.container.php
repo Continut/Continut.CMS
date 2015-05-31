@@ -1,5 +1,10 @@
+<?php
+	$sizeLeft = $formatColumns;
+	$sizeRight = 12 - $formatColumns;
+?>
+
 <div class="row">
-	<div class="col-lg-6">
+	<div class="col-lg-<?= $sizeLeft ?>">
 		<div class="panel panel-warning">
 			<div class="panel-heading">
 				<div class="panel-title"><?= $this->__("backend.themeBootstrapModerna.layout.container.column1") ?></div>
@@ -9,7 +14,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-lg-6">
+	<div class="col-lg-<?= $sizeRight ?>">
 		<div class="panel panel-warning">
 			<div class="panel-heading">
 				<div class="panel-title"><?= $this->__("backend.themeBootstrapModerna.layout.container.column2") ?></div>

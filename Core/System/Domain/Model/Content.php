@@ -203,6 +203,20 @@ namespace Core\System\Domain\Model {
 			$this->type = $type;
 		}
 
+		/**
+		 * Sets the element's serialized values
+		 *
+		 * @param string $value
+		 */
+		public function setValue($value) {
+			$this->value = $value;
+		}
+
+		/**
+		 * Gets the element's serialized values. Do a json_decode after retrieving them
+		 *
+		 * @return string
+		 */
 		public function getValue() {
 			return $this->value;
 		}
@@ -348,6 +362,7 @@ namespace Core\System\Domain\Model {
 		 */
 		public function getContainerValue($elements) {
 			$configuration = json_decode($this->getValue(), TRUE);
+			$variables = $configuration["container"]["data"];
 
 			$container = Utility::createInstance("\\Core\\Mvc\\View\\Container");
 			$container->setUid($this->getUid());
@@ -360,6 +375,7 @@ namespace Core\System\Domain\Model {
 					"Container"
 					)
 			);
+			$container->assignMultiple($variables);
 			return $container->render();
 		}
 	}

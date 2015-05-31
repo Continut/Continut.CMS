@@ -69,6 +69,12 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 			return $this->formatBlock("plugin", $title, $value);
 		}
 
+		/**
+		 * Shows Referenced content elements
+		 *
+		 * @return string
+		 * @throws \Core\Tools\Exception
+		 */
 		public function getReferenceValue() {
 			$reference = (int)$this->getReferenceUid();
 			$value = "";
@@ -111,7 +117,7 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 			$title = $this->getContentTitle();
 
 			$configuration = json_decode($this->getValue(), TRUE);
-
+			$variables = $configuration["container"]["data"];
 			$container = Utility::createInstance("\\Core\\System\\View\\BackendContainer");
 			//$container->setLayout($this->getPage()->getLayout());
 			$container->setUid($this->getuid());
@@ -124,6 +130,7 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 					"Container"
 					)
 			);
+			$container->assignMultiple($variables);
 			$value = $container->render();
 
 			return $this->formatBlock("container", $title, $value);

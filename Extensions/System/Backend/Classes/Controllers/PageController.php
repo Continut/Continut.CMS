@@ -267,6 +267,12 @@ namespace Extensions\System\Backend\Classes\Controllers {
 					->reset()
 					->add($pageModel)
 					->save();
+				// save a cached version of the breadcrumb
+				/*$pageModel->setCachedPath(implode(",", $pagesCollection->cachedBreadcrumb($pageModel->getParentUid())));
+				$pagesCollection
+					->reset()
+					->add($pageModel)
+					->save();*/
 			}
 
 			return "executed";

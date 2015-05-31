@@ -44,5 +44,22 @@ namespace Core\Mvc\Model {
 		public function dataMapper() {
 			return [];
 		}
+
+		/**
+		 * Updates the values of this model
+		 *
+		 * @param array $values Array of key/value pairs to update the model with
+		 *
+		 * @return $this
+		 */
+		public function update($values) {
+			foreach ($values as $key => $value) {
+				if (property_exists($this, "key")) {
+					$this->$key = $value;
+				}
+			}
+
+			return $this;
+		}
 	}
 }

@@ -98,6 +98,33 @@ namespace Core\System\Domain\Collection {
 
 			return $tree;
 		}
+
+		/**
+		 * @param int $pageUid
+		 *
+		 * @return array
+		 */
+		public function cachedBreadcrumb($pageUid) {
+			$cachedPath = [];
+
+			$this->fetchParent($cachedPath, $pageUid);
+
+			return $cachedPath;
+		}
+
+		/**
+		 * @param $path
+		 * @param $id
+		 */
+		protected function fetchParent(&$path, $id) {
+			$page = $this->findByUid($id);
+			$path[] = $id;
+			if ($page->getParentUid() == 0) {
+				return;
+			} else {
+				return $this->fetchParent($path, $page->getParentUid());
+			}
+		}
 	}
 
 }
