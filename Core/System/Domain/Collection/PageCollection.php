@@ -136,10 +136,15 @@ namespace Core\System\Domain\Collection {
 		 */
 		public function findWithUidOrSlug($uid, $slug) {
 			if ($uid == 0) {
-				return $this->where("slug LIKE :slug AND is_visible = 1 AND is_deleted = 0", ["slug" => $slug])->getFirst();
+				$page = $this->where("slug LIKE :slug AND is_visible = 1 AND is_deleted = 0", ["slug" => $slug])->getFirst();
 			} else {
-				return $this->where("uid = :uid AND is_visible = 1 AND is_deleted = 0", ["uid" => $uid])->getFirst();
+				$page = $this->where("uid = :uid AND is_visible = 1 AND is_deleted = 0", ["uid" => $uid])->getFirst();
 			}
+			// if no uid or slug is provided we should show the homepage, if one exists
+			if (!$page) {
+				$page = $this->where("is_visible = 1 AND is_deleted = 0 AND parent_uid = 0 ORDER BY sorting ASC")->getFirst();
+			}
+			return $page;
 		}
 	}
 
