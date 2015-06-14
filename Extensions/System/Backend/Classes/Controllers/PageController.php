@@ -76,6 +76,17 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			return json_encode($pagesData, JSON_UNESCAPED_UNICODE);
 		}
 
+		/**
+		 * Called when a page's properties are edited in the backend
+		 *
+		 * @throws \Core\Tools\Exception
+		 */
+		public function editAction() {
+			$pageUid = (int)$this->getRequest()->getArgument("page_uid");
+			$pageModel = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection")
+				->where("uid = :uid", ["uid" => $pageUid])->getFirst();
+			$this->getView()->assign('page', $pageModel);
+		}
 
 		/**
 		 * Called when the user clicks on a page in the page tree. It shows the details of the page on the right side

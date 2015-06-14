@@ -17,16 +17,17 @@ namespace Extensions\System\Frontend\Classes\Controllers {
 
 		public function indexAction() {
 			// get page id request
-			$pageUid = (int)$this->getRequest()->getArgument("pid", 1);
+			$pageUid = (int)$this->getRequest()->getArgument("pid");
+			// or slug, whichever is sent
+			$pageSlug = $this->getRequest()->getArgument("slug");
 
 			/*if ($cache = Utility::getCache()->getByUid($pageUid, "page")) {
 				return $cache;
 			} else {*/
 
-				// Load the page model from the database
+				// Load the page model from the database, by uid or slug
 				$pageModel = Utility::createInstance("\\Extensions\\System\\Frontend\\Classes\\Domain\\Collection\\FrontendPageCollection")
-					->where("uid = :uid AND is_visible = 1 AND is_deleted = 0", ["uid" => $pageUid])
-					->getFirst();
+					->findWithUidOrSlug($pageUid, $pageSlug);
 
 				if (!$pageModel) {
 					throw new \Exception("The page you are looking for does not exist, is disabled or has been deleted.");
@@ -37,7 +38,7 @@ namespace Extensions\System\Frontend\Classes\Controllers {
 
 				// get all elements from the database that belong to this page and are not hidden or deleted
 				$contentCollection = Utility::createInstance("\\Extensions\\System\\Frontend\\Classes\\Domain\\Collection\\FrontendContentCollection");
-				$contentCollection->where("page_uid = :page_uid AND is_deleted = 0 AND is_visible = 1 ORDER BY sorting ASC", [":page_uid" => $pageUid]);
+				$contentCollection->where("page_uid = :page_uid AND is_deleted = 0 AND is_visible = 1 ORDER BY sorting ASC", [":page_uid" => $pageModel->getUid()]);
 
 				$contentTree = $contentCollection->buildTree();
 

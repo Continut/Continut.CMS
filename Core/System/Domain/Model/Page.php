@@ -64,6 +64,11 @@ namespace Core\System\Domain\Model {
 		protected $cached_path;
 
 		/**
+		 * @var string Page slug
+		 */
+		protected $slug;
+
+		/**
 		 * @var string Backend layout
 		 */
 		protected $backend_layout;
@@ -72,6 +77,16 @@ namespace Core\System\Domain\Model {
 		 * @var int Sorting order
 		 */
 		protected $sorting;
+
+		/**
+		 * @var string
+		 */
+		protected $meta_keywords;
+
+		/**
+		 * @var string
+		 */
+		protected $meta_description;
 
 		/**
 		 * Simple datamapper used for the database
@@ -111,6 +126,54 @@ namespace Core\System\Domain\Model {
 			$this->is_in_menu = $is_in_menu;
 
 			return $this;
+		}
+
+		/**
+		 * @return string
+		 */
+		public function getSlug()
+		{
+			return $this->slug;
+		}
+
+		/**
+		 * @param string $slug
+		 */
+		public function setSlug($slug)
+		{
+			$this->slug = $slug;
+		}
+
+		/**
+		 * @return string
+		 */
+		public function getMetaKeywords()
+		{
+			return $this->meta_keywords;
+		}
+
+		/**
+		 * @param string $meta_keywords
+		 */
+		public function setMetaKeywords($meta_keywords)
+		{
+			$this->meta_keywords = $meta_keywords;
+		}
+
+		/**
+		 * @return string
+		 */
+		public function getMetaDescription()
+		{
+			return $this->meta_description;
+		}
+
+		/**
+		 * @param string $meta_description
+		 */
+		public function setMetaDescription($meta_description)
+		{
+			$this->meta_description = $meta_description;
 		}
 
 		/**

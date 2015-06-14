@@ -32,6 +32,11 @@ namespace Core\Mvc {
 		protected $action = "indexAction";
 
 		/**
+		 * @var string Controller extension
+		 */
+		protected $extension = "Frontend";
+
+		/**
 		 * Request format: html, json, etc
 		 *
 		 * @var string
@@ -69,6 +74,22 @@ namespace Core\Mvc {
 				throw new \Core\Tools\Exception("No controller has been found. Are you sure a controller was passed as an argument?", 40000001);
 			}
 			$this->controller = $controller;
+		}
+
+		/**
+		 * @return string
+		 */
+		public function getExtension()
+		{
+			return $this->extension;
+		}
+
+		/**
+		 * @param string $extension
+		 */
+		public function setExtension($extension)
+		{
+			$this->extension = $extension;
 		}
 
 		/**
@@ -147,12 +168,14 @@ namespace Core\Mvc {
 		 */
 		public function setArgument($argument, $value) {
 			switch ($argument) {
-				case 'controller':
-					$this->setController($value); break;
-				case 'action':
-					$this->setAction($value); break;
-				case 'format':
-					$this->setFormat($format); break;
+				case '_controller':
+					$this->setController($value);
+				case '_extension':
+					$this->setExtension($value);
+				case '_action':
+					$this->setAction($value);
+				case '_format':
+					$this->setFormat($value);
 				default:
 					$this->arguments[$argument] = $value;
 			}
@@ -198,6 +221,40 @@ namespace Core\Mvc {
 		 */
 		public function isAjax() {
 			return (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
+		}
+
+		/**
+		 * Maps routing rules and dispatches the calls
+		 */
+		public function mapRouting() {
+			$url = urldecode($_SERVER["REQUEST_URI"]);
+
+			$mappings = [
+				"/^\/(.*)$/Di" => [
+					"_controller" => "Index",
+					"_extension"  => "Frontend",
+					"_action"     => "index",
+					"parameters"  => ["slug"]
+				],
+			];
+
+			foreach ($mappings as $expression => $mapTo) {
+				if (preg_match($expression, $url, $matches)) {
+					$this->setArgument("_extension", $mapTo["_extension"]);
+					$this->setArgument("_controller", $mapTo["_controller"]);
+					$this->setArgument("_action", $mapTo["_action"]);
+					array_shift($matches);
+					if (isset($matches) && isset($mapTo["parameters"])) {
+						foreach ($matches as $key => $match) {
+							if (isset($mapTo["parameters"][$key])) {
+								$this->setArgument($mapTo["parameters"][ $key ], $match);
+							}
+						}
+					}
+					return;
+				}
+			}
+
 		}
 
 	}

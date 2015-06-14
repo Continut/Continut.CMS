@@ -36,7 +36,7 @@ AddEncoding gzip .gzip
 
 <IfModule mod_rewrite.c>
 
-# Enable URL rewriting
+# Activate Pretty urls
 RewriteEngine On
 
 # Change this path, if your installation is located in a subdirectory of the website root
@@ -55,6 +55,8 @@ RewriteRule ^(.+)\.(\d+)\.(php|js|css|png|jpg|gif|gzip)$ $1.$3 [L]
 
 # No rewrite rules for admin
 RewriteRule ^admin.php - [L]
+
+RewriteRule ^(Extensions/|favicon\.ico) - [L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

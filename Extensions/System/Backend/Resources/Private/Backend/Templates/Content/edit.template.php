@@ -42,7 +42,6 @@
 			dataType    : 'json',
 			success     : function(data, textStatus, jqXHR){
 				$('.ajax-loader').hide();
-				console.log(data.status);
 				if (data.status) {
 					$('.ajax-saved').show();
 				} else {

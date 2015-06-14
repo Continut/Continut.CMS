@@ -11,6 +11,9 @@
 <div class="row">
 	<div class="col-sm-8">
 		<div class="btn-group" role="group">
+			<button type="button" class="btn btn-warning" id="page-edit">
+				<i class="fa fa-fw fa-pencil"></i> <?= $this->__("backend.page.edit") ?>
+			</button>
 			<button type="button" class="btn btn-default" id="page-visibility-frontend">
 				<span class="element-visible <?= $page->getIsVisible() ? "" : "hide" ?>"><i class="fa fa-fw fa-check"></i> <?= $this->__("backend.page.visibleInFrontend") ?></span>
 				<span class="element-hide <?= $page->getIsVisible() ? "hide" : "" ?>"><i class="fa fa-fw fa-close text-danger"></i> <?= $this->__("backend.page.notVisibleInFrontend") ?></span>
@@ -18,9 +21,6 @@
 			<button type="button" class="btn btn-default" id="page-visibility-menu">
 				<span class="element-visible <?= $page->getIsInMenu() ? "" : "hide" ?>"><i class="fa fa-fw fa-eye"></i> <?= $this->__("backend.page.visibleInMenu") ?></span>
 				<span class="element-hide <?= $page->getIsInMenu() ? "hide" : "" ?>"><i class="fa fa-fw fa-eye-slash text-danger"></i> <?= $this->__("backend.page.notVisibleInMenu") ?></span>
-			</button>
-			<button type="button" class="btn btn-default" id="page-refresh">
-				<i class="fa fa-fw fa-refresh"></i> <?= $this->__("backend.page.refresh") ?>
 			</button>
 		</div>
 	</div>
@@ -30,6 +30,7 @@
 		</div>
 	</div>
 </div>
+<div id="page_edit" class="row"></div>
 <div class="panel panel-warning page-panel">
 	<div class="panel-heading"><i class="fa fa-fw fa-file-o"></i> <?= $page->getTitle() ?></div>
 	<div class="panel-body">
@@ -83,6 +84,14 @@
 					$(node.element).find(".fa-stack-1x").first().addClass("fa-eye-slash text-danger");
 				}
 			});
+	});
+	$('#page-edit').on('click', function() {
+		$.ajax({
+			url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "edit") ?>',
+			data: { page_uid: <?= $page->getUid() ?> }
+		}).done(function( data ) {
+			$('#page_edit').html(data);
+		});
 	});
 	$('#page-delete').on('click', function() {
 		BootstrapDialog.confirm({

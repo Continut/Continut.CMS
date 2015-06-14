@@ -25,14 +25,14 @@
               "label": "backend.news.showAll",
               "icon": "fa fa-fw fa-bars",
               "extension": "News",
-              "controller": "Backend/News",
+              "controller": "NewsBackend",
               "action": "showNews"
             },
             "add_new": {
               "label": "backend.news.createNew",
               "icon": "fa fa-fw fa-plus",
               "extension": "News",
-              "controller": "Backend/News",
+              "controller": "NewsBackend",
               "action": "createNews"
             }
           }

@@ -66,6 +66,18 @@ namespace Core\System\Helper {
 			];
 			return $this->linkTo($params);
 		}
+
+		/**
+		 * Frontend link to a certaing slug
+		 * //TODO Add additional parameters, language, etc
+		 *
+		 * @param $slug
+		 *
+		 * @return mixed
+		 */
+		public function linkToSlug($slug) {
+			return $slug;
+		}
 	}
 
 }

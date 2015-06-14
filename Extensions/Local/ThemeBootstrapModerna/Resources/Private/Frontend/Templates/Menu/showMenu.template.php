@@ -19,13 +19,13 @@
 								<ul class="dropdown-menu">
 								<?php foreach ($leaf->children as $subleaf): ?>
 									<li>
-										<a href="<?= $this->helper("Url")->linkToPage($subleaf->getUid()) ?>"><?= $subleaf->getTitle() ?></a>
+										<a href="<?= $this->helper("Url")->linkToSlug($subleaf->getSlug()) ?>"><?= $subleaf->getTitle() ?></a>
 									</li>
 								<?php endforeach ?>
 								</ul>
 							</li>
 						<?php else: ?>
-							<li><a href="<?= $this->helper("Url")->linkToPage($leaf->getUid()) ?>"><?= $leaf->getTitle() ?></a></li>
+							<li><a href="<?= $this->helper("Url")->linkToSlug($leaf->getSlug()) ?>"><?= $leaf->getTitle() ?></a></li>
 						<?php endif ?>
 					<?php endforeach ?>
 					</ul>

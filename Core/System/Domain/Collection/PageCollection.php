@@ -125,6 +125,22 @@ namespace Core\System\Domain\Collection {
 				return $this->fetchParent($path, $page->getParentUid());
 			}
 		}
+
+		/**
+		 * Finds a page either by uid, if not zero, or by its slug
+		 *
+		 * @param int    $uid
+		 * @param string $slug
+		 *
+		 * @return Core\System\Domain\Model\Page
+		 */
+		public function findWithUidOrSlug($uid, $slug) {
+			if ($uid == 0) {
+				return $this->where("slug LIKE :slug AND is_visible = 1 AND is_deleted = 0", ["slug" => $slug])->getFirst();
+			} else {
+				return $this->where("uid = :uid AND is_visible = 1 AND is_deleted = 0", ["uid" => $uid])->getFirst();
+			}
+		}
 	}
 
 }

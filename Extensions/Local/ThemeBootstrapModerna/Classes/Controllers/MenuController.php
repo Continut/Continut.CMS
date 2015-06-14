@@ -31,8 +31,9 @@ namespace Extensions\Local\ThemeBootstrapModerna\Classes\Controllers {
 		public function showBreadcrumbAction() {
 			$pagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection");
 
-			$pageUid = (int)$this->getRequest()->getArgument("pid", 0);
-			$pageModel = $pagesCollection->where("uid = :uid", ["uid" => $pageUid])->getFirst();
+			$pageUid  = (int)$this->getRequest()->getArgument("pid");
+			$pageSlug = $this->getRequest()->getArgument("slug");
+			$pageModel = $pagesCollection->findWithUidOrSlug($pageUid, $pageSlug);
 
 			$breadcrumbs = [];
 			if ($pageModel->getCachedPath()) {
