@@ -61,7 +61,7 @@ namespace Core\Mvc\View {
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<base href="http://cms.dev/">
+		<base href="http://cms.local/">
 		<title>$pageTitle</title>
 		$pageHeader
 	</head>

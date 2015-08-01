@@ -81,7 +81,10 @@
       "backend.menu.usergroups.backend.add": "Create new Backend Usergroup",
       "backend.menu.usergroups.frontend.add": "Create new Frontend Usergroup",
       "backend.menu.usergroups.frontend.all": "Show all Frontend Usergroups",
-      "backend.menu.usergroups.backend.all": "Show all Backend Usergroups"
+      "backend.menu.usergroups.backend.all": "Show all Backend Usergroups",
+      "backend.media.files.missing": "No files or folders found",
+      "backend.media.folders.up": "Up (..)",
+      "backend.media.folders.create": "Create new folder"
     },
     "ro_RO": {
       "copyright.text": "Conţinut CMS este un program open-source sub licenţă GPL-3. Pentru mai multe detalii vă rugăm să consultaţi fişierul %(file).",
@@ -164,7 +167,10 @@
       "backend.menu.usergroups.backend.add": "Creează un nou Grup de Utilizatori Frontend",
       "backend.menu.usergroups.frontend.add": "Creează un nou Grup de Utilizatori Frontend",
       "backend.menu.usergroups.frontend.all": "Afişează toate Grupurile de Utilizatori Frontend",
-      "backend.menu.usergroups.backend.all": "Afişează toate Grupurile de Utilizatori Backend"
+      "backend.menu.usergroups.backend.all": "Afişează toate Grupurile de Utilizatori Backend",
+      "backend.media.files.missing": "Nu a fost găsit nici un fişier sau director",
+      "backend.media.folders.up": "Urcaţi (..)",
+      "backend.media.folders.create": "Creare director nou"
     },
     "fr_FR": {
       "copyright.text": "Conţinut CMS est un logiciel open-source sous license GPL-3. Pour plus de details consultez svp. le fichier %(file).",
@@ -246,7 +252,10 @@
       "backend.menu.usergroups.backend.add": "Nouveau Group d'Utilisateur Backend",
       "backend.menu.usergroups.frontend.add": "Nouveau Group d'Utilisateur Frontend",
       "backend.menu.usergroups.frontend.all": "Afficher tous les Groups d'Utilisateurs Frontend",
-      "backend.menu.usergroups.backend.all": "Afficher tous les Groups d'Utilisateurs Backend"
+      "backend.menu.usergroups.backend.all": "Afficher tous les Groups d'Utilisateurs Backend",
+      "backend.media.files.missing": "Aucun fichier ou dossier trouvé",
+      "backend.media.folders.up": "Monter (..)",
+      "backend.media.folders.create": "Nouveau dossier"
     }
   }
 }

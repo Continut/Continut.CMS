@@ -11,6 +11,7 @@
 namespace Extensions\System\Backend\Classes\Controllers {
 
 	use Core\Mvc\Controller\BackendController;
+	use Core\System\Storage\LocalStorage;
 	use Core\Utility;
 
 	class MediaController extends BackendController {
@@ -21,6 +22,13 @@ namespace Extensions\System\Backend\Classes\Controllers {
 		}
 
 		public function indexAction() {
+			$storage = Utility::createInstance("\\Core\\System\\Storage\\LocalStorage");
+
+			$path = $this->getRequest()->getArgument("path", "");
+
+			$this->getView()->assign("path", $path);
+			$this->getView()->assign("files", $storage->getFiles($path));
+			$this->getView()->assign("folders", $storage->getFolders($path));
 		}
 	}
 

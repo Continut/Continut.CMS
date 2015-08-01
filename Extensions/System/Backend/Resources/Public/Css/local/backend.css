@@ -105,6 +105,31 @@ li a.helper-icon {
 	margin: 0 20px 0 0;
 }
 
+.panel-media .thumbnail {
+	text-align: center;
+	position: relative;
+	background: #f5f5f5;
+	border-radius: 0;
+	padding: 9px;
+}
+
+.panel-media .thumbnail .caption {
+	padding: 9px 0 0;
+}
+
+.panel-media .thumbnail p {
+	margin: 0;
+}
+
+.panel-media .thumbnail .extension {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	background: #111;
+	padding: 5px;
+	color: white;
+}
+
 .content-type-reference {
 	opacity: 0.9;
 	background-color: gray;
