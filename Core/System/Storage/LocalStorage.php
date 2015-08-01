@@ -3,9 +3,9 @@
  * This file is part of the Con?inut CMS project.
  * Distributed under the GNU General Public License.
  * For more details, consult the LICENSE.txt file supplied with the project
- * Author: Radu Mogo? <radu.mogos@pixelplant.ch>
+ * Author: Radu Mogoş <radu.mogos@pixelplant.ch>
  * Date: 01.08.2015 @ 13:41
- * Project: Con?inut CMS
+ * Project: Conţinut CMS
  */
 namespace Core\System\Storage {
 
