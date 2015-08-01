@@ -63,6 +63,8 @@ namespace Core {
 			// Set multibyte encoding to utf-8 and use the mb_ functions for proper multilanguage handling
 			// see: http://php.net/manual/en/ref.mbstring.php
 			mb_internal_encoding("UTF-8");
+			// TODO Currently hardcoded, to be modified
+			setlocale(LC_ALL, "ro_RO.utf8");
 
 			return $this;
 		}

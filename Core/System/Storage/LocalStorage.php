@@ -43,7 +43,7 @@ namespace Core\System\Storage {
 			if ($path === "") {
 				$path = DS . self::MEDIA_DIRECTORY;
 			} else {
-				$path = DS . self::MEDIA_DIRECTORY . DS . $path;
+				$path = DS . $path;
 			}
 
 			$existingFiles = new \FilesystemIterator($this->getRoot() . $path);
@@ -51,19 +51,24 @@ namespace Core\System\Storage {
 			$fileObjects = array();
 
 			foreach ($existingFiles as $existingFile) {
-				if ($existingFile->getType() == "file") {
-					$fileRelativePath = $path . DS . $existingFile->getFilename();
+				try {
+					if ($existingFile->getType() == "file") {
+						$fileRelativePath = $path . DS . $existingFile->getFilename();
 
-					$fileObject = Utility::createInstance("\\Core\\System\\Storage\\File");
-					$fileObject->setName($existingFile->getBasename("." . $existingFile->getExtension()));
-					$fileObject->setExtension(strtoupper($existingFile->getExtension()));
-					$fileObject->setRelativePath($path);
-					$fileObject->setRelativeFilename($fileRelativePath);
-					$fileObject->setAbsolutePath($existingFile->getPath());
-					$fileObject->setAbsoluteFilename($existingFile->getPathname());
-					$fileObject->setFullname($existingFile->getFilename());
-					$fileObject->setSize($existingFile->getSize());
-					$fileObjects[] = $fileObject;
+						$fileObject = Utility::createInstance("\\Core\\System\\Storage\\File");
+						$fileObject->setName($existingFile->getBasename("." . $existingFile->getExtension()));
+						$fileObject->setExtension(strtoupper($existingFile->getExtension()));
+						$fileObject->setRelativePath($path);
+						$fileObject->setRelativeFilename($fileRelativePath);
+						$fileObject->setAbsolutePath($existingFile->getPath());
+						$fileObject->setAbsoluteFilename($existingFile->getPathname());
+						$fileObject->setFullname($existingFile->getFilename());
+						$fileObject->setSize($existingFile->getSize());
+						$fileObjects[] = $fileObject;
+					}
+				} catch (\RuntimeException $e) {
+					// TODO: Add log message regarding an invalid file (probably the file name is in a different encoding)
+					// and/or has special symbols
 				}
 			}
 
@@ -80,7 +85,7 @@ namespace Core\System\Storage {
 			if ($path === "") {
 				$path = DS . self::MEDIA_DIRECTORY;
 			} else {
-				$path = DS . self::MEDIA_DIRECTORY . DS . $path;
+				$path = DS . $path;
 			}
 
 			$existingFolders = new \FilesystemIterator($this->getRoot() . $path);
@@ -88,27 +93,41 @@ namespace Core\System\Storage {
 			$folderObjects = array();
 
 			foreach ($existingFolders as $existingFolder) {
-				if ($existingFolder->getType() == "dir") {
-					$folderObject = Utility::createInstance("\\Core\\System\\Storage\\Folder");
+				try {
+					if ($existingFolder->getType() == "dir") {
+						$folderObject = Utility::createInstance("\\Core\\System\\Storage\\Folder");
 
-					$folderObject->setName($existingFolder->getFilename());
-					$folderObject->setAbsolutePath($existingFolder->getPathname());
-					$folderObject->setRelativePath($path . DS . $existingFolder);
+						$folderObject->setName($existingFolder->getFilename());
+						$folderObject->setAbsolutePath($existingFolder->getPathname());
+						$folderObject->setRelativePath($path . DS . $existingFolder->getFilename());
 
-					// count files and folders inside this folder
-					$subfiles = new \FilesystemIterator($folderObject->getAbsolutePath(), \FilesystemIterator::SKIP_DOTS);
-					foreach ($subfiles as $sub) {
-						if ($sub->getType() == "dir") {
-							$folderObject->setCountFolders($folderObject->getCountFolders() + 1);
-						} else {
-							$folderObject->setCountFiles($folderObject->getCountFiles() + 1);
+						// count files and folders inside this folder
+						$subfiles = new \FilesystemIterator($folderObject->getAbsolutePath(), \FilesystemIterator::SKIP_DOTS);
+						foreach ($subfiles as $sub) {
+							if ($sub->getType() == "dir") {
+								$folderObject->setCountFolders($folderObject->getCountFolders() + 1);
+							} else {
+								$folderObject->setCountFiles($folderObject->getCountFiles() + 1);
+							}
 						}
+						$folderObjects[] = $folderObject;
 					}
-					$folderObjects[] = $folderObject;
+				} catch (\RuntimeException $e) {
+					// TODO: Add log message regarding an invalid folder (probably the folder name is in a different encoding)
 				}
 			}
 
 			return $folderObjects;
+		}
+
+		/**
+		 * Attempts to create a directory
+		 *
+		 * @param string $path
+		 * @return bool
+		 */
+		public function createFolder($path) {
+			return mkdir($path);
 		}
 	}
 

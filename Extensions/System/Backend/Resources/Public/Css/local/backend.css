@@ -130,6 +130,14 @@ li a.helper-icon {
 	color: white;
 }
 
+.folders-list {
+	margin-top: 10px;
+}
+
+.folders-list .list-group-item {
+	border-radius: 0;
+}
+
 .content-type-reference {
 	opacity: 0.9;
 	background-color: gray;

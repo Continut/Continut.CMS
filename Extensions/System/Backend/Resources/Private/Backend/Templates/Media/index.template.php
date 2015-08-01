@@ -24,13 +24,21 @@
 	<div class="panel-body">
 		<div class="row">
 			<div class="col-sm-3">
-				<p><a class="btn btn-success"><?= $this->__("backend.media.folders.create") ?> <i class="fa fa-fw fa-plus"></i></a></p>
-				<div class="list-group">
+				<div class="btn-group btn-group-justified" role="group" aria-label="...">
+					<div class="btn-group" role="group">
+						<a class="btn btn-success" id="create-folder"><?= $this->__("backend.media.folders.create") ?> <i class="fa fa-fw fa-plus"></i></a>
+					</div>
+					<div class="btn-group" role="group">
+						<a class="btn btn-primary"><?= $this->__("backend.media.files.upload") ?> <i class="fa fa-fw fa-upload"></i></a>
+					</div>
+				</div>
+				<div class="list-group folders-list">
+					<h4><?= $this->__("backend.media.folders.subfolders") ?></h4>
 					<?php if ($path != ""): ?>
-						<a class="list-group-item" href="<?= $path ?>"> <?= $this->__("backend.media.folders.up") ?></a>
+						<a class="list-group-item list-group-item-info" href="<?= $path ?>"><span class="badge"><i class="fa fa-angle-double-up"></i></span> <?= $this->__("backend.media.folders.up") ?></a>
 					<?php endif ?>
 					<?php foreach ($folders as $folder): ?>
-						<a class="list-group-item" href="<?= $folder->getAbsolutePath() ?>"><span class="badge"><?= $folder->getCountFolders() ?> <i class="fa fa-fw fa-folder"></i> / <?= $folder->getCountFiles() ?> <i class="fa fa-fw fa-file"></i></span> <?= $folder->getName() ?></a>
+						<a class="list-group-item" href="<?= $this->helper("Url")->linkToAction("Backend", "Media", "index", array("path" => urlencode($folder->getRelativePath()) )) ?>"><span class="badge"><?= $folder->getCountFolders() ?> <i class="fa fa-fw fa-folder"></i> / <?= $folder->getCountFiles() ?> <i class="fa fa-fw fa-file"></i></span> <?= $folder->getName() ?></a>
 					<?php endforeach ?>
 				</div>
 			</div>
@@ -61,3 +69,25 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	$('#create-folder').on('click', function() {
+		BootstrapDialog.confirm({
+			message: '<?= preg_replace('/[\r\n]+/', null, $this->partial("Backend", "Backend", "Media/createDirectory")) ?>',
+			title: '<?= $this->__("backend.media.folders.create") ?>',
+			type: BootstrapDialog.TYPE_SUCCESS,
+			callback: function(result) {
+				// if user confirms, send delete request
+				if(result) {
+					$.getJSON('<?= $this->helper("Url")->linkToAction("Backend", "Media", "createFolder") ?>',
+						{
+							folder: $("#folder").val()
+						}
+					).done(function (data) {
+						console.log(data);
+					});
+				}
+			}
+		});
+	});
+</script>

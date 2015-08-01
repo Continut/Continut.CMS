@@ -83,8 +83,11 @@
       "backend.menu.usergroups.frontend.all": "Show all Frontend Usergroups",
       "backend.menu.usergroups.backend.all": "Show all Backend Usergroups",
       "backend.media.files.missing": "No files or folders found",
+      "backend.media.files.upload": "Upload files",
       "backend.media.folders.up": "Up (..)",
-      "backend.media.folders.create": "Create new folder"
+      "backend.media.folders.subfolders": "Subfolders",
+      "backend.media.folders.create": "Create new folder",
+      "backend.media.folders.specifyName": "Specify the name of the folder to create"
     },
     "ro_RO": {
       "copyright.text": "Conţinut CMS este un program open-source sub licenţă GPL-3. Pentru mai multe detalii vă rugăm să consultaţi fişierul %(file).",
@@ -169,8 +172,11 @@
       "backend.menu.usergroups.frontend.all": "Afişează toate Grupurile de Utilizatori Frontend",
       "backend.menu.usergroups.backend.all": "Afişează toate Grupurile de Utilizatori Backend",
       "backend.media.files.missing": "Nu a fost găsit nici un fişier sau director",
-      "backend.media.folders.up": "Urcaţi (..)",
-      "backend.media.folders.create": "Creare director nou"
+      "backend.media.files.upload": "Adăugaţi fişiere",
+      "backend.media.folders.up": "Urcaţi cu un nivel (..)",
+      "backend.media.folders.subfolders": "Subdirectoare",
+      "backend.media.folders.create": "Creare director nou",
+      "backend.media.folders.specifyName": "Specificaţi numele directorului ce va fi creat"
     },
     "fr_FR": {
       "copyright.text": "Conţinut CMS est un logiciel open-source sous license GPL-3. Pour plus de details consultez svp. le fichier %(file).",
@@ -254,8 +260,11 @@
       "backend.menu.usergroups.frontend.all": "Afficher tous les Groups d'Utilisateurs Frontend",
       "backend.menu.usergroups.backend.all": "Afficher tous les Groups d'Utilisateurs Backend",
       "backend.media.files.missing": "Aucun fichier ou dossier trouvé",
+      "backend.media.files.upload": "Charger fichiers",
       "backend.media.folders.up": "Monter (..)",
-      "backend.media.folders.create": "Nouveau dossier"
+      "backend.media.folders.subfolders": "Sous-dossiers",
+      "backend.media.folders.create": "Nouveau dossier",
+      "backend.media.folders.specifyName": "Specifiez le nom du dossier à créer"
     }
   }
 }

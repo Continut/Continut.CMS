@@ -21,6 +21,7 @@ namespace Core\System\Storage {
 		public function getRoot();
 		public function getFiles($path);
 		public function getFolders($path);
+		public function createFolder($path);
 	}
 
 }
