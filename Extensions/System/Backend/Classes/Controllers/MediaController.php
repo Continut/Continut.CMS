@@ -27,6 +27,9 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			$this->storage = Utility::createInstance("\\Core\\System\\Storage\\LocalStorage");
 		}
 
+		/**
+		 * Index page
+		 */
 		public function indexAction() {
 
 			$path = urldecode($this->getRequest()->getArgument("path", ""));
@@ -41,8 +44,11 @@ namespace Extensions\System\Backend\Classes\Controllers {
 		 */
 		public function createFolderAction() {
 			$folder = $this->getRequest()->getArgument("folder");
+			$path = urldecode($this->getRequest()->getArgument("path", ""));
 
-			return json_encode(array("success" => $this->storage->createFolder($folder)));
+			$createdFolder = $this->storage->createFolder($folder, $path);
+
+			return json_encode(array("success" => $createdFolder));
 		}
 
 	}

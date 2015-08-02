@@ -42,8 +42,6 @@ namespace Core\System\Storage {
 		public function getFiles($path = "") {
 			if ($path === "") {
 				$path = DS . self::MEDIA_DIRECTORY;
-			} else {
-				$path = DS . $path;
 			}
 
 			$existingFiles = new \FilesystemIterator($this->getRoot() . $path);
@@ -84,8 +82,6 @@ namespace Core\System\Storage {
 		public function getFolders($path = "") {
 			if ($path === "") {
 				$path = DS . self::MEDIA_DIRECTORY;
-			} else {
-				$path = DS . $path;
 			}
 
 			$existingFolders = new \FilesystemIterator($this->getRoot() . $path);
@@ -123,11 +119,15 @@ namespace Core\System\Storage {
 		/**
 		 * Attempts to create a directory
 		 *
-		 * @param string $path
+		 * @param string $folder Folder to create
+		 * @param string $path   Inside which path?
 		 * @return bool
 		 */
-		public function createFolder($path) {
-			return mkdir($path);
+		public function createFolder($folder, $path) {
+			if ($path == "") {
+				$path = DS . self::MEDIA_DIRECTORY;
+			}
+			return mkdir($this->getRoot() . $path . DS . $folder);
 		}
 	}
 

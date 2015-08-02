@@ -176,7 +176,12 @@
       "backend.media.folders.up": "Urcaţi cu un nivel (..)",
       "backend.media.folders.subfolders": "Subdirectoare",
       "backend.media.folders.create": "Creare director nou",
-      "backend.media.folders.specifyName": "Specificaţi numele directorului ce va fi creat"
+      "backend.media.folders.specifyName": "Specificaţi numele directorului ce va fi creat",
+      "system.helper.units.bytes": "%(size) B",
+      "system.helper.units.kilobytes": "%(size) KB",
+      "system.helper.megabytes": "%(size) MB",
+      "system.helper.gigabytes": "%(size) GB",
+      "system.helper.terabytes": "%(size) TB"
     },
     "fr_FR": {
       "copyright.text": "Conţinut CMS est un logiciel open-source sous license GPL-3. Pour plus de details consultez svp. le fichier %(file).",
