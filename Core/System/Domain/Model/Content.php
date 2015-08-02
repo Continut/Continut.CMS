@@ -65,6 +65,11 @@ namespace Core\System\Domain\Model {
 		protected $_pageView;
 
 		/**
+		 * @var string
+		 */
+		protected $title;
+
+		/**
 		 * Datamapper for this model
 		 *
 		 * @return array
@@ -268,115 +273,10 @@ namespace Core\System\Domain\Model {
 		}
 
 		/**
-		 * Render the current element and optinally pass the children elements to render for containers
-		 *
-		 * @param $elements Children elements to render, only for containers
-		 *
-		 * @return mixed|string
+		 * @param mixed $elements
 		 */
 		public function render($elements) {
-			$value = "";
-			switch ($this->getType()) {
-				case "content"   : $value = $this->getContentValue(); break;
-				case "plugin"    : $value = $this->getPluginValue(); break;
-				case "reference" : $value = $this->getReferenceValue(); break;
-				// container is a special case and it can render elements recursively
-				case "container" : $value = $this->getContainerValue($elements); break;
-			}
-			return $value;
-		}
 
-		/**
-		 * Outputs "regular" content, of type "content" in the database
-		 *
-		 * @return string
-		 */
-		public function getContentValue() {
-			$configuration = json_decode($this->getValue(), TRUE);
-
-			$variables = $configuration["content"]["data"];
-			// we overwrite the title, if such a variable exists, with the value of the column "title" in the content table
-			$variables["title"] = $this->getTitle();
-
-			$view = Utility::createInstance("Core\\Mvc\\View\\BaseView");
-			$view->setTemplate(Utility::getResource(
-				$configuration["content"]["template"],
-				$configuration["content"]["extension"],
-				"Frontend",
-				"Content"
-			));
-			$view->assignMultiple($variables);
-
-			return $view->render();
-		}
-
-		/**
-		 * Outputs "plugin" content
-		 *
-		 * @return string The output of the plugin call
-		 * @throws \Core\Tools\Exception
-		 */
-		public function getPluginValue() {
-			$configuration = json_decode($this->getValue(), TRUE);
-
-			return Utility::callPlugin(
-				$configuration["plugin"]["extension"],
-				$configuration["plugin"]["controller"],
-				$configuration["plugin"]["action"],
-				$configuration["plugin"]["settings"]
-				);
-		}
-
-		public function getReferenceValue() {
-			$reference = (int)$this->getReferenceUid();
-			$value = "";
-			if ($reference > 0) {
-				// Load the content collection model and then find all the content elements that belong to this page_uid
-				$contentCollection = Utility::createInstance("\\Extensions\\System\\Frontend\\Classes\\Domain\\Collection\\FrontendContentCollection");
-				$referencedContent = $contentCollection
-					->where("is_deleted = 0 AND uid = :uid ORDER BY sorting ASC", [":uid" => $reference])
-					->getFirst();
-				// set the element's id to the reference id, so that we do not modify the original
-				$referencedContent->setUid($this->getUid());
-				if ($referencedContent) {
-					if ($referencedContent->getType() != "container") {
-						$value = $referencedContent->render(null);
-					} else {
-						$contentCollection
-							->where("page_uid = :page_uid", ["page_uid" => $referencedContent->getPageUid()]);
-						$elements = $contentCollection->findChildrenForUid($reference);
-						$value = $referencedContent->render($elements->children);
-					}
-				}
-			}
-			return $value;
-		}
-
-		/**
-		 * Outputs "container" content
-		 *
-		 * @param $elements Chidren elements to render
-		 *
-		 * @return mixed
-		 * @throws \Core\Tools\Exception
-		 */
-		public function getContainerValue($elements) {
-			$configuration = json_decode($this->getValue(), TRUE);
-			$variables = $configuration["container"]["data"];
-
-			$container = Utility::createInstance("\\Core\\Mvc\\View\\Container");
-			$container->setUid($this->getUid());
-			$container->setElements($elements);
-			$container->setTemplate(
-				Utility::getResource(
-					$configuration["container"]["template"],
-					$configuration["container"]["extension"],
-					"Frontend",
-					"Container"
-					)
-			);
-			$container->assignMultiple($variables);
-			return $container->render();
 		}
 	}
 

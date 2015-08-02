@@ -61,5 +61,18 @@ namespace Core\Mvc\Model {
 
 			return $this;
 		}
+
+		/**
+		 * Imports values for properties from an array
+		 *
+		 * @param array $row
+		 */
+		public function importFromArray($row) {
+			foreach ($row as $key => $value) {
+				if (property_exists($this, $key)) {
+					$this->$key = $value;
+				}
+			}
+		}
 	}
 }

@@ -11,6 +11,7 @@
 namespace Extensions\System\Backend\Classes\Domain\Collection {
 
 	use Core\System\Domain\Collection\ContentCollection;
+	use Core\Utility;
 
 	class BackendContentCollection extends ContentCollection {
 		/**
@@ -19,6 +20,33 @@ namespace Extensions\System\Backend\Classes\Domain\Collection {
 		public function __construct() {
 			$this->_tablename = "sys_content";
 			$this->_elementClass = "\\Extensions\\System\\Backend\\Classes\\Domain\\Model\\BackendContent";
+		}
+
+		/**
+		 * Do a custom where on the collection and return different type objects
+		 *
+		 * @param $conditions
+		 * @param $values
+		 *
+		 * @return $this
+		 */
+		public function where($conditions, $values = []) {
+			$this->_elements = [];
+			$sth = Utility::getDatabase()->prepare("SELECT * FROM $this->_tablename WHERE " . $conditions);
+			$sth->execute($values);
+			$sth->setFetchMode(\PDO::FETCH_ASSOC);
+			while ($row = $sth->fetch()) {
+				switch ($row["type"]) {
+					case "plugin":    $element = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\Domain\\Model\\Content\\BackendPluginContent"); break;
+					case "container": $element = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\Domain\\Model\\Content\\BackendContainerContent"); break;
+					case "reference": $element = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\Domain\\Model\\Content\\BackendReferenceContent"); break;
+					default:          $element = Utility::createInstance($this->_elementClass);
+				}
+				$element->importFromArray($row);
+				$this->add($element);
+			}
+
+			return $this;
 		}
 	}
 

@@ -87,7 +87,13 @@
       "backend.media.folders.up": "Up (..)",
       "backend.media.folders.subfolders": "Subfolders",
       "backend.media.folders.create": "Create new folder",
-      "backend.media.folders.specifyName": "Specify the name of the folder to create"
+      "backend.media.folders.specifyName": "Specify the name of the folder to create",
+      "system.helper.units.bytes": "%(size) B",
+      "system.helper.units.kilobytes": "%(size) KB",
+      "system.helper.megabytes": "%(size) MB",
+      "system.helper.gigabytes": "%(size) GB",
+      "system.helper.terabytes": "%(size) TB",
+      "backend.content.reference.delete": "Delete the reference"
     },
     "ro_RO": {
       "copyright.text": "Conţinut CMS este un program open-source sub licenţă GPL-3. Pentru mai multe detalii vă rugăm să consultaţi fişierul %(file).",
@@ -181,7 +187,8 @@
       "system.helper.units.kilobytes": "%(size) KB",
       "system.helper.megabytes": "%(size) MB",
       "system.helper.gigabytes": "%(size) GB",
-      "system.helper.terabytes": "%(size) TB"
+      "system.helper.terabytes": "%(size) TB",
+      "backend.content.reference.delete": "Ştergeţi referinţa"
     },
     "fr_FR": {
       "copyright.text": "Conţinut CMS est un logiciel open-source sous license GPL-3. Pour plus de details consultez svp. le fichier %(file).",
@@ -269,7 +276,13 @@
       "backend.media.folders.up": "Monter (..)",
       "backend.media.folders.subfolders": "Sous-dossiers",
       "backend.media.folders.create": "Nouveau dossier",
-      "backend.media.folders.specifyName": "Specifiez le nom du dossier à créer"
+      "backend.media.folders.specifyName": "Specifiez le nom du dossier à créer",
+      "system.helper.units.bytes": "%(size) O",
+      "system.helper.units.kilobytes": "%(size) KO",
+      "system.helper.megabytes": "%(size) MO",
+      "system.helper.gigabytes": "%(size) GO",
+      "system.helper.terabytes": "%(size) TO",
+      "backend.content.reference.delete": "Supprimer la reference"
     }
   }
 }

@@ -18,9 +18,11 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 		/**
 		 * Outputs "regular" content, of type "content" in the database
 		 *
+		 * @param mixed $elements
+		 *
 		 * @return string
 		 */
-		public function getContentValue() {
+		public function render($elements) {
 			$title = $this->getContentTitle();
 
 			$configuration = json_decode($this->getValue(), TRUE);
@@ -37,103 +39,6 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 			//$value = Utility::helper('String')->truncate(Utility::helper('String')->stripTags($this->getValue()), 200);
 			$value = $view->render();
 			return $this->formatBlock("content", $title, $value);
-		}
-
-		/**
-		 * Outputs "plugin" content
-		 *
-		 * @return string The output of the plugin call
-		 * @throws \Core\Tools\Exception
-		 */
-		public function getPluginValue() {
-			$title = $this->getContentTitle();
-
-			$configuration = json_decode($this->getValue(), TRUE);
-
-			$extensionSettings = Utility::getExtensionSettings($configuration["plugin"]["extension"]);
-
-			if (isset($extensionSettings["plugins"][$configuration["plugin"]["identifier"]])) {
-				$modulePreviewSettings = $extensionSettings["plugins"][$configuration["plugin"]["identifier"]]["preview"];
-				$value = Utility::callPlugin(
-					$configuration["plugin"]["extension"],
-					$modulePreviewSettings["controller"],
-					$modulePreviewSettings["action"],
-					$configuration["plugin"]["settings"]
-				);
-			} else {
-				$value =
-					"Extension: " . $configuration["plugin"]["extension"] .
-					" | Action: " . $configuration["plugin"]["controller"] .
-					"->" . $configuration["plugin"]["action"];
-			}
-			return $this->formatBlock("plugin", $title, $value);
-		}
-
-		/**
-		 * Shows Referenced content elements
-		 *
-		 * @return string
-		 * @throws \Core\Tools\Exception
-		 */
-		public function getReferenceValue() {
-			$reference = (int)$this->getReferenceUid();
-			$value = "";
-			if ($reference > 0) {
-				// Load the content collection model and then find all the content elements that belong to this page_uid
-				$contentCollection = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\ReferenceContentCollection");
-				$referencedContent = $contentCollection
-					->where("is_deleted = 0 AND uid = :uid ORDER BY sorting ASC", [":uid" => $reference])
-					->getFirst();
-				// set the element's id to the reference id, so that we do not modify the original
-				$referencedContent->setUid($this->getUid());
-				//$referencedContent->setType("reference");
-				if ($referencedContent) {
-					if ($referencedContent->getType() != "container") {
-						$value = $referencedContent->render(null);
-					} else {
-						$contentCollection
-							->where("page_uid = :page_uid", ["page_uid" => $referencedContent->getPageUid()]);
-						$elements = $contentCollection->findChildrenForUid($reference);
-						$value = $referencedContent->render($elements->children);
-					}
-				}
-			}
-
-			return sprintf('<div class="content-type-reference"><p class="reference-title"><i class="fa fa-fw fa-chain"></i> %s</p>%s</div>',
-				Utility::helper("Localization")->translate("backend.content.reference.info", ["content_id" => $referencedContent->getUid(), "page_id" => $referencedContent->getPageUid()]),
-				$value
-			);
-		}
-
-		/**
-		 * Outputs "container" content
-		 *
-		 * @param $elements Chidren elements to render
-		 *
-		 * @return mixed
-		 * @throws \Core\Tools\Exception
-		 */
-		public function getContainerValue($elements) {
-			$title = $this->getContentTitle();
-
-			$configuration = json_decode($this->getValue(), TRUE);
-			$variables = $configuration["container"]["data"];
-			$container = Utility::createInstance("\\Core\\System\\View\\BackendContainer");
-			//$container->setLayout($this->getPage()->getLayout());
-			$container->setUid($this->getuid());
-			$container->setElements($elements);
-			$container->setTemplate(
-				Utility::getResource(
-					$configuration["container"]["template"],
-					$configuration["container"]["extension"],
-					"Backend",
-					"Container"
-					)
-			);
-			$container->assignMultiple($variables);
-			$value = $container->render();
-
-			return $this->formatBlock("container", $title, $value);
 		}
 
 		/**
