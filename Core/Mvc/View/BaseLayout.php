@@ -11,6 +11,7 @@
 namespace Core\Mvc\View {
 
 	use Core\Tools\Exception;
+	use Core\Utility;
 
 	class BaseLayout extends BaseView {
 
@@ -88,11 +89,14 @@ namespace Core\Mvc\View {
 
 			$htmlElements = "";
 
+			Utility::debugData("container_rendering", "start", "Container (" . $id . ") rendering completed");
+			Utility::debugData("Container with id follows: " . $id, "message");
 			foreach ($this->getElements() as $element) {
 				if ($element->getColumnId() == $id) {
 					$htmlElements .= $element->render($element->children);
 				}
 			}
+			Utility::debugData("container_rendering", "stop");
 			return $htmlElements;
 		}
 	}

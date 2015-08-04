@@ -55,6 +55,16 @@ namespace Core {
 		static $applicationScope;
 
 		/**
+		 * @var \Extensions\System\Debug\DebugBar\StandardDebugBar
+		 */
+		static $debug;
+
+		/**
+		 * @var array Configuration array
+		 */
+		static $configuration;
+
+		/**
 		 * @var string Application environment, Development, Test or Production
 		 */
 		static $applicationEnvironment;
@@ -99,6 +109,43 @@ namespace Core {
 		public static function setApplicationScope($applicationScope, $applicationEnvironment) {
 			static::$applicationScope = $applicationScope;
 			static::$applicationEnvironment = $applicationEnvironment;
+
+			// load environment configuration
+			require_once (__ROOTCMS__ . "/Extensions/configuration.php");
+
+			// convert the multiarray to a 2d array
+			$recursiveArray = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($config[$applicationEnvironment]));
+			$result = array();
+			foreach ($recursiveArray as $leaf) {
+				$keys = array();
+				foreach (range(0, $recursiveArray->getDepth()) as $depth) {
+					$keys[] = $recursiveArray->getSubIterator($depth)->key();
+				}
+				$result[ join('/', $keys) ] = $leaf;
+			}
+			static::$configuration = $result;
+			Utility::debugData($result, "config");
+
+			unset($config);
+
+			// Set multibyte encoding to utf-8 and use the mb_ functions for proper multilanguage handling
+			// see: http://php.net/manual/en/ref.mbstring.php
+			mb_internal_encoding("UTF-8");
+			// set locale, read from the config file
+			setlocale(LC_ALL, static::getConfiguration("System/Locale"));
+		}
+
+		/**
+		 * @param string $path Return configuration path
+		 *
+		 * @return mixed|null
+		 */
+		public static function getConfiguration($path) {
+			if (isset(static::$configuration[$path])) {
+				return static::$configuration[$path];
+			}
+			// TODO: throw an exception
+			return null;
 		}
 
 		/**
@@ -108,12 +155,18 @@ namespace Core {
 		 */
 		public static function connectToDatabase() {
 			try {
-				require_once (__ROOTCMS__ . "/Extensions/configuration.php");
-				static::$databaseHandler = new \PDO(
-					$config[static::$applicationEnvironment]["Database"]["Connection"],
-					$config[static::$applicationEnvironment]["Database"]["Username"],
-					$config[static::$applicationEnvironment]["Database"]["Password"]
+				$pdo = new \PDO(
+					static::getConfiguration("Database/Connection"),
+					static::getConfiguration("Database/Username"),
+					static::getConfiguration("Database/Password")
 				);
+				// if debugging is enabled
+				if (static::getConfiguration("System/Debug/Enabled")) {
+					static::$databaseHandler = new \Extensions\System\Debug\DebugBar\DataCollector\PDO\TraceablePDO($pdo);
+					static::debug()->addCollector(new \Extensions\System\Debug\DebugBar\DataCollector\PDO\PDOCollector(static::$databaseHandler));
+				} else {
+					static::$databaseHandler = $pdo;
+				}
 				static::$databaseHandler->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 			}
 			catch (\PDOException $e) {
@@ -133,6 +186,46 @@ namespace Core {
 		 */
 		public static function getDatabase() {
 			return static::$databaseHandler;
+		}
+
+		/**
+		 * Sets a debug message/value, if debugging is enabled
+		 *
+		 * @param mixed  $value
+		 * @param string $type  Type of debug info to set
+		 * @param string $label
+		 */
+		public static function debugData($value, $type, $label = "") {
+			if (static::getConfiguration("System/Debug/Enabled")) {
+				switch ($type) {
+					case "config":
+						Utility::debug()->addCollector(new \Extensions\System\Debug\DebugBar\DataCollector\ConfigCollector($value));
+						break;
+					case "exception":
+						Utility::debug()['exceptions']->addException($value);
+						break;
+					case "start":
+						Utility::debug()['time']->startMeasure($value, $label);
+						break;
+					case "stop":
+						Utility::debug()['time']->stopMeasure($value);
+						break;
+					default: // message
+						Utility::debug()['messages']->info($value);
+				}
+			}
+		}
+
+		/**
+		 * Returns the debug object
+		 *
+		 * @return \Extensions\System\Debug\DebugBar\StandardDebugBar
+		 */
+		public static function debug() {
+			if (!static::$debug) {
+				static::$debug = new \Extensions\System\Debug\DebugBar\StandardDebugBar();
+			}
+			return static::$debug;
 		}
 
 		/**
@@ -227,7 +320,9 @@ namespace Core {
 		public static function callPlugin($contextExtension, $contextController, $contextAction, $contextSettings = []) {
 			$controller = static::getController($contextExtension, $contextController, $contextAction, $contextSettings);
 
-			return $controller->getRenderOutput();
+			$content = $controller->getRenderOutput();
+
+			return $content;
 		}
 
 		/**

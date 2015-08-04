@@ -16,6 +16,7 @@ namespace Extensions\System\Frontend\Classes\Controllers {
 	class IndexController extends FrontendController {
 
 		public function indexAction() {
+			//Utility::debugData("page_rendering", "start", "Page rendering");
 			// get page id request
 			$pageUid = (int)$this->getRequest()->getArgument("pid");
 			// or slug, whichever is sent
@@ -54,6 +55,7 @@ namespace Extensions\System\Frontend\Classes\Controllers {
 				$cache = $pageView->render();
 				//Utility::getCache()->setByUid($pageUid, "page", $cache);
 			//}
+			//Utility::debugData("page_rendering", "stop");
 			return $cache;
 		}
 	}

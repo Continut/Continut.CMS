@@ -10,17 +10,6 @@
  * Project: Conţinut CMS
  */
 
-
-//memprof_enable();
-function convert($size)
-{
-	$unit=array('b','kb','mb','gb','tb','pb');
-	return @round($size/pow(1024,($i=floor(log($size,1024)))),2).' '.$unit[$i];
-}
-
-$memory_initial = memory_get_usage(false);
-$time_initial = microtime(true);
-
 define("__ROOTCMS__", __DIR__);
 define("DS", DIRECTORY_SEPARATOR);
 
@@ -28,12 +17,7 @@ require __ROOTCMS__ . DS . "Core" . DS . "Bootstrap.php";
 
 \Core\Bootstrap::getInstance()
 	->setEnvironment("Frontend", "Development") // Change this to "Production" before going LIVE
-	->loadConfiguration()
+	->loadExtensionsConfiguration()
 	->connectToDatabase()
 	->startSession()
 	->connectController();
-
-// Show estimative memory usage
-echo "mem: " . convert(memory_get_usage(false) - $memory_initial) . "<br/>";
-echo "exec: " . round((microtime(true) - $time_initial) , 4) . " sec";
-//memprof_dump_callgrind(fopen("/vagrant/project/callgrind.out", "w"));

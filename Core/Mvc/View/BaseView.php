@@ -99,6 +99,8 @@ namespace Core\Mvc\View {
 		 * @throws \Core\Tools\Exception
 		 */
 		public function render() {
+			Utility::debugData("view_render" . md5($this->_template), "start", "View ". str_replace(__ROOTCMS__, "", $this->_template));
+			Utility::debugData("View loaded: " . str_replace(__ROOTCMS__, "", $this->_template), "message");
 			$fullpath = $this->_template;
 			if (!is_file($fullpath)) {
 				throw new \Core\Tools\Exception("The specified template file does not exist " . $this->_template, 10000001);
@@ -108,7 +110,9 @@ namespace Core\Mvc\View {
 			}
 			ob_start();
 			include($fullpath);
-			return ob_get_clean();
+			$content = ob_get_clean();
+			Utility::debugData("view_render" . md5($this->_template), "stop");
+			return $content;
 		}
 
 		public function useLayout($layoutName) {

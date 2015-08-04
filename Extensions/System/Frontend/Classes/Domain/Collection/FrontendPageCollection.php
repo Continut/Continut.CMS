@@ -12,7 +12,7 @@ namespace Extensions\System\Frontend\Classes\Domain\Collection {
 
 	use Core\System\Domain\Collection\PageCollection;
 
-	class FrontendPageCollection extends PageCollection{
+	class FrontendPageCollection extends PageCollection {
 	}
 
 }

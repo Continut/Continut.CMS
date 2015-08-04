@@ -94,6 +94,7 @@ namespace Extensions\System\Backend\Classes\Controllers {
 		 * @throws \Core\Tools\Exception
 		 */
 		public function showAction() {
+			Utility::debugData("page_rendering", "start", "Page rendering");
 			// Load the pages collection model
 			$pagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection");
 			// Using the collection, load the page specified in the argument "page_uid"
@@ -130,6 +131,7 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			$this->getView()->assign("page", $pageModel);
 			$this->getView()->assign("pageContent", $pageContent);
 			$this->getView()->assign("breadcrumbs", $breadcrumbs);
+			Utility::debugData("page_rendering", "stop");
 		}
 
 		/**

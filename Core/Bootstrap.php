@@ -25,6 +25,11 @@ namespace Core {
 		static protected $_instance;
 
 		/**
+		 * @var \Extensions\System\Debug\DebugBar\StandardDebugBar
+		 */
+		protected $_debug;
+
+		/**
 		 * Returns or creates a Bootstrap instance
 		 *
 		 * @return Boostrap
@@ -59,12 +64,19 @@ namespace Core {
 			// @TODO - move the load_classes method to a proper class that does Class caching
 			spl_autoload_register([$this, "loadClasses"], TRUE, FALSE);
 
+			Utility::debugData("application", "start", "Application context");
 			Utility::setApplicationScope($applicationScope, $environment);
-			// Set multibyte encoding to utf-8 and use the mb_ functions for proper multilanguage handling
-			// see: http://php.net/manual/en/ref.mbstring.php
-			mb_internal_encoding("UTF-8");
-			// TODO Currently hardcoded, to be modified
-			setlocale(LC_ALL, "ro_RO.utf8");
+
+			return $this;
+		}
+
+		/**
+		 * @param bool $show Show or hide the PHP debugbar
+		 *
+		 * @return $this
+		 */
+		public function showDebugBar($show = FALSE) {
+			Utility::debug();
 
 			return $this;
 		}
@@ -74,10 +86,12 @@ namespace Core {
 		 *
 		 * @return $this
 		 */
-		public function loadConfiguration() {
+		public function loadExtensionsConfiguration() {
 			// Load Local and System extensions configuration data
+			Utility::debugData("load_extensions_configuration", "start", "Loading extensions configuration");
 			Utility::loadExtensionsConfigurationFromFolder(__ROOTCMS__ . DS . "Extensions" . DS . "Local");
 			Utility::loadExtensionsConfigurationFromFolder(__ROOTCMS__ . DS . "Extensions" . DS . "System");
+			Utility::debugData("load_extensions_configuration", "stop");
 
 			return $this;
 		}
@@ -110,6 +124,7 @@ namespace Core {
 		 * @throws \Core\Tools\Exception
 		 */
 		public function connectController() {
+			Utility::debugData("controller_call", "start", "Main call and rendering");
 			$request = Utility::getRequest();
 			$request->mapRouting();
 
@@ -118,12 +133,15 @@ namespace Core {
 			$contextController = $request->getArgument("_controller", "Index");
 			$contextAction     = $request->getArgument("_action",     "index");
 
-			echo Utility::callPlugin($contextExtension, $contextController, $contextAction);
+			$content = Utility::callPlugin($contextExtension, $contextController, $contextAction);
+
+			echo $content;
 
 			return $this;
 		}
 
 		public function connectBackendController() {
+			Utility::debugData("controller_call", "start", "Main call and rendering");
 			$layout = Utility::createInstance("\\Core\\System\\View\\BackendLayout");
 			$layout->setTemplate("/Extensions/System/Backend/Resources/Private/Backend/Layouts/Default.layout.php");
 

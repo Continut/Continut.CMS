@@ -51,9 +51,20 @@ namespace Core\Mvc\View {
 		}
 
 		public function render() {
+			Utility::debugData("layout_rendering", "start", "Layout rendering");
+			Utility::debugData("Layout used: " . str_replace(__ROOTCMS__, "", $this->_layout->getTemplate()), "message");
 			$pageContent = $this->_layout->render();
+			Utility::debugData("layout_rendering", "stop");
 			$pageHeader  = $this->renderHeader();
 			$pageTitle   = $this->getTitle();
+
+			$debug = Utility::debug()
+				->getJavascriptRenderer()
+				->setBaseUrl('Extensions/System/Debug/DebugBar/Resources')
+				->setEnableJqueryNoConflict(TRUE)->render();
+			$debugHead = Utility::debug()
+				->getJavascriptRenderer()
+				->renderHead();
 
 			$main = <<<HER
 <!DOCTYPE html>
@@ -64,9 +75,11 @@ namespace Core\Mvc\View {
 		<base href="http://cms.local/">
 		<title>$pageTitle</title>
 		$pageHeader
+		$debugHead
 	</head>
 	<body>
 		$pageContent
+		$debug
 	</body>
 </html>
 HER;
