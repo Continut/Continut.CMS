@@ -58,13 +58,17 @@ namespace Core\Mvc\View {
 			$pageHeader  = $this->renderHeader();
 			$pageTitle   = $this->getTitle();
 
-			$debug = Utility::debug()
-				->getJavascriptRenderer()
-				->setBaseUrl('Extensions/System/Debug/DebugBar/Resources')
-				->setEnableJqueryNoConflict(TRUE)->render();
-			$debugHead = Utility::debug()
-				->getJavascriptRenderer()
-				->renderHead();
+			// if the debuger is enabled, show debug data
+			if (Utility::getConfiguration("System/Debug/Enabled")) {
+				$pageContent .= Utility::debug()
+					->getJavascriptRenderer()
+					->setBaseUrl('Extensions/System/Debug/DebugBar/Resources')
+					->setEnableJqueryNoConflict(TRUE)
+					->render();
+				$pageHeader .= Utility::debug()
+					->getJavascriptRenderer()
+					->renderHead();
+			}
 
 			$main = <<<HER
 <!DOCTYPE html>
@@ -75,11 +79,9 @@ namespace Core\Mvc\View {
 		<base href="http://cms.local/">
 		<title>$pageTitle</title>
 		$pageHeader
-		$debugHead
 	</head>
 	<body>
 		$pageContent
-		$debug
 	</body>
 </html>
 HER;

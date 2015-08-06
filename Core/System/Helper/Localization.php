@@ -10,6 +10,8 @@
  */
 namespace Core\System\Helper {
 
+	use Core\Utility;
+
 	class Localization {
 
 		/**
@@ -71,7 +73,7 @@ namespace Core\System\Helper {
 				$labels = json_decode(file_get_contents($file), TRUE);
 				foreach ($labels as $extensionName => $languages) {
 					foreach ($languages as $languageCode => $language) {
-						if ($languageCode == "ro_RO") {
+						if ($languageCode == Utility::getConfiguration("System/Locale")) {
 							$this->_translationLabels = array_merge_recursive($this->_translationLabels, $language);
 						}
 					}

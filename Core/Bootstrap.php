@@ -25,11 +25,6 @@ namespace Core {
 		static protected $_instance;
 
 		/**
-		 * @var \Extensions\System\Debug\DebugBar\StandardDebugBar
-		 */
-		protected $_debug;
-
-		/**
 		 * Returns or creates a Bootstrap instance
 		 *
 		 * @return Boostrap
