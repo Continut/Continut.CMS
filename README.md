@@ -23,21 +23,34 @@ Inside this file place the following lines
     				"Connection" => "mysql:host=localhost;dbname=continutcms",
     				"Username"   => "root",
     				"Password"   => ""
-    			]
+    			],
+			"System" => [
+				"Locale" => "fr_FR",
+				"Debug" => [
+					"Enabled" => TRUE,
+					"IpMask"  => ""
+				]
+			]
     		],
     		"Test" => [
     			"Database" => [
     				"Connection" => "mysql:host=localhost;dbname=continutcms",
     				"Username"   => "root",
     				"Password"   => ""
-    			]
+    			],
+			"System" => [
+				"Locale" => "ro_RO"
+			]
     		],
     		"Production" => [
     			"Database" => [
     				"Connection" => "mysql:host=localhost;dbname=continutcms",
     				"Username"   => "root",
     				"Password"   => ""
-    			]
+    			],
+			"System" => [
+				"Locale" => "ro_RO"
+			]
     		]
     	];
     
