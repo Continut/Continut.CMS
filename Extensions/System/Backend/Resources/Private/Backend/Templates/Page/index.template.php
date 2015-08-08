@@ -40,6 +40,18 @@
 							<option data-icon="flag-icon flag-icon-<?= $language->getFlag() ?>" value="<?= $language->getUid() ?>"><?= $language->getTitle() ?></option>
 						<?php endforeach ?>
 					</select>
+					<script type="text/javascript">
+						$('#select_language').on('change', function (event) {
+							$.ajax({
+								url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "tree") ?>',
+								data: { domain_uid: $('#select_website').val(), domain_url_uid: this.value }
+							})
+								.done(function( data ) {
+									$('#cms_tree').tree('loadData', $.parseJSON(data).pages);
+									$('#content').empty();
+								});
+						});
+					</script>
 				</div>
 			</form>
 		</div>

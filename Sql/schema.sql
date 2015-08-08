@@ -157,14 +157,26 @@ CREATE TABLE `sys_cache` (
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-/* System languages per domain */
+/* System domain urls per domain */
 
-CREATE TABLE `sys_languages` (
-  `uid` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'unique id',
-  `domain_uid` int(11) unsigned NOT NULL COMMENT 'the domain this language belongs to',
-  `language_iso3` varchar(3) COLLATE utf8_unicode_ci NOT NULL COMMENT 'iso3 code of the language',
-  `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'title shown in the dropdowns',
-  `sorting` int(11) unsigned DEFAULT NULL COMMENT 'display order of languages',
-  `flag` varchar(2) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'country flag to use in the backend',
+CREATE TABLE `sys_domain_urls` (
+  `uid` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'domain uid',
+  `parent_uid` int(11) DEFAULT NULL COMMENT 'parent domain url, if an alias',
+  `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'the url pointing to this domain',
+  `is_alias` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'is this an alias domain or is it a main domain?',
+  `domain_uid` int(10) unsigned NOT NULL COMMENT 'uid of main domain',
+  `flag` varchar(2) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'iso2 code for the flag',
+  `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'title to be displayed in the frontend/backend',
+  `sorting` int(10) unsigned NOT NULL COMMENT 'backend sorting order',
+  `locale` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'language locale',
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+
+/* System registry */
+
+CREATE TABLE `sys_registry` (
+  `uid` int(11) unsigned NOT NULL,
+  `key` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `value` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci

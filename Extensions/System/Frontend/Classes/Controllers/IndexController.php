@@ -11,6 +11,7 @@
 namespace Extensions\System\Frontend\Classes\Controllers {
 
 	use Core\Mvc\Controller\FrontendController;
+	use Core\Tools\Exception;
 	use Core\Utility;
 
 	class IndexController extends FrontendController {
@@ -31,8 +32,9 @@ namespace Extensions\System\Frontend\Classes\Controllers {
 					->findWithUidOrSlug($pageUid, $pageSlug);
 
 				if (!$pageModel) {
-					throw new \Exception("The page you are looking for does not exist, is disabled or has been deleted.");
+					throw new Exception($this->__("exception.page.notFound"));
 				}
+				$pageModel->mergeOriginal();
 
 				// load the pageview renderer
 				$pageView = Utility::createInstance("\\Core\\Mvc\\View\\PageView");

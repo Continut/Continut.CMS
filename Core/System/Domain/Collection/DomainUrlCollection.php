@@ -19,6 +19,17 @@ namespace Core\System\Domain\Collection {
 			$this->_tablename = "sys_domain_urls";
 			$this->_elementClass = "\\Core\\System\\Domain\\Model\\DomainUrl";
 		}
+
+		public function toSimplifiedArray() {
+			$data = [];
+			foreach ($this->getAll() as $language) {
+				$data[$language->getUid()] = [
+					"title" => $language->getTitle(),
+					"flag"  => $language->getFlag()
+				];
+			}
+			return $data;
+		}
 	}
 
 }

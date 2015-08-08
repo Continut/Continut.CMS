@@ -35,9 +35,29 @@ namespace Core\System\Domain\Model {
 		protected $url;
 
 		/**
+		 * @var int
+		 */
+		protected $sorting;
+
+		/**
+		 * @var string ISO2 code used for the flag
+		 */
+		protected $flag;
+
+		/**
+		 * @var string Locale used by this domain url
+		 */
+		protected $locale;
+
+		/**
 		 * @var Core\System\Domain\Model\Domain
 		 */
 		protected $domain = NULL;
+
+		/**
+		 * @var string
+		 */
+		protected $title;
 
 		/**
 		 * Simple datamapper used for the database
@@ -48,7 +68,11 @@ namespace Core\System\Domain\Model {
 				"is_alias"      => $this->is_alias,
 				"parent_uid"    => $this->parent_uid,
 				"domain_uid"    => $this->domain_uid,
-				"url"           => $this->url
+				"sorting"       => $this->sorting,
+				"locale"        => $this->locale,
+				"flag"          => $this->flag,
+				"url"           => $this->url,
+				"title"         => $this->title
 			];
 		}
 
@@ -98,6 +122,86 @@ namespace Core\System\Domain\Model {
 		public function setUrl($url)
 		{
 			$this->url = $url;
+		}
+
+		/**
+		 * @return int
+		 */
+		public function getSorting()
+		{
+			return $this->sorting;
+		}
+
+		/**
+		 * @param int $sorting
+		 */
+		public function setSorting($sorting)
+		{
+			$this->sorting = $sorting;
+		}
+
+		/**
+		 * @return string
+		 */
+		public function getFlag()
+		{
+			return $this->flag;
+		}
+
+		/**
+		 * @param string $flag
+		 */
+		public function setFlag($flag)
+		{
+			$this->flag = $flag;
+		}
+
+		/**
+		 * @return string
+		 */
+		public function getLocale()
+		{
+			return $this->locale;
+		}
+
+		/**
+		 * @param string $locale
+		 */
+		public function setLocale($locale)
+		{
+			$this->locale = $locale;
+		}
+
+		/**
+		 * @return int
+		 */
+		public function getDomainUid()
+		{
+			return $this->domain_uid;
+		}
+
+		/**
+		 * @param int $domain_uid
+		 */
+		public function setDomainUid($domain_uid)
+		{
+			$this->domain_uid = $domain_uid;
+		}
+
+		/**
+		 * @return string
+		 */
+		public function getTitle()
+		{
+			return $this->title;
+		}
+
+		/**
+		 * @param string $title
+		 */
+		public function setTitle($title)
+		{
+			$this->title = $title;
 		}
 
 		/**

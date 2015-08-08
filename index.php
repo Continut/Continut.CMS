@@ -17,7 +17,8 @@ require __ROOTCMS__ . DS . "Core" . DS . "Bootstrap.php";
 
 \Core\Bootstrap::getInstance()
 	->setEnvironment("Frontend", "Development") // Change this to "Production" before going LIVE
-	->loadExtensionsConfiguration()
 	->connectToDatabase()
+	->initializeWebsite()
+	->loadExtensionsConfiguration()
 	->startSession()
-	->connectController();
+	->connectFrontendController();

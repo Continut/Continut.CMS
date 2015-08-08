@@ -39,6 +39,11 @@ namespace Core\Mvc\View {
 			return $this;
 		}
 
+		/**
+		 * @param string $template
+		 *
+		 * @throws \Core\Tools\Exception
+		 */
 		public function setLayoutFromTemplate($template) {
 			$this->_layout = Utility::createInstance("\\Core\\System\\View\\FrontendLayout");
 			$this->_layout
@@ -46,10 +51,14 @@ namespace Core\Mvc\View {
 				->setTemplate($template);
 		}
 
+		/**
+		 * @return BaseLayout
+		 */
 		public function getLayout() {
 			return $this->_layout;
 		}
 
+		// TODO: General layout should be defined in an external file
 		public function render() {
 			Utility::debugData("layout_rendering", "start", "Layout rendering");
 			Utility::debugData("Layout used: " . str_replace(__ROOTCMS__, "", $this->_layout->getTemplate()), "message");
@@ -57,7 +66,10 @@ namespace Core\Mvc\View {
 			Utility::debugData("layout_rendering", "stop");
 			$pageHeader  = $this->renderHeader();
 			$pageTitle   = $this->getTitle();
-			$url         = Utility::getSite()->getUrl();
+			$url         = $_SERVER["HTTP_HOST"];
+			if (Utility::getApplicationScope() == Utility::SCOPE_FRONTEND) {
+				$url = Utility::getSite()->getUrl();
+			}
 
 			// if the debuger is enabled, show debug data
 			if (Utility::getConfiguration("System/Debug/Enabled")) {
@@ -90,6 +102,11 @@ HER;
 			return $main;
 		}
 
+		/**
+		 * Renders the header assets (javascript and css files to include)
+		 *
+		 * @return string
+		 */
 		public function renderHeader() {
 			$header = "";
 
@@ -104,6 +121,9 @@ HER;
 			return $header;
 		}
 
+		/**
+		 * @return array
+		 */
 		public function getAssets() {
 			return $this->_assets;
 		}

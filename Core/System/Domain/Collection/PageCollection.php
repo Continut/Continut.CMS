@@ -136,16 +136,25 @@ namespace Core\System\Domain\Collection {
 		 * @return Core\System\Domain\Model\Page
 		 */
 		public function findWithUidOrSlug($uid, $slug) {
-			$domainUid = Utility::getSite()->getDomain()->getUid();
+			$domainUrlUid = Utility::getSite()->getDomainUrl()->getUid();
 
 			if ($uid == 0) {
-				$page = $this->where("slug LIKE :slug AND is_visible = 1 AND is_deleted = 0 AND domain_uid = :domain_uid", ["slug" => $slug, "domain_uid" => $domainUid])->getFirst();
+				$page = $this->where(
+					"slug LIKE :slug AND is_visible = 1 AND is_deleted = 0 AND domain_url_uid = :domain_url_uid",
+					[ "slug" => $slug, "domain_url_uid" => $domainUrlUid ]
+				)->getFirst();
 			} else {
-				$page = $this->where("uid = :uid AND is_visible = 1 AND is_deleted = 0 AND domain_uid = :domain_uid", ["uid" => $uid, "domain_uid" => $domainUid])->getFirst();
+				$page = $this->where(
+					"uid = :uid AND is_visible = 1 AND is_deleted = 0 AND domain_url_uid = :domain_url_uid",
+					[ "uid" => $uid, "domain_url_uid" => $domainUrlUid ]
+				)->getFirst();
 			}
 			// if no uid or slug is provided we should show the homepage, if one exists
 			if (!$page) {
-				$page = $this->where("is_visible = 1 AND is_deleted = 0 AND parent_uid = 0 AND domain_uid = :domain_uid ORDER BY sorting ASC", ["domain_uid" => $domainUid])->getFirst();
+				$page = $this->where(
+					"is_visible = 1 AND is_deleted = 0 AND parent_uid = 0 AND domain_url_uid = :domain_url_uid ORDER BY sorting ASC",
+					[ "domain_url_uid" => $domainUrlUid ]
+				)->getFirst();
 			}
 			return $page;
 		}

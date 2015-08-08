@@ -68,6 +68,15 @@ namespace Core\System\Helper {
 		}
 
 		/**
+		 * @return string
+		 */
+		public function linkToHome() {
+			//return $this->linkToAction("Frontend", "Index", "index");
+			// TODO modify method to incorporate the domain url settings
+			return "";
+		}
+
+		/**
 		 * Frontend link to a certaing slug
 		 * //TODO Add additional parameters, language, etc
 		 *

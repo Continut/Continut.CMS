@@ -11,6 +11,8 @@
 
 namespace Core {
 
+	use Core\Tools\Exception;
+
 	/**
 	 * Main Class that bootstraps the system
 	 * @package Core
@@ -92,6 +94,23 @@ namespace Core {
 		}
 
 		/**
+		 * @return $this
+		 */
+		public function initializeWebsite() {
+			// on the frontend we use the locale setup in the domain url, if any
+			if (Utility::getApplicationScope() == Utility::SCOPE_FRONTEND) {
+				Utility::setCurrentWebsite();
+
+				if (Utility::getSite()->getDomainUrl()->getLocale()) {
+					Utility::setConfiguration("System/Locale", Utility::getSite()->getDomainUrl()->getLocale());
+				}
+			}
+			setlocale(LC_ALL, Utility::getConfiguration("System/Locale"));
+
+			return $this;
+		}
+
+		/**
 		 * Start content output
 		 *
 		 * @return $this
@@ -118,10 +137,8 @@ namespace Core {
 		 *
 		 * @throws \Core\Tools\Exception
 		 */
-		public function connectController() {
+		public function connectFrontendController() {
 			Utility::debugData("controller_call", "start", "Main call and rendering");
-
-			Utility::setCurrentWebsite();
 
 			$request = Utility::getRequest();
 			$request->mapRouting();
@@ -131,9 +148,12 @@ namespace Core {
 			$contextController = $request->getArgument("_controller", "Index");
 			$contextAction     = $request->getArgument("_action",     "index");
 
-			$content = Utility::callPlugin($contextExtension, $contextController, $contextAction);
-
-			echo $content;
+			try {
+				$content = Utility::callPlugin($contextExtension, $contextController, $contextAction);
+				echo $content;
+			} catch (Exception $e) {
+				echo $e->getMessage();
+			}
 
 			return $this;
 		}
@@ -141,34 +161,42 @@ namespace Core {
 		public function connectBackendController() {
 			Utility::debugData("controller_call", "start", "Main call and rendering");
 
-			Utility::setCurrentWebsite();
+			$content = "";
 
-			$layout = Utility::createInstance("\\Core\\System\\View\\BackendLayout");
-			$layout->setTemplate("/Extensions/System/Backend/Resources/Private/Backend/Layouts/Default.layout.php");
+			try {
 
-			$pageView = Utility::createInstance("\\Core\\Mvc\\View\\PageView");
-			$pageView->setLayout($layout);
+				$layout = Utility::createInstance("\\Core\\System\\View\\BackendLayout");
+				$layout->setTemplate("/Extensions/System/Backend/Resources/Private/Backend/Layouts/Default.layout.php");
 
-			$request = Utility::getRequest();
+				$pageView = Utility::createInstance("\\Core\\Mvc\\View\\PageView");
+				$pageView->setLayout($layout);
 
-			// Get request argument values or switch to default values if not defined
-			$contextExtension  = $request->getArgument("_extension",  "Backend");
-			$contextController = $request->getArgument("_controller", "Index");
-			$contextAction     = $request->getArgument("_action",     "dashboard");
+				$request = Utility::getRequest();
 
-			$controller = Utility::getController($contextExtension, $contextController, $contextAction);
+				// Get request argument values or switch to default values if not defined
+				$contextExtension = $request->getArgument("_extension", "Backend");
+				$contextController = $request->getArgument("_controller", "Index");
+				$contextAction = $request->getArgument("_action", "dashboard");
 
-			// If it's not an AJAX request, load layout and pageview then render it otherwise just return directly the response
-			if (!Utility::getRequest()->isAjax()) {
-				if ($controller->getLayoutTemplate()) {
-					$pageView->getLayout()->setTemplate($controller->getLayoutTemplate());
+				$controller = Utility::getController($contextExtension, $contextController, $contextAction);
+
+				// If it's not an AJAX request, load layout and pageview then render it otherwise just return directly the response
+				if (!Utility::getRequest()->isAjax()) {
+					if ($controller->getLayoutTemplate()) {
+						$pageView->getLayout()->setTemplate($controller->getLayoutTemplate());
+					}
+					$pageView->getLayout()->setContent($controller->getRenderOutput());
+
+					$content = $pageView->render();
+				} else {
+					$content = $controller->getRenderOutput();
 				}
-				$pageView->getLayout()->setContent($controller->getRenderOutput());
-
-				echo $pageView->render();
-			} else {
-				echo $controller->getRenderOutput();
 			}
+			catch (Exception $e) {
+				$content = $e->getMessage();
+			}
+
+			echo $content;
 
 			return $this;
 		}

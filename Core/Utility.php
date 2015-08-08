@@ -138,8 +138,6 @@ namespace Core {
 			// Set multibyte encoding to utf-8 and use the mb_ functions for proper multilanguage handling
 			// see: http://php.net/manual/en/ref.mbstring.php
 			mb_internal_encoding("UTF-8");
-			// set locale, read from the config file
-			setlocale(LC_ALL, static::getConfiguration("System/Locale"));
 		}
 
 		/**
@@ -153,6 +151,14 @@ namespace Core {
 			}
 			// TODO: throw an exception
 			return null;
+		}
+
+		/**
+		 * @param string $path
+		 * @param mixed $value
+		 */
+		public static function setConfiguration($path, $value) {
+			static::$configuration[$path] = $value;
 		}
 
 		/**

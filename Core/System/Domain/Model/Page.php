@@ -21,6 +21,9 @@ namespace Core\System\Domain\Model {
 		 */
 		protected $title = "Unnamed page";
 
+		/**
+		 * @var \Core\System\Domain\Model\Page
+		 */
 		protected $parent;
 
 		/**
@@ -49,9 +52,9 @@ namespace Core\System\Domain\Model {
 		protected $is_deleted = FALSE;
 
 		/**
-		 * @var int The id of the domain this page belongs to
+		 * @var int The id of the domain url this page belongs to
 		 */
-		protected $domain_uid = 0;
+		protected $domain_url_uid = 0;
 
 		/**
 		 * @var string Layout used by this Page
@@ -89,6 +92,16 @@ namespace Core\System\Domain\Model {
 		protected $meta_description;
 
 		/**
+		 * @var int
+		 */
+		protected $original_uid;
+
+		/**
+		 * @var \Core\System\Domain\Model\Page Original page, if this is a translated one
+		 */
+		protected $original;
+
+		/**
 		 * Simple datamapper used for the database
 		 * @return array
 		 */
@@ -98,12 +111,13 @@ namespace Core\System\Domain\Model {
 				"title"           => $this->title,
 				"language_iso3"   => $this->language_iso3,
 				"cached_path"     => $this->cached_path,
-				"domain_uid"      => $this->domain_uid,
+				"domain_url_uid"  => $this->domain_url_uid,
 				"is_deleted"      => $this->is_deleted,
 				"is_in_menu"      => $this->is_in_menu,
 				"is_visible"      => $this->is_visible,
 				"frontend_layout" => $this->frontend_layout,
 				"backend_layout"  => $this->backend_layout,
+				"original_uid"    => $this->original_uid,
 				"sorting"         => $this->sorting
 			];
 		}
@@ -227,17 +241,17 @@ namespace Core\System\Domain\Model {
 		/**
 		 * @return int
 		 */
-		public function getDomainUid()
+		public function getDomainUrlUid()
 		{
-			return $this->domain_uid;
+			return $this->domain_url_uid;
 		}
 
 		/**
-		 * @param int $domain_uid
+		 * @param int $domain_url_uid
 		 */
-		public function setDomainUid($domain_uid)
+		public function setDomainUrlUid($domain_url_uid)
 		{
-			$this->domain_uid = $domain_uid;
+			$this->domain_url_uid = $domain_url_uid;
 		}
 
 		/**
@@ -293,13 +307,64 @@ namespace Core\System\Domain\Model {
 		public function getParent() {
 			if ($this->parent_uid) {
 				if (empty($this->parent)) {
-					$this->parent = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection")->
-					where("uid = :parent_uid", $this->getParentUid())
-						->getFirst();
+					$this->parent = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection")
+						->findByUid($this->getParentUid());
 				}
 			}
 
 			return $this->parent;
+		}
+
+		/**
+		 * Merges different values from the original page to the translated one
+		 * Settings like the frontend or backend layout to use are only specified on the original page, and thus
+		 * need to be readded to the translated one too
+		 *
+		 * @return $this
+		 */
+		public function mergeOriginal() {
+			if ($this->original_uid > 0) {
+				$originalPage = $this->getOriginal();
+				$this->setBackendLayout($originalPage->getBackendLayout());
+				$this->setFrontendLayout($originalPage->getFrontendLayout());
+			}
+
+			return $this;
+		}
+
+		/**
+		 * @return Page
+		 * @throws \Core\Tools\Exception
+		 */
+		public function getOriginal() {
+			if ($this->original_uid) {
+				if (empty($this->original)) {
+					$this->original = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection")
+						->findByUid($this->getOriginalUid());
+				}
+			}
+
+			return $this->original;
+		}
+
+		/**
+		 * @return int
+		 */
+		public function getOriginalUid()
+		{
+			return $this->original_uid;
+		}
+
+		/**
+		 * @param int $original_uid
+		 *
+		 * @return $this
+		 */
+		public function setOriginalUid($original_uid)
+		{
+			$this->original_uid = $original_uid;
+
+			return $this;
 		}
 
 		/**
@@ -324,12 +389,35 @@ namespace Core\System\Domain\Model {
 		}
 
 		/**
+		 * Sets the layout to be used in the frontend
+		 * @param $frontend_layout
+		 *
+		 * @return $this
+		 */
+		public function setFrontendLayout($frontend_layout) {
+			$this->frontend_layout = $frontend_layout;
+
+			return $this;
+		}
+
+		/**
 		 * Layout to be used in the Backend preview
 		 *
 		 * @return string
 		 */
 		public function getBackendLayout() {
 			return $this->backend_layout;
+		}
+
+		/**
+		 * @param string $backend_layout
+		 *
+		 * @return $this
+		 */
+		public function setBackendLayout($backend_layout) {
+			$this->backend_layout = $backend_layout;
+
+			return $this;
 		}
 
 		/**

@@ -267,5 +267,16 @@ namespace Core\Mvc\Controller {
 		public function redirect($to, $status = 301) {
 			header("Location: $to", true, $status);
 		}
+
+		/**
+		 * Returns a translated label
+		 * @param string $label
+		 * @param array  $arguments
+		 *
+		 * @return string
+		 */
+		public function __($label, $arguments = NULL) {
+			return Utility::helper("Localization")->translate($label, $arguments);
+		}
 	}
 }

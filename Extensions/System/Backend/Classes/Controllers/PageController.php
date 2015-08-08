@@ -29,7 +29,7 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			$domainsCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\DomainCollection");
 			$domainsCollection->where("is_visible = :is_visible ORDER BY sorting ASC", ["is_visible" => 1]);
 
-			$languagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\LanguageCollection");
+			$languagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\DomainUrlCollection");
 			$languagesCollection->where("domain_uid = :domain_uid ORDER BY sorting ASC", ["domain_uid" => $domainsCollection->getFirst()->getUid()]);
 
 			$this->getView()->assign("domains", $domainsCollection);
@@ -46,27 +46,53 @@ namespace Extensions\System\Backend\Classes\Controllers {
 		public function treeAction($term = "") {
 			$pagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection");
 
+			// get the domains collection
+			$domainsCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\DomainCollection");
+
 			$domainUid = $this->getRequest()->getArgument("domain_uid", 0);
 			if ($domainUid == 0) {
-				// get the domains collection
-				$domainsCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\DomainCollection");
-				// and fetch the first visible domain, ordered by sorting
-				$domainUid = $domainsCollection->where("is_visible = 1 ORDER BY sorting ASC")
-					->getFirst()
-					->getUid();
-			}
-			// get all the pages that belong to this domain
-			if (mb_strlen($term) > 0) {
-				$pagesCollection->where("domain_uid = :domain_uid AND title LIKE :title ORDER BY sorting ASC", [
-					"domain_uid" => $domainUid,
-					"title" => "%$term%"
-				]);
+				// fetch the first visible domain, ordered by sorting, if no domain_uid is sent
+				$domain = $domainsCollection->where("is_visible = 1 ORDER BY sorting ASC")
+					->getFirst();
 			} else {
-				$pagesCollection->where("domain_uid = :domain_uid ORDER BY sorting ASC", ["domain_uid" => $domainUid]);
+				$domain = $domainsCollection->where("uid = :uid ORDER BY sorting ASC", [ "uid" => $domainUid ])
+					->getFirst();
 			}
 
-			$languagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\LanguageCollection");
-			$languagesCollection->where("domain_uid = :domain_uid", ["domain_uid" => $domainUid]);
+			// then the domains url collection
+			$domainsUrlCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\DomainUrlCollection");
+			// see if a domain url was sent, if not get the first one found for this domain
+			$domainUrlUid = $this->getRequest()->getArgument("domain_url_uid", 0);
+			if ($domainUrlUid == 0) {
+				$domainUrl = $domainsUrlCollection->where(
+					"domain_uid = :domain_uid ORDER BY sorting ASC",
+					[ "domain_uid" => $domain->getUid() ]
+				)
+					->getFirst();
+			} else {
+				$domainUrl = $domainsUrlCollection->where(
+					"domain_uid = :domain_uid AND uid = :uid ORDER BY sorting ASC",
+					[ "domain_uid" => $domain->getUid(), "uid" => $domainUrlUid ]
+				)
+					->getFirst();
+			}
+
+			// get all the pages that belong to this domain
+			// if the search filter is not empty, filter on page titles
+			if (mb_strlen($term) > 0) {
+				$pagesCollection->where(
+					"domain_url_uid = :domain_url_uid AND title LIKE :title ORDER BY sorting ASC",
+					[ "domain_url_uid" => $domainUrl->getUid(), "title" => "%$term%" ]
+				);
+			} else {
+				$pagesCollection->where(
+					"domain_url_uid = :domain_url_uid ORDER BY sorting ASC",
+					[ "domain_url_uid" => $domainUrl->getUid() ]
+				);
+			}
+
+			$languagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\DomainUrlCollection");
+			$languagesCollection->where("domain_uid = :domain_uid", ["domain_uid" => $domain->getUid()]);
 
 			$pagesData = [
 				"pages" => $pagesCollection->buildJsonTree(),
@@ -84,7 +110,9 @@ namespace Extensions\System\Backend\Classes\Controllers {
 		public function editAction() {
 			$pageUid = (int)$this->getRequest()->getArgument("page_uid");
 			$pageModel = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection")
-				->where("uid = :uid", ["uid" => $pageUid])->getFirst();
+				->where("uid = :uid", ["uid" => $pageUid])
+				->getFirst();
+			$pageModel->mergeOriginal();
 			$this->getView()->assign('page', $pageModel);
 		}
 
@@ -99,7 +127,8 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			$pagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection");
 			// Using the collection, load the page specified in the argument "page_uid"
 			$pageUid = (int)$this->getRequest()->getArgument("page_uid", 0);
-			$pageModel = $pagesCollection->where("uid = :uid", ["uid" => $pageUid])->getFirst();
+			$pageModel = $pagesCollection->findByUid($pageUid);
+			$pageModel->mergeOriginal();
 
 			// The breadcrumbs path is cached in the variable "cached_path" as a comma separated list of values
 			// so that we can easily traverse it in 1 query
