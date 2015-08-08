@@ -24,13 +24,13 @@ Inside this file place the following lines
     				"Username"   => "root",
     				"Password"   => ""
     			],
-			"System" => [
-				"Locale" => "fr_FR",
-				"Debug" => [
-					"Enabled" => TRUE,
-					"IpMask"  => ""
-				]
-			]
+    			"System" => [
+    				"Locale" => "fr_FR",
+    				"Debug" => [
+    					"Enabled" => TRUE,
+    					"IpMask"  => ""
+    				]
+    			]
     		],
     		"Test" => [
     			"Database" => [
