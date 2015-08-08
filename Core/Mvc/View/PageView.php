@@ -57,6 +57,7 @@ namespace Core\Mvc\View {
 			Utility::debugData("layout_rendering", "stop");
 			$pageHeader  = $this->renderHeader();
 			$pageTitle   = $this->getTitle();
+			$url         = Utility::getSite()->getUrl();
 
 			// if the debuger is enabled, show debug data
 			if (Utility::getConfiguration("System/Debug/Enabled")) {
@@ -76,7 +77,7 @@ namespace Core\Mvc\View {
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<base href="http://cms.local/">
+		<base href="http://$url">
 		<title>$pageTitle</title>
 		$pageHeader
 	</head>

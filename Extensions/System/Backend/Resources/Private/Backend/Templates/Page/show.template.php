@@ -95,8 +95,8 @@
 	});
 	$('#page-delete').on('click', function() {
 		BootstrapDialog.confirm({
-			message: '<?= $this->__("backend.page.deletePage.confirm") ?>',
-			title: '<?= $this->__("backend.page.deletePage") ?>',
+			message: <?= json_encode($this->__("backend.page.deletePage.confirm")) ?>,
+			title: <?= json_encode($this->__("backend.page.deletePage")) ?>,
 			type: BootstrapDialog.TYPE_DANGER,
 			callback: function(result) {
 				// if user confirms, send delete request
@@ -115,7 +115,7 @@
 	$('.content-wizard').on('click', function(e) {
 		e.preventDefault();
 		BootstrapDialog.show({
-			title: '<?= $this->__("backend.content.wizard.create.title") ?>',
+			title: <?= json_encode($this->__("backend.content.wizard.create.title")) ?>,
 			message: $('<div></div>').load('<?= $this->helper("Url")->linkToAction("Backend", "Content", "wizard") ?>')
 		})
 	});

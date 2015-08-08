@@ -55,7 +55,7 @@
 				</form>
 			</div>
 			<div class="col-xs-5">
-				<a href="" class="btn btn-success col-xs-12"><i class="fa fa-fw fa-plus"></i> Pagină nouă</a>
+				<a href="" class="btn btn-success col-xs-12"><i class="fa fa-fw fa-plus"></i> <?= $this->__("backend.pageTree.createPage") ?></a>
 			</div>
 		</div>
 		<div id="cms_tree"></div>

@@ -10,6 +10,8 @@
  */
 namespace Core {
 
+	use Core\Tools\Exception;
+
 	/**
 	 * Class Utility
 	 * @package Core
@@ -63,6 +65,11 @@ namespace Core {
 		 * @var array Configuration array
 		 */
 		static $configuration;
+
+		/**
+		 * @var Core\System\Domain\Model\Site
+		 */
+		static $site;
 
 		/**
 		 * @var string Application environment, Development, Test or Production
@@ -186,6 +193,29 @@ namespace Core {
 		 */
 		public static function getDatabase() {
 			return static::$databaseHandler;
+		}
+
+		/**
+		 * @throws Exception
+		 */
+		public static function setCurrentWebsite() {
+			$domainUrls = Utility::createInstance("Core\\System\\Domain\\Collection\\DomainUrlCollection")
+				->findByUrl($_SERVER["HTTP_HOST"]);
+
+			if ($domainUrls->isEmpty()) {
+				throw new Exception("Current domain is not configured");
+			} else {
+				$domainUrl = $domainUrls->getFirst();
+				static::$site = Utility::createInstance("Core\\System\\Domain\\Model\\Site")
+					->setDomainUrl($domainUrl);
+			}
+		}
+
+		/**
+		 * @return Core\System\Domain\Model\Site
+		 */
+		public static function getSite() {
+			return static::$site;
 		}
 
 		/**

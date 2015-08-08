@@ -11,6 +11,7 @@
 namespace Core\System\Domain\Collection {
 
 	use Core\Mvc\Model\BaseCollection;
+	use Core\Utility;
 
 	class PageCollection extends BaseCollection {
 
@@ -135,14 +136,16 @@ namespace Core\System\Domain\Collection {
 		 * @return Core\System\Domain\Model\Page
 		 */
 		public function findWithUidOrSlug($uid, $slug) {
+			$domainUid = Utility::getSite()->getDomain()->getUid();
+
 			if ($uid == 0) {
-				$page = $this->where("slug LIKE :slug AND is_visible = 1 AND is_deleted = 0", ["slug" => $slug])->getFirst();
+				$page = $this->where("slug LIKE :slug AND is_visible = 1 AND is_deleted = 0 AND domain_uid = :domain_uid", ["slug" => $slug, "domain_uid" => $domainUid])->getFirst();
 			} else {
-				$page = $this->where("uid = :uid AND is_visible = 1 AND is_deleted = 0", ["uid" => $uid])->getFirst();
+				$page = $this->where("uid = :uid AND is_visible = 1 AND is_deleted = 0 AND domain_uid = :domain_uid", ["uid" => $uid, "domain_uid" => $domainUid])->getFirst();
 			}
 			// if no uid or slug is provided we should show the homepage, if one exists
 			if (!$page) {
-				$page = $this->where("is_visible = 1 AND is_deleted = 0 AND parent_uid = 0 ORDER BY sorting ASC")->getFirst();
+				$page = $this->where("is_visible = 1 AND is_deleted = 0 AND parent_uid = 0 AND domain_uid = :domain_uid ORDER BY sorting ASC", ["domain_uid" => $domainUid])->getFirst();
 			}
 			return $page;
 		}

@@ -126,6 +126,16 @@ namespace Core\Mvc\Model {
 			return $element;
 		}
 
+		public function __call($method, $args) {
+			if (substr($method, 0, 6) == "findBy" && strlen($method) > 6) {
+				$field = lcfirst(substr($method, 6));
+				// so far we only map 1 field, to be enhanced to more (AND, OR conditions)
+				$values = array($field => $args[0]);
+				$conditions = "$field = :$field";
+				return $this->where($conditions, $values);
+			}
+		}
+
 		/**
 		 * Save all the collection elements
 		 *
@@ -174,6 +184,13 @@ namespace Core\Mvc\Model {
 		 */
 		public function count() {
 			return sizeof($this->_elements);
+		}
+
+		/**
+		 * @return boolean
+		 */
+		public function isEmpty() {
+			return (sizeof($this->_elements) == 0);
 		}
 	}
 

@@ -120,6 +120,9 @@ namespace Core {
 		 */
 		public function connectController() {
 			Utility::debugData("controller_call", "start", "Main call and rendering");
+
+			Utility::setCurrentWebsite();
+
 			$request = Utility::getRequest();
 			$request->mapRouting();
 
@@ -137,6 +140,9 @@ namespace Core {
 
 		public function connectBackendController() {
 			Utility::debugData("controller_call", "start", "Main call and rendering");
+
+			Utility::setCurrentWebsite();
+
 			$layout = Utility::createInstance("\\Core\\System\\View\\BackendLayout");
 			$layout->setTemplate("/Extensions/System/Backend/Resources/Private/Backend/Layouts/Default.layout.php");
 
