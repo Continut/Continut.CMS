@@ -38,9 +38,9 @@ Inside this file place the following lines
     				"Username"   => "root",
     				"Password"   => ""
     			],
-			"System" => [
-				"Locale" => "ro_RO"
-			]
+    			"System" => [
+    				"Locale" => "ro_RO"
+    			]
     		],
     		"Production" => [
     			"Database" => [
@@ -48,9 +48,9 @@ Inside this file place the following lines
     				"Username"   => "root",
     				"Password"   => ""
     			],
-			"System" => [
-				"Locale" => "ro_RO"
-			]
+    			"System" => [
+    				"Locale" => "ro_RO"
+    			]
     		]
     	];
     
