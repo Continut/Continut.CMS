@@ -115,17 +115,6 @@ namespace Core {
 		}
 
 		/**
-		 * @param bool $show Show or hide the PHP debugbar
-		 *
-		 * @return $this
-		 */
-		public function showDebugBar($show = FALSE) {
-			Utility::debug();
-
-			return $this;
-		}
-
-		/**
 		 * Loads all the core configurations, like the class mapper, etc
 		 *
 		 * @return $this
