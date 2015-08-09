@@ -22,13 +22,13 @@ namespace Core\System\Helper {
 		 * @return string
 		 */
 		public function formatBytes($size, $precision = 2) {
-			$unitLabels = array(
+			$unitLabels = [
 				'system.helper.units.bytes',
 				'system.helper.units.kilobytes',
 				'system.helper.megabytes',
 				'system.helper.gigabytes',
 				'system.helper.terabytes'
-			);
+			];
 
 			$size = max($size, 0);
 			$pow = floor(($size ? log($size) : 0) / log(1024));

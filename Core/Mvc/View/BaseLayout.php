@@ -68,6 +68,7 @@ namespace Core\Mvc\View {
 		 */
 		public function render() {
 			if (!is_file($this->_template)) {
+				Utility::debugData($this->__("backend.layout.noLayoutSpecified"), "error");
 				return $this->__("backend.layout.noLayoutSpecified");
 			} else {
 				ob_start();

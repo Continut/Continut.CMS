@@ -10,7 +10,10 @@
  */
 namespace Core {
 
+	use Core\Tools\DatabaseException;
+	use Core\Tools\ErrorException;
 	use Core\Tools\Exception;
+	use Core\Tools\HttpException;
 
 	/**
 	 * Class Utility
@@ -97,7 +100,7 @@ namespace Core {
 				$class = static::$classMappings[$classToLoad];
 			}
 			if (!file_exists(__ROOTCMS__ . DS . $class . ".php")) {
-				throw new Tools\Exception("The PHP class you are trying to load does not exist: " . $classToLoad, 30000001);
+				throw new ErrorException("The PHP class you are trying to load does not exist: " . $classToLoad, 30000001);
 			}
 			return new $classToLoad();
 		}
@@ -107,6 +110,13 @@ namespace Core {
 		 */
 		public static function getApplicationScope() {
 			return static::$applicationScope;
+		}
+
+		/**
+		 * @return string
+		 */
+		public static function getApplicationEnvironment() {
+			return static::$applicationEnvironment;
 		}
 
 		/**
@@ -183,7 +193,7 @@ namespace Core {
 				static::$databaseHandler->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 			}
 			catch (\PDOException $e) {
-				throw new \Core\Tools\Exception("Cannot connect to the database. Please check username, password and host", 20000001);
+				throw new DatabaseException("Cannot connect to the database. Please check username, password and host", 20000001);
 			}
 		}
 
@@ -209,7 +219,7 @@ namespace Core {
 				->findByUrl($_SERVER["HTTP_HOST"]);
 
 			if ($domainUrls->isEmpty()) {
-				throw new Exception("Current domain is not configured");
+				throw new HttpException(404, "The domain you are currently trying to access is not configured inside the CMS application!");
 			} else {
 				$domainUrl = $domainUrls->getFirst();
 				static::$site = Utility::createInstance("Core\\System\\Domain\\Model\\Site")
@@ -222,46 +232,6 @@ namespace Core {
 		 */
 		public static function getSite() {
 			return static::$site;
-		}
-
-		/**
-		 * Sets a debug message/value, if debugging is enabled
-		 *
-		 * @param mixed  $value
-		 * @param string $type  Type of debug info to set
-		 * @param string $label
-		 */
-		public static function debugData($value, $type, $label = "") {
-			if (static::getConfiguration("System/Debug/Enabled")) {
-				switch ($type) {
-					case "config":
-						Utility::debug()->addCollector(new \Extensions\System\Debug\DebugBar\DataCollector\ConfigCollector($value));
-						break;
-					case "exception":
-						Utility::debug()['exceptions']->addException($value);
-						break;
-					case "start":
-						Utility::debug()['time']->startMeasure($value, $label);
-						break;
-					case "stop":
-						Utility::debug()['time']->stopMeasure($value);
-						break;
-					default: // message
-						Utility::debug()['messages']->info($value);
-				}
-			}
-		}
-
-		/**
-		 * Returns the debug object
-		 *
-		 * @return \Extensions\System\Debug\DebugBar\StandardDebugBar
-		 */
-		public static function debug() {
-			if (!static::$debug) {
-				static::$debug = new \Extensions\System\Debug\DebugBar\StandardDebugBar();
-			}
-			return static::$debug;
 		}
 
 		/**
@@ -317,7 +287,7 @@ namespace Core {
 			$extensionFolders = static::getSubdirectories($path);
 			foreach ($extensionFolders as $folderPath => $folderName) {
 				if (!file_exists($folderPath . DS . "configuration.json")) {
-					throw new Tools\Exception("configuration.json file not found for extension " . $folderName);
+					throw new ErrorException("configuration.json file not found for extension " . $folderName);
 				}
 				// also load localizations for the extension, if available
 				static::helper("Localization")->loadLabelsFromFile($folderPath . DS . "labels_" . strtolower(static::$applicationScope) .  ".json");
@@ -387,7 +357,7 @@ namespace Core {
 
 			// and call it's action method, if it exists
 			if (!method_exists($controller, $contextAction)) {
-				throw new Tools\Exception("The action you are trying to call does not exist for this controller", 30000002);
+				throw new ErrorException("The action you are trying to call does not exist for this controller", 30000002);
 			}
 
 			// then execute it's action
@@ -495,6 +465,58 @@ namespace Core {
 				static::$helpers[$helperName] = static::createInstance("\\Core\\System\\Helper\\$helperName");
 			}
 			return static::$helpers[$helperName];
+		}
+
+		/**
+		 * Sets a debug message/value, if debugging is enabled
+		 *
+		 * @param mixed  $value
+		 * @param string $type  Type of debug info to set
+		 * @param string $label
+		 */
+		public static function debugData($value, $type, $label = "") {
+			if (static::getConfiguration("System/Debug/Enabled")) {
+				switch ($type) {
+					case "config":
+						Utility::debug()->addCollector(new \Extensions\System\Debug\DebugBar\DataCollector\ConfigCollector($value));
+						break;
+					case "exception":
+						Utility::debug()['exceptions']->addException($value);
+						break;
+					case "start":
+						Utility::debug()['time']->startMeasure($value, $label);
+						break;
+					case "stop":
+						Utility::debug()['time']->stopMeasure($value);
+						break;
+					case "error":
+						Utility::debug()['messages']->error($value);
+						break;
+					default: // message
+						Utility::debug()['messages']->info($value);
+				}
+			}
+		}
+
+		/**
+		 * Returns the debug object
+		 *
+		 * @return \Extensions\System\Debug\DebugBar\StandardDebugBar
+		 */
+		public static function debug() {
+			if (!static::$debug) {
+				static::$debug = new \Extensions\System\Debug\DebugBar\StandardDebugBar();
+			}
+			return static::$debug;
+		}
+
+		/**
+		 * Debug data for Ajax calls
+		 */
+		public static function debugAjax() {
+			if (static::$debug) {
+				static::$debug->sendDataInHeaders();
+			}
 		}
 	}
 }

@@ -1,13 +1,16 @@
 {
   "Backend": {
     "en_US": {
-      "backend.layout.noLayoutSpecified": "Pentru această pagină nu a fost specificat nici un layout. Trebuie să setaţi un layout pentru această pagină dacă doriţi să puteţi adăuga/edita elemente de conţinut."
+      "backend.layout.noLayoutSpecified": "Pentru această pagină nu a fost specificat nici un layout. Trebuie să setaţi un layout pentru această pagină dacă doriţi să puteţi adăuga/edita elemente de conţinut.",
+      "backend.content.templateMissing": "Template-ul folosit de acest element de conţinut nu există sau nu poate fi deschis."
     },
     "ro_RO": {
-      "backend.layout.noLayoutSpecified": "No layout has been specified for this page. You need to assing a layout to this page if you want to be able to add/edit content elements."
+      "backend.layout.noLayoutSpecified": "No layout has been specified for this page. You need to assing a layout to this page if you want to be able to add/edit content elements.",
+      "backend.content.templateMissing": "Error reading content element template, or template not found."
     },
     "fr_FR": {
-      "backend.layout.noLayoutSpecified": "Aucun layout n'est specifie pour cette page. Un layout doit être assigné au page si vous voulez ajouter/modifier les elements de contenu."
+      "backend.layout.noLayoutSpecified": "Aucun layout n'est specifie pour cette page. Un layout doit être assigné au page si vous voulez ajouter/modifier les elements de contenu.",
+      "backend.content.templateMissing": "Le template utilisé par cet element de contenu n'existe pas ou ne peut pas être lu."
     }
   }
 }

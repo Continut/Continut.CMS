@@ -10,6 +10,9 @@
  */
 
 namespace Core\Mvc\View {
+
+	use Core\Tools\ErrorException;
+	use Core\Tools\Exception;
 	use Core\Utility;
 
 	/**
@@ -23,6 +26,11 @@ namespace Core\Mvc\View {
 		 * @var string The template file to use for the view
 		 */
 		protected $_template;
+
+		/**
+		 * @var string Relative template path
+		 */
+		protected $_relativePath;
 
 		/**
 		 * @var array List of values sent to the view
@@ -82,6 +90,7 @@ namespace Core\Mvc\View {
 		 */
 		public function setTemplate($template) {
 			$this->_template = $template;
+			$this->_relativePath = str_replace(__ROOTCMS__, "", $this->_template);
 		}
 
 		/**
@@ -94,25 +103,36 @@ namespace Core\Mvc\View {
 		}
 
 		/**
-		 * @return $this
+		 * @return string
+		 */
+		public function getRelativePath() {
+			return $this->_relativePath;
+		}
+
+		/**
+		 * @return string
 		 *
 		 * @throws \Core\Tools\Exception
 		 */
 		public function render() {
-			Utility::debugData("view_render" . md5($this->_template), "start", "View ". str_replace(__ROOTCMS__, "", $this->_template));
-			Utility::debugData("View loaded: " . str_replace(__ROOTCMS__, "", $this->_template), "message");
 			$fullpath = $this->_template;
 			if (!is_file($fullpath)) {
-				throw new \Core\Tools\Exception("The specified template file does not exist " . $this->_template, 10000001);
+				Utility::debugData("View missing: " . $this->getRelativePath(), "error");
+				return $this->__("backend.content.templateMissing");
+				//throw new ErrorException("The specified template file does not exist " . $this->_template, 10000001);
+			} else {
+				Utility::debugData("View loaded: " . $this->getRelativePath(), "message");
+				Utility::debugData("view_render" . md5($this->_template), "start", "View render ". str_replace(__ROOTCMS__, "", $this->_template));
+				if (!empty($this->_variables)) {
+					extract($this->_variables);
+				}
+				ob_start();
+				include($fullpath);
+				$content = ob_get_clean();
+				Utility::debugData("view_render" . md5($this->_template), "stop");
+
+				return $content;
 			}
-			if (!empty($this->_variables)) {
-				extract($this->_variables);
-			}
-			ob_start();
-			include($fullpath);
-			$content = ob_get_clean();
-			Utility::debugData("view_render" . md5($this->_template), "stop");
-			return $content;
 		}
 
 		public function useLayout($layoutName) {

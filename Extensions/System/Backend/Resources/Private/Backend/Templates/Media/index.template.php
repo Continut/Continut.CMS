@@ -26,7 +26,7 @@
 			<div class="col-sm-3">
 				<div class="btn-group btn-group-justified" role="group" aria-label="...">
 					<div class="btn-group" role="group">
-						<a class="btn btn-success" id="create_folder" href="<?= $this->helper("Url")->linkToAction("Backend", "Media", "createFolder", array("path" => urlencode($path))) ?>"><?= $this->__("backend.media.folders.create") ?> <i class="fa fa-fw fa-plus"></i></a>
+						<a class="btn btn-success" id="create_folder" href="<?= $this->helper("Url")->linkToAction("Backend", "Media", "createFolder", ["path" => urlencode($path)]) ?>"><?= $this->__("backend.media.folders.create") ?> <i class="fa fa-fw fa-plus"></i></a>
 					</div>
 					<div class="btn-group" role="group">
 						<a class="btn btn-primary"><?= $this->__("backend.media.files.upload") ?> <i class="fa fa-fw fa-upload"></i></a>
@@ -38,7 +38,7 @@
 						<a class="list-group-item list-group-item-info" href="<?= $path ?>"><span class="badge"><i class="fa fa-angle-double-up"></i></span> <?= $this->__("backend.media.folders.up") ?></a>
 					<?php endif ?>
 					<?php foreach ($folders as $folder): ?>
-						<a class="list-group-item" href="<?= $this->helper("Url")->linkToAction("Backend", "Media", "index", array("path" => urlencode($folder->getRelativePath()) )) ?>"><span class="badge"><?= $folder->getCountFolders() ?> <i class="fa fa-fw fa-folder"></i> / <?= $folder->getCountFiles() ?> <i class="fa fa-fw fa-file"></i></span> <?= $folder->getName() ?></a>
+						<a class="list-group-item" href="<?= $this->helper("Url")->linkToAction("Backend", "Media", "index", ["path" => urlencode($folder->getRelativePath())] ) ?>"><span class="badge"><?= $folder->getCountFolders() ?> <i class="fa fa-fw fa-folder"></i> / <?= $folder->getCountFiles() ?> <i class="fa fa-fw fa-file"></i></span> <?= $folder->getName() ?></a>
 					<?php endforeach ?>
 				</div>
 			</div>

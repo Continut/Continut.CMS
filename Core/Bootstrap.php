@@ -11,7 +11,9 @@
 
 namespace Core {
 
+	use Core\Tools\ErrorException;
 	use Core\Tools\Exception;
+	use Core\Tools\HttpException;
 
 	/**
 	 * Main Class that bootstraps the system
@@ -60,11 +62,56 @@ namespace Core {
 		public function setEnvironment($applicationScope, $environment) {
 			// @TODO - move the load_classes method to a proper class that does Class caching
 			spl_autoload_register([$this, "loadClasses"], TRUE, FALSE);
+			set_exception_handler([$this, "handleException"]);
+			set_error_handler([$this, 'handleError']);
 
 			Utility::debugData("application", "start", "Application context");
 			Utility::setApplicationScope($applicationScope, $environment);
 
 			return $this;
+		}
+
+		/**
+		 * @param \Exception $exception
+		 */
+		public function handleException($exception) {
+			// General error template, for production mode
+			$errorTemplate = "Public/Error.html";
+
+			// Http exceptions have custom html templates, based on the error code
+			// They are all stored inside the Public folder
+			if ($exception instanceof HttpException) {
+				switch ($exception->getCode()) {
+					default:
+						$code = (int)$exception->getCode();
+						$errorTemplate = "Public/$code.html";
+						break;
+				}
+			}
+
+			// In production mode, we log any errors/exceptions and we do not show them in the frontend
+			// For all the other environments, "Test", "Development" or your custom ones, we show the errors
+			if (Utility::getApplicationEnvironment() == "Production") {
+				// TODO Create log class and log data
+				$view = Utility::createInstance("Core\\Mvc\\View\\BaseView");
+				$view->setTemplate($errorTemplate);
+				echo $view->render();
+			} else {
+				Utility::debugData($exception, "exception");
+				echo $exception->getMessage();
+			}
+		}
+
+		/**
+		 * @param int    $code
+		 * @param string $message
+		 * @param string $file
+		 * @param string $line
+		 *
+		 * @throws Exception
+		 */
+		public function handleError($code, $message, $file, $line) {
+			throw new ErrorException($message, $code);
 		}
 
 		/**
@@ -111,26 +158,6 @@ namespace Core {
 		}
 
 		/**
-		 * Start content output
-		 *
-		 * @return $this
-		 */
-		public function startOutput() {
-			ob_start();
-			return $this;
-		}
-
-		/**
-		 * End content output
-		 *
-		 * @return $this
-		 */
-		public function endOutput() {
-			ob_end_clean();
-			return $this;
-		}
-
-		/**
 		 * Call the current parsed controller and action using the extension"s context
 		 *
 		 * @return $this
@@ -148,12 +175,8 @@ namespace Core {
 			$contextController = $request->getArgument("_controller", "Index");
 			$contextAction     = $request->getArgument("_action",     "index");
 
-			try {
-				$content = Utility::callPlugin($contextExtension, $contextController, $contextAction);
-				echo $content;
-			} catch (Exception $e) {
-				echo $e->getMessage();
-			}
+			$content = Utility::callPlugin($contextExtension, $contextController, $contextAction);
+			echo $content;
 
 			return $this;
 		}
@@ -190,6 +213,7 @@ namespace Core {
 					$content = $pageView->render();
 				} else {
 					$content = $controller->getRenderOutput();
+					Utility::debugAjax();
 				}
 			}
 			catch (Exception $e) {

@@ -130,7 +130,7 @@ namespace Core\Mvc\Model {
 			if (substr($method, 0, 6) == "findBy" && strlen($method) > 6) {
 				$field = lcfirst(substr($method, 6));
 				// so far we only map 1 field, to be enhanced to more (AND, OR conditions)
-				$values = array($field => $args[0]);
+				$values = [ $field => $args[0] ];
 				$conditions = "$field = :$field";
 				return $this->where($conditions, $values);
 			}

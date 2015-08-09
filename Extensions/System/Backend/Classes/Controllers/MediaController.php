@@ -48,7 +48,7 @@ namespace Extensions\System\Backend\Classes\Controllers {
 
 			$createdFolder = $this->storage->createFolder($folder, $path);
 
-			return json_encode(array("success" => $createdFolder));
+			return json_encode(["success" => $createdFolder]);
 		}
 
 	}

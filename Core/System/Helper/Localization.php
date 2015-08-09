@@ -10,6 +10,7 @@
  */
 namespace Core\System\Helper {
 
+	use Core\Tools\ErrorException;
 	use Core\Utility;
 
 	class Localization {
@@ -71,12 +72,16 @@ namespace Core\System\Helper {
 		public function loadLabelsFromFile($file) {
 			if (file_exists($file)) {
 				$labels = json_decode(file_get_contents($file), TRUE);
-				foreach ($labels as $extensionName => $languages) {
-					foreach ($languages as $languageCode => $language) {
-						if ($languageCode == Utility::getConfiguration("System/Locale")) {
-							$this->_translationLabels = array_merge_recursive($this->_translationLabels, $language);
+				if (is_array($labels)) {
+					foreach ($labels as $extensionName => $languages) {
+						foreach ($languages as $languageCode => $language) {
+							if ($languageCode == Utility::getConfiguration("System/Locale")) {
+								$this->_translationLabels = array_merge_recursive($this->_translationLabels, $language);
+							}
 						}
 					}
+				} else {
+					Utility::debugData("$file: The localization file could not be loaded. It was either empty, or has invalid data.", "error");
 				}
 			}
 		}

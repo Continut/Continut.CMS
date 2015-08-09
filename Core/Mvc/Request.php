@@ -11,6 +11,8 @@
 
 namespace Core\Mvc {
 
+	use Core\Tools\Exception;
+
 	/**
 	 * Request Class Handler
 	 * @package Core\Mvc
@@ -71,7 +73,7 @@ namespace Core\Mvc {
 		public function setController($controller)
 		{
 			if (empty($controller)) {
-				throw new \Core\Tools\Exception("No controller has been found. Are you sure a controller was passed as an argument?", 40000001);
+				throw new Exception("No controller has been found. Are you sure a controller was passed as an argument?", 40000001);
 			}
 			$this->controller = $controller;
 		}
@@ -113,7 +115,7 @@ namespace Core\Mvc {
 		public function setAction($action)
 		{
 			if (empty($action)) {
-				throw new \Core\Tools\Exception("No action has been found. Are you sure a controller action was passed as an argument?", 40000002);
+				throw new Exception("No action has been found. Are you sure a controller action was passed as an argument?", 40000002);
 			}
 			$this->action = $action;
 		}
