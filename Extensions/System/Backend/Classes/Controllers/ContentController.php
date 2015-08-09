@@ -121,14 +121,19 @@ namespace Extensions\System\Backend\Classes\Controllers {
 				$otherElement = $contentCollection->where("uid = :uid", ["uid" => $beforeUid])
 					->getFirst();
 				$contentElement->setSorting($otherElement->getSorting());
-				$elementsToModify = $contentCollection->where("sorting >= :sorting_value", ["sorting_value" => $otherElement->getSorting()]);
+				$elementsToModify = $contentCollection->where(
+					"column_id = :column_id AND parent_uid = :parent_uid AND sorting >= :sorting_value",
+					["column_id" => $newColumn, "parent_uid" => $newParent, "sorting_value" => $otherElement->getSorting()]
+				);
 				foreach ($elementsToModify->getAll() as $element) {
 					$element->setSorting($element->getSorting() + 1);
 				}
 				$elementsToModify->save();
 			} else {
-				$otherElement = $contentCollection->where("column_id = :column_id AND parent_uid = :parent_uid ORDER BY sorting DESC", ["column_id" => $newColumn, "parent_uid" => $newParent])
-					->getFirst();
+				$otherElement = $contentCollection->where(
+					"column_id = :column_id AND parent_uid = :parent_uid ORDER BY sorting DESC",
+					["column_id" => $newColumn, "parent_uid" => $newParent]
+				)->getFirst();
 				if ($otherElement) {
 					$contentElement->setSorting($otherElement->getSorting() + 1);
 				} else {
