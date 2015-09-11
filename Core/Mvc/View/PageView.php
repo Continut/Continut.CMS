@@ -28,6 +28,11 @@ namespace Core\Mvc\View {
 		protected $_title;
 
 		/**
+		 * @var Core\System\Domain\Model\Page
+		 */
+		protected $_pageModel;
+
+		/**
 		 * @param \Core\Mvc\View\BaseLayout $layout Set page layout
 		 *
 		 * @return $this
@@ -42,6 +47,8 @@ namespace Core\Mvc\View {
 		/**
 		 * @param string $template
 		 *
+		 * @return $this
+		 *
 		 * @throws \Core\Tools\Exception
 		 */
 		public function setLayoutFromTemplate($template) {
@@ -49,6 +56,8 @@ namespace Core\Mvc\View {
 			$this->_layout
 				->setPage($this)
 				->setTemplate($template);
+
+			return $this;
 		}
 
 		/**
@@ -56,6 +65,26 @@ namespace Core\Mvc\View {
 		 */
 		public function getLayout() {
 			return $this->_layout;
+		}
+
+		/**
+		 * @return Core\System\Domain\Model\Page
+		 */
+		public function getPageModel()
+		{
+			return $this->_pageModel;
+		}
+
+		/**
+		 * @param Core\System\Domain\Model\Page $pageModel
+		 *
+		 * @return $this
+		 */
+		public function setPageModel($pageModel)
+		{
+			$this->_pageModel = $pageModel;
+
+			return $this;
 		}
 
 		// TODO: General layout should be defined in an external file
@@ -117,6 +146,17 @@ HER;
 					}
 				}
 			}
+
+			// TODO move pageview to an external template and escape/clean the meta values
+			/*if ($this->getPageModel()->getMetaDescription()) {
+				$meta = json_encode($this->getPageModel()->getMetaDescription());
+				$header .= "<meta name='description' value=$meta>";
+			}
+
+			if ($this->getPageModel()->getMetaKeywords()) {
+				$meta = json_encode($this->getPageModel()->getMetaKeywords());
+				$header .= "<meta name='keywords' value=$meta>";
+			}*/
 
 			return $header;
 		}
@@ -196,9 +236,13 @@ HER;
 
 		/**
 		 * @param string $title Set page title
+		 *
+		 * @return $this
 		 */
 		public function setTitle($title) {
 			$this->_title = $title;
+
+			return $this;
 		}
 	}
 

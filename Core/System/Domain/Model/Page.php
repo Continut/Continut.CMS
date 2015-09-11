@@ -107,18 +107,21 @@ namespace Core\System\Domain\Model {
 		 */
 		public function dataMapper() {
 			return [
-				"parent_uid"      => $this->parent_uid,
-				"title"           => $this->title,
-				"language_iso3"   => $this->language_iso3,
-				"cached_path"     => $this->cached_path,
-				"domain_url_uid"  => $this->domain_url_uid,
-				"is_deleted"      => $this->is_deleted,
-				"is_in_menu"      => $this->is_in_menu,
-				"is_visible"      => $this->is_visible,
-				"frontend_layout" => $this->frontend_layout,
-				"backend_layout"  => $this->backend_layout,
-				"original_uid"    => $this->original_uid,
-				"sorting"         => $this->sorting
+				"parent_uid"       => $this->parent_uid,
+				"title"            => $this->title,
+				"slug"             => $this->slug,
+				"language_iso3"    => $this->language_iso3,
+				"cached_path"      => $this->cached_path,
+				"domain_url_uid"   => $this->domain_url_uid,
+				"is_deleted"       => $this->is_deleted,
+				"is_in_menu"       => $this->is_in_menu,
+				"is_visible"       => $this->is_visible,
+				"frontend_layout"  => $this->frontend_layout,
+				"backend_layout"   => $this->backend_layout,
+				"original_uid"     => $this->original_uid,
+				"sorting"          => $this->sorting,
+				"meta_keywords"    => $this->meta_keywords,
+				"meta_description" => $this->meta_description
 			];
 		}
 
@@ -276,8 +279,20 @@ namespace Core\System\Domain\Model {
 			return $this;
 		}
 
+		/**
+		 * @return string
+		 */
 		public function getLanguageIso3() {
 			return $this->language_iso3;
+		}
+
+		/**
+		 * @param string $language_iso3
+		 *
+		 * @return mixed
+		 */
+		public function setLanguageIso3($language_iso3) {
+			return $this->language_iso3 = $language_iso3;
 		}
 
 		/**

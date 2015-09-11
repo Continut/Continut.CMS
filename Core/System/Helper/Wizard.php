@@ -18,6 +18,20 @@ namespace Core\System\Helper {
 		protected $prefix = "data";
 
 		/**
+		 * @param string $name
+		 * @param string $value
+		 *
+		 * @return string
+		 */
+		public function hiddenField($name, $value) {
+			$fieldName = $this->prefix . "[$name]";
+			$html = <<<HER
+			<input id="field_$name" type="hidden" class="form-control" value="$value" name="$fieldName"/>
+HER;
+			return $html;
+		}
+
+		/**
 		 * Shows a simple text field with a label in a wizard
 		 *
 		 * @param        $name

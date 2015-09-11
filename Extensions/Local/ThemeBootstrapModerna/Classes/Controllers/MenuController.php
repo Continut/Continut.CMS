@@ -18,7 +18,7 @@ namespace Extensions\Local\ThemeBootstrapModerna\Classes\Controllers {
 		public function showMenuAction() {
 			$pageCollection = Utility::createInstance("\\Extensions\\System\\Frontend\\Classes\\Domain\\Collection\\FrontendPageCollection")
 				->where(
-					"is_in_menu = 1 AND is_visible = 1 AND is_deleted = 0 AND domain_url_uid = :domain_url_uid ORDER BY sorting ASC",
+					"is_in_menu = 1 AND is_visible = 1 AND is_deleted = 0 AND domain_url_uid = :domain_url_uid ORDER BY parent_uid ASC, sorting ASC",
 					[ "domain_url_uid" => Utility::getSite()->getDomainUrl()->getUid() ]
 				);
 

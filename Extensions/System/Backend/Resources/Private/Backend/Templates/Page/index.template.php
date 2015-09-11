@@ -67,7 +67,7 @@
 				</form>
 			</div>
 			<div class="col-xs-5">
-				<a href="" class="btn btn-success col-xs-12"><i class="fa fa-fw fa-plus"></i> <?= $this->__("backend.pageTree.createPage") ?></a>
+				<a href="#" class="btn btn-success col-xs-12 page-add"><i class="fa fa-fw fa-plus"></i> <?= $this->__("backend.pageTree.createPage") ?></a>
 			</div>
 		</div>
 		<div id="cms_tree"></div>
@@ -75,6 +75,7 @@
 			var searchPageTreeThread = null;
 			var searchPageSpinner = $('#search_page_progress');
 			var oldSearch = null;
+			var previousSelectedNode = null;
 
 			function findPageByName(term) {
 				oldSearch = term;
@@ -127,7 +128,7 @@
 								case "hidden-menu":     pageIcon = '<span class="fa-stack"><i class="fa fa-lg tree-icon fa-fw ' + iconClass + '"></i><i class="fa fa-eye-slash fa-stack-1x text-danger"></i></span> '; break;
 								default:                pageIcon = '<span class="fa-stack"><i class="fa fa-lg tree-icon fa-fw ' + iconClass + '"></i><i class="fa fa-stack-1x"></i></span> ';
 							}
-							$li.find('.jqtree-title').before(pageIcon);
+							$li.find('.jqtree-title').before(pageIcon).after('<a class="btn btn-success pull-right btn-sm page-add" style="display:none" data-page-id="' + node.id + '"><i class="fa fa-plus"></i></a>');
 						}
 
 					});
@@ -146,10 +147,18 @@
 									.done(function (data) {
 										$('#content').html(data);
 										$(event.node.element).find('.fa-spinner').remove();
+										if (previousSelectedNode) {
+											$(previousSelectedNode.element).find('.page-add').eq(0).hide();
+										}
+										$(event.node.element).find('.page-add').eq(0).show();
+										previousSelectedNode = event.node;
 									});
+							} else {
+								$(event.previous_node.element).find('.page-add').eq(0).hide();
 							}
 						}
 					);
+
 					$('#cms_tree').bind(
 						'tree.move',
 						function(event) {
@@ -165,7 +174,17 @@
 							);
 						}
 					);
+
+					$('.page-add').on('click', function(e) {
+						e.preventDefault();
+						var pid = $('#cms_tree').tree('getSelectedNode').id;
+						BootstrapDialog.show({
+							title: <?= json_encode($this->__("backend.page.wizard.create.title")) ?>,
+							message: $('<div></div>').load('<?= $this->helper("Url")->linkToAction("Backend", "Page", "wizard") ?>&uid=' + pid)
+						})
+					});
 				}
+
 			);
 
 		</script>

@@ -81,12 +81,12 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			// if the search filter is not empty, filter on page titles
 			if (mb_strlen($term) > 0) {
 				$pagesCollection->where(
-					"domain_url_uid = :domain_url_uid AND title LIKE :title ORDER BY sorting ASC",
+					"domain_url_uid = :domain_url_uid AND title LIKE :title ORDER BY parent_uid ASC, sorting ASC",
 					[ "domain_url_uid" => $domainUrl->getUid(), "title" => "%$term%" ]
 				);
 			} else {
 				$pagesCollection->where(
-					"domain_url_uid = :domain_url_uid ORDER BY sorting ASC",
+					"domain_url_uid = :domain_url_uid ORDER BY parent_uid ASC, sorting ASC",
 					[ "domain_url_uid" => $domainUrl->getUid() ]
 				);
 			}
@@ -114,6 +114,25 @@ namespace Extensions\System\Backend\Classes\Controllers {
 				->getFirst();
 			$pageModel->mergeOriginal();
 			$this->getView()->assign('page', $pageModel);
+		}
+
+		/**
+		 * Called when the page properties are modified and need to be saved
+		 */
+		public function savePropertiesAction() {
+			$data = $this->getRequest()->getArgument("data");
+			$uid = (int)$data["uid"];
+
+			$pageCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection");
+			$pageModel = $pageCollection->findByUid($uid);
+			$pageModel->update($data);
+
+			$pageCollection
+				->reset()
+				->add($pageModel)
+				->save();
+
+			return json_encode(["success" => 1]);
 		}
 
 		/**
@@ -148,7 +167,9 @@ namespace Extensions\System\Backend\Classes\Controllers {
 
 			// A PageView is the model that we use to load a layout and render the elements
 			$pageView = Utility::createInstance("\\Core\\System\\View\\BackendPageView");
-			$pageView->setLayoutFromTemplate(__ROOTCMS__ . $pageModel->getBackendLayout());
+			$pageView
+				->setPageModel($pageModel)
+				->setLayoutFromTemplate(__ROOTCMS__ . $pageModel->getBackendLayout());
 
 			// Send the tree of elements to this page's layout
 			$pageView->getLayout()->setElements($contentTree);
@@ -329,6 +350,46 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			$pagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection");
 			// A page can have multiple children so we get it's tree and we delete all subpages
 			$pageTree = $pagesCollection->where("is_deleted = 0")->buildTree($pageUid);
+
+		}
+
+		/**
+		 * Called when the page creation wizard should be displayed
+		 */
+		public function wizardAction() {
+			$pageUid = (int)$this->getRequest()->getArgument("uid");
+			$pageModel = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection")
+				->findByUid($pageUid);
+
+			$this->getView()->assign('page', $pageModel);
+		}
+
+		/**
+		 * Add one or multiple pages to the tree
+		 */
+		public function addAction() {
+			$pageUid = (int)$this->getRequest()->getArgument("uid");
+			$pagePlacement = $this->getRequest()->getArgument("page_placement");
+			$pages = $this->getRequest()->getArgument("page");
+
+			$pageCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection");
+
+			foreach ($pages["names"] as $title) {
+				$pageModel = Utility::createInstance("Core\\System\\Domain\\Model\\Page");
+				if ($pagePlacement == "inside") {
+					$pageModel->setParentUid($pageUid);
+				}
+				$pageModel->setLanguageIso3("rou");
+				$pageModel->setSlug($title);
+				$pageModel->setOriginalUid(0);
+				$pageModel->setTitle($title);
+
+				$pageCollection->add($pageModel);
+			}
+
+			$pageCollection->save();
+
+			return "";
 
 		}
 

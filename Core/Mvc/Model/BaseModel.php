@@ -54,7 +54,7 @@ namespace Core\Mvc\Model {
 		 */
 		public function update($values) {
 			foreach ($values as $key => $value) {
-				if (property_exists($this, "key")) {
+				if (property_exists($this, $key)) {
 					$this->$key = $value;
 				}
 			}
