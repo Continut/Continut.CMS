@@ -27,7 +27,9 @@
       "backend.wizard.containers.usage.2_10": "84% left, 16% right",
       "backend.wizard.containers.usage.2_11": "92% left, 8% right",
       "backend.wizard.containers.info": "This is an element of type container, in which you can add up to %(count) columns of content",
-      "backend.wizard.containers.info.footer": "Containers can embed other containers or any other content type"
+      "backend.wizard.containers.info.footer": "Containers can embed other containers or any other content type",
+      "layout.homepage": "Homepage",
+      "layout.default": "Default layout"
     },
     "ro_RO": {
       "backend.themeBootstrapModerna.layout.container.header": "Secţiunea antet",
@@ -56,7 +58,9 @@
       "backend.wizard.containers.usage.2_10": "84% în stînga, 16% în dreapta",
       "backend.wizard.containers.usage.2_11": "92% în stînga, 8% în dreapta",
       "backend.wizard.containers.info": "Acesta este un element de tip container, în care puteţi adăuga pînă la %(count) coloane de conţinut",
-      "backend.wizard.containers.info.footer": "Containerele pot conţine la rîndul lor alte alte containere sau elemente de conţinut"
+      "backend.wizard.containers.info.footer": "Containerele pot conţine la rîndul lor alte alte containere sau elemente de conţinut",
+      "layout.homepage": "Pagina de start",
+      "layout.default": "Layout standard"
     },
     "fr_FR": {
       "backend.themeBootstrapModerna.layout.container.header": "Section entête",
@@ -85,7 +89,9 @@
       "backend.wizard.containers.usage.2_10": "84% à gauche, 16% à droite",
       "backend.wizard.containers.usage.2_11": "92% à gauche, 8% à droite",
       "backend.wizard.containers.info": "Ceci est un element de type container, qui peut avoir jusqu'au %(count) colonnes de contenu",
-      "backend.wizard.containers.info.footer": "Les containers peut inclure des autres containers ou des autres types de contenu"
+      "backend.wizard.containers.info.footer": "Les containers peut inclure des autres containers ou des autres types de contenu",
+      "layout.homepage": "Layout pour la page d'accueil",
+      "layout.default": "Layout standard"
     }
   }
 }

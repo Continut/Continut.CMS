@@ -8,24 +8,29 @@
 				</div>
 			</div>
 			<div class="panel-body">
-				<div class="col-sm-12">
+				<div class="col-md-6">
 					<div class="form-group">
-						<?= $this->helper("Wizard")->textField("title", $this->__("backend.page.properties.page_title"), $page->getTitle()) ?>
+						<?= $this->helper("Wizard")->textField("title", $this->__("backend.page.properties.pageTitle"), $page->getTitle()) ?>
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="form-group">
-						<?= $this->helper("Wizard")->textField("meta_keywords", $this->__("backend.page.properties.meta_keywords"), $page->getMetaKeywords()) ?>
+						<?= $this->helper("Wizard")->selectField("layout", $this->__("backend.page.properties.pageLayout"), array(), $page->getFrontendLayout()) ?>
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="form-group">
-						<?= $this->helper("Wizard")->textareaField("meta_description", $this->__("backend.page.properties.meta_description"), $page->getMetaDescription()) ?>
+						<?= $this->helper("Wizard")->textField("meta_keywords", $this->__("backend.page.properties.metaKeywords"), $page->getMetaKeywords()) ?>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<?= $this->helper("Wizard")->textareaField("meta_description", $this->__("backend.page.properties.metaDescription"), $page->getMetaDescription()) ?>
 					</div>
 				</div>
 			</div>
 			<div class="panel-footer">
-				<input type="submit" name="submit" class="btn btn-primary" value="<?= $this->__("backend.page.properties.save_changes") ?>" />
+				<input type="submit" name="submit" class="btn btn-primary" value="<?= $this->__("backend.page.properties.saveChanges") ?>" />
 			</div>
 		</div>
 	</div>

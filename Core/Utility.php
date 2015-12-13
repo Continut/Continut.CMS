@@ -99,7 +99,11 @@ namespace Core {
 			if (array_key_exists($classToLoad, static::$classMappings)) {
 				$class = static::$classMappings[$classToLoad];
 			}
-			if (!file_exists(__ROOTCMS__ . DS . $class . ".php")) {
+
+			$absolutePath = __ROOTCMS__ . DS . $class;
+			$absolutePath = str_replace("\\", DS, $absolutePath);
+			
+			if (!file_exists($absolutePath . ".php")) {
 				throw new ErrorException("The PHP class you are trying to load does not exist: " . $classToLoad, 30000001);
 			}
 			return new $classToLoad();
@@ -181,7 +185,8 @@ namespace Core {
 				$pdo = new \PDO(
 					static::getConfiguration("Database/Connection"),
 					static::getConfiguration("Database/Username"),
-					static::getConfiguration("Database/Password")
+					static::getConfiguration("Database/Password"),
+					array(\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8")
 				);
 				// if debugging is enabled
 				if (static::getConfiguration("System/Debug/Enabled")) {
@@ -216,7 +221,7 @@ namespace Core {
 		 */
 		public static function setCurrentWebsite() {
 			$domainUrls = Utility::createInstance("Core\\System\\Domain\\Collection\\DomainUrlCollection")
-				->findByUrl($_SERVER["HTTP_HOST"]);
+				->findByUrl($_SERVER["SERVER_NAME"]);
 
 			if ($domainUrls->isEmpty()) {
 				throw new HttpException(404, "The domain you are currently trying to access is not configured inside the CMS application!");

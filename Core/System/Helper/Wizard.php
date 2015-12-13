@@ -129,6 +129,7 @@ HER;
 		 */
 		public function selectField($name, $label, $values, $selectedValue = null) {
 			$fieldName = $this->prefix . "[$name]";
+			$options = array();
 			foreach ($values as $key => $title) {
 				if ($key == $selectedValue) {
 					$options[] = "<option selected value='$key'>$title</option>";
