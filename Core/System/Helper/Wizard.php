@@ -130,11 +130,39 @@ HER;
 		public function selectField($name, $label, $values, $selectedValue = null) {
 			$fieldName = $this->prefix . "[$name]";
 			$options = array();
-			foreach ($values as $key => $title) {
-				if ($key == $selectedValue) {
-					$options[] = "<option selected value='$key'>$title</option>";
+
+			/* if data is an array it means we have optgroup definitions
+			 * and thus $values is a multiarray
+			 *
+			 * Example for simple list of options
+			 * $values = ["value1" => "label 1", "value2" => "label 2"];
+			 *
+			 * And with mutiarray for optgroups
+			 * $values = ["optgroup label" => ["value1" => "label1", "value2" => "label 2"]];
+			*/
+
+			foreach ($values as $group => $data) {
+				// do we have optgroups?
+				if (is_array($data)) {
+					if (!empty($group)) {
+						$options[] = "<optgroup label='$group'></optgroup>";
+					}
+					if ($data) {
+						foreach ($data as $key => $title) {
+							if ($key == $selectedValue) {
+								$options[] = "<option selected value='$key'>$title</option>";
+							} else {
+								$options[] = "<option value='$key'>$title</option>";
+							}
+						}
+					}
+				// or just simple arrays?
 				} else {
-					$options[] = "<option value='$key'>$title</option>";
+					if ($group == $selectedValue) {
+						$options[] = "<option selected value='$group'>$data</option>";
+					} else {
+						$options[] = "<option value='$group'>$data</option>";
+					}
 				}
 			}
 			$optionsSelect = implode("\n", $options);

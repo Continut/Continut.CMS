@@ -333,7 +333,7 @@ namespace Core\System\Domain\Model {
 		/**
 		 * Merges different values from the original page to the translated one
 		 * Settings like the frontend or backend layout to use are only specified on the original page, and thus
-		 * need to be readded to the translated one too
+		 * need to be re-added to the translated one too
 		 *
 		 * @return $this
 		 */

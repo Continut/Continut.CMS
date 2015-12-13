@@ -3,17 +3,20 @@
     "en_US": {
       "backend.themeBootstrap.layout.container.header": "Header section",
       "backend.themeBootstrap.layout.container.leftColumn": "Left column",
-      "backend.themeBootstrap.layout.container.rightColumn": "Right column"
+      "backend.themeBootstrap.layout.container.rightColumn": "Right column",
+      "layout.columns2": "2 Columns layout"
     },
     "ro_RO": {
       "backend.themeBootstrap.layout.container.header": "Secţiunea antet",
       "backend.themeBootstrap.layout.container.leftColumn": "Coloana din stînga",
-      "backend.themeBootstrap.layout.container.rightColumn": "Coloana din dreapta"
+      "backend.themeBootstrap.layout.container.rightColumn": "Coloana din dreapta",
+      "layout.columns2": "2 Columns layout"
     },
     "fr_FR": {
       "backend.themeBootstrap.layout.container.header": "Section entête",
       "backend.themeBootstrap.layout.container.leftColumn": "Colonne gauche",
-      "backend.themeBootstrap.layout.container.rightColumn": "Colonne droite"
+      "backend.themeBootstrap.layout.container.rightColumn": "Colonne droite",
+      "layout.columns2": "2 Columns layout"
     }
   }
 }

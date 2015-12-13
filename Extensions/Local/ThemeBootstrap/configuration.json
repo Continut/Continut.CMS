@@ -14,6 +14,20 @@
       "sys_backend": {
         "version": "0.0.1"
       }
+    },
+    "ui": {
+      "layout": {
+        "default": {
+          "label": "layout.default",
+          "backendFile": "/Extensions/Local/ThemeBootstrap/Resources/Private/Backend/Layouts/Default.layout.php",
+          "frontendFile": "/Extensions/Local/ThemeBootstrap/Resources/Private/Frontend/Layouts/Default.layout.php"
+        },
+        "homepage": {
+          "label": "layout.columns2",
+          "backendFile": "/Extensions/Local/ThemeBootstrap/Resources/Private/Backend/Layouts/Columns2.layout.php",
+          "frontendFile": "/Extensions/Local/ThemeBootstrap/Resources/Private/Frontend/Layouts/Columns2.layout.php"
+        }
+      }
     }
   }
 }
