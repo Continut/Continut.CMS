@@ -102,7 +102,7 @@ namespace Core {
 
 			$absolutePath = __ROOTCMS__ . DS . $class;
 			$absolutePath = str_replace("\\", DS, $absolutePath);
-			
+
 			if (!file_exists($absolutePath . ".php")) {
 				throw new ErrorException("The PHP class you are trying to load does not exist: " . $classToLoad, 30000001);
 			}
