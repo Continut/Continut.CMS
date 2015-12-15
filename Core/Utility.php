@@ -523,5 +523,24 @@ namespace Core {
 				static::$debug->sendDataInHeaders();
 			}
 		}
+
+		/**
+		 * Returns the list of configured layouts for the FE and BE
+		 *
+		 * @return array
+		 */
+		public static function getLayouts() {
+			$layouts = array();
+
+			$settings = static::getExtensionSettings("");
+			foreach ($settings as $extensionName => $params) {
+				if (isset($params["ui"]["layout"])) {
+					foreach ($params["ui"]["layout"] as $layoutId => $layoutData) {
+						$layouts[$extensionName][$extensionName . "." . $layoutId] = static::helper("Localization")->translate($layoutData["label"]);
+					}
+				}
+			}
+			return $layouts;
+		}
 	}
 }

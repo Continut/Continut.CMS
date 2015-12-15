@@ -16,7 +16,13 @@ namespace Core\Mvc\Controller {
 		public function __construct() {
 			parent::__construct();
 			if (!$this->isConnected()) {
-				$this->redirect(Utility::helper("Url")->linkToAction("Backend", "Login", "index"));
+				$url = Utility::helper("Url")->linkToAction("Backend", "Login", "index");
+				if ($this->getRequest()->isAjax()) {
+					echo "<script>window.location = '$url';</script>";
+					die();
+				} else {
+					$this->redirect($url);
+				}
 			}
 		}
 	}

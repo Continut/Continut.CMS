@@ -57,9 +57,19 @@ namespace Core\System\Domain\Model {
 		protected $domain_url_uid = 0;
 
 		/**
-		 * @var string Layout used by this Page
+		 * @var string Layout for this page
+		 */
+		protected $layout;
+
+		/**
+		 * @var string Frontend cached layout path for this page
 		 */
 		protected $frontend_layout;
+
+		/**
+		 * @var string Backend cached layout path for this page
+		 */
+		protected $backend_layout;
 
 		/**
 		 * @var string Cached path used for breadcrumb (List of comma separated values of parent uids)
@@ -70,11 +80,6 @@ namespace Core\System\Domain\Model {
 		 * @var string Page slug
 		 */
 		protected $slug;
-
-		/**
-		 * @var string Backend layout
-		 */
-		protected $backend_layout;
 
 		/**
 		 * @var int Sorting order
@@ -116,6 +121,7 @@ namespace Core\System\Domain\Model {
 				"is_deleted"       => $this->is_deleted,
 				"is_in_menu"       => $this->is_in_menu,
 				"is_visible"       => $this->is_visible,
+				"layout"           => $this->layout,
 				"frontend_layout"  => $this->frontend_layout,
 				"backend_layout"   => $this->backend_layout,
 				"original_uid"     => $this->original_uid,
@@ -433,6 +439,22 @@ namespace Core\System\Domain\Model {
 			$this->backend_layout = $backend_layout;
 
 			return $this;
+		}
+
+		/**
+		 * @return string
+		 */
+		public function getLayout()
+		{
+			return $this->layout;
+		}
+
+		/**
+		 * @param string $layout
+		 */
+		public function setLayout($layout)
+		{
+			$this->layout = $layout;
 		}
 
 		/**

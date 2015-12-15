@@ -22,7 +22,7 @@
           "backendFile": "/Extensions/Local/ThemeBootstrap/Resources/Private/Backend/Layouts/Default.layout.php",
           "frontendFile": "/Extensions/Local/ThemeBootstrap/Resources/Private/Frontend/Layouts/Default.layout.php"
         },
-        "homepage": {
+        "columns2": {
           "label": "layout.columns2",
           "backendFile": "/Extensions/Local/ThemeBootstrap/Resources/Private/Backend/Layouts/Columns2.layout.php",
           "frontendFile": "/Extensions/Local/ThemeBootstrap/Resources/Private/Frontend/Layouts/Columns2.layout.php"

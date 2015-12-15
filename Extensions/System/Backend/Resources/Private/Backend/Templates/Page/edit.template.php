@@ -15,7 +15,7 @@
 				</div>
 				<div class="col-md-6">
 					<div class="form-group">
-						<?= $this->helper("Wizard")->selectField("frontend_layout", $this->__("backend.page.properties.pageLayout"), array_merge(array("" => $this->__("backend.layout.selectLayout")), $layouts), $page->getFrontendLayout()) ?>
+						<?= $this->helper("Wizard")->selectField("layout", $this->__("backend.page.properties.pageLayout"), array_merge(array("" => $this->__("backend.layout.selectLayout")), $layouts), $page->getLayout()) ?>
 					</div>
 				</div>
 				<div class="col-md-6">

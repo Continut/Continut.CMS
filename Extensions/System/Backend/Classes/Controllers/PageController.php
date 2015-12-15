@@ -113,15 +113,9 @@ namespace Extensions\System\Backend\Classes\Controllers {
 				->where("uid = :uid", ["uid" => $pageUid])
 				->getFirst();
 			$pageModel->mergeOriginal();
-			$settings = Utility::getExtensionSettings("");
-			$layouts = array();
-			foreach ($settings as $extensionName => $params) {
-				if (isset($params["ui"]["layout"])) {
-					foreach ($params["ui"]["layout"] as $layoutId => $layoutData) {
-						$layouts[$extensionName][$extensionName . "." . $layoutId] = Utility::helper("Localization")->translate($layoutData["label"]);
-					}
-				}
-			}
+
+			$layouts  = Utility::getLayouts();
+
 			$this->getView()->assign('page', $pageModel);
 			$this->getView()->assign('layouts', $layouts);
 		}
@@ -136,10 +130,14 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			$pageCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection");
 			$pageModel = $pageCollection->findByUid($uid);
 			$pageModel->update($data);
-			// @TODO It's probably best to remove these 2 different layout fields and just keep 1 with the layout's id
-			// then we can easily switch between the 2 once in BE or FE context
-			if ($pageModel->getFrontendLayout()) {
-				$pageModel->setBackendLayout($pageModel->getFrontendLayout());
+
+			// We store a cached version for the FE and BE versions, this way we avoid looking for layouts all the time
+			$extensionName = substr($pageModel->getLayout(), 0, strpos($pageModel->getLayout(), "."));
+			$layoutId      = substr($pageModel->getLayout(), strlen($extensionName) + 1);
+			$settings      = Utility::getExtensionSettings($extensionName);
+			if (isset($settings["ui"]["layout"][$layoutId])) {
+				$pageModel->setBackendLayout($settings["ui"]["layout"][$layoutId]["backendFile"]);
+				$pageModel->setFrontendLayout($settings["ui"]["layout"][$layoutId]["frontendFile"]);
 			}
 
 			$pageCollection
