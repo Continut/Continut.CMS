@@ -12,6 +12,7 @@ body, html {
 	font-size: 16px;
 	margin: 0;
 	line-height: 36px;
+	color: white;
 }
 
 #main_toolbar .navbar-nav > li > a {
@@ -224,7 +225,7 @@ ul.jqtree-tree li.jqtree-folder {
 }
 
 .panel-backend-content {
-	background: #f5f5f5;
+	background: rgba(220, 220, 220, 0.3);
 	border-top: 1px solid #ddd;
 	margin: 10px 0;
 }
