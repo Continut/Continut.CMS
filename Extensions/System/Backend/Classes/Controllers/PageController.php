@@ -145,7 +145,10 @@ namespace Extensions\System\Backend\Classes\Controllers {
 				->add($pageModel)
 				->save();
 
-			return json_encode(["success" => 1]);
+			$this->getRequest()->setArgument("page_uid", $uid);
+			$this->forward('show');
+
+			//return json_encode(["success" => 1, "uid" => $uid]);
 		}
 
 		/**

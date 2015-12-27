@@ -358,6 +358,10 @@ namespace Core {
 
 			// Instantiate the controller
 			$controller = Utility::createInstance($classToLoad);
+			$controller
+				->setName($templateController)
+				->setAction($templateAction)
+				->setExtension($contextExtension);
 			$controller->settings = $contextSettings;
 
 			// and call it's action method, if it exists
@@ -365,10 +369,8 @@ namespace Core {
 				throw new ErrorException("The action you are trying to call does not exist for this controller", 30000002);
 			}
 
-			// then execute it's action
-			$controller->setAction($contextAction);
-
 			$contextScope = $controller->getScope();
+
 			$controller
 				->getView()
 				->setTemplate(

@@ -26,6 +26,11 @@ namespace Core\Mvc\Controller {
 		protected $_request;
 
 		/**
+		 * @var string Controller name
+		 */
+		protected $_name;
+
+		/**
 		 * @var \Core\System\Session\User Current session user
 		 */
 		protected $_user;
@@ -116,10 +121,14 @@ namespace Core\Mvc\Controller {
 
 		/**
 		 * @param string $action
+		 *
+		 * @return $this
 		 */
 		public function setAction($action)
 		{
 			$this->_action = $action;
+
+			return $this;
 		}
 
 		/**
@@ -138,7 +147,7 @@ namespace Core\Mvc\Controller {
 		 * @throws \Core\Tools\Exception
 		 */
 		public function getRenderOutput() {
-			$action = $this->_action;
+			$action = $this->_action . "Action";
 			$viewContent = $this->$action();
 
 			if (empty($viewContent)) {
@@ -269,6 +278,35 @@ namespace Core\Mvc\Controller {
 		}
 
 		/**
+		 * Forward current action to another one
+		 *
+		 * @param $to Action name to forward to
+		 *
+		 * @throws ErrorException
+		 */
+		public function forward($to) {
+			$this->setAction($to);
+
+			$templateController = $this->getName();
+			$templateAction     = $this->getAction();
+			$contextExtension   = $this->getExtension();
+			$contextScope       = $this->getScope();
+			$contextAction      = $this->getAction() . "Action";
+
+			$this
+				->getView()
+				->setTemplate(
+					Utility::getResource("$templateController/$templateAction", $contextExtension, $contextScope, "Template")
+				);
+
+			if (!method_exists($this, $contextAction)) {
+				throw new ErrorException("The action you are trying to call does not exist for this controller", 30000002);
+			}
+
+			$this->$contextAction();
+		}
+
+		/**
 		 * Returns a translated label
 		 * @param string $label
 		 * @param array  $arguments
@@ -277,6 +315,26 @@ namespace Core\Mvc\Controller {
 		 */
 		public function __($label, $arguments = NULL) {
 			return Utility::helper("Localization")->translate($label, $arguments);
+		}
+
+		/**
+		 * @return string
+		 */
+		public function getName()
+		{
+			return $this->_name;
+		}
+
+		/**
+		 * @param string $name
+		 *
+		 * @return $this
+		 */
+		public function setName($name)
+		{
+			$this->_name = $name;
+
+			return $this;
 		}
 	}
 }

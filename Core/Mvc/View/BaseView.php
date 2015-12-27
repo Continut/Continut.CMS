@@ -118,8 +118,8 @@ namespace Core\Mvc\View {
 			$fullpath = $this->_template;
 			if (!is_file($fullpath)) {
 				Utility::debugData("View missing: " . $this->getRelativePath(), "error");
+				throw new ErrorException("The specified template file does not exist " . $this->_template, 10000001);
 				return $this->__("backend.content.templateMissing");
-				//throw new ErrorException("The specified template file does not exist " . $this->_template, 10000001);
 			} else {
 				Utility::debugData("View loaded: " . $this->getRelativePath(), "message");
 				Utility::debugData("view_render" . md5($this->_template), "start", "View render ". str_replace(__ROOTCMS__, "", $this->_template));

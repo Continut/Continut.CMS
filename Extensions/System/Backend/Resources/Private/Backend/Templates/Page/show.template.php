@@ -8,6 +8,7 @@
 		</ol>
 	</div>
 </div>
+
 <div class="row">
 	<div class="col-sm-8">
 		<div class="btn-group" role="group">
@@ -30,6 +31,11 @@
 		</div>
 	</div>
 </div>
+
+<div class="progress-loader text-center loader-page-save-properties">
+	<img src="<?= $this->helper("Image")->getPath("Images/spin.svg", "Backend") ?>" alt="" />
+</div>
+
 <div id="page_edit" class="row"></div>
 <div class="panel panel-warning page-panel">
 	<div class="panel-heading"><i class="fa fa-fw fa-file-o"></i> <?= $page->getTitle() ?></div>
@@ -43,7 +49,7 @@
 			url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "show") ?>',
 			data: { page_uid: $(this).data('page-uid') }
 		})
-		.done(function( data ) {
+		.done(function (data) {
 			$('#content').html(data);
 		});
 	});
@@ -53,7 +59,7 @@
 			data: { page_uid: <?= $page->getUid() ?> },
 			dataType: 'json'
 		})
-			.done(function( data ) {
+			.done(function (data) {
 				var node = $('#cms_tree').tree('getNodeById', data.pid);
 				if (data.visible) {
 					$('#page-visibility-frontend .element-visible').removeClass("hide");
@@ -72,7 +78,7 @@
 			data: { page_uid: <?= $page->getUid() ?> },
 			dataType: 'json'
 		})
-			.done(function( data ) {
+			.done(function (data) {
 				var node = $('#cms_tree').tree('getNodeById', data.pid);
 				if (data.isInMenu) {
 					$('#page-visibility-menu .element-visible').removeClass("hide");
@@ -89,7 +95,7 @@
 		$.ajax({
 			url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "edit") ?>',
 			data: { page_uid: <?= $page->getUid() ?> }
-		}).done(function( data ) {
+		}).done(function (data) {
 			$('#page_edit').html(data);
 		});
 	});
@@ -112,7 +118,7 @@
 		});
 	});
 
-	$('.content-wizard').on('click', function(e) {
+	$('.content-wizard').on('click', function (e) {
 		e.preventDefault();
 		BootstrapDialog.show({
 			title: <?= json_encode($this->__("backend.content.wizard.create.title")) ?>,
@@ -125,7 +131,7 @@
 
 		var url = $(this).attr('href');
 
-		$.getJSON(url, function(data) {
+		$.getJSON(url, function (data) {
 			if (data.operation == "delete") {
 				$('#panel-backend-content-' + data.uid).remove();
 			}
@@ -141,7 +147,7 @@
 		elementsWithInteraction: '.no-pep',
 		place: false,
 		revert: true,
-		revertIf: function(ev, obj){
+		revertIf: function (ev, obj){
 			return !this.activeDropRegions.length;
 		},
 		cssEaseDuration: 200,
@@ -166,7 +172,7 @@
 			}
 			$('.content-drag-receiver').remove();
 		},
-		start: function(ev, obj) {
+		start: function (ev, obj) {
 			$('.container-receiver').prepend($('<div class="content-drag-receiver receiver-on"></div>'));
 			$('.panel-backend-content').each(function(index, item) {
 				if (!$(item).is(obj.$el)) {
@@ -174,7 +180,7 @@
 				}
 			});
 		},
-		stop: function(ev, obj) {
+		stop: function (ev, obj) {
 		}
 	});
 </script>

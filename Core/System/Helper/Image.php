@@ -10,6 +10,8 @@
  */
 namespace Core\System\Helper {
 
+	use Core\Utility;
+
 	class Image {
 
 		/**
@@ -76,6 +78,10 @@ namespace Core\System\Helper {
 			imagedestroy($imageResource);
 
 			return $newFilename;
+		}
+
+		public function getPath($filename, $extensionName) {
+			return "/" . Utility::getAssetPath($filename, $extensionName);
 		}
 	}
 

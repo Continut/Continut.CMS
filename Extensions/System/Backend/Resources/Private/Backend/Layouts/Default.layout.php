@@ -1,8 +1,9 @@
 <?php
 $this->getPage()
-	->addCssAsset( [ "identifier" => "bootstrap", "extension" => "Backend", "file" => "bootstrap/bootstrap.min.css" ])
+	->addCssAsset( [ "identifier" => "bootstrap", "extension" => "Backend", "file" => "bootstrap-themes/simplex.min.css" ])
 	->addCssAsset( [ "identifier" => "bootstrap-select", "extension" => "Backend", "file" => "bootstrap-select/bootstrap-select.css" ])
 	->addCssAsset( [ "identifier" => "bootstrap-dialog", "extension"  => "Backend", "file" => "bootstrap-dialog/bootstrap-dialog.css" ])
+	->addCssAsset( [ "identifier" => "datetimepicker", "extension" => "Backend", "file" => "datetimepicker/DateTimePicker.css" ])
 	->addCssAsset( [ "identifier" => "fontawesome", "extension" => "Backend", "file" => "fontawesome/font-awesome.css" ])
 	->addCssAsset( [ "identifier" => "flagicons", "extension" => "Backend", "file" => "flagicons/flag-icon.css" ])
 	->addCssAsset( [ "identifier" => "jqtree", "extension" => "Backend", "file" => "jqtree/jqtree.css" ])
@@ -13,6 +14,8 @@ $this->getPage()
 	->addJsAsset( [ "identifier" => "bootstrap", "extension"  => "Backend", "file" => "bootstrap/bootstrap.min.js" ])
 	->addJsAsset( [ "identifier" => "bootstrap-select", "extension"  => "Backend", "file" => "bootstrap-select/bootstrap-select.js" ])
 	->addJsAsset( [ "identifier" => "bootstrap-dialog", "extension"  => "Backend", "file" => "bootstrap-dialog/bootstrap-dialog.min.js" ])
+	->addJsAsset( [ "identifier" => "datetimepicker", "extension"  => "Backend", "file" => "datetimepicker/DateTimePicker.min.js" ])
+	->addJsAsset( [ "identifier" => "datetimepicker-i18n", "extension"  => "Backend", "file" => "datetimepicker/i18n/DateTimePicker-i18n.js" ])
 	->addJsAsset( [ "identifier" => "tree", "extension"  => "Backend", "file" => "jqtree/tree.jquery.js" ])
 	->addJsAsset( [ "identifier" => "pep", "extension"  => "Backend", "file" => "pep/jquery.pep.js" ])
 	->addJsAsset( [ "identifier" => "wysihtml-toolbar", "extension"  => "Backend", "file" => "wysihtml/wysihtml-toolbar.min.js" ])
@@ -45,3 +48,4 @@ $this->getPage()
 <div id="container" class="container-fluid">
 	<?= $this->showContent(); ?>
 </div>
+<div id="dtBox"></div>

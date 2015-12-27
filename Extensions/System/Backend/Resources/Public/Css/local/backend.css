@@ -364,3 +364,8 @@ ul.jqtree-tree li.jqtree-folder {
 	box-shadow: 0 0 4px gray inset;
 	background: #dcdcdc;
 }
+
+/** CSS actions loader **/
+.progress-loader {
+	display: none;
+}

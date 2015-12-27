@@ -3,25 +3,29 @@
 <?php else: ?>
 	<p class="lead">Pages will be added to root</p>
 <?php endif ?>
-<form method="post" id="form_page_wizard" class="form" action="<?= $this->helper("Url")->linkToAction("Backend", "Page", "add", ["uid" => $page->getUid()]) ?>">
+<form method="post" id="form_page_wizard" class="form" action="<?= $this->helper("Url")->linkToAction("Backend", "Page", "add", ["uid" => (($page) ? $page->getUid() : 0)]) ?>">
 	<div class="row">
 		<div class="col-sm-12 col-md-4">
 			<p><strong><?= $this->__('backend.page.wizard.placement.title') ?></strong></p>
+			<?php if ($page): ?>
 			<div class="radio">
 				<label>
 					<input type="radio" value="before" name="page_placement" id="before_page"> <?= $this->__('backend.page.wizard.placement.before') ?>
 				</label>
 			</div>
+			<?php endif ?>
 			<div class="radio">
 				<label>
 					<input type="radio" value="inside" name="page_placement" id="inside_page" checked> <?= $this->__('backend.page.wizard.placement.inside') ?>
 				</label>
 			</div>
+			<?php if ($page): ?>
 			<div class="radio">
 				<label>
 					<input type="radio" value="after" name="page_placement" id="after_page"> <?= $this->__('backend.page.wizard.placement.after') ?>
 				</label>
 			</div>
+			<?php endif; ?>
 		</div>
 		<div class="col-sm-12 col-md-8">
 			<p><strong><?= $this->__('backend.page.wizard.pages.list') ?></strong></p>

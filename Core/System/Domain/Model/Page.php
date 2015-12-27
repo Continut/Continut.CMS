@@ -47,7 +47,7 @@ namespace Core\System\Domain\Model {
 		protected $is_in_menu = TRUE;
 
 		/**
-		 * @var boor Has our Page been deleted?
+		 * @var bool Has our Page been deleted?
 		 */
 		protected $is_deleted = FALSE;
 
@@ -60,6 +60,11 @@ namespace Core\System\Domain\Model {
 		 * @var string Layout for this page
 		 */
 		protected $layout;
+
+		/**
+		 * @var bool Are templates inherited recursively or not?
+		 */
+		protected $layout_recursive;
 
 		/**
 		 * @var string Frontend cached layout path for this page
@@ -107,6 +112,16 @@ namespace Core\System\Domain\Model {
 		protected $original;
 
 		/**
+		 * @var \DateTime
+		 */
+		protected $start_date;
+
+		/**
+		 * @var \DateTime
+		 */
+		protected $end_date;
+
+		/**
 		 * Simple datamapper used for the database
 		 * @return array
 		 */
@@ -122,12 +137,15 @@ namespace Core\System\Domain\Model {
 				"is_in_menu"       => $this->is_in_menu,
 				"is_visible"       => $this->is_visible,
 				"layout"           => $this->layout,
+				"layout_recursive" => $this->layout_recursive,
 				"frontend_layout"  => $this->frontend_layout,
 				"backend_layout"   => $this->backend_layout,
 				"original_uid"     => $this->original_uid,
 				"sorting"          => $this->sorting,
 				"meta_keywords"    => $this->meta_keywords,
-				"meta_description" => $this->meta_description
+				"meta_description" => $this->meta_description,
+				"start_date"       => $this->start_date,
+				"end_date"         => $this->end_date
 			];
 		}
 
@@ -472,6 +490,54 @@ namespace Core\System\Domain\Model {
 		public function setCachedPath($cached_path)
 		{
 			$this->cached_path = $cached_path;
+		}
+
+		/**
+		 * @return boolean
+		 */
+		public function getLayoutRecursive()
+		{
+			return $this->layout_recursive;
+		}
+
+		/**
+		 * @param boolean $layout_recursive
+		 */
+		public function setLayoutRecursive($layout_recursive)
+		{
+			$this->layout_recursive = $layout_recursive;
+		}
+
+		/**
+		 * @return \DateTime
+		 */
+		public function getStartDate()
+		{
+			return $this->start_date;
+		}
+
+		/**
+		 * @param \DateTime $start_date
+		 */
+		public function setStartDate($start_date)
+		{
+			$this->start_date = $start_date;
+		}
+
+		/**
+		 * @return \DateTime
+		 */
+		public function getEndDate()
+		{
+			return $this->end_date;
+		}
+
+		/**
+		 * @param \DateTime $end_date
+		 */
+		public function setEndDate($end_date)
+		{
+			$this->end_date = $end_date;
 		}
 	}
 }

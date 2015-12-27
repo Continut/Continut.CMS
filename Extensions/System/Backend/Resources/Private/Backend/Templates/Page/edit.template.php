@@ -25,7 +25,22 @@
 				</div>
 				<div class="col-md-6">
 					<div class="form-group">
+						<?= $this->helper("Wizard")->selectField("layout_recursive", $this->__("backend.page.properties.pageLayoutRecursive"), array(0 => "No", 1 => "Yes"), $page->getLayoutRecursive()) ?>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
 						<?= $this->helper("Wizard")->textareaField("meta_description", $this->__("backend.page.properties.metaDescription"), $page->getMetaDescription()) ?>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<?= $this->helper("Wizard")->dateTimeField("start_date", $this->__("backend.page.properties.startDate"), $page->getStartDate()) ?>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<?= $this->helper("Wizard")->dateTimeField("end_date", $this->__("backend.page.properties.endDate"), $page->getEndDate()) ?>
 					</div>
 				</div>
 			</div>
@@ -52,10 +67,14 @@
 			contentType: false,
 			processData: false,
 			type: 'POST',
-			dataType: 'json',
-			success: function (data, textStatus, jqXHR) {
-				$('#page_edit').empty();
+			beforeSend: function(xhr) {
+				$('.loader-page-save-properties').show();
 			}
+		})
+		.done(function (data) {
+			$('#page_edit').empty();
+			$('.loader-page-save-properties').hide();
+			$('#content').html(data);
 		});
 
 		return false;
