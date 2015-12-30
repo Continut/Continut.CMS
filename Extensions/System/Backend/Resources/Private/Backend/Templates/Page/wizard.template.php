@@ -1,7 +1,7 @@
 <?php if ($page): ?>
 	<p class="lead"><?= $this->__('backend.page.wizard.create.description', ['page' => $page->getTitle()]) ?></p>
 <?php else: ?>
-	<p class="lead">Pages will be added to root</p>
+	<p class="lead"><?= $this->__('backend.page.wizard.title.root') ?></p>
 <?php endif ?>
 <form method="post" id="form_page_wizard" class="form" action="<?= $this->helper("Url")->linkToAction("Backend", "Page", "add", ["uid" => (($page) ? $page->getUid() : 0)]) ?>">
 	<div class="row">
@@ -32,7 +32,7 @@
 			<div id="wizard_pages">
 				<div class="row page-line form-group">
 					<div class="col-sm-8">
-						<input type="text" name="page[names][]" class="form-control" placeholder="title">
+						<input type="text" name="page[names][]" class="form-control" placeholder="<?= $this->__('backend.page.wizard.placeholder.title') ?>">
 					</div>
 					<div class="col-sm-4">
 						<select class="form-control">
@@ -51,8 +51,8 @@
 	</div>
 	<div class="row">
 		<div class="col-sm-12">
-			<a class="btn btn-default">Close</a>
-			<input type="submit" class="pull-right btn btn-primary" value="Save" />
+			<a class="btn btn-default" data-dismiss="modal"><?= $this->__('backend.page.wizard.button.close') ?></a>
+			<input type="submit" class="pull-right btn btn-primary" value="<?= $this->__('backend.page.wizard.button.save') ?>" />
 		</div>
 	</div>
 </form>
