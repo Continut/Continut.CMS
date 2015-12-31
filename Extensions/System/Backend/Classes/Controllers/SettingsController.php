@@ -1,0 +1,34 @@
+<?php
+/**
+ * This file is part of the Conţinut CMS project.
+ * Distributed under the GNU General Public License.
+ * For more details, consult the LICENSE.txt file supplied with the project
+
+ * Author: Radu Mogoş <radu.mogos@pixelplant.ch>
+ * Date: 31.12.2015 @ 14:46
+ * Project: Conţinut CMS
+ */
+namespace Extensions\System\Backend\Classes\Controllers {
+
+	use Core\Mvc\Controller\BackendController;
+	use Core\Utility;
+
+	class SettingsController extends BackendController
+	{
+		public function __construct() {
+			parent::__construct();
+			$this->setLayoutTemplate(Utility::getResource("Default", "Backend", "Backend", "Layout"));
+		}
+
+		public function indexAction() {
+			$domainsCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\DomainCollection");
+			$domainsCollection->where("is_visible = :is_visible ORDER BY sorting ASC", ["is_visible" => 1]);
+
+			$languagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\DomainUrlCollection");
+			$languagesCollection->where("domain_uid = :domain_uid ORDER BY sorting ASC", ["domain_uid" => $domainsCollection->getFirst()->getUid()]);
+
+			$this->getView()->assign("domains", $domainsCollection);
+			$this->getView()->assign("languages", $languagesCollection);
+		}
+	}
+}

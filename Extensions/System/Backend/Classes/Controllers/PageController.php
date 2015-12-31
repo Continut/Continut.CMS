@@ -391,9 +391,6 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			$pageCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection");
 
 			foreach ($pages["names"] as $title) {
-				/**
-				 * @var \Core\System\Domain\Model\Page $pageModel
-				 */
 				$pageModel = Utility::createInstance("Core\\System\\Domain\\Model\\Page");
 				if ($pagePlacement == "inside") {
 					$pageModel->setParentUid($pageUid);

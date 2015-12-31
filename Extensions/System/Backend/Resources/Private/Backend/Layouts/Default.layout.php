@@ -28,7 +28,7 @@ $this->getPage()
 	</div>
 	<ul class="nav navbar-nav navbar-right">
 		<li>
-			<a href="#"><i class="fa fa-fw fa-cogs"></i> Settings</a>
+			<a href="<?= $this->helper("Url")->linkToAction("Backend", "Settings", "index") ?>"><i class="fa fa-fw fa-cogs"></i> Settings</a>
 		</li>
 		<li role="presentation" class="dropdown">
 			<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false"><i class="fa fa-fw fa-user"></i> Gringo Deluxe <span class="caret"></span></a>

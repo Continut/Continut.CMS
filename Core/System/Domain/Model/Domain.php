@@ -11,6 +11,7 @@
 namespace Core\System\Domain\Model {
 
 	use Core\Mvc\Model\BaseModel;
+	use Core\Utility;
 
 	class Domain extends BaseModel {
 
@@ -28,6 +29,11 @@ namespace Core\System\Domain\Model {
 		 * @var int
 		 */
 		protected $sorting;
+
+		/**
+		 * @var array
+		 */
+		protected $domain_urls;
 
 		/**
 		 * Simple datamapper used for the database
@@ -85,6 +91,17 @@ namespace Core\System\Domain\Model {
 		public function setSorting($sorting)
 		{
 			$this->sorting = $sorting;
+		}
+
+		/**
+		 * @return array
+		 * @throws \Core\Tools\Exception
+		 */
+		public function getDomainUrls() {
+			if ($this->domain_urls == null) {
+				$this->domain_urls = Utility::createInstance("Core\\System\\Domain\\Collection\\DomainUrlCollection")->findByDomain_uid($this->uid)->getAll();
+			}
+			return $this->domain_urls;
 		}
 	}
 

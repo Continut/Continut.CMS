@@ -67,7 +67,7 @@
 				</form>
 			</div>
 			<div class="col-xs-5">
-				<a href="#" class="btn btn-success col-xs-12 page-add"><i class="fa fa-fw fa-plus"></i> <?= $this->__("backend.pageTree.createPage") ?></a>
+				<a href="#" class="btn btn-success col-xs-12 page-add" title="<?= $this->__("backend.pageTree.createPage") ?>"><i class="fa fa-fw fa-plus"></i> <?= $this->__("backend.pageTree.createPage") ?></a>
 			</div>
 		</div>
 		<div id="cms_tree"></div>
@@ -128,7 +128,7 @@
 								case "hidden-menu":     pageIcon = '<span class="fa-stack"><i class="fa fa-lg tree-icon fa-fw ' + iconClass + '"></i><i class="fa fa-eye-slash fa-stack-1x text-danger"></i></span> '; break;
 								default:                pageIcon = '<span class="fa-stack"><i class="fa fa-lg tree-icon fa-fw ' + iconClass + '"></i><i class="fa fa-stack-1x"></i></span> ';
 							}
-							$li.find('.jqtree-title').before(pageIcon).after('<a class="btn btn-success pull-right btn-sm page-add" style="display:none" data-page-id="' + node.id + '"><i class="fa fa-plus"></i></a>');
+							$li.find('.jqtree-title').before(pageIcon).after('<a class="btn btn-success pull-right btn-sm page-add" style="display:none" data-page-id="' + node.id + '" title="<?= $this->__("backend.pageTree.createPage") ?>"><i class="fa fa-plus"></i></a>');
 						}
 
 					});

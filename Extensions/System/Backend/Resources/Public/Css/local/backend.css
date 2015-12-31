@@ -369,3 +369,23 @@ ul.jqtree-tree li.jqtree-folder {
 .progress-loader {
 	display: none;
 }
+
+/** settings **/
+.settings-content {
+	margin-top: 1em;
+}
+
+ul.list-enclosed {
+	background: white;
+	border: 1px solid #dcdcdc;
+}
+
+ul.list-readable {
+	margin: 0;
+	padding: 10px 10px 0 10px;
+	list-style: none;
+}
+
+ul.list-readable li {
+	margin: 0 0 10px 0;
+}

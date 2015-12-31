@@ -79,7 +79,7 @@ namespace Core\System\Domain\Model {
 		/**
 		 * @return boolean
 		 */
-		public function isIsAlias()
+		public function getIsAlias()
 		{
 			return $this->is_alias;
 		}
