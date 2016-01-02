@@ -74,5 +74,19 @@ namespace Core\Mvc\Model {
 				}
 			}
 		}
+
+		/**
+		 * Returns directly a value by property name
+		 *
+		 * @param $key
+		 *
+		 * @return mixed
+		 */
+		public function fetchFromField($key) {
+			if (property_exists($this, $key)) {
+				return $this->$key;
+			}
+			return null;
+		}
 	}
 }

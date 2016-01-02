@@ -7,6 +7,7 @@
 				<div class="row">
 					<div class="col-md-6">
 						<select id="select_website" class="selectpicker" data-width="100%">
+							<option value="0">- Global -</option>
 							<?php foreach ($domains->getAll() as $domain): ?>
 								<option value="<?= $domain->getUid() ?>"><?= $domain->getTitle() ?></option>
 							<?php endforeach ?>
@@ -14,7 +15,7 @@
 						<script type="text/javascript">
 							$('#select_website').on('change', function (event) {
 								$.ajax({
-										url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "tree") ?>',
+										url: '<?= $this->helper("Url")->linkToAction("Backend", "Settings", "languages") ?>',
 										data: { domain_uid: this.value }
 									})
 									.done(function( data ) {
@@ -24,14 +25,13 @@
 											$languages.append($("<option data-icon='flag-icon flag-icon-" + key.flag + "'></option>").attr("value", value).text(key.title));
 										});
 										$languages.selectpicker('refresh');
-										$('#cms_tree').tree('loadData', $.parseJSON(data).pages);
-										$('#content').empty();
 									});
 							});
 						</script>
 					</div>
 					<div class="col-md-6">
 						<select id="select_language" class="selectpicker" data-width="100%">
+							<option value="0">- All languages -</option>
 							<?php foreach ($languages->getAll() as $language): ?>
 								<option data-icon="flag-icon flag-icon-<?= $language->getFlag() ?>" value="<?= $language->getUid() ?>"><?= $language->getTitle() ?></option>
 							<?php endforeach ?>
@@ -42,7 +42,7 @@
 			<div class="col-md-9">
 			</div>
 		</div>
-		<div class="row settings-content" id="settings_content">
+		<div class="row settings-content" id="content">
 			<div class="col-sm-12">
 				<div class="row">
 					<form method="post" action="">
@@ -63,25 +63,63 @@
 										<a href="" class="btn btn-success"><i class="fa fa-icon fa-home"></i> Add new domain</a>
 										<a href="" class="btn btn-success"><i class="fa fa-icon fa-globe"></i> Add new language</a>
 									</div>
-									<h3>Domains and domain urls</h3>
-									<ul class="list-readable list-enclosed">
-									<?php foreach ($domains->getAll() as $domain): ?>
-										<li>
-											<label><strong><input type="checkbox" name="domains[]" value="<?= $domain->getUid() ?>"> <?= $domain->getTitle() ?></strong></label>
-											<ul class="list-readable">
-											<?php foreach ($domain->getDomainUrls() as $language): ?>
-												<li>
-													<label><input type="checkbox" name="domain_urls[]" value="<?= $language->getUid() ?>"> <i class="flag-icon flag-icon-<?= $language->getFlag() ?>"></i> <?= $language->getTitle() ?></label>
-													<i class="fa fa-icon fa-globe"></i> <?= $language->getUrl() ?>
-												</li>
-											<?php endforeach; ?>
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<div class="panel-title">Domains and domain urls</div>
+										</div>
+										<div class="panel-body">
+											<ul class="list-readable list-enclosed">
+												<?php foreach ($domains->getAll() as $domain): ?>
+													<li>
+														<label><strong><input type="checkbox" name="domains[]" value="<?= $domain->getUid() ?>"> <?= $domain->getTitle() ?></strong></label>
+														<ul class="list-readable">
+															<?php foreach ($domain->getDomainUrls() as $language): ?>
+																<li>
+																	<label><input type="checkbox" name="domain_urls[]" value="<?= $language->getUid() ?>"> <i class="flag-icon flag-icon-<?= $language->getFlag() ?>"></i> <?= $language->getTitle() ?></label>
+																	<i class="fa fa-icon fa-globe"></i> <?= $language->getUrl() ?>
+																</li>
+															<?php endforeach; ?>
+														</ul>
+													</li>
+												<?php endforeach ?>
 											</ul>
-										</li>
-									<?php endforeach ?>
-									</ul>
+										</div>
+									</div>
 								</div>
 								<div role="tabpanel" class="tab-pane" id="option2">
-									<h3>Sessions</h3>
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<div class="panel-title">Sessions</div>
+										</div>
+										<div class="panel-body">
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group form-group-lg">
+														<label>Frontend session expires in</label>
+														<div class="input-group col-sm-4">
+															<div class="input-group-addon"><span class="fa fa-icon fa-hourglass-half"></span></div>
+															<input type="text" class="form-control" name="settings[session][feuser_expire]" value="360" />
+															<div class="input-group-addon">minutes</div>
+														</div>
+													</div>
+													<a class="btn btn-default" href=""><span class="fa fa-icon fa-users"></span> Administer Frontend Users</a>
+													<a class="btn btn-default" href=""><span class="fa fa-icon fa-users"></span> Administer Frontend Groups</a>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group form-group-lg">
+														<label>Backend session expires in</label>
+														<div class="input-group col-sm-4">
+															<div class="input-group-addon"><span class="fa fa-icon fa-hourglass-half"></span></div>
+															<input type="text" class="form-control" name="settings[session][beuser_expire]" value="360" />
+															<div class="input-group-addon">minutes</div>
+														</div>
+													</div>
+													<a class="btn btn-default" href=""><span class="fa fa-icon fa-users"></span> Administer Backend Users</a>
+													<a class="btn btn-default" href=""><span class="fa fa-icon fa-users"></span> Administer Backend Groups</a>
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
 								<div role="tabpanel" class="tab-pane" id="option3">
 									<h3>Media storages</h3>

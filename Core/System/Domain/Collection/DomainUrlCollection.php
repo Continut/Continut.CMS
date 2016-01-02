@@ -20,8 +20,17 @@ namespace Core\System\Domain\Collection {
 			$this->_elementClass = "\\Core\\System\\Domain\\Model\\DomainUrl";
 		}
 
-		public function toSimplifiedArray() {
+		/**
+		 * @param bool   $addEmpty   Should an initial empty value be added?
+		 * @param string $emptyTitle If so, what title should be shown, if any
+		 *
+		 * @return array
+		 */
+		public function toSimplifiedArray($addEmpty = false, $emptyTitle = "") {
 			$data = [];
+			if ($addEmpty) {
+				$data = [0 => ["title" => $emptyTitle, "flag" => "eu"]];
+			}
 			foreach ($this->getAll() as $language) {
 				$data[$language->getUid()] = [
 					"title" => $language->getTitle(),

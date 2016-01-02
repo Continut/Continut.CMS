@@ -12,7 +12,6 @@
 namespace Core\Mvc\View {
 
 	use Core\Tools\ErrorException;
-	use Core\Tools\Exception;
 	use Core\Utility;
 
 	/**
@@ -36,10 +35,6 @@ namespace Core\Mvc\View {
 		 * @var array List of values sent to the view
 		 */
 		protected $_variables;
-
-		public function __constructor($template) {
-			$this->_template = $template;
-		}
 
 		/**
 		 * Assign a variable and value to the View variables list
@@ -87,10 +82,14 @@ namespace Core\Mvc\View {
 		 * Set View template file
 		 *
 		 * @param string $template Template file to use
+		 *
+		 * @return $this
 		 */
 		public function setTemplate($template) {
 			$this->_template = $template;
 			$this->_relativePath = str_replace(__ROOTCMS__, "", $this->_template);
+
+			return $this;
 		}
 
 		/**

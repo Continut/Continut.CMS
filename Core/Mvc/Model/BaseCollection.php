@@ -100,6 +100,7 @@ namespace Core\Mvc\Model {
 		public function where($conditions, $values = []) {
 			$this->_elements = [];
 			$sth = Utility::getDatabase()->prepare("SELECT * FROM $this->_tablename WHERE " . $conditions);
+
 			$sth->execute($values);
 			$sth->setFetchMode(\PDO::FETCH_CLASS, $this->_elementClass);
 			while ($element = $sth->fetch()) {

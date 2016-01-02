@@ -1,0 +1,83 @@
+<div class="grid">
+	<form method="post" action="" class="form">
+		<div class="row">
+			<?php foreach ($this->getFields() as $fieldName => $fieldValue): ?>
+				<div class="<?= (isset($fieldValue['css']) ? $fieldValue['css'] : 'col-sm-1') ?>">
+					<div class="form-group">
+						<label><?= $fieldValue['label'] ?></label>
+						<?php if (isset($fieldValue['filter'])): ?>
+							<?= $fieldValue['filter'] ?>
+						<?php endif; ?>
+					</div>
+				</div>
+			<?php endforeach ?>
+		</div>
+		<!-- panel START -->
+		<div class="row grid-panel">
+			<div class="col-sm-6">
+				<nav>
+					<ul class="pagination">
+						<li>
+							<a href="#" aria-label="Previous">
+								<span aria-hidden="true">&laquo;</span>
+							</a>
+						</li>
+						<li class="active"><a href="#">1</a></li>
+						<li><a href="#">2</a></li>
+						<li><a href="#">3</a></li>
+						<li><a href="#">4</a></li>
+						<li><a href="#">5</a></li>
+						<li>
+							<a href="#" aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+			<div class="col-sm-6 text-right">
+				<a href="" class="btn btn-danger"><span class="fa fa-icon fa-refresh"></span> Reset filters</a>
+				<a href="" class="btn btn-primary"><span class="fa fa-icon fa-search"></span> Search</a>
+			</div>
+		</div>
+		<!-- panel END -->
+
+			<?php foreach ($this->getCollection()->getAll() as $index => $record): ?>
+				<div class="row grid-row <?= ($index % 2 == 0) ? '' : 'grid-even' ?>">
+				<?php foreach ($this->getFields() as $fieldName => $fieldValue): ?>
+					<div class="<?= (isset($fieldValue['css']) ? $fieldValue['css'] : 'col-sm-1') ?>">
+						<?= $record->fetchFromField($fieldName) ?>
+					</div>
+				<?php endforeach ?>
+				</div>
+			<?php endforeach ?>
+
+		<!-- panel START -->
+		<div class="row grid-panel">
+			<div class="col-sm-6">
+				<nav>
+					<ul class="pagination">
+						<li>
+							<a href="#" aria-label="Previous">
+								<span aria-hidden="true">&laquo;</span>
+							</a>
+						</li>
+						<li class="active"><a href="#">1</a></li>
+						<li><a href="#">2</a></li>
+						<li><a href="#">3</a></li>
+						<li><a href="#">4</a></li>
+						<li><a href="#">5</a></li>
+						<li>
+							<a href="#" aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+			<div class="col-sm-6 text-right">
+			</div>
+		</div>
+		<!-- panel END -->
+	</form>
+</div>

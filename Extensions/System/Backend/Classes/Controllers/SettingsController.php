@@ -30,5 +30,18 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			$this->getView()->assign("domains", $domainsCollection);
 			$this->getView()->assign("languages", $languagesCollection);
 		}
+
+		public function languagesAction() {
+			$domainUid = $this->getRequest()->getArgument("domain_uid", 0);
+
+			$languagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\DomainUrlCollection");
+
+			if ($domainUid > 0) {
+				$languagesCollection->where("domain_uid = :domain_uid ORDER BY sorting ASC", ["domain_uid" => $domainUid]);
+			}
+			$languages = $languagesCollection->toSimplifiedArray(TRUE, "All");
+
+			return json_encode(["languages" => $languages]);
+		}
 	}
 }

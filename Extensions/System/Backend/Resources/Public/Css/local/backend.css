@@ -375,11 +375,6 @@ ul.jqtree-tree li.jqtree-folder {
 	margin-top: 1em;
 }
 
-ul.list-enclosed {
-	background: white;
-	border: 1px solid #dcdcdc;
-}
-
 ul.list-readable {
 	margin: 0;
 	padding: 10px 10px 0 10px;
@@ -388,4 +383,32 @@ ul.list-readable {
 
 ul.list-readable li {
 	margin: 0 0 10px 0;
+}
+
+/** widget grid **/
+.quick-panel {
+	margin: 10px 0;
+}
+
+.grid {
+
+}
+
+.grid-panel {
+	background: rgba(200, 200, 200, 0.3);
+	padding: 10px 0;
+	margin: 10px 0;
+}
+
+.grid-row {
+	padding: 10px;
+	margin: 0;
+}
+
+.grid-even {
+	background: rgba(200, 200, 200, 0.3);
+}
+
+.grid .pagination {
+	margin: 0;
 }
