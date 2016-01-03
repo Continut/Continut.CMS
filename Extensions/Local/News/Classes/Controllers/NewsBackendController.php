@@ -37,13 +37,13 @@ namespace Extensions\Local\News\Classes\Controllers {
 							"label"    => "Title",
 							"css"      => "col-sm-3",
 							"renderer" => "",
-							"filter"   => "\\Extensions\\System\\Backend\\Classes\\View\\Filter\\Text"
+							"filter"   => "\\Extensions\\System\\Backend\\Classes\\View\\Filter\\TextFilter"
 						],
 						"description" => [
 							"label"    => "Description",
 							"css"      => "col-sm-2",
 							"renderer" => "",
-							"filter"   => "\\Extensions\\System\\Backend\\Classes\\View\\Filter\\Text"
+							"filter"   => "\\Extensions\\System\\Backend\\Classes\\View\\Filter\\TextFilter"
 						],
 						"is_visible" => [
 							"label"    => "Is visible",

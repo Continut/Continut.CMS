@@ -42,7 +42,18 @@ namespace Extensions\System\Backend\Classes\View {
 		{
 			$offset = (int)$this->getOffset();
 			$limit  = (int)$this->getLimit();
-			return $this->collection->where("1=1 LIMIT $offset, $limit");
+
+			$filterQueries = [];
+			$filterValues = [];
+			foreach ($this->getFields() as $name => $field) {
+				if ($field->getFilter()) {
+					$filterQueries[] = $field->getFilter()->getQueryText();
+					$filterValues = array_merge($filterValues, $field->getFilter()->getQueryValues());
+				}
+			}
+
+			$filterQueries = implode(" AND ", $filterQueries);
+			return $this->collection->where("$filterQueries LIMIT $offset, $limit", $filterValues);
 		}
 
 		/**
@@ -63,13 +74,13 @@ namespace Extensions\System\Backend\Classes\View {
 		 * @return $this
 		 */
 		public function setFields($fields) {
-			$this->fields = $fields;
-
-			foreach ($this->fields as $name => $field) {
-				if (isset($field['filter'])) {
-					$filter = Utility::createInstance($field['filter']);
-					$this->fields[$name]['filter'] = $filter->render();
+			foreach ($fields as $name => $fieldValues) {
+				$field = Utility::createInstance("Extensions\\System\\Backend\\Classes\\Domain\\Model\\Grid\\Field");
+				$field->update($fieldValues);
+				if ($field->getFilter()) {
+					$field->getFilter()->setFieldName($name);
 				}
+				$this->fields[$name] = $field;
 			}
 
 			return $this;

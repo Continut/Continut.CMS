@@ -1,12 +1,12 @@
 <div class="grid">
 	<form method="post" action="" class="form">
 		<div class="row">
-			<?php foreach ($this->getFields() as $fieldName => $fieldValue): ?>
-				<div class="<?= (isset($fieldValue['css']) ? $fieldValue['css'] : 'col-sm-1') ?>">
+			<?php foreach ($this->getFields() as $fieldName => $field): ?>
+				<div class="<?= ($field->getCss()) ? $field->getCss() : 'col-sm-1'; ?>">
 					<div class="form-group">
-						<label><?= $fieldValue['label'] ?></label>
-						<?php if (isset($fieldValue['filter'])): ?>
-							<?= $fieldValue['filter'] ?>
+						<label><?= $field->getLabel() ?></label>
+						<?php if ($field->getFilter()): ?>
+							<?= $field->getFilter()->render() ?>
 						<?php endif; ?>
 					</div>
 				</div>
@@ -44,8 +44,8 @@
 
 			<?php foreach ($this->getCollection()->getAll() as $index => $record): ?>
 				<div class="row grid-row <?= ($index % 2 == 0) ? '' : 'grid-even' ?>">
-				<?php foreach ($this->getFields() as $fieldName => $fieldValue): ?>
-					<div class="<?= (isset($fieldValue['css']) ? $fieldValue['css'] : 'col-sm-1') ?>">
+				<?php foreach ($this->getFields() as $fieldName => $field): ?>
+					<div class="<?= ($field->getCss()) ? $field->getCss() : 'col-sm-1'; ?>">
 						<?= $record->fetchFromField($fieldName) ?>
 					</div>
 				<?php endforeach ?>

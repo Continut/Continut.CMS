@@ -544,5 +544,25 @@ namespace Core {
 			}
 			return $layouts;
 		}
+
+		/**
+		 * @param      $string
+		 * @param bool $capitalizeFirstCharacter
+		 *
+		 * @see http://stackoverflow.com/questions/2791998/convert-dashes-to-camelcase-in-php
+		 *
+		 * @return mixed
+		 */
+		public static function toCamelCase($string, $capitalizeFirstCharacter = FALSE)
+		{
+
+			$str = str_replace(' ', '', ucwords(str_replace('_', ' ', $string)));
+
+			if (!$capitalizeFirstCharacter) {
+				$str = lcfirst($str);
+			}
+
+			return $str;
+		}
 	}
 }

@@ -1,1 +1,1 @@
-<input type="text" name="" class="form-control" value="" />
+<input type="text" name="<?= $this->getFieldName() ?>" class="form-control" value="" />

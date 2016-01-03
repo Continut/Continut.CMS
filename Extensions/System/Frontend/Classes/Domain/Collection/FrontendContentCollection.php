@@ -43,7 +43,7 @@ namespace Extensions\System\Frontend\Classes\Domain\Collection {
 					case "reference": $element = Utility::createInstance("\\Extensions\\System\\Frontend\\Classes\\Domain\\Model\\Content\\FrontendReferenceContent"); break;
 					default:          $element = Utility::createInstance($this->_elementClass);
 				}
-				$element->importFromArray($row);
+				$element->update($row);
 				$this->add($element);
 			}
 

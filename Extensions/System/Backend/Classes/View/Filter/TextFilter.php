@@ -10,17 +10,31 @@
  */
 namespace Extensions\System\Backend\Classes\View\Filter {
 
-	use Core\Mvc\View\BaseView;
 	use Core\Utility;
 
-	class Text extends BaseView {
+	class TextFilter extends BaseFilter {
 
 		/**
-		 * @param $template
+		 * TextFilter constructor
 		 */
 		public function __construct()
 		{
 			$this->setTemplate(Utility::getResource("Filter/text", "Backend", "Backend", "Template"));
+		}
+
+		/**
+		 * @return string
+		 */
+		public function getQueryText() {
+			$fieldname = $this->getFieldName();
+			return "$fieldname LIKE :$fieldname";
+		}
+
+		/**
+		 * @return array
+		 */
+		public function getQueryValues() {
+			return [$this->getFieldName() => "%news%"];
 		}
 	}
 

@@ -42,7 +42,7 @@ namespace Extensions\System\Backend\Classes\Domain\Collection {
 					case "reference": $element = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\Domain\\Model\\Content\\BackendReferenceContent"); break;
 					default:          $element = Utility::createInstance($this->_elementClass);
 				}
-				$element->importFromArray($row);
+				$element->update($row);
 				$this->add($element);
 			}
 

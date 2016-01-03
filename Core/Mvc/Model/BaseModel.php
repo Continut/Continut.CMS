@@ -55,24 +55,12 @@ namespace Core\Mvc\Model {
 		public function update($values) {
 			foreach ($values as $key => $value) {
 				if (property_exists($this, $key)) {
-					$this->$key = $value;
+					$method = "set" . Utility::toCamelCase($key, TRUE);
+					$this->$method($value);
 				}
 			}
 
 			return $this;
-		}
-
-		/**
-		 * Imports values for properties from an array
-		 *
-		 * @param array $row
-		 */
-		public function importFromArray($row) {
-			foreach ($row as $key => $value) {
-				if (property_exists($this, $key)) {
-					$this->$key = $value;
-				}
-			}
 		}
 
 		/**
@@ -84,7 +72,8 @@ namespace Core\Mvc\Model {
 		 */
 		public function fetchFromField($key) {
 			if (property_exists($this, $key)) {
-				return $this->$key;
+				$method = "get" . Utility::toCamelCase($key, TRUE);
+				return $this->$method();
 			}
 			return null;
 		}
