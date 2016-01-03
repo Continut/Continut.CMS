@@ -141,12 +141,12 @@ namespace Core\Mvc\View {
 		/**
 		 * Render a partial template file
 		 *
+		 * @param string $partialFilename Relative Path and complete filename of the partial
 		 * @param string $extensionName   Name of the extension where the partial is located
 		 * @param string $scope           Scope of the resource, Frontend or Backend
-		 * @param string $partialFilename Relative Path and complete filename of the partial
 		 * @param array  $variables       List of variables to pass on to the partial
 		 */
-		public function partial($extensionName, $scope, $partialFilename, $variables = []) {
+		public function partial($partialFilename, $extensionName, $scope, $variables = []) {
 			$partialView = Utility::createInstance("Core\\Mvc\\View\\BaseView");
 			$partialView->assignMultiple($variables);
 			$partialView->setTemplate(Utility::getResource($partialFilename, $extensionName, $scope, "Partial"));

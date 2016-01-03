@@ -31,9 +31,14 @@ namespace Extensions\System\Backend\Classes\View {
 		protected $limit = 10;
 
 		/**
+		 * @var int Paginator's current page
+		 */
+		protected $page = 1;
+
+		/**
 		 * @var int
 		 */
-		protected $offset = 0;
+		protected $totalRecords;
 
 		/**
 		 * @var string
@@ -45,8 +50,12 @@ namespace Extensions\System\Backend\Classes\View {
 		 */
 		public function getCollection()
 		{
-			$offset = (int)$this->getOffset();
+			return $this->collection;
+		}
+
+		public function initialize() {
 			$limit  = (int)$this->getLimit();
+			$offset = ($this->getPage() - 1) * $limit;
 
 			$filterQueries = [];
 			$filterValues = [];
@@ -65,7 +74,10 @@ namespace Extensions\System\Backend\Classes\View {
 			} else {
 				$filterQueries = "1=1";
 			}
-			return $this->collection->where("$filterQueries LIMIT $offset, $limit", $filterValues);
+
+			$this->setTotalRecords($this->collection->whereCount($filterQueries, $filterValues));
+
+			$this->collection->where("$filterQueries LIMIT $offset, $limit", $filterValues);
 		}
 
 		/**
@@ -92,11 +104,6 @@ namespace Extensions\System\Backend\Classes\View {
 					->setName($name)
 					->update($fieldValues)
 					->setValue(Utility::getRequest()->getArgument($name));
-				/*if ($field->getFilter()) {
-					$field->getFilter()
-						->setFieldName($name)
-						->setFieldValue(Utility::getRequest()->getArgument($name));
-				}*/
 				$this->fields[$name] = $field;
 			}
 
@@ -117,9 +124,9 @@ namespace Extensions\System\Backend\Classes\View {
 		 *
 		 * @return $this
 		 */
-		public function setPager($limit, $offset) {
+		public function setPager($limit, $page) {
 			$this->limit = $limit;
-			$this->offset = $offset;
+			$this->page = $page;
 
 			return $this;
 		}
@@ -145,26 +152,6 @@ namespace Extensions\System\Backend\Classes\View {
 		}
 
 		/**
-		 * @return int
-		 */
-		public function getOffset()
-		{
-			return $this->offset;
-		}
-
-		/**
-		 * @param int $offset
-		 *
-		 * @return $this
-		 */
-		public function setOffset($offset)
-		{
-			$this->offset = $offset;
-
-			return $this;
-		}
-
-		/**
 		 * @return string
 		 */
 		public function getFormAction()
@@ -180,6 +167,46 @@ namespace Extensions\System\Backend\Classes\View {
 		public function setFormAction($formAction)
 		{
 			$this->formAction = $formAction;
+
+			return $this;
+		}
+
+		/**
+		 * @return int
+		 */
+		public function getPage()
+		{
+			return $this->page;
+		}
+
+		/**
+		 * @param $page
+		 *
+		 * @return $this
+		 */
+		public function setPage($page)
+		{
+			$this->page = $page;
+
+			return $this;
+		}
+
+		/**
+		 * @return int
+		 */
+		public function getTotalRecords()
+		{
+			return $this->totalRecords;
+		}
+
+		/**
+		 * @param $totalRecords
+		 *
+		 * @return $this
+		 */
+		public function setTotalRecords($totalRecords)
+		{
+			$this->totalRecords = $totalRecords;
 
 			return $this;
 		}

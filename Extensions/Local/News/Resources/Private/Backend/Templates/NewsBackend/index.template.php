@@ -4,7 +4,7 @@
 
 <div class="panel panel-default">
 	<div class="panel-heading">
-		<div class="panel-title">View all news</div>
+		<div class="panel-title"><?= $this->__("backend.news.grid.title") ?></div>
 	</div>
 	<div class="panel-body">
 		<?= $grid->render() ?>

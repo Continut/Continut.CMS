@@ -22,21 +22,21 @@ namespace Extensions\Local\News\Classes\Controllers {
 		public function indexAction() {
 			$grid = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\View\\GridView");
 
-			$newsCollection = Utility::createInstance("\\Extensions\\Local\\News\\Classes\\Domain\\Collection\\NewsCollection");
-
 			$grid
 				->setFormAction(Utility::helper("Url")->linkToAction("News", "NewsBackend", "index"))
-				->setTemplate(Utility::getResource("Grid/gridView", "News", "Backend", "Template"))
-				->setCollection($newsCollection)
-				->setPager(10, 0)
+				->setTemplate(Utility::getResource("Grid/gridView", "Backend", "Backend", "Template"))
+				->setCollection(Utility::createInstance("\\Extensions\\Local\\News\\Classes\\Domain\\Collection\\NewsCollection"))
+				->setPager(10, Utility::getRequest()->getArgument("page", 1))
 				->setFields(
 					[
 						"photo" => [
-							"label"    => "Photo",
-							"renderer" => []
+							"label"    => "backend.news.grid.field.photo",
+							"renderer" => [
+								"class" => "\\Extensions\\Local\\News\\Classes\\View\\Renderer\\PhotoRenderer"
+							]
 						],
 						"title" => [
-							"label"    => "Title",
+							"label"    => "backend.news.grid.field.title",
 							"css"      => "col-sm-3",
 							"renderer" => [
 								"parameters" => ["crop" => 200, "cropAppend" => "...", "removeHtml" => TRUE]
@@ -46,7 +46,7 @@ namespace Extensions\Local\News\Classes\Controllers {
 							]
 						],
 						"description" => [
-							"label"    => "Description",
+							"label"    => "backend.news.grid.field.description",
 							"css"      => "col-sm-3",
 							"renderer" => [
 								"parameters" => ["crop" => 400, "cropAppend" => "...", "removeHtml" => TRUE]
@@ -56,16 +56,19 @@ namespace Extensions\Local\News\Classes\Controllers {
 							]
 						],
 						"is_visible" => [
-							"label"    => "Is visible",
+							"label"    => "backend.news.grid.field.isVisible",
 							"css"      => "col-sm-1",
-							"renderer" => [],
+							"renderer" => [
+								"class" => "\\Extensions\\Local\\News\\Classes\\View\\Renderer\\IsVisibleRenderer"
+							],
 							"filter"   => [
 								"class"  => "\\Extensions\\System\\Backend\\Classes\\View\\Filter\\SelectFilter",
 								"values" => ["" => "", "0" => "Hidden", "1" => "Is visible"]
 							]
 						]
 					]
-			);
+				)
+				->initialize();
 
 			$this->getView()->assign("grid", $grid);
 		}

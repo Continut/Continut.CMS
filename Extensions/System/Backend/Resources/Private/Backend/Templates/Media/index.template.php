@@ -78,7 +78,7 @@
 		event.preventDefault();
 		var path = $(this).attr('href');
 		BootstrapDialog.confirm({
-			message: '<?= preg_replace('/[\r\n]+/', null, $this->partial("Backend", "Backend", "Media/createDirectory")) ?>',
+			message: '<?= preg_replace('/[\r\n]+/', null, $this->partial("Media/createDirectory", "Backend", "Backend")) ?>',
 			title: '<?= $this->__("backend.media.folders.create") ?>',
 			type: BootstrapDialog.TYPE_SUCCESS,
 			callback: function(result) {

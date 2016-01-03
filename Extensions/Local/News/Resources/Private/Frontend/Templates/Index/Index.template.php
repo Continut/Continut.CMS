@@ -1,4 +1,4 @@
-<?= $this->partial('ThemeBootstrap', 'Index/index.partial.php', ["country" => $country]); ?>
+<?= $this->partial('Index/index', 'ThemeBootstrap', 'Frontend', ["country" => $country]); ?>
 
 <h1>Hello <?= $firstname; ?> I come from a template that resides in the Index Controller of an extension</h1>
 <p>I know people also like to call you <?= $lastname; ?> and that you're from <?= $country; ?>.</p>

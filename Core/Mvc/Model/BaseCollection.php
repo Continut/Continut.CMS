@@ -92,8 +92,8 @@ namespace Core\Mvc\Model {
 		/**
 		 * Do a where on the collection
 		 *
-		 * @param $conditions
-		 * @param $values
+		 * @param string $conditions
+		 * @param array  $values
 		 *
 		 * @return $this
 		 */
@@ -108,6 +108,18 @@ namespace Core\Mvc\Model {
 			}
 
 			return $this;
+		}
+
+		/**
+		 * @param string $conditions
+		 * @param array  $values
+		 *
+		 * @return string
+		 */
+		public function whereCount($conditions, $values = []) {
+			$sth = Utility::getDatabase()->prepare("SELECT COUNT(*) FROM $this->_tablename WHERE " . $conditions);
+			$sth->execute($values);
+			return $sth->fetchColumn();
 		}
 
 		/**

@@ -13,7 +13,7 @@
 		</ol>
 	</div>
 </div>
-<?= $this->partial("Backend", "Backend", "Content/editArea") ?>
+<?= $this->partial("Content/editArea", "Backend", "Backend") ?>
 <div class="row">
 	<div class="col-sm-12">
 		<form method="post" id="form_content" class="form-content" action="<?= $this->helper("Url")->linkToAction("Backend", "Content", "update", ["uid" => $element->getUid()]) ?>">
@@ -21,7 +21,7 @@
 		</form>
 	</div>
 </div>
-<?= $this->partial("Backend", "Backend", "Content/editArea") ?>
+<?= $this->partial("Content/editArea", "Backend", "Backend") ?>
 
 <script>
 	// Post form using FormData, if supported

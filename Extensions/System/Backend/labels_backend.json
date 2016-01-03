@@ -1,6 +1,8 @@
 {
   "Backend": {
     "en_US": {
+      "general.yes": "Yes",
+      "general.no": "No",
       "copyright.text": "Conţinut CMS is an open-source software licensed under the GPL-3 license. For more details, please consult our %(file) file.",
       "copyright.footer": "&copy; Copyright %(link) 2015",
       "login.helpmenu.gettingStarted": "Just getting started?",
@@ -114,9 +116,14 @@
       "system.helper.megabytes": "%(size) MB",
       "system.helper.gigabytes": "%(size) GB",
       "system.helper.terabytes": "%(size) TB",
-      "backend.content.reference.delete": "Delete the reference"
+      "backend.content.reference.delete": "Delete the reference",
+      "backend.grid.form.resetFilters": "Reset filters",
+      "backend.grid.form.search": "Search",
+      "backend.grid.form.resultsCount": "%(count) records found"
     },
     "ro_RO": {
+      "general.yes": "Da",
+      "general.no": "Nu",
       "copyright.text": "Conţinut CMS este un program open-source sub licenţă GPL-3. Pentru mai multe detalii vă rugăm să consultaţi fişierul %(file).",
       "copyright.footer": "&copy; Copyright %(link) 2015",
       "login.helpmenu.gettingStarted": "Sunteţi la început?",
@@ -230,9 +237,14 @@
       "system.helper.megabytes": "%(size) MB",
       "system.helper.gigabytes": "%(size) GB",
       "system.helper.terabytes": "%(size) TB",
-      "backend.content.reference.delete": "Ştergeţi referinţa"
+      "backend.content.reference.delete": "Ştergeţi referinţa",
+      "backend.grid.form.resetFilters": "Resetare filtre",
+      "backend.grid.form.search": "Căutare",
+      "backend.grid.form.resultsCount": "%(count) înregistrări găsite"
     },
     "fr_FR": {
+      "general.yes": "Oui",
+      "general.no": "Non",
       "copyright.text": "Conţinut CMS est un logiciel open-source sous license GPL-3. Pour plus de details consultez svp. le fichier %(file).",
       "copyright.footer": "&copy; Copyright %(link) 2015",
       "login.helpmenu.gettingStarted": "Vous avez besoin d'aide?",
@@ -346,7 +358,10 @@
       "system.helper.megabytes": "%(size) MO",
       "system.helper.gigabytes": "%(size) GO",
       "system.helper.terabytes": "%(size) TO",
-      "backend.content.reference.delete": "Supprimer la reference"
+      "backend.content.reference.delete": "Supprimer la reference",
+      "backend.grid.form.resetFilters": "Reinitialisation filtres",
+      "backend.grid.form.search": "Recherche",
+      "backend.grid.form.resultsCount": "%(count) enregistrements trouvées"
     }
   }
 }

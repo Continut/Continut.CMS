@@ -8,7 +8,7 @@ $this->getPage()
 	<div class="row">
 		<div class="col-xs-12">
 			<?= $this->plugin("ThemeBootstrap", "Menu", "showMenu"); ?>
-			<?= $this->partial('ThemeBootstrap', 'Index/index.partial.php'); ?>
+			<?= $this->partial('Index/index', 'ThemeBootstrap', 'Frontend'); ?>
 		</div>
 	</div>
 		<div class="panel panel-danger">
