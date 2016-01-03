@@ -8,11 +8,11 @@
  * Date: 02.01.2016 @ 16:33
  * Project: Conţinut CMS
  */
-namespace Extensions\System\Backend\Classes\View\Filter {
+namespace Extensions\System\Backend\Classes\View\Renderer {
 
 	use Core\Mvc\View\BaseView;
 
-	class BaseFilter extends BaseView {
+	class BaseRenderer extends BaseView {
 
 		/**
 		 * @var \Extensions\System\Backend\Classes\Domain\Model\Grid\Field
@@ -20,9 +20,16 @@ namespace Extensions\System\Backend\Classes\View\Filter {
 		protected $field;
 
 		/**
-		 * @var array
+		 * @var array Parameters to be sent to the renderer template
 		 */
-		protected $values;
+		protected $parameters;
+
+		/**
+		 * The record that this renderer will show
+		 *
+		 * @var \Core\Mvc\Model\BaseModel\BaseModel
+		 */
+		protected $record;
 
 		/**
 		 * @return \Extensions\System\Backend\Classes\Domain\Model\Grid\Field
@@ -47,25 +54,42 @@ namespace Extensions\System\Backend\Classes\View\Filter {
 		/**
 		 * @return array
 		 */
-		public function getValues()
+		public function getParameters()
 		{
-			return $this->values;
+			return $this->parameters;
 		}
 
 		/**
-		 * @param $values
+		 * @param $parameters
 		 *
 		 * @return $this
 		 */
-		public function setValues($values)
+		public function setParameters($parameters)
 		{
-			$this->values = $values;
+			$this->parameters = $parameters;
 
 			return $this;
 		}
 
-		public function getQueryText() {}
-		public function getQueryValue() {}
+		/**
+		 * @return \Core\Mvc\Model\BaseModel\BaseModel
+		 */
+		public function getRecord()
+		{
+			return $this->record;
+		}
+
+		/**
+		 * @param $record
+		 *
+		 * @return $this
+		 */
+		public function setRecord($record)
+		{
+			$this->record = $record;
+
+			return $this;
+		}
 	}
 
 }

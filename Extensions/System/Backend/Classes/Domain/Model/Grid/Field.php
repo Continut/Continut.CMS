@@ -16,6 +16,16 @@ namespace Extensions\System\Backend\Classes\Domain\Model\Grid {
 	class Field extends BaseModel {
 
 		/**
+		 * @var string Input's field name
+		 */
+		protected $name;
+
+		/**
+		 * @var mixed Input's value
+		 */
+		protected $value;
+
+		/**
 		 * @var string Css class to use for the field
 		 */
 		protected $css;
@@ -31,7 +41,7 @@ namespace Extensions\System\Backend\Classes\Domain\Model\Grid {
 		protected $filter;
 
 		/**
-		 * @var mixed @TODO - replace with abstract filter class
+		 * @var \Extensions\System\Backend\Classes\View\Filter\BaseFilter
 		 */
 		protected $filterObject;
 
@@ -39,6 +49,11 @@ namespace Extensions\System\Backend\Classes\Domain\Model\Grid {
 		 * @var string
 		 */
 		protected $renderer;
+
+		/**
+		 * @var \Extensions\System\Backend\Classes\View\Renderer\BaseRenderer
+		 */
+		protected $rendererObject;
 
 		/**
 		 * @return string
@@ -89,7 +104,7 @@ namespace Extensions\System\Backend\Classes\Domain\Model\Grid {
 		}
 
 		/**
-		 * @param $filter
+		 * @param array $filter Configuration array for the filter
 		 *
 		 * @return $this
 		 * @throws \Core\Tools\ErrorException
@@ -97,17 +112,21 @@ namespace Extensions\System\Backend\Classes\Domain\Model\Grid {
 		public function setFilter($filter)
 		{
 			$this->filter = $filter;
-			$this->filterObject = Utility::createInstance($filter);
+			$this->filterObject = Utility::createInstance($filter["class"]);
+			if (isset($filter["values"])) {
+				$this->filterObject->setValues($filter["values"]);
+			}
+			$this->filterObject->setField($this);
 
 			return $this;
 		}
 
 		/**
-		 * @return string
+		 * @return \Extensions\System\Backend\Classes\View\Renderer\BaseRenderer
 		 */
 		public function getRenderer()
 		{
-			return $this->renderer;
+			return $this->rendererObject;
 		}
 
 		/**
@@ -118,6 +137,54 @@ namespace Extensions\System\Backend\Classes\Domain\Model\Grid {
 		public function setRenderer($renderer)
 		{
 			$this->renderer = $renderer;
+			if (!isset($renderer["class"])) {
+				$renderer["class"] = "\\Extensions\\System\\Backend\\Classes\\View\\Renderer\\TextRenderer";
+			}
+			$this->rendererObject = Utility::createInstance($renderer["class"]);
+			if (isset($renderer["parameters"])) {
+				$this->rendererObject->setParameters($renderer["parameters"]);
+			}
+			$this->rendererObject->setField($this);
+
+			return $this;
+		}
+
+		/**
+		 * @return mixed
+		 */
+		public function getName()
+		{
+			return $this->name;
+		}
+
+		/**
+		 * @param string $name
+		 *
+		 * @return $this
+		 */
+		public function setName($name)
+		{
+			$this->name = $name;
+
+			return $this;
+		}
+
+		/**
+		 * @return mixed
+		 */
+		public function getValue()
+		{
+			return $this->value;
+		}
+
+		/**
+		 * @param mixed $value
+		 *
+		 * @return $this
+		 */
+		public function setValue($value)
+		{
+			$this->value = $value;
 
 			return $this;
 		}

@@ -5,21 +5,21 @@
  * For more details, consult the LICENSE.txt file supplied with the project
 
  * Author: Radu Mogoş <radu.mogos@pixelplant.ch>
- * Date: 02.01.2016 @ 16:33
+ * Date: 03.01.2016 @ 13:40
  * Project: Conţinut CMS
  */
 namespace Extensions\System\Backend\Classes\View\Filter {
 
 	use Core\Utility;
 
-	class TextFilter extends BaseFilter {
+	class SelectFilter extends BaseFilter {
 
 		/**
 		 * TextFilter constructor
 		 */
 		public function __construct()
 		{
-			$this->setTemplate(Utility::getResource("Filter/text", "Backend", "Backend", "Template"));
+			$this->setTemplate(Utility::getResource("Filter/select", "Backend", "Backend", "Template"));
 		}
 
 		/**
@@ -27,8 +27,8 @@ namespace Extensions\System\Backend\Classes\View\Filter {
 		 */
 		public function getQueryText() {
 			$fieldName = $this->getField()->getName();
-			if ($this->getField()->getValue()) {
-				return "$fieldName LIKE :$fieldName";
+			if ($this->getField()->getValue() != null) {
+				return "$fieldName = :$fieldName";
 			}
 		}
 
@@ -37,8 +37,8 @@ namespace Extensions\System\Backend\Classes\View\Filter {
 		 */
 		public function getQueryValue() {
 			$filterValue = $this->getField()->getValue();
-			if ($filterValue) {
-				return [$this->getField()->getName() => "%$filterValue%"];
+			if ($filterValue != null) {
+				return [$this->getField()->getName() => $filterValue];
 			}
 		}
 	}

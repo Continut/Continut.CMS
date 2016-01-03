@@ -36,6 +36,11 @@ namespace Extensions\System\Backend\Classes\View {
 		protected $offset = 0;
 
 		/**
+		 * @var string
+		 */
+		protected $formAction;
+
+		/**
 		 * @return mixed
 		 */
 		public function getCollection()
@@ -47,12 +52,19 @@ namespace Extensions\System\Backend\Classes\View {
 			$filterValues = [];
 			foreach ($this->getFields() as $name => $field) {
 				if ($field->getFilter()) {
-					$filterQueries[] = $field->getFilter()->getQueryText();
-					$filterValues = array_merge($filterValues, $field->getFilter()->getQueryValues());
+					$queryText = $field->getFilter()->getQueryText();
+					if ($queryText) {
+						$filterQueries[] = $field->getFilter()->getQueryText();
+						$filterValues = array_merge($filterValues, $field->getFilter()->getQueryValue());
+					}
 				}
 			}
 
-			$filterQueries = implode(" AND ", $filterQueries);
+			if ($filterQueries) {
+				$filterQueries = implode(" AND ", $filterQueries);
+			} else {
+				$filterQueries = "1=1";
+			}
 			return $this->collection->where("$filterQueries LIMIT $offset, $limit", $filterValues);
 		}
 
@@ -76,10 +88,15 @@ namespace Extensions\System\Backend\Classes\View {
 		public function setFields($fields) {
 			foreach ($fields as $name => $fieldValues) {
 				$field = Utility::createInstance("Extensions\\System\\Backend\\Classes\\Domain\\Model\\Grid\\Field");
-				$field->update($fieldValues);
-				if ($field->getFilter()) {
-					$field->getFilter()->setFieldName($name);
-				}
+				$field
+					->setName($name)
+					->update($fieldValues)
+					->setValue(Utility::getRequest()->getArgument($name));
+				/*if ($field->getFilter()) {
+					$field->getFilter()
+						->setFieldName($name)
+						->setFieldValue(Utility::getRequest()->getArgument($name));
+				}*/
 				$this->fields[$name] = $field;
 			}
 
@@ -143,6 +160,26 @@ namespace Extensions\System\Backend\Classes\View {
 		public function setOffset($offset)
 		{
 			$this->offset = $offset;
+
+			return $this;
+		}
+
+		/**
+		 * @return string
+		 */
+		public function getFormAction()
+		{
+			return $this->formAction;
+		}
+
+		/**
+		 * @param $formAction
+		 *
+		 * @return $this
+		 */
+		public function setFormAction($formAction)
+		{
+			$this->formAction = $formAction;
 
 			return $this;
 		}

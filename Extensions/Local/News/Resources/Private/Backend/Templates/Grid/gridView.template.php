@@ -1,5 +1,5 @@
 <div class="grid">
-	<form method="post" action="" class="form">
+	<form method="post" action="<?= $this->getFormAction() ?>" class="form">
 		<div class="row">
 			<?php foreach ($this->getFields() as $fieldName => $field): ?>
 				<div class="<?= ($field->getCss()) ? $field->getCss() : 'col-sm-1'; ?>">
@@ -36,8 +36,8 @@
 				</nav>
 			</div>
 			<div class="col-sm-6 text-right">
-				<a href="" class="btn btn-danger"><span class="fa fa-icon fa-refresh"></span> Reset filters</a>
-				<a href="" class="btn btn-primary"><span class="fa fa-icon fa-search"></span> Search</a>
+				<a href="<?= $this->getFormAction() ?>" class="btn btn-danger"><span class="fa fa-icon fa-refresh"></span> Reset filters</a>
+				<input type="submit" class="btn btn-primary" value="Search" />
 			</div>
 		</div>
 		<!-- panel END -->
@@ -46,7 +46,7 @@
 				<div class="row grid-row <?= ($index % 2 == 0) ? '' : 'grid-even' ?>">
 				<?php foreach ($this->getFields() as $fieldName => $field): ?>
 					<div class="<?= ($field->getCss()) ? $field->getCss() : 'col-sm-1'; ?>">
-						<?= $record->fetchFromField($fieldName) ?>
+						<?= $field->getRenderer()->setRecord($record)->render() ?>
 					</div>
 				<?php endforeach ?>
 				</div>
