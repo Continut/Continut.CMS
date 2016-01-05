@@ -119,7 +119,11 @@
       "backend.content.reference.delete": "Delete the reference",
       "backend.grid.form.resetFilters": "Reset filters",
       "backend.grid.form.search": "Search",
-      "backend.grid.form.resultsCount": "%(count) records found"
+      "backend.grid.form.resultsCount": "%(count) records found",
+      "backend.paginator.page.last": "Last",
+      "backend.paginator.page.first": "First",
+      "backend.paginator.page.previous": "Previous",
+      "backend.paginator.page.next": "Next"
     },
     "ro_RO": {
       "general.yes": "Da",
@@ -240,7 +244,11 @@
       "backend.content.reference.delete": "Ştergeţi referinţa",
       "backend.grid.form.resetFilters": "Resetare filtre",
       "backend.grid.form.search": "Căutare",
-      "backend.grid.form.resultsCount": "%(count) înregistrări găsite"
+      "backend.grid.form.resultsCount": "%(count) înregistrări găsite",
+      "backend.paginator.page.last": "Ultima pagină",
+      "backend.paginator.page.first": "Prima pagină",
+      "backend.paginator.page.previous": "Pagina precedentă",
+      "backend.paginator.page.next": "Pagina următoare"
     },
     "fr_FR": {
       "general.yes": "Oui",
@@ -361,7 +369,11 @@
       "backend.content.reference.delete": "Supprimer la reference",
       "backend.grid.form.resetFilters": "Reinitialisation filtres",
       "backend.grid.form.search": "Recherche",
-      "backend.grid.form.resultsCount": "%(count) enregistrements trouvées"
+      "backend.grid.form.resultsCount": "%(count) enregistrements trouvées",
+      "backend.paginator.page.last": "Derniere page",
+      "backend.paginator.page.first": "Premiere page",
+      "backend.paginator.page.previous": "Page precedente",
+      "backend.paginator.page.next": "Page suivante"
     }
   }
 }

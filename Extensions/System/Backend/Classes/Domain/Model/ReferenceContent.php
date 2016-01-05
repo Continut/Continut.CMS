@@ -69,9 +69,9 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 				Utility::helper("Localization")->translate("backend.content.operation.move")
 			);*/
 
-			$overallWrap = '<div id="panel-backend-content-%s content-type-%s" data-id="%s" class="panel panel-backend-content %s"><div class="panel-heading"><strong>%s</strong>%s</div><div class="panel-body">%s</div></div>';
+			$overallWrap = '<div id="panel-backend-content-%s" data-id="%s" class="content-type-%s panel panel-backend-content %s"><div class="panel-heading"><strong>%s</strong>%s</div><div class="panel-body">%s</div></div>';
 
-			return sprintf($overallWrap, $this->getUid(), $this->getType(), $this->getUid(), $visibilityClass, $title, $operationLinks, $content);
+			return sprintf($overallWrap, $this->getUid(), $this->getUid(), $this->getType(), $visibilityClass, $title, $operationLinks, $content);
 		}
 	}
 

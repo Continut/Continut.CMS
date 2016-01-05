@@ -27,7 +27,7 @@ namespace Extensions\System\Frontend\Classes\Domain\Model\Content {
 				$configuration["plugin"]["extension"],
 				$configuration["plugin"]["controller"],
 				$configuration["plugin"]["action"],
-				$configuration["plugin"]["settings"]
+				$configuration["plugin"]["data"]
 			);
 		}
 	}

@@ -362,7 +362,7 @@ namespace Core {
 				->setName($templateController)
 				->setAction($templateAction)
 				->setExtension($contextExtension);
-			$controller->settings = $contextSettings;
+			$controller->data = $contextSettings;
 
 			// and call it's action method, if it exists
 			if (!method_exists($controller, $contextAction)) {

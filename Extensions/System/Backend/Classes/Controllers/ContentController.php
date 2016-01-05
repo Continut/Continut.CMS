@@ -43,36 +43,58 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			]);
 		}
 
+		/**
+		 * Toggles an element's visibility
+		 */
+		public function toggleVisibilityAction() {
+			$uid = (int)$this->getRequest()->getArgument("uid");
+
+			$contentCollection = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
+			$content = $contentCollection->findByUid($uid);
+
+			$content->setIsVisible(!$content->getIsVisible());
+
+			$contentCollection
+				->reset()
+				->add($content)
+				->save();
+
+			return json_encode([
+				"uid"       => $content->getUid(),
+				"operation" => "toggleVisibility"
+			]);
+		}
+
 		public function editAction() {
 			$uid = (int)$this->getRequest()->getArgument("uid");
 
 			$contentCollection = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
-			$contentElement = $contentCollection->where("uid = :uid AND is_deleted = 0", ["uid" => $uid])->getFirst();
+			$content = $contentCollection->where("uid = :uid AND is_deleted = 0", ["uid" => $uid])->getFirst();
 
-			$this->getView()->assign("element", $contentElement);
+			$this->getView()->assign("element", $content);
 
-			$data = json_decode($contentElement->getValue(), TRUE);
-			$wizardData = $data[$contentElement->getType()];
+			$data = json_decode($content->getValue(), TRUE);
+			$wizardData = $data[$content->getType()];
 
 			$wizard = Utility::createInstance("Core\\Mvc\\View\\BaseView");
-			$wizardTemplate = ucfirst($contentElement->getType()) . "s/" . $wizardData["template"];
+			$wizardTemplate = ucfirst($content->getType()) . "s/" . $wizardData["template"];
 			$wizard->setTemplate(Utility::getResource($wizardTemplate, $wizardData["extension"], "Frontend", "Wizard"));
 			if (!isset($wizardData["data"]["title"])) {
-				$wizardData["data"]["title"] = $contentElement->getTitle();
+				$wizardData["data"]["title"] = $content->getTitle();
 			}
 			$wizard->assignMultiple($wizardData["data"]);
 
 			$this->getView()->assign("content", $wizard->render());
 
 			return json_encode([
-				"uid"       => $contentElement->getUid(),
+				"uid"       => $content->getUid(),
 				"html"      => $this->getView()->render(),
 				"operation" => "edit"
 			]);
 		}
 
 		/**
-		 * Saves the changes made to a content element in the backend
+			 * Saves the changes made to a content element in the backend
 		 *
 		 * @return string
 		 * @throws \Core\Tools\Exception

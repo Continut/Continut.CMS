@@ -16,6 +16,11 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 	class BackendContent extends Content {
 
 		/**
+		 * @var bool if rendered from inside a reference, certain menu elements are disabled
+		 */
+		protected $fromReference = FALSE;
+
+		/**
 		 * Outputs "regular" content, of type "content" in the database
 		 *
 		 * @param mixed $elements
@@ -36,7 +41,6 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 			));
 			$view->assignMultiple($variables);
 
-			//$value = Utility::helper('String')->truncate(Utility::helper('String')->stripTags($this->getValue()), 200);
 			$value = $view->render();
 			return $this->formatBlock("content", $title, $value);
 		}
@@ -62,6 +66,7 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 		 * @param string $type    The type of content element we're formating
 		 * @param string $title   The title of the content element, if any
 		 * @param string $content The content of the element
+		 * @param bool   $fromReference Rendered from inside a reference?
 		 *
 		 * @return string
 		 */
@@ -89,9 +94,10 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 				Utility::helper("Localization")->translate("backend.content.operation.hide")
 			);
 
-			$linkToShow   = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-eye-slash text-danger fa-fw"></i></a>',
+			$linkToShow   = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-eye-slash fa-fw"></i> %s</a>',
 				Utility::helper("Localization")->translate("backend.content.operation.show"),
-				Utility::helper("Url")->linkToAction("Backend", "Content", "toggleVisibility", ["uid" => $this->getUid(), "show" => 1])
+				Utility::helper("Url")->linkToAction("Backend", "Content", "toggleVisibility", ["uid" => $this->getUid(), "show" => 1]),
+				Utility::helper("Localization")->translate("backend.content.operation.show")
 			);
 
 			if ($this->getIsVisible()) {
@@ -103,6 +109,11 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 				$title .= Utility::helper("Localization")->translate("backend.content.headerIsHidden");
 			}
 
+			if ($this->getFromReference()) {
+				$linkToCopy = "";
+				$visibilityLink = "";
+			}
+
 			$operationLinks = sprintf('<div class="btn-group btn-group-sm pull-right no-pep" role="group" aria-label="Element actions">%s<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button><ul class="dropdown-menu" role="menu"><li>%s</li><li>%s</li><li>%s</li></div>',
 				$linkToEdit, $linkToCopy, $visibilityLink, $linkToDelete);
 
@@ -111,9 +122,29 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 				Utility::helper("Localization")->translate("backend.content.operation.move")
 			);*/
 
-			$overallWrap = '<div id="panel-backend-content-%s content-type-%s" data-id="%s" class="panel panel-backend-content content-drag-sender %s"><div class="panel-heading"><strong>%s</strong>%s</div><div class="panel-body no-pep">%s</div></div>';
+			$overallWrap = '<div id="panel-backend-content-%s" data-id="%s" class="content-type-%s panel panel-backend-content content-drag-sender %s"><div class="panel-heading"><strong>%s</strong>%s</div><div class="panel-body no-pep">%s</div></div>';
 
-			return sprintf($overallWrap, $this->getUid(), $this->getType(), $this->getUid(), $visibilityClass, $title, $operationLinks, $content);
+			return sprintf($overallWrap, $this->getUid(), $this->getUid(), $this->getType(), $visibilityClass, $title, $operationLinks, $content);
+		}
+
+		/**
+		 * @return boolean
+		 */
+		public function getFromReference()
+		{
+			return $this->fromReference;
+		}
+
+		/**
+		 * @param boolean $fromReference
+		 *
+		 * @return $this;
+		 */
+		public function setFromReference($fromReference)
+		{
+			$this->fromReference = $fromReference;
+
+			return $this;
 		}
 	}
 

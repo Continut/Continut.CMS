@@ -32,7 +32,7 @@ namespace Extensions\System\Backend\Classes\Domain\Model\Content {
 					$configuration["plugin"]["extension"],
 					$modulePreviewSettings["controller"],
 					$modulePreviewSettings["action"],
-					$configuration["plugin"]["settings"]
+					$configuration["plugin"]["data"]
 				);
 			} else {
 				$value =

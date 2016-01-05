@@ -11,6 +11,7 @@
 namespace Extensions\Local\News\Classes\Controllers {
 
 	use Core\Mvc\Controller\BackendController;
+	use Core\Utility;
 
 	class PreviewController extends BackendController {
 		public function backendConfigureAction() {
@@ -18,7 +19,13 @@ namespace Extensions\Local\News\Classes\Controllers {
 		}
 
 		public function backendPreviewAction() {
-			$this->getView()->assign('limit', $this->settings["limit"]);
+			$newsCollection = Utility::createInstance("\\Extensions\\Local\\News\\Classes\\Domain\\Collection\\NewsCollection");
+
+			$limit = (isset($this->data["limit"])) ? $this->data["limit"] : 1;
+			$newsCollection->where("1=1 LIMIT $limit");
+
+			$this->getView()->assign('news', $newsCollection);
+			$this->getView()->assign('data', $this->data);
 		}
 	}
 

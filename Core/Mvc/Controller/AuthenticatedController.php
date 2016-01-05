@@ -13,6 +13,10 @@ namespace Core\Mvc\Controller {
 	use Core\Utility;
 
 	class AuthenticatedController extends ActionController {
+
+		/**
+		 * AuthenticatedController constructor.
+		 */
 		public function __construct() {
 			parent::__construct();
 			if (!$this->isConnected()) {

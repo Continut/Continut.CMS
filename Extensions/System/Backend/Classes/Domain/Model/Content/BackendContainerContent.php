@@ -17,7 +17,7 @@ namespace Extensions\System\Backend\Classes\Domain\Model\Content {
 		/**
 		 * Outputs "container" content
 		 *
-		 * @param $elements Chidren elements to render
+		 * @param mixed $elements Chidren elements to render
 		 *
 		 * @return mixed|string
 		 * @throws \Core\Tools\Exception
@@ -98,6 +98,10 @@ namespace Extensions\System\Backend\Classes\Domain\Model\Content {
 				$title .= Utility::helper("Localization")->translate("backend.content.headerIsHidden");
 			}
 
+			if ($this->getFromReference()) {
+				$linkToCopy = "";
+			}
+
 			$operationLinks = sprintf('<div class="btn-group btn-group-sm pull-right no-pep" role="group" aria-label="Element actions">%s %s<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button><ul class="dropdown-menu" role="menu"><li>%s</li><li>%s</li><li>%s</li></div>',
 				$linkNewElement,
 				$linkToEdit,
@@ -105,9 +109,9 @@ namespace Extensions\System\Backend\Classes\Domain\Model\Content {
 				$visibilityLink,
 				$linkToDelete);
 
-			$overallWrap = '<div id="panel-backend-content-%s content-type-%s" data-id="%s" class="panel panel-backend-content content-drag-sender %s"><div class="panel-heading"><strong>%s</strong>%s</div><div class="panel-body no-pep">%s</div></div>';
+			$overallWrap = '<div id="panel-backend-content-%s" data-id="%s" class="content-type-%s panel panel-backend-content content-drag-sender %s"><div class="panel-heading"><strong>%s</strong>%s</div><div class="panel-body no-pep">%s</div></div>';
 
-			return sprintf($overallWrap, $this->getUid(), $this->getType(), $this->getUid(), $visibilityClass, $title, $operationLinks, $content);
+			return sprintf($overallWrap, $this->getUid(), $this->getUid(), $this->getType(), $visibilityClass, $title, $operationLinks, $content);
 		}
 	}
 

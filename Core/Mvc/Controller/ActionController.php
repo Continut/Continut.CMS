@@ -63,9 +63,9 @@ namespace Core\Mvc\Controller {
 		protected $templateStorage;
 
 		/**
-		 * @var array Settings, in case the controller belongs to a plugin
+		 * @var array Data, in case the controller belongs to a plugin
 		 */
-		public $settings;
+		public $data;
 
 		/**
 		 * @var \Core\System\Session\UserSession Reference to the current user session

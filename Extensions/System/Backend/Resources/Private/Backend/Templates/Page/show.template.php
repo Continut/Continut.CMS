@@ -133,6 +133,7 @@
 
 		$.getJSON(url, function (data) {
 			if (data.operation == "delete") {
+				console.log(data);
 				$('#panel-backend-content-' + data.uid).remove();
 			}
 			if (data.operation == "edit") {

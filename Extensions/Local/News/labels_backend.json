@@ -10,7 +10,8 @@
       "backend.news.grid.field.photo": "Photo",
       "backend.news.grid.field.title": "Title",
       "backend.news.grid.field.description": "Description",
-      "backend.news.grid.field.isVisible": "Is visible"
+      "backend.news.grid.field.isVisible": "Is visible",
+      "backend.news.preview.lastXArticles": "Showing last <strong>%(limit)</strong> articles"
     },
     "ro_RO": {
       "backend.news.header": "Ştiri/Articole",
@@ -22,7 +23,8 @@
       "backend.news.grid.field.photo": "Poză",
       "backend.news.grid.field.title": "Titlu",
       "backend.news.grid.field.description": "Descriere",
-      "backend.news.grid.field.isVisible": "Este afișat pe site"
+      "backend.news.grid.field.isVisible": "Este afișat pe site",
+      "backend.news.preview.lastXArticles": "Afișare ultimele <strong>%(limit)</strong> articole"
     },
     "fr_FR": {
       "backend.news.header": "Articles",
@@ -34,7 +36,8 @@
       "backend.news.grid.field.photo": "Photo",
       "backend.news.grid.field.title": "Titre",
       "backend.news.grid.field.description": "Description",
-      "backend.news.grid.field.isVisible": "Visible sur le site"
+      "backend.news.grid.field.isVisible": "Visible sur le site",
+      "backend.news.preview.lastXArticles": "Afichage des <strong>%(limit)</strong> dernieres articles"
     }
   }
 }

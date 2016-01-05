@@ -31,25 +31,30 @@ namespace Extensions\System\Backend\Classes\Domain\Model\Content {
 					->where("is_deleted = 0 AND uid = :uid ORDER BY sorting ASC", [":uid" => $reference])
 					->getFirst();
 				// set the element's id to the reference id, so that we do not modify the original
-				$referencedContent->setUid($this->getUid());
-				//$referencedContent->setType("reference");
 				if ($referencedContent) {
-					if ($referencedContent->getType() != "container") {
-						$value = $referencedContent->render(null);
+					$referencedContent->setUid($this->getUid());
+					//$referencedContent->setType("reference");
+
+					// if not a container, render it directly
+					if ( $referencedContent->getType() != "container" ) {
+						$value = $referencedContent->setFromReference(TRUE)->render(NULL);
+					// otherwise render all it's children
 					} else {
 						$contentCollection
 							->where("page_uid = :page_uid", ["page_uid" => $referencedContent->getPageUid()]);
 						$elements = $contentCollection->findChildrenForUid($reference);
-						$value = $referencedContent->render($elements->children);
+						$value = $referencedContent->setFromReference(TRUE)->render($elements->children);
 					}
+
+					return sprintf('<div class="content-type-reference"><p class="reference-title"><i class="fa fa-fw fa-chain"></i> %s </p>%s <a class="btn btn-danger" href=""><i class="fa fa-unlink"></i> %s</a></div>',
+						Utility::helper("Localization")->translate("backend.content.reference.info", ["content_id" => $reference, "page_id" => $referencedContent->getPageUid()]),
+						$value,
+						Utility::helper("Localization")->translate("backend.content.reference.delete")
+					);
 				}
 			}
+			return "";
 
-			return sprintf('<div class="content-type-reference"><p class="reference-title"><i class="fa fa-fw fa-chain"></i> %s </p>%s <a class="btn btn-danger" href=""><i class="fa fa-unlink"></i> %s</a></div>',
-				Utility::helper("Localization")->translate("backend.content.reference.info", ["content_id" => $referencedContent->getUid(), "page_id" => $referencedContent->getPageUid()]),
-				$value,
-				Utility::helper("Localization")->translate("backend.content.reference.delete")
-			);
 		}
 	}
 

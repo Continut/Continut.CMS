@@ -94,7 +94,7 @@ li a.helper-icon {
 	box-shadow: 0 0 4px #666;
 }
 
-.panel-hidden {
+.panel-hidden .panel-body {
 	opacity: 0.5;
 }
 

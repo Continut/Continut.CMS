@@ -1,5 +1,7 @@
-<strong>Showing: </strong> maximum <?= $limit ?> news
-<?php for ($i = 1; $i <= $limit; $i++): ?>
+<?php if (isset($data["limit"])): ?>
+	<p><?= $this->__("backend.news.preview.lastXArticles", ["limit" => $data["limit"]]) ?></p>
+<?php endif ?>
+<?php foreach ($news->getAll() as $newsItem): ?>
 <div class="media">
 	<div class="media-left">
 		<a href="#">
@@ -7,8 +9,8 @@
 		</a>
 	</div>
 	<div class="media-body">
-		<h4 class="media-heading">News title <?= $i ?></h4>
-		<p>The content of the news goes here...</p>
+		<h4 class="media-heading"><?= $this->helper("String")->truncate($this->helper("String")->stripTags($newsItem->getTitle()), 100) ?></h4>
+		<p><?= $this->helper("String")->truncate($this->helper("String")->stripTags($newsItem->getDescription()), 100) ?></p>
 	</div>
 </div>
-<?php endfor ?>
+<?php endforeach ?>
