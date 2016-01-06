@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Extensions\System\Debug\Symfony\Component\VarDumper\Dumper;
+namespace Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Dumper;
 
-use Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Cursor;
-use Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data;
+use Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Cursor;
+use Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data;
 
 /**
  * HtmlDumper dumps variables as HTML.

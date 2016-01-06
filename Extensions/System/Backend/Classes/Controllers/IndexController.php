@@ -9,9 +9,9 @@
  * Project: Conţinut CMS
  */
 
-namespace Extensions\System\Backend\Classes\Controllers {
-	use \Core\Mvc\Controller\BackendController;
-	use \Core\Utility;
+namespace Continut\Extensions\System\Backend\Classes\Controllers {
+	use \Continut\Core\Mvc\Controller\BackendController;
+	use \Continut\Core\Utility;
 
 	/**
 	 * Backend main controller

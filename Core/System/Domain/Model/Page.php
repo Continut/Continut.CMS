@@ -9,10 +9,10 @@
  * Project: Conţinut CMS
  */
 
-namespace Core\System\Domain\Model {
+namespace Continut\Core\System\Domain\Model {
 
-	use Core\Mvc\Model\BaseModel;
-	use Core\Utility;
+	use Continut\Core\Mvc\Model\BaseModel;
+	use Continut\Core\Utility;
 
 	class Page extends BaseModel {
 
@@ -22,7 +22,7 @@ namespace Core\System\Domain\Model {
 		protected $title = "Unnamed page";
 
 		/**
-		 * @var \Core\System\Domain\Model\Page
+		 * @var \Continut\Core\System\Domain\Model\Page
 		 */
 		protected $parent;
 
@@ -107,7 +107,7 @@ namespace Core\System\Domain\Model {
 		protected $original_uid;
 
 		/**
-		 * @var \Core\System\Domain\Model\Page Original page, if this is a translated one
+		 * @var \Continut\Core\System\Domain\Model\Page Original page, if this is a translated one
 		 */
 		protected $original;
 
@@ -341,12 +341,12 @@ namespace Core\System\Domain\Model {
 		 * Get parent PageModel
 		 *
 		 * @return mixed
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function getParent() {
 			if ($this->parent_uid) {
 				if (empty($this->parent)) {
-					$this->parent = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection")
+					$this->parent = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\PageCollection")
 						->findByUid($this->getParentUid());
 				}
 			}
@@ -373,12 +373,12 @@ namespace Core\System\Domain\Model {
 
 		/**
 		 * @return Page
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function getOriginal() {
 			if ($this->original_uid) {
 				if (empty($this->original)) {
-					$this->original = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection")
+					$this->original = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\PageCollection")
 						->findByUid($this->getOriginalUid());
 				}
 			}
@@ -409,7 +409,7 @@ namespace Core\System\Domain\Model {
 		/**
 		 * Set this page's parent
 		 *
-		 * @param \Core\System\Domain\Model\Page $parent
+		 * @param \Continut\Core\System\Domain\Model\Page $parent
 		 *
 		 * @return $this
 		 */

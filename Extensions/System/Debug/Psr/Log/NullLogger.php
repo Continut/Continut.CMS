@@ -1,6 +1,6 @@
 <?php
 
-namespace Extensions\System\Debug\Psr\Log;
+namespace Continut\Extensions\System\Debug\Psr\Log;
 
 /**
  * This Logger can be used to avoid conditional log calls.

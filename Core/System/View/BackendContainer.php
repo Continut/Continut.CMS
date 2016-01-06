@@ -8,9 +8,9 @@
  * Date: 03.04.2015 @ 18:59
  * Project: Conţinut CMS
  */
-namespace Core\System\View {
+namespace Continut\Core\System\View {
 
-	use Core\Mvc\View\Container;
+	use Continut\Core\Mvc\View\Container;
 
 	class BackendContainer extends Container {
 		/**

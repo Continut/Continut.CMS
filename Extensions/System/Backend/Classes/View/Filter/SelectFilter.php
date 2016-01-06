@@ -8,9 +8,9 @@
  * Date: 03.01.2016 @ 13:40
  * Project: Conţinut CMS
  */
-namespace Extensions\System\Backend\Classes\View\Filter {
+namespace Continut\Extensions\System\Backend\Classes\View\Filter {
 
-	use Core\Utility;
+	use Continut\Core\Utility;
 
 	class SelectFilter extends BaseFilter {
 

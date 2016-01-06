@@ -8,10 +8,10 @@
  * Date: 04.04.2015 @ 13:02
  * Project: Conţinut CMS
  */
-namespace Extensions\System\Backend\Classes\Domain\Collection {
+namespace Continut\Extensions\System\Backend\Classes\Domain\Collection {
 
-	use Core\System\Domain\Collection\ContentCollection;
-	use Core\Utility;
+	use Continut\Core\System\Domain\Collection\ContentCollection;
+	use Continut\Core\Utility;
 
 	class BackendContentCollection extends ContentCollection {
 		/**
@@ -19,7 +19,7 @@ namespace Extensions\System\Backend\Classes\Domain\Collection {
 		 */
 		public function __construct() {
 			$this->_tablename = "sys_content";
-			$this->_elementClass = "\\Extensions\\System\\Backend\\Classes\\Domain\\Model\\BackendContent";
+			$this->_elementClass = "\\Continut\\Extensions\\System\\Backend\\Classes\\Domain\\Model\\BackendContent";
 		}
 
 		/**
@@ -37,9 +37,9 @@ namespace Extensions\System\Backend\Classes\Domain\Collection {
 			$sth->setFetchMode(\PDO::FETCH_ASSOC);
 			while ($row = $sth->fetch()) {
 				switch ($row["type"]) {
-					case "plugin":    $element = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\Domain\\Model\\Content\\BackendPluginContent"); break;
-					case "container": $element = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\Domain\\Model\\Content\\BackendContainerContent"); break;
-					case "reference": $element = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\Domain\\Model\\Content\\BackendReferenceContent"); break;
+					case "plugin":    $element = Utility::createInstance("\\Continut\\Extensions\\System\\Backend\\Classes\\Domain\\Model\\Content\\BackendPluginContent"); break;
+					case "container": $element = Utility::createInstance("\\Continut\\Extensions\\System\\Backend\\Classes\\Domain\\Model\\Content\\BackendContainerContent"); break;
+					case "reference": $element = Utility::createInstance("\\Continut\\Extensions\\System\\Backend\\Classes\\Domain\\Model\\Content\\BackendReferenceContent"); break;
 					default:          $element = Utility::createInstance($this->_elementClass);
 				}
 				$element->update($row);

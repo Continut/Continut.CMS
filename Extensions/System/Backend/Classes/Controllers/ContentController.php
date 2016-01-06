@@ -8,10 +8,10 @@
  * Date: 19.04.2015 @ 21:25
  * Project: Conţinut CMS
  */
-namespace Extensions\System\Backend\Classes\Controllers {
+namespace Continut\Extensions\System\Backend\Classes\Controllers {
 
-	use Core\Mvc\Controller\BackendController;
-	use Core\Utility;
+	use Continut\Core\Mvc\Controller\BackendController;
+	use Continut\Core\Utility;
 
 	class ContentController extends BackendController {
 
@@ -22,12 +22,12 @@ namespace Extensions\System\Backend\Classes\Controllers {
 		 * Delete a content element in the backend
 		 *
 		 * @return string
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function deleteAction() {
 			$uid = (int)$this->getRequest()->getArgument("uid");
 
-			$contentCollection = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
+			$contentCollection = Utility::createInstance("\\Continut\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
 			$contentElement = $contentCollection->where("uid = :uid AND is_deleted = 0", ["uid" => $uid])->getFirst();
 
 			$contentElement->setIsDeleted(true);
@@ -49,7 +49,7 @@ namespace Extensions\System\Backend\Classes\Controllers {
 		public function toggleVisibilityAction() {
 			$uid = (int)$this->getRequest()->getArgument("uid");
 
-			$contentCollection = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
+			$contentCollection = Utility::createInstance("\\Continut\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
 			$content = $contentCollection->findByUid($uid);
 
 			$content->setIsVisible(!$content->getIsVisible());
@@ -68,7 +68,7 @@ namespace Extensions\System\Backend\Classes\Controllers {
 		public function editAction() {
 			$uid = (int)$this->getRequest()->getArgument("uid");
 
-			$contentCollection = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
+			$contentCollection = Utility::createInstance("\\Continut\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
 			$content = $contentCollection->where("uid = :uid AND is_deleted = 0", ["uid" => $uid])->getFirst();
 
 			$this->getView()->assign("element", $content);
@@ -76,7 +76,7 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			$data = json_decode($content->getValue(), TRUE);
 			$wizardData = $data[$content->getType()];
 
-			$wizard = Utility::createInstance("Core\\Mvc\\View\\BaseView");
+			$wizard = Utility::createInstance("Continut\\Core\\Mvc\\View\\BaseView");
 			$wizardTemplate = ucfirst($content->getType()) . "s/" . $wizardData["template"];
 			$wizard->setTemplate(Utility::getResource($wizardTemplate, $wizardData["extension"], "Frontend", "Wizard"));
 			if (!isset($wizardData["data"]["title"])) {
@@ -97,13 +97,13 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			 * Saves the changes made to a content element in the backend
 		 *
 		 * @return string
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function updateAction() {
 			$uid  = (int)$this->getRequest()->getArgument("uid");
 			$data = $this->getRequest()->getArgument("data", null);
 			if ($data && $uid > 0) {
-				$contentCollection = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
+				$contentCollection = Utility::createInstance("\\Continut\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
 				$content = $contentCollection->findByUid($uid);
 				$values = json_decode($content->getValue(), TRUE);
 				if (isset($data["title"])) {
@@ -127,7 +127,7 @@ namespace Extensions\System\Backend\Classes\Controllers {
 		 * Update content element's container once it is dragged & dropped
 		 *
 		 * @return string
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function updateContainerAction() {
 			$newParent = (int)$this->getRequest()->getArgument("parent_uid");
@@ -135,7 +135,7 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			$uid       = (int)$this->getRequest()->getArgument("uid");
 			$beforeUid = (int)$this->getRequest()->getArgument("before_uid");
 
-			$contentCollection = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
+			$contentCollection = Utility::createInstance("\\Continut\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
 			$contentElement = $contentCollection->where("uid = :uid AND is_deleted = 0", ["uid" => $uid])->getFirst();
 
 			// the element was either added before one, ar at the very end of a container, in which case the $beforeUid is not present

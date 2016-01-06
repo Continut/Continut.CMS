@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the Extensions\System\Debug\DebugBar package.
+ * This file is part of the Continut\Extensions\System\Debug\DebugBar package.
  *
  * (c) 2013 Maxime Bouroumeau-Fuseau
  *
@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Extensions\System\Debug\DebugBar;
+namespace Continut\Extensions\System\Debug\DebugBar;
 
 /**
  * Handler to list and open saved dataset
@@ -23,7 +23,7 @@ class OpenHandler
     public function __construct(DebugBar $debugBar)
     {
         if (!$debugBar->isDataPersisted()) {
-            throw new DebugBarException("Extensions\System\Debug\DebugBar must have a storage backend to use OpenHandler");
+            throw new DebugBarException("Continut\Extensions\System\Debug\DebugBar must have a storage backend to use OpenHandler");
         }
         $this->debugBar = $debugBar;
     }

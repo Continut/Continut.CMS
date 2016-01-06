@@ -8,15 +8,15 @@
  * Date: 06.04.2015 @ 19:42
  * Project: Conţinut CMS
  */
-namespace Core\System\View {
+namespace Continut\Core\System\View {
 
-	use Core\Mvc\View\PageView;
-	use Core\Utility;
+	use Continut\Core\Mvc\View\PageView;
+	use Continut\Core\Utility;
 
 	class BackendPageView extends PageView {
 
 		public function setLayoutFromTemplate($template) {
-			$this->_layout = Utility::createInstance("\\Core\\System\\View\\BackendLayout");
+			$this->_layout = Utility::createInstance("\\Continut\\Core\\System\\View\\BackendLayout");
 			$this->_layout
 				->setPage($this)
 				->setTemplate($template);

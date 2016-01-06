@@ -8,10 +8,10 @@
  * Date: 18.04.2015 @ 20:12
  * Project: Conţinut CMS
  */
-namespace Core\System\Helper {
+namespace Continut\Core\System\Helper {
 
-	use Core\Tools\ErrorException;
-	use Core\Utility;
+	use Continut\Core\Tools\ErrorException;
+	use Continut\Core\Utility;
 
 	class Localization {
 

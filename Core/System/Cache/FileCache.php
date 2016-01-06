@@ -9,7 +9,7 @@
  * Project: Conţinut CMS
  */
 
-namespace Core\System\Cache {
+namespace Continut\Core\System\Cache {
 
 	class FileCache implements CacheInterface
 	{

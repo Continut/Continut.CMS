@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the Extensions\System\Debug\DebugBar package.
+ * This file is part of the Continut\Extensions\System\Debug\DebugBar package.
  *
  * (c) 2013 Maxime Bouroumeau-Fuseau
  *
@@ -8,10 +8,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Extensions\System\Debug\DebugBar;
+namespace Continut\Extensions\System\Debug\DebugBar;
 
-use Extensions\System\Debug\DebugBar\DataCollector\AssetProvider;
-use Extensions\System\Debug\DebugBar\DataCollector\Renderable;
+use Continut\Extensions\System\Debug\DebugBar\DataCollector\AssetProvider;
+use Continut\Extensions\System\Debug\DebugBar\DataCollector\Renderable;
 
 /**
  * Renders the debug bar using the client side javascript implementation
@@ -77,7 +77,7 @@ class JavascriptRenderer
     protected $openHandlerUrl;
 
     /**
-     * @param \Extensions\System\Debug\DebugBar\DebugBar $debugBar
+     * @param \Continut\Extensions\System\Debug\DebugBar\DebugBar $debugBar
      * @param string $baseUrl
      * @param string $basePath
      */
@@ -86,7 +86,7 @@ class JavascriptRenderer
         $this->debugBar = $debugBar;
 
         if ($baseUrl === null) {
-            $baseUrl = '/vendor/maximebf/debugbar/src/Extensions\System\Debug\DebugBar/Resources';
+            $baseUrl = '/vendor/maximebf/debugbar/src/Continut\Extensions\System\Debug\DebugBar/Resources';
         }
         $this->baseUrl = $baseUrl;
 

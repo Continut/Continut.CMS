@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Extensions\System\Debug\Symfony\Component\VarDumper\Tests\Caster;
+namespace Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Tests\Caster;
 
-use Extensions\System\Debug\Symfony\Component\VarDumper\Caster\PdoCaster;
-use Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Stub;
+use Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\PdoCaster;
+use Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Stub;
 
 /**
  * @author Nicolas Grekas <p@tchwork.com>
@@ -31,7 +31,7 @@ class PdoCasterTest extends \PHPUnit_Framework_TestCase
         $cast = PdoCaster::castPdo($pdo, array(), new Stub(), false);
         $attr = $cast["\0~\0attributes"];
 
-        $this->assertInstanceOf('Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ConstStub', $attr['CASE']);
+        $this->assertInstanceOf('Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ConstStub', $attr['CASE']);
         $this->assertSame('NATURAL', $attr['CASE']->class);
         $this->assertSame('BOTH', $attr['DEFAULT_FETCH_MODE']->class);
 

@@ -7,10 +7,10 @@
  * Date: 02.08.2015 @ 19:48
  * Project: Conţinut CMS
  */
-namespace Extensions\System\Backend\Classes\Domain\Model\Content {
+namespace Continut\Extensions\System\Backend\Classes\Domain\Model\Content {
 
-	use Core\Utility;
-	use Extensions\System\Backend\Classes\Domain\Model\BackendContent;
+	use Continut\Core\Utility;
+	use Continut\Extensions\System\Backend\Classes\Domain\Model\BackendContent;
 
 	class BackendContainerContent extends BackendContent {
 
@@ -20,14 +20,14 @@ namespace Extensions\System\Backend\Classes\Domain\Model\Content {
 		 * @param mixed $elements Chidren elements to render
 		 *
 		 * @return mixed|string
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function render($elements) {
 			$title = $this->getContentTitle();
 
 			$configuration = json_decode($this->getValue(), TRUE);
 			$variables = $configuration["container"]["data"];
-			$container = Utility::createInstance("\\Core\\System\\View\\BackendContainer");
+			$container = Utility::createInstance("\\Continut\\Core\\System\\View\\BackendContainer");
 			//$container->setLayout($this->getPage()->getLayout());
 			$container->setUid($this->getuid());
 			$container->setElements($elements);

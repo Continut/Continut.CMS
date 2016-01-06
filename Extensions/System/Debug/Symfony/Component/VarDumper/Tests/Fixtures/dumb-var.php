@@ -1,6 +1,6 @@
 <?php
 
-namespace Extensions\System\Debug\Symfony\Component\VarDumper\Tests\Fixture;
+namespace Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Tests\Fixture;
 
 if (!class_exists('Symfony\Component\VarDumper\Tests\Fixture\DumbFoo')) {
     class DumbFoo

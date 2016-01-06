@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the Extensions\System\Debug\DebugBar package.
+ * This file is part of the Continut\Extensions\System\Debug\DebugBar package.
  *
  * (c) 2013 Maxime Bouroumeau-Fuseau
  *
@@ -8,17 +8,17 @@
  * file that was distributed with this source code.
  */
 
-namespace Extensions\System\Debug\DebugBar\Bridge;
+namespace Continut\Extensions\System\Debug\DebugBar\Bridge;
 
 use BasicLogger;
-use Extensions\System\Debug\DebugBar\DataCollector\AssetProvider;
-use Extensions\System\Debug\DebugBar\DataCollector\DataCollector;
-use Extensions\System\Debug\DebugBar\DataCollector\Renderable;
+use Continut\Extensions\System\Debug\DebugBar\DataCollector\AssetProvider;
+use Continut\Extensions\System\Debug\DebugBar\DataCollector\DataCollector;
+use Continut\Extensions\System\Debug\DebugBar\DataCollector\Renderable;
 use Propel;
 use PropelConfiguration;
 use PropelPDO;
-use Extensions\System\Debug\Psr\Log\LogLevel;
-use Extensions\System\Debug\Psr\Log\LoggerInterface;
+use Continut\Extensions\System\Debug\Psr\Log\LogLevel;
+use Continut\Extensions\System\Debug\Psr\Log\LoggerInterface;
 
 /**
  * A Propel logger which acts as a data collector

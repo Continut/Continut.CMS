@@ -8,10 +8,10 @@
  * Date: 11.04.2015 @ 17:50
  * Project: Conţinut CMS
  */
-namespace Extensions\System\Backend\Classes\Domain\Model {
+namespace Continut\Extensions\System\Backend\Classes\Domain\Model {
 
-	use Core\System\Domain\Model\Content;
-	use Core\Utility;
+	use Continut\Core\System\Domain\Model\Content;
+	use Continut\Core\Utility;
 
 	class BackendContent extends Content {
 
@@ -32,7 +32,7 @@ namespace Extensions\System\Backend\Classes\Domain\Model {
 
 			$configuration = json_decode($this->getValue(), TRUE);
 			$variables = $configuration["content"]["data"];
-			$view = Utility::createInstance("Core\\Mvc\\View\\BaseView");
+			$view = Utility::createInstance("Continut\\Core\\Mvc\\View\\BaseView");
 			$view->setTemplate(Utility::getResource(
 				$configuration["content"]["template"],
 				$configuration["content"]["extension"],

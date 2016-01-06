@@ -8,9 +8,9 @@
  * Date: 03.04.2015 @ 18:59
  * Project: Conţinut CMS
  */
-namespace Core\Mvc\View {
+namespace Continut\Core\Mvc\View {
 
-	use Core\Utility;
+	use Continut\Core\Utility;
 
 	class Container {
 		/**

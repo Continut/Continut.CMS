@@ -1,6 +1,6 @@
 <?php
 
-namespace Extensions\System\Debug\DebugBar\DataCollector\PDO;
+namespace Continut\Extensions\System\Debug\DebugBar\DataCollector\PDO;
 
 use PDO;
 use PDOException;
@@ -17,7 +17,7 @@ class TraceablePDO extends PDO
     public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
-        $this->pdo->setAttribute(PDO::ATTR_STATEMENT_CLASS, array('Extensions\System\Debug\DebugBar\DataCollector\PDO\TraceablePDOStatement', array($this)));
+        $this->pdo->setAttribute(PDO::ATTR_STATEMENT_CLASS, array('Continut\Extensions\System\Debug\DebugBar\DataCollector\PDO\TraceablePDOStatement', array($this)));
     }
 
     public function beginTransaction()

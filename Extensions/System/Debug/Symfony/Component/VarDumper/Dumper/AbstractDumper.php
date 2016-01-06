@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Extensions\System\Debug\Symfony\Component\VarDumper\Dumper;
+namespace Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Dumper;
 
-use Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data;
-use Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\DumperInterface;
+use Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data;
+use Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\DumperInterface;
 
 /**
  * Abstract mechanism for dumping a Data object.

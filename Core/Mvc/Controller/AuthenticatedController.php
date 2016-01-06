@@ -8,9 +8,9 @@
  * Date: 27.04.2015 @ 22:55
  * Project: Conţinut CMS
  */
-namespace Core\Mvc\Controller {
+namespace Continut\Core\Mvc\Controller {
 
-	use Core\Utility;
+	use Continut\Core\Utility;
 
 	class AuthenticatedController extends ActionController {
 

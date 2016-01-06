@@ -9,13 +9,13 @@
  * Project: Conţinut CMS
  */
 
-namespace Core\Mvc\Model {
-	use Core\Utility;
+namespace Continut\Core\Mvc\Model {
+	use Continut\Core\Utility;
 
 	/**
 	 * Class BaseModel
 	 *
-	 * @package Core\Mvc\Model
+	 * @package Continut\Core\Mvc\Model
 	 */
 	class BaseModel {
 		/**

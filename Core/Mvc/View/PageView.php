@@ -8,12 +8,12 @@
  * Date: 03.04.2015 @ 19:12
  * Project: Conţinut CMS
  */
-namespace Core\Mvc\View {
-	use Core\Utility;
+namespace Continut\Core\Mvc\View {
+	use Continut\Core\Utility;
 
 	class PageView {
 		/**
-		 * @var \Core\Mvc\View\BaseLayout Layout used by this page
+		 * @var \Continut\Core\Mvc\View\BaseLayout Layout used by this page
 		 */
 		protected $_layout;
 
@@ -28,12 +28,12 @@ namespace Core\Mvc\View {
 		protected $_title;
 
 		/**
-		 * @var Core\System\Domain\Model\Page
+		 * @var Continut\Core\System\Domain\Model\Page
 		 */
 		protected $_pageModel;
 
 		/**
-		 * @param \Core\Mvc\View\BaseLayout $layout Set page layout
+		 * @param \Continut\Core\Mvc\View\BaseLayout $layout Set page layout
 		 *
 		 * @return $this
 		 */
@@ -49,10 +49,10 @@ namespace Core\Mvc\View {
 		 *
 		 * @return $this
 		 *
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function setLayoutFromTemplate($template) {
-			$this->_layout = Utility::createInstance("\\Core\\System\\View\\FrontendLayout");
+			$this->_layout = Utility::createInstance("\\Continut\\Core\\System\\View\\FrontendLayout");
 			$this->_layout
 				->setPage($this)
 				->setTemplate($template);
@@ -68,7 +68,7 @@ namespace Core\Mvc\View {
 		}
 
 		/**
-		 * @return Core\System\Domain\Model\Page
+		 * @return Continut\Core\System\Domain\Model\Page
 		 */
 		public function getPageModel()
 		{
@@ -76,7 +76,7 @@ namespace Core\Mvc\View {
 		}
 
 		/**
-		 * @param Core\System\Domain\Model\Page $pageModel
+		 * @param Continut\Core\System\Domain\Model\Page $pageModel
 		 *
 		 * @return $this
 		 */

@@ -8,9 +8,9 @@
  * Date: 13.04.2015 @ 22:06
  * Project: Conţinut CMS
  */
-namespace Core\System\Helper {
+namespace Continut\Core\System\Helper {
 
-	use Core\Utility;
+	use Continut\Core\Utility;
 
 	class Image {
 

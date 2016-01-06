@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the Extensions\System\Debug\DebugBar package.
+ * This file is part of the Continut\Extensions\System\Debug\DebugBar package.
  *
  * (c) 2013 Maxime Bouroumeau-Fuseau
  *
@@ -8,9 +8,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Extensions\System\Debug\DebugBar\DataCollector;
+namespace Continut\Extensions\System\Debug\DebugBar\DataCollector;
 
-use Extensions\System\Debug\DebugBar\DebugBarException;
+use Continut\Extensions\System\Debug\DebugBar\DebugBarException;
 
 /**
  * Collects info about the request duration as well as providing

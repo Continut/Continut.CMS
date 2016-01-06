@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the Extensions\System\Debug\DebugBar package.
+ * This file is part of the Continut\Extensions\System\Debug\DebugBar package.
  *
  * (c) 2013 Maxime Bouroumeau-Fuseau
  *
@@ -8,11 +8,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Extensions\System\Debug\DebugBar\Bridge\SwiftMailer;
+namespace Continut\Extensions\System\Debug\DebugBar\Bridge\SwiftMailer;
 
-use Extensions\System\Debug\DebugBar\DataCollector\AssetProvider;
-use Extensions\System\Debug\DebugBar\DataCollector\DataCollector;
-use Extensions\System\Debug\DebugBar\DataCollector\Renderable;
+use Continut\Extensions\System\Debug\DebugBar\DataCollector\AssetProvider;
+use Continut\Extensions\System\Debug\DebugBar\DataCollector\DataCollector;
+use Continut\Extensions\System\Debug\DebugBar\DataCollector\Renderable;
 use Swift_Mailer;
 use Swift_Plugins_MessageLogger;
 

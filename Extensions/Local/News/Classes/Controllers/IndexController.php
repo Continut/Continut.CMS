@@ -1,7 +1,7 @@
 <?php
 
-namespace Extensions\Local\News\Classes\Controllers {
-	use \Core\Mvc\Controller\FrontendController;
+namespace Continut\Extensions\Local\News\Classes\Controllers {
+	use \Continut\Core\Mvc\Controller\FrontendController;
 
 	class IndexController extends FrontendController {
 		protected $test;

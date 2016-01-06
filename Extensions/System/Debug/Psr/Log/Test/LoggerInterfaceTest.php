@@ -1,9 +1,9 @@
 <?php
 
-namespace Extensions\System\Debug\Psr\Log\Test;
+namespace Continut\Extensions\System\Debug\Psr\Log\Test;
 
-use Extensions\System\Debug\Psr\Log\LoggerInterface;
-use Extensions\System\Debug\Psr\Log\LogLevel;
+use Continut\Extensions\System\Debug\Psr\Log\LoggerInterface;
+use Continut\Extensions\System\Debug\Psr\Log\LogLevel;
 
 /**
  * Provides a base test class for ensuring compliance with the LoggerInterface.
@@ -31,7 +31,7 @@ abstract class LoggerInterfaceTest extends \PHPUnit_Framework_TestCase
 
     public function testImplements()
     {
-        $this->assertInstanceOf('Extensions\System\Debug\Psr\Log\LoggerInterface', $this->getLogger());
+        $this->assertInstanceOf('Continut\Extensions\System\Debug\Psr\Log\LoggerInterface', $this->getLogger());
     }
 
     /**
@@ -65,7 +65,7 @@ abstract class LoggerInterfaceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Extensions\System\Debug\Psr\Log\InvalidArgumentException
+     * @expectedException \Continut\Extensions\System\Debug\Psr\Log\InvalidArgumentException
      */
     public function testThrowsOnInvalidLevel()
     {
@@ -84,7 +84,7 @@ abstract class LoggerInterfaceTest extends \PHPUnit_Framework_TestCase
 
     public function testObjectCastToString()
     {
-        $dummy = $this->getMock('Extensions\System\Debug\Psr\Log\Test\DummyTest', array('__toString'));
+        $dummy = $this->getMock('Continut\Extensions\System\Debug\Psr\Log\Test\DummyTest', array('__toString'));
         $dummy->expects($this->once())
             ->method('__toString')
             ->will($this->returnValue('DUMMY'));

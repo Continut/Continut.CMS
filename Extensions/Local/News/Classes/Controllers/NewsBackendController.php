@@ -8,9 +8,9 @@
  * Date: 31.05.2015 @ 22:28
  * Project: Conţinut CMS
  */
-namespace Extensions\Local\News\Classes\Controllers {
-	use Core\Mvc\Controller\BackendController;
-	use Core\Utility;
+namespace Continut\Extensions\Local\News\Classes\Controllers {
+	use Continut\Core\Mvc\Controller\BackendController;
+	use Continut\Core\Utility;
 
 	class NewsBackendController extends BackendController{
 
@@ -20,19 +20,19 @@ namespace Extensions\Local\News\Classes\Controllers {
 		}
 
 		public function indexAction() {
-			$grid = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\View\\GridView");
+			$grid = Utility::createInstance("\\Continut\\Extensions\\System\\Backend\\Classes\\View\\GridView");
 
 			$grid
 				->setFormAction(Utility::helper("Url")->linkToAction("News", "NewsBackend", "index"))
 				->setTemplate(Utility::getResource("Grid/gridView", "Backend", "Backend", "Template"))
-				->setCollection(Utility::createInstance("\\Extensions\\Local\\News\\Classes\\Domain\\Collection\\NewsCollection"))
+				->setCollection(Utility::createInstance("\\Continut\\Extensions\\Local\\News\\Classes\\Domain\\Collection\\NewsCollection"))
 				->setPager(10, Utility::getRequest()->getArgument("page", 1))
 				->setFields(
 					[
 						"photo" => [
 							"label"    => "backend.news.grid.field.photo",
 							"renderer" => [
-								"class" => "\\Extensions\\Local\\News\\Classes\\View\\Renderer\\PhotoRenderer"
+								"class" => "\\Continut\\Extensions\\Local\\News\\Classes\\View\\Renderer\\PhotoRenderer"
 							]
 						],
 						"title" => [
@@ -42,7 +42,7 @@ namespace Extensions\Local\News\Classes\Controllers {
 								"parameters" => ["crop" => 200, "cropAppend" => "...", "removeHtml" => TRUE]
 							],
 							"filter"   => [
-								"class" => "\\Extensions\\System\\Backend\\Classes\\View\\Filter\\TextFilter"
+								"class" => "\\Continut\\Extensions\\System\\Backend\\Classes\\View\\Filter\\TextFilter"
 							]
 						],
 						"description" => [
@@ -52,17 +52,17 @@ namespace Extensions\Local\News\Classes\Controllers {
 								"parameters" => ["crop" => 400, "cropAppend" => "...", "removeHtml" => TRUE]
 							],
 							"filter"   => [
-								"class" => "\\Extensions\\System\\Backend\\Classes\\View\\Filter\\TextFilter"
+								"class" => "\\Continut\\Extensions\\System\\Backend\\Classes\\View\\Filter\\TextFilter"
 							]
 						],
 						"is_visible" => [
 							"label"    => "backend.news.grid.field.isVisible",
 							"css"      => "col-sm-1",
 							"renderer" => [
-								"class" => "\\Extensions\\Local\\News\\Classes\\View\\Renderer\\IsVisibleRenderer"
+								"class" => "\\Continut\\Extensions\\Local\\News\\Classes\\View\\Renderer\\IsVisibleRenderer"
 							],
 							"filter"   => [
-								"class"  => "\\Extensions\\System\\Backend\\Classes\\View\\Filter\\SelectFilter",
+								"class"  => "\\Continut\\Extensions\\System\\Backend\\Classes\\View\\Filter\\SelectFilter",
 								"values" => ["" => "", "0" => "Hidden", "1" => "Is visible"]
 							]
 						]

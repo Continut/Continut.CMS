@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Extensions\System\Debug\Symfony\Component\VarDumper\Test;
+namespace Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Test;
 
-use Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\VarCloner;
-use Extensions\System\Debug\Symfony\Component\VarDumper\Dumper\CliDumper;
+use Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\VarCloner;
+use Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Dumper\CliDumper;
 
 /**
  * @author Nicolas Grekas <p@tchwork.com>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Extensions\System\Debug\Psr\Log;
+namespace Continut\Extensions\System\Debug\Psr\Log;
 
 /**
  * Describes a logger instance.

@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Extensions\System\Debug\Symfony\Component\VarDumper\Tests;
+namespace Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Tests;
 
-use Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\VarCloner;
+use Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\VarCloner;
 
 /**
  * @author Nicolas Grekas <p@tchwork.com>
@@ -26,13 +26,13 @@ class VarClonerTest extends \PHPUnit_Framework_TestCase
         $clone = $cloner->cloneVar($data);
 
         $expected = <<<EOTXT
-Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data Object
+Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data Object
 (
-    [data:Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data:private] => Array
+    [data:Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data:private] => Array
         (
             [0] => Array
                 (
-                    [0] => Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Stub Object
+                    [0] => Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Stub Object
                         (
                             [type] => array
                             [class] => assoc
@@ -52,9 +52,9 @@ Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data Object
 
         )
 
-    [maxDepth:Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data:private] => 20
-    [maxItemsPerDepth:Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data:private] => -1
-    [useRefHandles:Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data:private] => -1
+    [maxDepth:Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data:private] => 20
+    [maxItemsPerDepth:Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data:private] => -1
+    [useRefHandles:Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data:private] => -1
 )
 
 EOTXT;
@@ -69,13 +69,13 @@ EOTXT;
         $clone = $cloner->cloneVar($json);
 
         $expected = <<<EOTXT
-Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data Object
+Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data Object
 (
-    [data:Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data:private] => Array
+    [data:Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data:private] => Array
         (
             [0] => Array
                 (
-                    [0] => Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Stub Object
+                    [0] => Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Stub Object
                         (
                             [type] => object
                             [class] => stdClass
@@ -90,7 +90,7 @@ Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data Object
 
             [1] => Array
                 (
-                    [\000+\0001] => Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Stub Object
+                    [\000+\0001] => Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Stub Object
                         (
                             [type] => object
                             [class] => stdClass
@@ -101,7 +101,7 @@ Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data Object
                             [position] => 2
                         )
 
-                    [\000+\0002] => Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Stub Object
+                    [\000+\0002] => Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Stub Object
                         (
                             [type] => object
                             [class] => stdClass
@@ -126,9 +126,9 @@ Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data Object
 
         )
 
-    [maxDepth:Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data:private] => 20
-    [maxItemsPerDepth:Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data:private] => -1
-    [useRefHandles:Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data:private] => -1
+    [maxDepth:Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data:private] => 20
+    [maxItemsPerDepth:Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data:private] => -1
+    [useRefHandles:Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data:private] => -1
 )
 
 EOTXT;
@@ -150,13 +150,13 @@ EOTXT;
         $clone = $cloner->cloneVar($this);
 
         $expected = <<<EOTXT
-Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data Object
+Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data Object
 (
-    [data:Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data:private] => Array
+    [data:Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data:private] => Array
         (
             [0] => Array
                 (
-                    [0] => Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Stub Object
+                    [0] => Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Stub Object
                         (
                             [type] => object
                             [class] => %s
@@ -176,9 +176,9 @@ Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data Object
 
         )
 
-    [maxDepth:Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data:private] => 20
-    [maxItemsPerDepth:Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data:private] => -1
-    [useRefHandles:Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data:private] => -1
+    [maxDepth:Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data:private] => 20
+    [maxItemsPerDepth:Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data:private] => -1
+    [useRefHandles:Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Data:private] => -1
 )
 
 EOTXT;

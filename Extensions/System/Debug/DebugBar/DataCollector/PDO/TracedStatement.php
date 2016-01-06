@@ -1,6 +1,6 @@
 <?php
 
-namespace Extensions\System\Debug\DebugBar\DataCollector\PDO;
+namespace Continut\Extensions\System\Debug\DebugBar\DataCollector\PDO;
 
 /**
  * Holds information about a statement

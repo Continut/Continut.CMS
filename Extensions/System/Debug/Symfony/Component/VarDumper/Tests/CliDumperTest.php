@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Extensions\System\Debug\Symfony\Component\VarDumper\Tests;
+namespace Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Tests;
 
-use Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\VarCloner;
-use Extensions\System\Debug\Symfony\Component\VarDumper\Dumper\CliDumper;
-use Extensions\System\Debug\Symfony\Component\VarDumper\Test\VarDumperTestCase;
+use Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\VarCloner;
+use Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Dumper\CliDumper;
+use Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Test\VarDumperTestCase;
 
 /**
  * @author Nicolas Grekas <p@tchwork.com>
@@ -70,13 +70,13 @@ array:24 [
     eof: false
     options: []
   }
-  "obj" => Extensions\System\Debug\Symfony\Component\VarDumper\Tests\Fixture\DumbFoo {#%d
+  "obj" => Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Tests\Fixture\DumbFoo {#%d
     +foo: "foo"
     +"bar": "bar"
   }
   "closure" => Closure {{$r}
-    class: "Extensions\System\Debug\Symfony\Component\VarDumper\Tests\CliDumperTest"
-    this: Extensions\System\Debug\Symfony\Component\VarDumper\Tests\CliDumperTest {{$r} …}
+    class: "Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Tests\CliDumperTest"
+    this: Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Tests\CliDumperTest {{$r} …}
     parameters: array:2 [
       "\$a" => []
       "&\$b" => array:2 [
@@ -95,7 +95,7 @@ array:24 [
     0 => &4 array:1 [&4]
   ]
   8 => &1 null
-  "sobj" => Extensions\System\Debug\Symfony\Component\VarDumper\Tests\Fixture\DumbFoo {#%d}
+  "sobj" => Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Tests\Fixture\DumbFoo {#%d}
   "snobj" => &3 {#%d}
   "snobj2" => {#%d}
   "file" => "{$var['file']}"
@@ -201,7 +201,7 @@ stream resource {@{$ref}
   blocked: true
   eof: false
   options: []
-  ⚠: Extensions\System\Debug\Symfony\Component\VarDumper\Exception\ThrowingCasterException {{$r}
+  ⚠: Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Exception\ThrowingCasterException {{$r}
     #message: "Unexpected Exception thrown from a caster: Foobar"
     trace: array:1 [
       0 => array:2 [

@@ -8,11 +8,11 @@
  * Date: 27.04.2015 @ 23:42
  * Project: Conţinut CMS
  */
-namespace Extensions\System\Backend\Classes\Controllers {
+namespace Continut\Extensions\System\Backend\Classes\Controllers {
 
-	use Core\Mvc\Controller\FrontendController;
-	use Core\System\Session\UserSession;
-	use Core\Utility;
+	use Continut\Core\Mvc\Controller\FrontendController;
+	use Continut\Core\System\Session\UserSession;
+	use Continut\Core\Utility;
 
 	class LoginController extends FrontendController {
 
@@ -36,13 +36,13 @@ namespace Extensions\System\Backend\Classes\Controllers {
 		/**
 		 * Checks the login data and connects the user to the backend or redirects to the login form if the credentials are incorrect
 		 *
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function checkLoginAction() {
 			$username = $this->getRequest()->getArgument("cms_username");
 			$password = $this->getRequest()->getArgument("cms_password");
 
-			$userCollection = Utility::createInstance("Core\\System\\Domain\\Collection\\BackendUserCollection");
+			$userCollection = Utility::createInstance("Continut\\Core\\System\\Domain\\Collection\\BackendUserCollection");
 			$backendUser = $userCollection->where("username = :username AND password = :password AND is_deleted = 0 AND is_active = 1",
 				[
 					"username" => $username,

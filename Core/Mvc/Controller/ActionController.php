@@ -9,19 +9,19 @@
  * Project: Conţinut CMS
  */
 
-namespace Core\Mvc\Controller {
-	use \Core\Utility;
+namespace Continut\Core\Mvc\Controller {
+	use \Continut\Core\Utility;
 
 	/**
 	 * Base Controller Class, used by Frontend and Backend Controllers
-	 * @package Core\Mvc\Controller
+	 * @package Continut\Core\Mvc\Controller
 	 */
 	class ActionController {
 
 		/**
 		 * Request class
 		 *
-		 * @var \Core\Mvc\Request
+		 * @var \Continut\Core\Mvc\Request
 		 */
 		protected $_request;
 
@@ -31,7 +31,7 @@ namespace Core\Mvc\Controller {
 		protected $_name;
 
 		/**
-		 * @var \Core\System\Session\User Current session user
+		 * @var \Continut\Core\System\Session\User Current session user
 		 */
 		protected $_user;
 
@@ -53,7 +53,7 @@ namespace Core\Mvc\Controller {
 		protected $_response;
 
 		/**
-		 * @var \Core\Mvc\View\BaseView
+		 * @var \Continut\Core\Mvc\View\BaseView
 		 */
 		protected $_view;
 
@@ -68,7 +68,7 @@ namespace Core\Mvc\Controller {
 		public $data;
 
 		/**
-		 * @var \Core\System\Session\UserSession Reference to the current user session
+		 * @var \Continut\Core\System\Session\UserSession Reference to the current user session
 		 */
 		protected $_session;
 
@@ -83,13 +83,13 @@ namespace Core\Mvc\Controller {
 		protected $_action = "index";
 
 		public function __construct() {
-			$this->_view    = Utility::createInstance("\\Core\\Mvc\\View\\BaseView");
+			$this->_view    = Utility::createInstance("\\Continut\\Core\\Mvc\\View\\BaseView");
 			$this->_request = Utility::getRequest();
 			//$this->_user    = Utility::getUser();
 		}
 
 		/**
-		 * @return \Core\System\Session\User
+		 * @return \Continut\Core\System\Session\User
 		 */
 		public function getUser() {
 			return $this->_user;
@@ -134,7 +134,7 @@ namespace Core\Mvc\Controller {
 		/**
 		 * Get view instance
 		 *
-		 * @return \Core\Mvc\View\BaseView
+		 * @return \Continut\Core\Mvc\View\BaseView
 		 */
 		public function getView() {
 			return $this->_view;
@@ -144,7 +144,7 @@ namespace Core\Mvc\Controller {
 		 * Returns the final render from the action called, or it's rendered template
 		 *
 		 * @return string
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function getRenderOutput() {
 			$action = $this->_action . "Action";
@@ -160,7 +160,7 @@ namespace Core\Mvc\Controller {
 		/**
 		 * Get user session
 		 *
-		 * @return \Core\System\Session\UserSession
+		 * @return \Continut\Core\System\Session\UserSession
 		 */
 		public function getSession() {
 			return Utility::getSession();
@@ -191,7 +191,7 @@ namespace Core\Mvc\Controller {
 		/**
 		 * Get request object
 		 *
-		 * @return \Core\Mvc\Request
+		 * @return \Continut\Core\Mvc\Request
 		 */
 		public function getRequest() {
 			return $this->_request;

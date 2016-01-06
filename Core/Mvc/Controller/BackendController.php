@@ -9,15 +9,15 @@
  * Project: Conținut CMS
  */
 
-namespace Core\Mvc\Controller {
-	use \Core\Mvc\Controller\ActionController;
-	use Core\Utility;
+namespace Continut\Core\Mvc\Controller {
+	use \Continut\Core\Mvc\Controller\ActionController;
+	use Continut\Core\Utility;
 
 	/**
 	 * Backend Controller base class. Always extends AuthenticatedController since anything in the Backend
 	 * is only accessible if a user is connected
 	 *
-	 * @package Core\Mvc\Controller
+	 * @package Continut\Core\Mvc\Controller
 	 */
 	class BackendController extends AuthenticatedController {
 

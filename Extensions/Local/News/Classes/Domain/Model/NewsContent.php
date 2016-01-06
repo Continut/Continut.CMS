@@ -8,8 +8,8 @@
  * Date: 03.04.2015 @ 20:59
  * Project: Conţinut CMS
  */
-namespace Extensions\Local\News\Classes\Domain\Model {
-	use Core\Mvc\Model\Content;
+namespace Continut\Extensions\Local\News\Classes\Domain\Model {
+	use Continut\Core\Mvc\Model\Content;
 
 	class NewsContent extends Content {
 		public function render() {

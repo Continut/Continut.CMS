@@ -8,9 +8,9 @@
  * Date: 02.01.2016 @ 18:04
  * Project: Conţinut CMS
  */
-namespace Extensions\Local\News\Classes\Domain\Collection {
+namespace Continut\Extensions\Local\News\Classes\Domain\Collection {
 
-	use Core\Mvc\Model\BaseCollection;
+	use Continut\Core\Mvc\Model\BaseCollection;
 
 	class NewsCollection extends BaseCollection
 	{
@@ -21,7 +21,7 @@ namespace Extensions\Local\News\Classes\Domain\Collection {
 		public function __construct()
 		{
 			$this->_tablename = "ext_news";
-			$this->_elementClass = "\\Extensions\\Local\\News\\Classes\\Domain\\Model\\News";
+			$this->_elementClass = "\\Continut\\Extensions\\Local\\News\\Classes\\Domain\\Model\\News";
 		}
 	}
 }

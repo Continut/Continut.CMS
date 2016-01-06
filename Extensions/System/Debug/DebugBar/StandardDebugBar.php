@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the Extensions\System\Debug\DebugBar package.
+ * This file is part of the Continut\Extensions\System\Debug\DebugBar package.
  *
  * (c) 2013 Maxime Bouroumeau-Fuseau
  *
@@ -8,14 +8,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Extensions\System\Debug\DebugBar;
+namespace Continut\Extensions\System\Debug\DebugBar;
 
-use Extensions\System\Debug\DebugBar\DataCollector\ExceptionsCollector;
-use Extensions\System\Debug\DebugBar\DataCollector\MemoryCollector;
-use Extensions\System\Debug\DebugBar\DataCollector\MessagesCollector;
-use Extensions\System\Debug\DebugBar\DataCollector\PhpInfoCollector;
-use Extensions\System\Debug\DebugBar\DataCollector\RequestDataCollector;
-use Extensions\System\Debug\DebugBar\DataCollector\TimeDataCollector;
+use Continut\Extensions\System\Debug\DebugBar\DataCollector\ExceptionsCollector;
+use Continut\Extensions\System\Debug\DebugBar\DataCollector\MemoryCollector;
+use Continut\Extensions\System\Debug\DebugBar\DataCollector\MessagesCollector;
+use Continut\Extensions\System\Debug\DebugBar\DataCollector\PhpInfoCollector;
+use Continut\Extensions\System\Debug\DebugBar\DataCollector\RequestDataCollector;
+use Continut\Extensions\System\Debug\DebugBar\DataCollector\TimeDataCollector;
 
 /**
  * Debug bar subclass which adds all included collectors

@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the Extensions\System\Debug\DebugBar package.
+ * This file is part of the Continut\Extensions\System\Debug\DebugBar package.
  *
  * (c) 2013 Maxime Bouroumeau-Fuseau
  *
@@ -8,20 +8,20 @@
  * file that was distributed with this source code.
  */
 
-namespace Extensions\System\Debug\DebugBar;
+namespace Continut\Extensions\System\Debug\DebugBar;
 
 use ArrayAccess;
-use \Extensions\System\Debug\DebugBar\DataCollector\DataCollectorInterface;
-use \Extensions\System\Debug\DebugBar\Storage\StorageInterface;
+use \Continut\Extensions\System\Debug\DebugBar\DataCollector\DataCollectorInterface;
+use \Continut\Extensions\System\Debug\DebugBar\Storage\StorageInterface;
 
 /**
- * Main Extensions\System\Debug\DebugBar object
+ * Main Continut\Extensions\System\Debug\DebugBar object
  *
- * Manages data collectors. Extensions\System\Debug\DebugBar provides an array-like access
+ * Manages data collectors. Continut\Extensions\System\Debug\DebugBar provides an array-like access
  * to collectors by name.
  *
  * <code>
- *     $debugbar = new Extensions\System\Debug\DebugBar();
+ *     $debugbar = new Continut\Extensions\System\Debug\DebugBar();
  *     $debugbar->addCollector(new DataCollector\MessagesCollector());
  *     $debugbar['messages']->addMessage("foobar");
  * </code>
@@ -448,7 +448,7 @@ class DebugBar implements ArrayAccess
 
     public function offsetSet($key, $value)
     {
-        throw new DebugBarException("Extensions\System\Debug\DebugBar[] is read-only");
+        throw new DebugBarException("Continut\Extensions\System\Debug\DebugBar[] is read-only");
     }
 
     public function offsetGet($key)
@@ -463,6 +463,6 @@ class DebugBar implements ArrayAccess
 
     public function offsetUnset($key)
     {
-        throw new DebugBarException("Extensions\System\Debug\DebugBar[] is read-only");
+        throw new DebugBarException("Continut\Extensions\System\Debug\DebugBar[] is read-only");
     }
 }

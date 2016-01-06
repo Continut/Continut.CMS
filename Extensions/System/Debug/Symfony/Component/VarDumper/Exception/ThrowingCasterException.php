@@ -9,7 +9,7 @@
 * file that was distributed with this source code.
 */
 
-namespace Extensions\System\Debug\Symfony\Component\VarDumper\Exception;
+namespace Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Exception;
 
 /**
  * @author Nicolas Grekas <p@tchwork.com>

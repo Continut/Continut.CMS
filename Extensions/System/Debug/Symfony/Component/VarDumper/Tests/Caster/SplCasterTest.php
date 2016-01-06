@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Extensions\System\Debug\Symfony\Component\VarDumper\Tests\Caster;
+namespace Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Tests\Caster;
 
-use Extensions\System\Debug\Symfony\Component\VarDumper\Test\VarDumperTestCase;
+use Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Test\VarDumperTestCase;
 
 /**
  * @author Grégoire Pineau <lyrixx@lyrixx.info>

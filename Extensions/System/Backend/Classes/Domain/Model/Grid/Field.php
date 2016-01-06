@@ -8,10 +8,10 @@
  * Date: 03.01.2016 @ 17:50
  * Project: Conţinut CMS
  */
-namespace Extensions\System\Backend\Classes\Domain\Model\Grid {
+namespace Continut\Extensions\System\Backend\Classes\Domain\Model\Grid {
 
-	use Core\Mvc\Model\BaseModel;
-	use Core\Utility;
+	use Continut\Core\Mvc\Model\BaseModel;
+	use Continut\Core\Utility;
 
 	class Field extends BaseModel {
 
@@ -41,7 +41,7 @@ namespace Extensions\System\Backend\Classes\Domain\Model\Grid {
 		protected $filter;
 
 		/**
-		 * @var \Extensions\System\Backend\Classes\View\Filter\BaseFilter
+		 * @var \Continut\Extensions\System\Backend\Classes\View\Filter\BaseFilter
 		 */
 		protected $filterObject;
 
@@ -51,7 +51,7 @@ namespace Extensions\System\Backend\Classes\Domain\Model\Grid {
 		protected $renderer;
 
 		/**
-		 * @var \Extensions\System\Backend\Classes\View\Renderer\BaseRenderer
+		 * @var \Continut\Extensions\System\Backend\Classes\View\Renderer\BaseRenderer
 		 */
 		protected $rendererObject;
 
@@ -107,7 +107,7 @@ namespace Extensions\System\Backend\Classes\Domain\Model\Grid {
 		 * @param array $filter Configuration array for the filter
 		 *
 		 * @return $this
-		 * @throws \Core\Tools\ErrorException
+		 * @throws \Continut\Core\Tools\ErrorException
 		 */
 		public function setFilter($filter)
 		{
@@ -122,7 +122,7 @@ namespace Extensions\System\Backend\Classes\Domain\Model\Grid {
 		}
 
 		/**
-		 * @return \Extensions\System\Backend\Classes\View\Renderer\BaseRenderer
+		 * @return \Continut\Extensions\System\Backend\Classes\View\Renderer\BaseRenderer
 		 */
 		public function getRenderer()
 		{
@@ -138,7 +138,7 @@ namespace Extensions\System\Backend\Classes\Domain\Model\Grid {
 		{
 			$this->renderer = $renderer;
 			if (!isset($renderer["class"])) {
-				$renderer["class"] = "\\Extensions\\System\\Backend\\Classes\\View\\Renderer\\TextRenderer";
+				$renderer["class"] = "\\Continut\\Extensions\\System\\Backend\\Classes\\View\\Renderer\\TextRenderer";
 			}
 			$this->rendererObject = Utility::createInstance($renderer["class"]);
 			if (isset($renderer["parameters"])) {

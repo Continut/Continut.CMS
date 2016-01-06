@@ -1,11 +1,11 @@
 <?php
 
-namespace Extensions\System\Debug\DebugBar\DataCollector\PDO;
+namespace Continut\Extensions\System\Debug\DebugBar\DataCollector\PDO;
 
-use Extensions\System\Debug\DebugBar\DataCollector\AssetProvider;
-use Extensions\System\Debug\DebugBar\DataCollector\DataCollector;
-use Extensions\System\Debug\DebugBar\DataCollector\Renderable;
-use Extensions\System\Debug\DebugBar\DataCollector\TimeDataCollector;
+use Continut\Extensions\System\Debug\DebugBar\DataCollector\AssetProvider;
+use Continut\Extensions\System\Debug\DebugBar\DataCollector\DataCollector;
+use Continut\Extensions\System\Debug\DebugBar\DataCollector\Renderable;
+use Continut\Extensions\System\Debug\DebugBar\DataCollector\TimeDataCollector;
 
 /**
  * Collects data about SQL statements executed with PDO

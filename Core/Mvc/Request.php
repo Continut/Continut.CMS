@@ -9,13 +9,13 @@
  * Project: Conţinut CMS
  */
 
-namespace Core\Mvc {
+namespace Continut\Core\Mvc {
 
-	use Core\Tools\Exception;
+	use Continut\Core\Tools\Exception;
 
 	/**
 	 * Request Class Handler
-	 * @package Core\Mvc
+	 * @package Continut\Core\Mvc
 	 */
 	class Request {
 		/**
@@ -67,7 +67,7 @@ namespace Core\Mvc {
 		 *
 		 * @param string $controller
 		 *
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 * @return void
 		 */
 		public function setController($controller)
@@ -109,7 +109,7 @@ namespace Core\Mvc {
 		 *
 		 * @param string $action
 		 *
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 * @return void
 		 */
 		public function setAction($action)
@@ -147,7 +147,7 @@ namespace Core\Mvc {
 		 * @param mixed $defaultValue default value returned if argument is not set
 		 *
 		 * @return mixed
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function getArgument($argumentName, $defaultValue = NULL) {
 			if (!isset($this->arguments[$argumentName])) {
@@ -155,7 +155,7 @@ namespace Core\Mvc {
 					return $defaultValue;
 				}
 				return FALSE;
-				//throw new \Core\Tools\Exception("The supplied argument name does not exist", 40000003);
+				//throw new \Continut\Core\Tools\Exception("The supplied argument name does not exist", 40000003);
 			}
 			return $this->arguments[$argumentName];
 		}
@@ -166,7 +166,7 @@ namespace Core\Mvc {
 		 * @param $argument
 		 * @param $value
 		 *
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function setArgument($argument, $value) {
 			switch ($argument) {

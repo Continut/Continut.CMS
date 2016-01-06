@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Extensions\System\Debug\Symfony\Component\VarDumper\Dumper;
+namespace Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Dumper;
 
-use Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Cursor;
+use Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Cursor;
 
 /**
  * CliDumper dumps variables for command line output.

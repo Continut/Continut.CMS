@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Extensions\System\Debug\Symfony\Component\VarDumper\Caster;
+namespace Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster;
 
 /**
  * Represents a cut array.

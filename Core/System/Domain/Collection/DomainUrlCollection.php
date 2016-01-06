@@ -7,9 +7,9 @@
  * Date: 08.08.2015 @ 15:11
  * Project: Conţinut CMS
  */
-namespace Core\System\Domain\Collection {
+namespace Continut\Core\System\Domain\Collection {
 
-	use Core\Mvc\Model\BaseCollection;
+	use Continut\Core\Mvc\Model\BaseCollection;
 
 	class DomainUrlCollection extends BaseCollection {
 		/**
@@ -17,7 +17,7 @@ namespace Core\System\Domain\Collection {
 		 */
 		public function __construct() {
 			$this->_tablename = "sys_domain_urls";
-			$this->_elementClass = "\\Core\\System\\Domain\\Model\\DomainUrl";
+			$this->_elementClass = "\\Continut\\Core\\System\\Domain\\Model\\DomainUrl";
 		}
 
 		/**

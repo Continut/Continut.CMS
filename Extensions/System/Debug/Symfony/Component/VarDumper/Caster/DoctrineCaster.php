@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Extensions\System\Debug\Symfony\Component\VarDumper\Caster;
+namespace Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster;
 
 use Doctrine\Common\Proxy\Proxy as CommonProxy;
 use Doctrine\ORM\Proxy\Proxy as OrmProxy;
 use Doctrine\ORM\PersistentCollection;
-use Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Stub;
+use Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Stub;
 
 /**
  * Casts Doctrine related classes to array representation.

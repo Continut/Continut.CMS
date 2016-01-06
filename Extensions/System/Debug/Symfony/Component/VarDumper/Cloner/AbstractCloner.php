@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Extensions\System\Debug\Symfony\Component\VarDumper\Cloner;
+namespace Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner;
 
-use Extensions\System\Debug\Symfony\Component\VarDumper\Caster\Caster;
-use Extensions\System\Debug\Symfony\Component\VarDumper\Exception\ThrowingCasterException;
+use Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\Caster;
+use Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Exception\ThrowingCasterException;
 
 /**
  * AbstractCloner implements a generic caster mechanism for objects and resources.
@@ -22,86 +22,86 @@ use Extensions\System\Debug\Symfony\Component\VarDumper\Exception\ThrowingCaster
 abstract class AbstractCloner implements ClonerInterface
 {
     public static $defaultCasters = array(
-        'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\CutStub' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\StubCaster::castStub',
-        'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\CutArrayStub' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\StubCaster::castCutArray',
-        'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ConstStub' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\StubCaster::castStub',
+        'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\CutStub' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\StubCaster::castStub',
+        'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\CutArrayStub' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\StubCaster::castCutArray',
+        'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ConstStub' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\StubCaster::castStub',
 
-        'Closure' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ReflectionCaster::castClosure',
-        'ReflectionClass' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ReflectionCaster::castClass',
-        'ReflectionFunctionAbstract' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ReflectionCaster::castFunctionAbstract',
-        'ReflectionMethod' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ReflectionCaster::castMethod',
-        'ReflectionParameter' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ReflectionCaster::castParameter',
-        'ReflectionProperty' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ReflectionCaster::castProperty',
-        'ReflectionExtension' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ReflectionCaster::castExtension',
-        'ReflectionZendExtension' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ReflectionCaster::castZendExtension',
+        'Closure' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ReflectionCaster::castClosure',
+        'ReflectionClass' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ReflectionCaster::castClass',
+        'ReflectionFunctionAbstract' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ReflectionCaster::castFunctionAbstract',
+        'ReflectionMethod' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ReflectionCaster::castMethod',
+        'ReflectionParameter' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ReflectionCaster::castParameter',
+        'ReflectionProperty' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ReflectionCaster::castProperty',
+        'ReflectionExtension' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ReflectionCaster::castExtension',
+        'ReflectionZendExtension' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ReflectionCaster::castZendExtension',
 
-        'Doctrine\Common\Persistence\ObjectManager' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\StubCaster::cutInternals',
-        'Doctrine\Common\Proxy\Proxy' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DoctrineCaster::castCommonProxy',
-        'Doctrine\ORM\Proxy\Proxy' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DoctrineCaster::castOrmProxy',
-        'Doctrine\ORM\PersistentCollection' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DoctrineCaster::castPersistentCollection',
+        'Doctrine\Common\Persistence\ObjectManager' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\StubCaster::cutInternals',
+        'Doctrine\Common\Proxy\Proxy' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DoctrineCaster::castCommonProxy',
+        'Doctrine\ORM\Proxy\Proxy' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DoctrineCaster::castOrmProxy',
+        'Doctrine\ORM\PersistentCollection' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DoctrineCaster::castPersistentCollection',
 
-        'DOMException' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castException',
-        'DOMStringList' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castLength',
-        'DOMNameList' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castLength',
-        'DOMImplementation' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castImplementation',
-        'DOMImplementationList' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castLength',
-        'DOMNode' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castNode',
-        'DOMNameSpaceNode' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castNameSpaceNode',
-        'DOMDocument' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castDocument',
-        'DOMNodeList' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castLength',
-        'DOMNamedNodeMap' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castLength',
-        'DOMCharacterData' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castCharacterData',
-        'DOMAttr' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castAttr',
-        'DOMElement' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castElement',
-        'DOMText' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castText',
-        'DOMTypeinfo' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castTypeinfo',
-        'DOMDomError' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castDomError',
-        'DOMLocator' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castLocator',
-        'DOMDocumentType' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castDocumentType',
-        'DOMNotation' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castNotation',
-        'DOMEntity' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castEntity',
-        'DOMProcessingInstruction' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castProcessingInstruction',
-        'DOMXPath' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castXPath',
+        'DOMException' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castException',
+        'DOMStringList' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castLength',
+        'DOMNameList' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castLength',
+        'DOMImplementation' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castImplementation',
+        'DOMImplementationList' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castLength',
+        'DOMNode' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castNode',
+        'DOMNameSpaceNode' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castNameSpaceNode',
+        'DOMDocument' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castDocument',
+        'DOMNodeList' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castLength',
+        'DOMNamedNodeMap' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castLength',
+        'DOMCharacterData' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castCharacterData',
+        'DOMAttr' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castAttr',
+        'DOMElement' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castElement',
+        'DOMText' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castText',
+        'DOMTypeinfo' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castTypeinfo',
+        'DOMDomError' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castDomError',
+        'DOMLocator' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castLocator',
+        'DOMDocumentType' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castDocumentType',
+        'DOMNotation' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castNotation',
+        'DOMEntity' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castEntity',
+        'DOMProcessingInstruction' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castProcessingInstruction',
+        'DOMXPath' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\DOMCaster::castXPath',
 
-        'ErrorException' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ExceptionCaster::castErrorException',
-        'Exception' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ExceptionCaster::castException',
-        'Error' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ExceptionCaster::castError',
-        'Symfony\Component\DependencyInjection\ContainerInterface' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\StubCaster::cutInternals',
-        'Extensions\System\Debug\Symfony\Component\VarDumper\Exception\ThrowingCasterException' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ExceptionCaster::castThrowingCasterException',
+        'ErrorException' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ExceptionCaster::castErrorException',
+        'Exception' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ExceptionCaster::castException',
+        'Error' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ExceptionCaster::castError',
+        'Symfony\Component\DependencyInjection\ContainerInterface' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\StubCaster::cutInternals',
+        'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Exception\ThrowingCasterException' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ExceptionCaster::castThrowingCasterException',
 
-        'PHPUnit_Framework_MockObject_MockObject' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\StubCaster::cutInternals',
-        'Prophecy\Prophecy\ProphecySubjectInterface' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\StubCaster::cutInternals',
-        'Mockery\MockInterface' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\StubCaster::cutInternals',
+        'PHPUnit_Framework_MockObject_MockObject' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\StubCaster::cutInternals',
+        'Prophecy\Prophecy\ProphecySubjectInterface' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\StubCaster::cutInternals',
+        'Mockery\MockInterface' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\StubCaster::cutInternals',
 
-        'PDO' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\PdoCaster::castPdo',
-        'PDOStatement' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\PdoCaster::castPdoStatement',
+        'PDO' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\PdoCaster::castPdo',
+        'PDOStatement' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\PdoCaster::castPdoStatement',
 
-        'AMQPConnection' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\AmqpCaster::castConnection',
-        'AMQPChannel' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\AmqpCaster::castChannel',
-        'AMQPQueue' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\AmqpCaster::castQueue',
-        'AMQPExchange' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\AmqpCaster::castExchange',
-        'AMQPEnvelope' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\AmqpCaster::castEnvelope',
+        'AMQPConnection' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\AmqpCaster::castConnection',
+        'AMQPChannel' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\AmqpCaster::castChannel',
+        'AMQPQueue' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\AmqpCaster::castQueue',
+        'AMQPExchange' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\AmqpCaster::castExchange',
+        'AMQPEnvelope' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\AmqpCaster::castEnvelope',
 
-        'ArrayObject' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\SplCaster::castArrayObject',
-        'SplDoublyLinkedList' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\SplCaster::castDoublyLinkedList',
-        'SplFileInfo' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\SplCaster::castFileInfo',
-        'SplFileObject' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\SplCaster::castFileObject',
-        'SplFixedArray' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\SplCaster::castFixedArray',
-        'SplHeap' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\SplCaster::castHeap',
-        'SplObjectStorage' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\SplCaster::castObjectStorage',
-        'SplPriorityQueue' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\SplCaster::castHeap',
+        'ArrayObject' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\SplCaster::castArrayObject',
+        'SplDoublyLinkedList' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\SplCaster::castDoublyLinkedList',
+        'SplFileInfo' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\SplCaster::castFileInfo',
+        'SplFileObject' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\SplCaster::castFileObject',
+        'SplFixedArray' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\SplCaster::castFixedArray',
+        'SplHeap' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\SplCaster::castHeap',
+        'SplObjectStorage' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\SplCaster::castObjectStorage',
+        'SplPriorityQueue' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\SplCaster::castHeap',
 
-        'MongoCursorInterface' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\MongoCaster::castCursor',
+        'MongoCursorInterface' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\MongoCaster::castCursor',
 
-        ':curl' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ResourceCaster::castCurl',
-        ':dba' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ResourceCaster::castDba',
-        ':dba persistent' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ResourceCaster::castDba',
-        ':gd' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ResourceCaster::castGd',
-        ':mysql link' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ResourceCaster::castMysqlLink',
-        ':process' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ResourceCaster::castProcess',
-        ':stream' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ResourceCaster::castStream',
-        ':stream-context' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ResourceCaster::castStreamContext',
-        ':xml' => 'Extensions\System\Debug\Symfony\Component\VarDumper\Caster\XmlResourceCaster::castXml',
+        ':curl' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ResourceCaster::castCurl',
+        ':dba' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ResourceCaster::castDba',
+        ':dba persistent' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ResourceCaster::castDba',
+        ':gd' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ResourceCaster::castGd',
+        ':mysql link' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ResourceCaster::castMysqlLink',
+        ':process' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ResourceCaster::castProcess',
+        ':stream' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ResourceCaster::castStream',
+        ':stream-context' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\ResourceCaster::castStreamContext',
+        ':xml' => 'Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\XmlResourceCaster::castXml',
     );
 
     protected $maxItems = 2500;
@@ -240,7 +240,7 @@ abstract class AbstractCloner implements ClonerInterface
             $this->classInfo[$class] = $classInfo;
         }
 
-        $a = $this->callCaster('Extensions\System\Debug\Symfony\Component\VarDumper\Caster\Caster::castObject', $obj, $classInfo[1], null, $isNested);
+        $a = $this->callCaster('Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster\Caster::castObject', $obj, $classInfo[1], null, $isNested);
 
         foreach ($classInfo[2] as $p) {
             if (!empty($this->casters[$p = strtolower($p)])) {

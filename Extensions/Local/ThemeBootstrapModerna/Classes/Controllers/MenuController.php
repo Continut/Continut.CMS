@@ -8,15 +8,15 @@
  * Date: 09.05.2015 @ 16:55
  * Project: Conţinut CMS
  */
-namespace Extensions\Local\ThemeBootstrapModerna\Classes\Controllers {
+namespace Continut\Extensions\Local\ThemeBootstrapModerna\Classes\Controllers {
 
-	use Core\Mvc\Controller\FrontendController;
-	use Core\Utility;
+	use Continut\Core\Mvc\Controller\FrontendController;
+	use Continut\Core\Utility;
 
 	class MenuController extends FrontendController {
 
 		public function showMenuAction() {
-			$pageCollection = Utility::createInstance("\\Extensions\\System\\Frontend\\Classes\\Domain\\Collection\\FrontendPageCollection")
+			$pageCollection = Utility::createInstance("\\Continut\\Extensions\\System\\Frontend\\Classes\\Domain\\Collection\\FrontendPageCollection")
 				->where(
 					"is_in_menu = 1 AND is_visible = 1 AND is_deleted = 0 AND domain_url_uid = :domain_url_uid ORDER BY parent_uid ASC, sorting ASC",
 					[ "domain_url_uid" => Utility::getSite()->getDomainUrl()->getUid() ]
@@ -32,7 +32,7 @@ namespace Extensions\Local\ThemeBootstrapModerna\Classes\Controllers {
 		}
 
 		public function showBreadcrumbAction() {
-			$pagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection");
+			$pagesCollection = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\PageCollection");
 
 			$pageUid  = (int)$this->getRequest()->getArgument("pid");
 			$pageSlug = $this->getRequest()->getArgument("slug");

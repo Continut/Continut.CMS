@@ -8,14 +8,14 @@
  * Date: 02.01.2016 @ 16:33
  * Project: Conţinut CMS
  */
-namespace Extensions\System\Backend\Classes\View\Renderer {
+namespace Continut\Extensions\System\Backend\Classes\View\Renderer {
 
-	use Core\Mvc\View\BaseView;
+	use Continut\Core\Mvc\View\BaseView;
 
 	class BaseRenderer extends BaseView {
 
 		/**
-		 * @var \Extensions\System\Backend\Classes\Domain\Model\Grid\Field
+		 * @var \Continut\Extensions\System\Backend\Classes\Domain\Model\Grid\Field
 		 */
 		protected $field;
 
@@ -27,12 +27,12 @@ namespace Extensions\System\Backend\Classes\View\Renderer {
 		/**
 		 * The record that this renderer will show
 		 *
-		 * @var \Core\Mvc\Model\BaseModel\BaseModel
+		 * @var \Continut\Core\Mvc\Model\BaseModel\BaseModel
 		 */
 		protected $record;
 
 		/**
-		 * @return \Extensions\System\Backend\Classes\Domain\Model\Grid\Field
+		 * @return \Continut\Extensions\System\Backend\Classes\Domain\Model\Grid\Field
 		 */
 		public function getField()
 		{
@@ -40,7 +40,7 @@ namespace Extensions\System\Backend\Classes\View\Renderer {
 		}
 
 		/**
-		 * @param \Extensions\System\Backend\Classes\Domain\Model\Grid\Field $field
+		 * @param \Continut\Extensions\System\Backend\Classes\Domain\Model\Grid\Field $field
 		 *
 		 * @return $this
 		 */
@@ -72,7 +72,7 @@ namespace Extensions\System\Backend\Classes\View\Renderer {
 		}
 
 		/**
-		 * @return \Core\Mvc\Model\BaseModel\BaseModel
+		 * @return \Continut\Core\Mvc\Model\BaseModel\BaseModel
 		 */
 		public function getRecord()
 		{

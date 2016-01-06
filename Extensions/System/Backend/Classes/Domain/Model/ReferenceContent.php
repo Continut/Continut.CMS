@@ -8,9 +8,9 @@
  * Date: 11.04.2015 @ 17:50
  * Project: Conţinut CMS
  */
-namespace Extensions\System\Backend\Classes\Domain\Model {
+namespace Continut\Extensions\System\Backend\Classes\Domain\Model {
 
-	use Core\Utility;
+	use Continut\Core\Utility;
 
 	class ReferenceContent extends BackendContent {
 

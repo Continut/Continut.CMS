@@ -7,10 +7,10 @@
  * Date: 02.08.2015 @ 20:43
  * Project: Conţinut CMS
  */
-namespace Extensions\System\Backend\Classes\Domain\Model\Content {
+namespace Continut\Extensions\System\Backend\Classes\Domain\Model\Content {
 
-	use Core\Utility;
-	use Extensions\System\Backend\Classes\Domain\Model\BackendContent;
+	use Continut\Core\Utility;
+	use Continut\Extensions\System\Backend\Classes\Domain\Model\BackendContent;
 
 	class BackendReferenceContent extends BackendContent {
 		/**
@@ -19,14 +19,14 @@ namespace Extensions\System\Backend\Classes\Domain\Model\Content {
 		 * @param mixed $elements
 		 *
 		 * @return string
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function render($elements) {
 			$reference = (int)$this->getReferenceUid();
 			$value = "";
 			if ($reference > 0) {
 				// Load the content collection model and then find all the content elements that belong to this page_uid
-				$contentCollection = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
+				$contentCollection = Utility::createInstance("\\Continut\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
 				$referencedContent = $contentCollection
 					->where("is_deleted = 0 AND uid = :uid ORDER BY sorting ASC", [":uid" => $reference])
 					->getFirst();

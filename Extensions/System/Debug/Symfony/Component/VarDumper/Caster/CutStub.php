@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Extensions\System\Debug\Symfony\Component\VarDumper\Caster;
+namespace Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Caster;
 
-use Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Stub;
+use Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\Stub;
 
 /**
  * Represents the main properties of a PHP variable, pre-casted by a caster.

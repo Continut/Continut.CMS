@@ -8,9 +8,9 @@
  * Date: 04.04.2015 @ 13:02
  * Project: Conţinut CMS
  */
-namespace Core\System\Domain\Collection {
+namespace Continut\Core\System\Domain\Collection {
 
-	use Core\Mvc\Model\BaseCollection;
+	use Continut\Core\Mvc\Model\BaseCollection;
 
 	class ContentCollection extends BaseCollection {
 
@@ -19,7 +19,7 @@ namespace Core\System\Domain\Collection {
 		 */
 		public function __construct() {
 			$this->_tablename = "sys_content";
-			$this->_elementClass = "\\Core\\System\\Domain\\Model\\Content";
+			$this->_elementClass = "\\Continut\\Core\\System\\Domain\\Model\\Content";
 		}
 
 		/**

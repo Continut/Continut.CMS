@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Extensions\System\Debug\Symfony\Component\VarDumper;
+namespace Continut\Extensions\System\Debug\Symfony\Component\VarDumper;
 
-use Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\VarCloner;
-use Extensions\System\Debug\Symfony\Component\VarDumper\Dumper\CliDumper;
-use Extensions\System\Debug\Symfony\Component\VarDumper\Dumper\HtmlDumper;
+use Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner\VarCloner;
+use Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Dumper\CliDumper;
+use Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Dumper\HtmlDumper;
 
 // Load the global dump() function
 require_once __DIR__.'/Resources/functions/dump.php';

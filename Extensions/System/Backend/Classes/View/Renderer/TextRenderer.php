@@ -8,9 +8,9 @@
  * Date: 03.01.2016 @ 15:00
  * Project: Conţinut CMS
  */
-namespace Extensions\System\Backend\Classes\View\Renderer {
+namespace Continut\Extensions\System\Backend\Classes\View\Renderer {
 
-	use Core\Utility;
+	use Continut\Core\Utility;
 
 	class TextRenderer extends BaseRenderer {
 		/**

@@ -8,9 +8,9 @@
  * Date: 03.04.2015 @ 20:38
  * Project: Conţinut CMS
  */
-namespace Core\System\Domain\Model {
-	use Core\Mvc\Model\BaseModel;
-	use \Core\Utility;
+namespace Continut\Core\System\Domain\Model {
+	use Continut\Core\Mvc\Model\BaseModel;
+	use \Continut\Core\Utility;
 
 	class Content extends BaseModel {
 
@@ -60,7 +60,7 @@ namespace Core\System\Domain\Model {
 		protected $sorting;
 
 		/**
-		 * @var \Core\Mvc\View\PageView Link to the parent PageView
+		 * @var \Continut\Core\Mvc\View\PageView Link to the parent PageView
 		 */
 		protected $_pageView;
 
@@ -234,7 +234,7 @@ namespace Core\System\Domain\Model {
 		}
 
 		/**
-		 * @return \Core\Mvc\View\PageViews
+		 * @return \Continut\Core\Mvc\View\PageViews
 		 */
 		public function getPage() {
 			return $this->_pageView;

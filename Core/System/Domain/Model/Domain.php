@@ -8,10 +8,10 @@
  * Date: 07.04.2015 @ 22:46
  * Project: Conţinut CMS
  */
-namespace Core\System\Domain\Model {
+namespace Continut\Core\System\Domain\Model {
 
-	use Core\Mvc\Model\BaseModel;
-	use Core\Utility;
+	use Continut\Core\Mvc\Model\BaseModel;
+	use Continut\Core\Utility;
 
 	class Domain extends BaseModel {
 
@@ -95,11 +95,11 @@ namespace Core\System\Domain\Model {
 
 		/**
 		 * @return array
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function getDomainUrls() {
 			if ($this->domain_urls == null) {
-				$this->domain_urls = Utility::createInstance("Core\\System\\Domain\\Collection\\DomainUrlCollection")->findByDomain_uid($this->uid)->getAll();
+				$this->domain_urls = Utility::createInstance("Continut\\Core\\System\\Domain\\Collection\\DomainUrlCollection")->findByDomain_uid($this->uid)->getAll();
 			}
 			return $this->domain_urls;
 		}

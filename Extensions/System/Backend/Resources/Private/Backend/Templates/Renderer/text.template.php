@@ -5,7 +5,7 @@ if ($this->getParameters()["crop"]) {
 	if ($this->getParameters()["cropAppend"]) {
 		$cropAppend = $this->getParameters()["cropAppend"];
 	}
-	$text = \Core\Utility::helper("String")->truncate(\Core\Utility::helper("String")->stripTags($this->getRecord()->fetchFromField($this->getField()->getName())), $cropLength, $cropAppend);
+	$text = \Continut\Core\Utility::helper("String")->truncate(\Continut\Core\Utility::helper("String")->stripTags($this->getRecord()->fetchFromField($this->getField()->getName())), $cropLength, $cropAppend);
 } else {
 	$text = $this->getRecord()->fetchFromField($this->getField()->getName());
 }

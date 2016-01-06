@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Extensions\System\Debug\Symfony\Component\VarDumper\Cloner;
+namespace Continut\Extensions\System\Debug\Symfony\Component\VarDumper\Cloner;
 
 /**
  * Represents the current state of a dumper while dumping.

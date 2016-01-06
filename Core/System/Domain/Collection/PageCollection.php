@@ -8,10 +8,10 @@
  * Date: 04.04.2015 @ 12:39
  * Project: Conţinut CMS
  */
-namespace Core\System\Domain\Collection {
+namespace Continut\Core\System\Domain\Collection {
 
-	use Core\Mvc\Model\BaseCollection;
-	use Core\Utility;
+	use Continut\Core\Mvc\Model\BaseCollection;
+	use Continut\Core\Utility;
 
 	class PageCollection extends BaseCollection {
 
@@ -20,7 +20,7 @@ namespace Core\System\Domain\Collection {
 		 */
 		public function __construct() {
 			$this->_tablename = "sys_pages";
-			$this->_elementClass = "\\Core\\System\\Domain\\Model\\Page";
+			$this->_elementClass = "\\Continut\\Core\\System\\Domain\\Model\\Page";
 		}
 
 		/**
@@ -133,7 +133,7 @@ namespace Core\System\Domain\Collection {
 		 * @param int    $uid
 		 * @param string $slug
 		 *
-		 * @return Core\System\Domain\Model\Page
+		 * @return Continut\Core\System\Domain\Model\Page
 		 */
 		public function findWithUidOrSlug($uid, $slug) {
 			$domainUrlUid = Utility::getSite()->getDomainUrl()->getUid();

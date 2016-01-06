@@ -8,11 +8,11 @@
  * Date: 30.03.2015 @ 21:15
  * Project: Conţinut CMS
  */
-namespace Core\Tools {
+namespace Continut\Core\Tools {
 
 	/**
 	 * Base Exception Class
-	 * @package Core\Tools
+	 * @package Continut\Core\Tools
 	 */
 	class Exception extends \Exception {
 

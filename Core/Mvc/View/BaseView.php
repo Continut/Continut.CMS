@@ -9,15 +9,15 @@
  * Project: Conţinut CMS
  */
 
-namespace Core\Mvc\View {
+namespace Continut\Core\Mvc\View {
 
-	use Core\Tools\ErrorException;
-	use Core\Utility;
+	use Continut\Core\Tools\ErrorException;
+	use Continut\Core\Utility;
 
 	/**
 	 * Class BaseView
 	 *
-	 * @package Core\Mvc\View
+	 * @package Continut\Core\Mvc\View
 	 */
 	class BaseView {
 
@@ -111,7 +111,7 @@ namespace Core\Mvc\View {
 		/**
 		 * @return string
 		 *
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function render() {
 			$fullpath = $this->_template;
@@ -147,7 +147,7 @@ namespace Core\Mvc\View {
 		 * @param array  $variables       List of variables to pass on to the partial
 		 */
 		public function partial($partialFilename, $extensionName, $scope, $variables = []) {
-			$partialView = Utility::createInstance("Core\\Mvc\\View\\BaseView");
+			$partialView = Utility::createInstance("Continut\\Core\\Mvc\\View\\BaseView");
 			$partialView->assignMultiple($variables);
 			$partialView->setTemplate(Utility::getResource($partialFilename, $extensionName, $scope, "Partial"));
 			return $partialView->render();

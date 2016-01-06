@@ -7,10 +7,10 @@
  * Date: 08.08.2015 @ 14:58
  * Project: Conţinut CMS
  */
-namespace Core\System\Domain\Model {
+namespace Continut\Core\System\Domain\Model {
 
-	use Core\Mvc\Model\BaseModel;
-	use Core\Utility;
+	use Continut\Core\Mvc\Model\BaseModel;
+	use Continut\Core\Utility;
 
 	class DomainUrl extends BaseModel {
 
@@ -50,7 +50,7 @@ namespace Core\System\Domain\Model {
 		protected $locale;
 
 		/**
-		 * @var Core\System\Domain\Model\Domain
+		 * @var Continut\Core\System\Domain\Model\Domain
 		 */
 		protected $domain = NULL;
 
@@ -205,12 +205,12 @@ namespace Core\System\Domain\Model {
 		}
 
 		/**
-		 * @return Core\System\Domain\Model\Domain
-		 * @throws \Core\Tools\Exception
+		 * @return Continut\Core\System\Domain\Model\Domain
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function getDomain() {
 			if ($this->domain == null) {
-				$this->domain = Utility::createInstance("Core\\System\\Domain\\Collection\\DomainCollection")->findByUid($this->domain_uid);
+				$this->domain = Utility::createInstance("Continut\\Core\\System\\Domain\\Collection\\DomainCollection")->findByUid($this->domain_uid);
 			}
 			return $this->domain;
 		}
