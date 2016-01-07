@@ -130,24 +130,43 @@ namespace Continut\Core\System\Domain\Collection {
 		public function findWithIdOrSlug($id, $slug) {
 			$domainUrlId = Utility::getSite()->getDomainUrl()->getId();
 
+			$db = $this->getEntityManager()->createQueryBuilder();
+
 			if ($id == 0) {
-				$page = $this->where(
-					"slug LIKE :slug AND is_visible = 1 AND is_deleted = 0 AND domain_url_id = :domain_url_id",
-					[ "slug" => $slug, "domain_url_id" => $domainUrlId ]
-				)->getFirst();
+				$db->select('p')
+					->from($this->_entityName, 'p')
+					->where('p.slug LIKE :slug')
+					->andWhere('p.isVisible = 1')
+					->andWhere('p.isDeleted = 0')
+					->andWhere('p.domainUrl = :domainUrl ')
+					->setParameters([ "slug" => $slug, "domainUrl" => $domainUrlId ])
+					->setMaxResults(1);
+				$page = $db->getQuery()->getOneOrNullResult();
 			} else {
-				$page = $this->where(
-					"id = :id AND is_visible = 1 AND is_deleted = 0 AND domain_url_id = :domain_url_id",
-					[ "id" => $id, "domain_url_id" => $domainUrlId ]
-				)->getFirst();
+				$db->select('p')
+					->from($this->_entityName, 'p')
+					->where('id = :id')
+					->andWhere('p.isVisible = 1')
+					->andWhere('p.isDeleted = 0')
+					->andWhere('p.domainUrl = :domainUrl ')
+					->setParameters([ "id" => $id, "domainUrl" => $domainUrlId ])
+					->setMaxResults(1);
+				$page = $db->getQuery()->getOneOrNullResult();
 			}
 			// if no id or slug is provided we should show the homepage, if one exists
 			if (!$page) {
-				$page = $this->where(
-					"is_visible = 1 AND is_deleted = 0 AND parent_id = 0 AND domain_url_id = :domain_url_id ORDER BY sorting ASC",
-					[ "domain_url_id" => $domainUrlId ]
-				)->getFirst();
+				$db->select('p')
+					//->from($this->_entityName, 'p')
+					->where('p.parent = 0')
+					->andWhere('p.isVisible = 1')
+					->andWhere('p.isDeleted = 0')
+					->andWhere('p.domainUrl = :domainUrl ')
+					->setParameters(["domainUrl" => $domainUrlId ])
+					->orderBy("p.sorting", "ASC")
+					->setMaxResults(1);
+				$page = $db->getQuery()->getOneOrNullResult();
 			}
+
 			return $page;
 		}
 	}

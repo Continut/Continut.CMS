@@ -190,9 +190,9 @@ namespace Continut\Core {
 			$annotationConfig = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
 				array(
 					__ROOTCMS__ . DS . "Core" . DS . "System" . DS . "Domain" . DS . "Model",
-					//__ROOTCMS__ . DS . "Core" . DS . "System" . DS . "Domain" . DS . "Collection",
+					__ROOTCMS__ . DS . "Core" . DS . "System" . DS . "Domain" . DS . "Collection",
 					__ROOTCMS__ . DS . "Core" . DS . "Mvc" . DS . "Model",
-					//__ROOTCMS__ . DS . "Core" . DS . "Mvc" . DS . "Collection"
+					__ROOTCMS__ . DS . "Core" . DS . "Mvc" . DS . "Collection"
 				),
 				(static::$applicationEnvironment == "Development")
 			);

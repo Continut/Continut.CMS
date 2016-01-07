@@ -10,7 +10,6 @@
  */
 namespace Continut\Core\System\Session {
 
-	use Continut\Core\Mvc\Model\BaseModel;
 	use Continut\Core\Utility;
 
 	class UserSession implements \SessionHandlerInterface {

@@ -27,35 +27,35 @@ namespace Continut\Extensions\System\Frontend\Classes\Controllers {
 				return $cache;
 			} else {*/
 
-				// Load the page model from the database, by id or slug
-				$pageModel = Utility::$entityManager->getRepository("Continut\\Core\\System\\Domain\\Model\\Page")->findOneBy(["slug" => $pageSlug]);
+			// Load the page model from the database, by id or slug
+			$pageModel = Utility::$entityManager->getRepository("Continut\\Core\\System\\Domain\\Model\\Page")->findWithIdOrSlug($pageId, $pageSlug);
 
-				if (!$pageModel) {
-					throw new Exception($this->__("exception.page.notFound"));
-				}
-				$pageModel->mergeOriginal();
+			if (!$pageModel) {
+				throw new Exception($this->__("exception.page.notFound"));
+			}
+			$pageModel->mergeOriginal();
 
-				// load the pageview renderer
-				$pageView = Utility::createInstance("\\Continut\\Core\\Mvc\\View\\PageView");
+			// load the pageview renderer
+			$pageView = Utility::createInstance("\\Continut\\Core\\Mvc\\View\\PageView");
 
-				// get all elements from the database that belong to this page and are not hidden or deleted
-				$contentCollection = Utility::createInstance("\\Continut\\Extensions\\System\\Frontend\\Classes\\Domain\\Collection\\FrontendContentCollection");
-				$contentCollection->where("page_id = :page_id AND is_deleted = 0 AND is_visible = 1 ORDER BY sorting ASC", [":page_id" => $pageModel->getId()]);
+			// get all elements from the database that belong to this page and are not hidden or deleted
+			$contentCollection = Utility::createInstance("\\Continut\\Extensions\\System\\Frontend\\Classes\\Domain\\Collection\\FrontendContentCollection");
+			$contentCollection->where("page_id = :page_id AND is_deleted = 0 AND is_visible = 1 ORDER BY sorting ASC", [":page_id" => $pageModel->getId()]);
 
-				$contentTree = $contentCollection->buildTree();
+			$contentTree = $contentCollection->buildTree();
 
-				$pageView
-					->setPageModel($pageModel)
-					->setLayoutFromTemplate(__ROOTCMS__ . $pageModel->getFrontendLayout());
+			$pageView
+				->setPageModel($pageModel)
+				->setLayoutFromTemplate(__ROOTCMS__ . $pageModel->getFrontendLayout());
 
-				// send the containers to our layout for rendering
-				//$pageView->getLayout()->setContainers($firstContainers, $containers);
-				$pageView->getLayout()->setElements($contentTree);
+			// send the containers to our layout for rendering
+			//$pageView->getLayout()->setContainers($firstContainers, $containers);
+			$pageView->getLayout()->setElements($contentTree);
 
-				$pageView->setTitle($pageModel->getTitle());
+			$pageView->setTitle($pageModel->getTitle());
 
-				// dump it all on screen
-				$cache = $pageView->render();
+			// dump it all on screen
+			$cache = $pageView->render();
 				//Utility::getCache()->setById($pageId, "page", $cache);
 			//}
 			//Utility::debugData("page_rendering", "stop");
