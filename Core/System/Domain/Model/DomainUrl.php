@@ -10,102 +10,111 @@
 namespace Continut\Core\System\Domain\Model {
 
 	use Continut\Core\Mvc\Model\BaseModel;
-	use Continut\Core\Utility;
 
+	/**
+	 * @Table(name="sys_domain_urls")
+	 * @Entity(repositoryClass="Continut\Core\System\Domain\Collection\DomainUrlCollection")
+	 */
 	class DomainUrl extends BaseModel {
 
 		/**
 		 * @var boolean
+		 *
+		 * @Column(name="is_alias", type="boolean", nullable=false)
 		 */
-		protected $is_alias;
+		protected $isAlias = 0;
 
 		/**
-		 * @var int
+		 * @var DomainUrl
+		 *
+		 * @Column(type="integer", name="parent_id")
+		 * @OneToOne(targetEntity="DomainUrl")
+		 * @JoinColumn(name="parent_id", referencedColumnName="id")
 		 */
-		protected $parent_uid;
+		protected $parent;
 
 		/**
-		 * @var int
+		 * @var Domain
+		 *
+		 * @Column(type="integer", name="domain_id")
+		 * @OneToOne(targetEntity="Domain")
+		 * @JoinColumn(name="domain_id", referencedColumnName="id")
 		 */
-		protected $domain_uid;
+		protected $domain;
 
 		/**
 		 * @var string
+		 *
+		 * @Column(type="string")
 		 */
 		protected $url;
 
 		/**
 		 * @var int
+		 *
+		 * @Column(name="sorting", type="integer", nullable=false)
 		 */
 		protected $sorting;
 
 		/**
 		 * @var string ISO2 code used for the flag
+		 *
+		 * @Column(name="flag", type="string", length=2)
 		 */
 		protected $flag;
 
 		/**
 		 * @var string Locale used by this domain url
+		 *
+		 * @Column(name="locale", type="string", length=20)
 		 */
 		protected $locale;
 
 		/**
-		 * @var Continut\Core\System\Domain\Model\Domain
-		 */
-		protected $domain = NULL;
-
-		/**
 		 * @var string
+		 *
+		 * @Column(name="title", type="string", length=255, nullable=true)
 		 */
 		protected $title;
-
-		/**
-		 * Simple datamapper used for the database
-		 * @return array
-		 */
-		public function dataMapper() {
-			return [
-				"is_alias"      => $this->is_alias,
-				"parent_uid"    => $this->parent_uid,
-				"domain_uid"    => $this->domain_uid,
-				"sorting"       => $this->sorting,
-				"locale"        => $this->locale,
-				"flag"          => $this->flag,
-				"url"           => $this->url,
-				"title"         => $this->title
-			];
-		}
 
 		/**
 		 * @return boolean
 		 */
 		public function getIsAlias()
 		{
-			return $this->is_alias;
+			return $this->isAlias;
 		}
 
 		/**
-		 * @param boolean $is_alias
+		 * @param boolean $isAlias
+		 *
+		 * @return DomainUrl
 		 */
-		public function setIsAlias($is_alias)
+		public function setIsAlias($isAlias)
 		{
-			$this->is_alias = $is_alias;
+			$this->isAlias = $isAlias;
+
+			return $this;
 		}
 
 		/**
-		 * @return int
+		 * @return DomainUrl
 		 */
-		public function getParentUid()
+		public function getParent()
 		{
-			return $this->parent_uid;
+			return $this->parent;
 		}
 
 		/**
-		 * @param int $parent_uid
+		 * @param DomainUrl $parent
+		 *
+		 * @return DomainUrl
 		 */
-		public function setParentUid($parent_uid)
+		public function setParent($parent)
 		{
-			$this->parent_uid = $parent_uid;
+			$this->parent = $parent;
+
+			return $this;
 		}
 
 		/**
@@ -118,10 +127,14 @@ namespace Continut\Core\System\Domain\Model {
 
 		/**
 		 * @param string $url
+		 *
+		 * @return DomainUrl
 		 */
 		public function setUrl($url)
 		{
 			$this->url = $url;
+
+			return $this;
 		}
 
 		/**
@@ -134,10 +147,14 @@ namespace Continut\Core\System\Domain\Model {
 
 		/**
 		 * @param int $sorting
+		 *
+		 * @return DomainUrl
 		 */
 		public function setSorting($sorting)
 		{
 			$this->sorting = $sorting;
+
+			return $this;
 		}
 
 		/**
@@ -150,10 +167,14 @@ namespace Continut\Core\System\Domain\Model {
 
 		/**
 		 * @param string $flag
+		 *
+		 * @return DomainUrl
 		 */
 		public function setFlag($flag)
 		{
 			$this->flag = $flag;
+
+			return $this;
 		}
 
 		/**
@@ -166,26 +187,34 @@ namespace Continut\Core\System\Domain\Model {
 
 		/**
 		 * @param string $locale
+		 *
+		 * @return DomainUrl
 		 */
 		public function setLocale($locale)
 		{
 			$this->locale = $locale;
+
+			return $this;
 		}
 
 		/**
-		 * @return int
+		 * @return Domain
 		 */
-		public function getDomainUid()
+		public function getDomain()
 		{
-			return $this->domain_uid;
+			return $this->domain;
 		}
 
 		/**
-		 * @param int $domain_uid
+		 * @param Domain $domain
+		 *
+		 * @return DomainUrl
 		 */
-		public function setDomainUid($domain_uid)
+		public function setDomain($domain)
 		{
-			$this->domain_uid = $domain_uid;
+			$this->domain = $domain;
+
+			return $this;
 		}
 
 		/**
@@ -198,21 +227,14 @@ namespace Continut\Core\System\Domain\Model {
 
 		/**
 		 * @param string $title
+		 *
+		 * @return DomainUrl
 		 */
 		public function setTitle($title)
 		{
 			$this->title = $title;
-		}
 
-		/**
-		 * @return Continut\Core\System\Domain\Model\Domain
-		 * @throws \Continut\Core\Tools\Exception
-		 */
-		public function getDomain() {
-			if ($this->domain == null) {
-				$this->domain = Utility::createInstance("Continut\\Core\\System\\Domain\\Collection\\DomainCollection")->findByUid($this->domain_uid);
-			}
-			return $this->domain;
+			return $this;
 		}
 
 	}

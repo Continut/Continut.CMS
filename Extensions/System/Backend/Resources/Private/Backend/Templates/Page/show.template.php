@@ -2,7 +2,7 @@
 	<div class="col-sm-12">
 		<ol class="breadcrumb breadcrumb-page-tree">
 			<?php foreach ($breadcrumbs as $breadcrumb): ?>
-				<li><a class="page-link" href="#" data-page-uid="<?= $breadcrumb->getUid() ?>"><?= $breadcrumb->getTitle(); ?></a></li>
+				<li><a class="page-link" href="#" data-page-id="<?= $breadcrumb->getId() ?>"><?= $breadcrumb->getTitle(); ?></a></li>
 			<?php endforeach ?>
 			<li class="active"><?= $page->getTitle() ?></li>
 		</ol>
@@ -47,7 +47,7 @@
 	$('.page-link').on('click', function() {
 		$.ajax({
 			url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "show") ?>',
-			data: { page_uid: $(this).data('page-uid') }
+			data: { page_id: $(this).data('page-id') }
 		})
 		.done(function (data) {
 			$('#content').html(data);
@@ -56,7 +56,7 @@
 	$('#page-visibility-frontend').on('click', function() {
 		$.ajax({
 			url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "toggleVisibility") ?>',
-			data: { page_uid: <?= $page->getUid() ?> },
+			data: { page_id: <?= $page->getId() ?> },
 			dataType: 'json'
 		})
 			.done(function (data) {
@@ -75,7 +75,7 @@
 	$('#page-visibility-menu').on('click', function() {
 		$.ajax({
 			url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "toggleMenu") ?>',
-			data: { page_uid: <?= $page->getUid() ?> },
+			data: { page_id: <?= $page->getId() ?> },
 			dataType: 'json'
 		})
 			.done(function (data) {
@@ -94,7 +94,7 @@
 	$('#page-edit').on('click', function() {
 		$.ajax({
 			url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "edit") ?>',
-			data: { page_uid: <?= $page->getUid() ?> }
+			data: { page_id: <?= $page->getId() ?> }
 		}).done(function (data) {
 			$('#page_edit').html(data);
 		});
@@ -109,7 +109,7 @@
 				if(result) {
 					$.getJSON({
 						url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "delete") ?>',
-						data: { page_uid: <?= $page->getUid() ?> }
+						data: { page_id: <?= $page->getId() ?> }
 					}).done(function (data) {
 						console.log(data);
 					});
@@ -134,7 +134,7 @@
 		$.getJSON(url, function (data) {
 			if (data.operation == "delete") {
 				console.log(data);
-				$('#panel-backend-content-' + data.uid).remove();
+				$('#panel-backend-content-' + data.id).remove();
 			}
 			if (data.operation == "edit") {
 				$('#content').html(data.html);
@@ -159,7 +159,7 @@
 				var beforeId = target.prevObject.next(".panel-backend-content").data('id');
 				if (target) {
 					$.getJSON('<?= $this->helper("Url")->linkToAction("Backend", "Content", "updateContainer") ?>',
-						{ parent_uid: target.data('parent'), column_id: target.data('id'), uid: this.$el.data('id'), before_uid: beforeId })
+						{ parent_id: target.data('parent'), column_id: target.data('id'), id: this.$el.data('id'), before_id: beforeId })
 						.done( function (data) {
 						if (data.status == "ok") {
 

@@ -9,16 +9,9 @@
  */
 namespace Continut\Core\System\Domain\Collection {
 
-	use Continut\Core\Mvc\Model\BaseCollection;
+	use Continut\Core\Mvc\Model\BaseRepository;
 
-	class DomainUrlCollection extends BaseCollection {
-		/**
-		 * Set tablename and element class for this collection
-		 */
-		public function __construct() {
-			$this->_tablename = "sys_domain_urls";
-			$this->_elementClass = "\\Continut\\Core\\System\\Domain\\Model\\DomainUrl";
-		}
+	class DomainUrlCollection extends BaseRepository {
 
 		/**
 		 * @param bool   $addEmpty   Should an initial empty value be added?
@@ -32,13 +25,14 @@ namespace Continut\Core\System\Domain\Collection {
 				$data = [0 => ["title" => $emptyTitle, "flag" => "eu"]];
 			}
 			foreach ($this->getAll() as $language) {
-				$data[$language->getUid()] = [
+				$data[$language->getId()] = [
 					"title" => $language->getTitle(),
 					"flag"  => $language->getFlag()
 				];
 			}
 			return $data;
 		}
+
 	}
 
 }

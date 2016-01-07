@@ -13,8 +13,8 @@ namespace Continut\Core\System\Cache {
 
 	interface CacheInterface
 	{
-		public function getByUid($uid, $type);
+		public function getById($id, $type);
 		public function getByKey($key, $type);
-		public function setByUid($uid, $type, $data);
+		public function setById($id, $type, $data);
 	}
 }

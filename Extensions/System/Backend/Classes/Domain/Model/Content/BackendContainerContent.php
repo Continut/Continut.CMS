@@ -29,7 +29,7 @@ namespace Continut\Extensions\System\Backend\Classes\Domain\Model\Content {
 			$variables = $configuration["container"]["data"];
 			$container = Utility::createInstance("\\Continut\\Core\\System\\View\\BackendContainer");
 			//$container->setLayout($this->getPage()->getLayout());
-			$container->setUid($this->getuid());
+			$container->setId($this->getId());
 			$container->setElements($elements);
 			$container->setTemplate(
 				Utility::getResource(
@@ -58,35 +58,35 @@ namespace Continut\Extensions\System\Backend\Classes\Domain\Model\Content {
 		protected function formatBlock($type, $title, $content) {
 			$linkToEdit   = sprintf('<a title="%s" class="btn btn-default content-operation-link" href="%s"><i class="fa fa-pencil fa-fw"></i></a>',
 				Utility::helper("Localization")->translate("backend.content.operation.edit"),
-				Utility::helper("Url")->linkToAction("Backend", "Content", "edit", ["uid" => $this->getUid()])
+				Utility::helper("Url")->linkToAction("Backend", "Content", "edit", ["id" => $this->getId()])
 			);
 
 			$linkToDelete = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-trash-o fa-fw"></i> %s</a>',
 				Utility::helper("Localization")->translate("backend.content.operation.delete"),
-				Utility::helper("Url")->linkToAction("Backend", "Content", "delete", ["uid" => $this->getUid()]),
+				Utility::helper("Url")->linkToAction("Backend", "Content", "delete", ["id" => $this->getId()]),
 				Utility::helper("Localization")->translate("backend.content.operation.delete")
 			);
 
 			$linkToCopy   = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-copy fa-fw"></i> %s</a>',
 				Utility::helper("Localization")->translate("backend.content.operation.copy"),
-				Utility::helper("Url")->linkToAction("Backend", "Content", "copy", ["uid" => $this->getUid()]),
+				Utility::helper("Url")->linkToAction("Backend", "Content", "copy", ["id" => $this->getId()]),
 				Utility::helper("Localization")->translate("backend.content.operation.copy")
 			);
 
 			$linkToHide   = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-eye fa-fw"></i> %s</a>',
 				Utility::helper("Localization")->translate("backend.content.operation.hide"),
-				Utility::helper("Url")->linkToAction("Backend", "Content", "toggleVisibility", ["uid" => $this->getUid(), "show" => 0]),
+				Utility::helper("Url")->linkToAction("Backend", "Content", "toggleVisibility", ["id" => $this->getId(), "show" => 0]),
 				Utility::helper("Localization")->translate("backend.content.operation.hide")
 			);
 
 			$linkToShow   = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-eye-slash text-danger fa-fw"></i></a>',
 				Utility::helper("Localization")->translate("backend.content.operation.show"),
-				Utility::helper("Url")->linkToAction("Backend", "Content", "toggleVisibility", ["uid" => $this->getUid(), "show" => 1])
+				Utility::helper("Url")->linkToAction("Backend", "Content", "toggleVisibility", ["id" => $this->getId(), "show" => 1])
 			);
 
 			$linkNewElement = sprintf('<a class="btn btn-sm btn-success content-wizard" title="%s" href="%s"><i class="fa fa-plus fa-fw"></i></a>',
 				Utility::helper("Localization")->translate("backend.content.addNew"),
-				Utility::helper("Url")->linkToAction("Backend", "Content", "addElement", ["uid" => $this->getUid()])
+				Utility::helper("Url")->linkToAction("Backend", "Content", "addElement", ["id" => $this->getId()])
 			);
 
 			if ($this->getIsVisible()) {
@@ -111,7 +111,7 @@ namespace Continut\Extensions\System\Backend\Classes\Domain\Model\Content {
 
 			$overallWrap = '<div id="panel-backend-content-%s" data-id="%s" class="content-type-%s panel panel-backend-content content-drag-sender %s"><div class="panel-heading"><strong>%s</strong>%s</div><div class="panel-body no-pep">%s</div></div>';
 
-			return sprintf($overallWrap, $this->getUid(), $this->getUid(), $this->getType(), $visibilityClass, $title, $operationLinks, $content);
+			return sprintf($overallWrap, $this->getId(), $this->getId(), $this->getType(), $visibilityClass, $title, $operationLinks, $content);
 		}
 	}
 

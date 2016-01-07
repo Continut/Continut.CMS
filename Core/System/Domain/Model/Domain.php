@@ -99,7 +99,7 @@ namespace Continut\Core\System\Domain\Model {
 		 */
 		public function getDomainUrls() {
 			if ($this->domain_urls == null) {
-				$this->domain_urls = Utility::createInstance("Continut\\Core\\System\\Domain\\Collection\\DomainUrlCollection")->findByDomain_uid($this->uid)->getAll();
+				$this->domain_urls = Utility::createInstance("Continut\\Core\\System\\Domain\\Collection\\DomainUrlCollection")->findByDomain_uid($this->id)->getAll();
 			}
 			return $this->domain_urls;
 		}

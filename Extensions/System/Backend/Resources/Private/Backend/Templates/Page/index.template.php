@@ -8,14 +8,14 @@
 					<?php if ($domains->count() > 0): ?>
 						<select id="select_website" class="selectpicker" data-width="100%">
 							<?php foreach ($domains->getAll() as $domain): ?>
-								<option value="<?= $domain->getUid() ?>"><?= $domain->getTitle() ?></option>
+								<option value="<?= $domain->getId() ?>"><?= $domain->getTitle() ?></option>
 							<?php endforeach ?>
 						</select>
 						<script type="text/javascript">
 							$('#select_website').on('change', function (event) {
 								$.ajax({
 									url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "tree") ?>',
-									data: { domain_uid: this.value }
+									data: { domain_id: this.value }
 								})
 									.done(function( data ) {
 										var $languages = $('#select_language');
@@ -37,14 +37,14 @@
 					<label for="select_language"><a class="btn btn-sm btn-default" href=""><i class="fa fa-cog"></i></a> <span class="hidden-md"><?= $this->__("backend.pageTree.language.label") ?></span></label>
 					<select id="select_language" class="selectpicker" data-width="100%">
 						<?php foreach ($languages->getAll() as $language): ?>
-							<option data-icon="flag-icon flag-icon-<?= $language->getFlag() ?>" value="<?= $language->getUid() ?>"><?= $language->getTitle() ?></option>
+							<option data-icon="flag-icon flag-icon-<?= $language->getFlag() ?>" value="<?= $language->getId() ?>"><?= $language->getTitle() ?></option>
 						<?php endforeach ?>
 					</select>
 					<script type="text/javascript">
 						$('#select_language').on('change', function (event) {
 							$.ajax({
 								url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "tree") ?>',
-								data: { domain_uid: $('#select_website').val(), domain_url_uid: this.value }
+								data: { domain_id: $('#select_website').val(), domain_url_id: this.value }
 							})
 								.done(function( data ) {
 									$('#cms_tree').tree('loadData', $.parseJSON(data).pages);
@@ -82,7 +82,7 @@
 				searchPageSpinner.removeClass("fa-file").addClass("fa-spinner fa-pulse");
 				$.ajax({
 						url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "searchTree") ?>',
-						data: {query: term, domain_uid: $('#select_website').val() }
+						data: {query: term, domain_id: $('#select_website').val() }
 					}
 				).done(function (data) {
 					searchPageSpinner.removeClass("fa-spinner fa-pulse").addClass("fa-file");
@@ -139,7 +139,7 @@
 							if (event.node) {
 								$.ajax({
 									url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "show") ?>',
-									data: {page_uid: event.node.id},
+									data: {page_id: event.node.id},
 									beforeSend: function (xhr) {
 										$(event.node.element).find('.jqtree-element').eq(0).append('<span class="pull-right fa fa-spinner fa-pulse"></span>');
 									}
@@ -180,7 +180,7 @@
 						var pid = $('#cms_tree').tree('getSelectedNode').id;
 						BootstrapDialog.show({
 							title: <?= json_encode($this->__("backend.page.wizard.create.title")) ?>,
-							message: $('<div></div>').load('<?= $this->helper("Url")->linkToAction("Backend", "Page", "wizard") ?>&uid=' + pid)
+							message: $('<div></div>').load('<?= $this->helper("Url")->linkToAction("Backend", "Page", "wizard") ?>&id=' + pid)
 						})
 					});
 				}

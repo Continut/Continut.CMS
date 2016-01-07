@@ -13,7 +13,7 @@ namespace Continut\Core\System\Session {
 	use Continut\Core\Mvc\Model\BaseModel;
 	use Continut\Core\Utility;
 
-	class UserSession extends BaseModel implements \SessionHandlerInterface {
+	class UserSession implements \SessionHandlerInterface {
 
 		/**
 		 * @var int Session lifetime, in seconds. Default set to 1 hour
@@ -58,7 +58,7 @@ namespace Continut\Core\System\Session {
 		 * @return mixed
 		 */
 		public function read($sessionId) {
-			$sth = Utility::getDatabase()->prepare("SELECT session_data FROM $this->_tablename WHERE session_id = :session_id AND session_expires >= :expire_time");
+			$sth = Utility::$entityManager->getConnection()->prepare("SELECT session_data FROM $this->_tablename WHERE session_id = :session_id AND session_expires >= :expire_time");
 			$sth->execute([
 				":session_id" => $sessionId,
 				":expire_time" => time()
@@ -80,12 +80,12 @@ namespace Continut\Core\System\Session {
 		public function write($sessionId, $sessionData) {
 			$newExpiryDate = time() + $this->_lifetime;
 
-			$sth = Utility::getDatabase()->prepare("SELECT * FROM $this->_tablename WHERE session_id = :session_id");
+			$sth = Utility::$entityManager->getConnection()->prepare("SELECT * FROM $this->_tablename WHERE session_id = :session_id");
 			$sth->execute([":session_id" => $sessionId]);
 			$sth->setFetchMode(\PDO::FETCH_ASSOC);
 
 			if ($sth->rowCount() > 0) {
-				$sth = Utility::getDatabase()->prepare("UPDATE $this->_tablename SET session_expires = :session_expires, session_data = :session_data WHERE session_id = :session_id");
+				$sth = Utility::$entityManager->getConnection()->prepare("UPDATE $this->_tablename SET session_expires = :session_expires, session_data = :session_data WHERE session_id = :session_id");
 				$sth->execute(
 					[
 						":session_expires" => $newExpiryDate,
@@ -96,7 +96,7 @@ namespace Continut\Core\System\Session {
 					return TRUE;
 				}
 			} else {
-				$sth = Utility::getDatabase()->prepare("INSERT INTO $this->_tablename (session_id, session_expires, session_data) VALUES (:session_id, :session_expires, :session_data)");
+				$sth = Utility::$entityManager->getConnection()->prepare("INSERT INTO $this->_tablename (session_id, session_expires, session_data) VALUES (:session_id, :session_expires, :session_data)");
 				$sth->execute(
 						[
 							":session_id"      => $sessionId,
@@ -121,7 +121,7 @@ namespace Continut\Core\System\Session {
 		 * @return bool
 		 */
 		public function destroy($sessionId) {
-			$sth = Utility::getDatabase()->prepare("DELETE FROM $this->_tablename WHERE session_id = :session_id");
+			$sth = Utility::$entityManager->getConnection()->prepare("DELETE FROM $this->_tablename WHERE session_id = :session_id");
 			$sth->execute([":session_id" => $sessionId]);
 
 			return ($sth->rowCount() > 0);
@@ -135,7 +135,7 @@ namespace Continut\Core\System\Session {
 		 * @return bool
 		 */
 		public function gc($maxLifetime) {
-			$sth = Utility::getDatabase()->prepare("DELETE FROM $this->_tablename WHERE session_expires < :current_time");
+			$sth = Utility::$entityManager->getConnection()->prepare("DELETE FROM $this->_tablename WHERE session_expires < :current_time");
 			$sth->execute([":current_time" => time()]);
 
 			return ($sth->rowCount() > 0);

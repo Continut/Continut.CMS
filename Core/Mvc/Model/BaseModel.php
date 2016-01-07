@@ -16,25 +16,30 @@ namespace Continut\Core\Mvc\Model {
 	 * Class BaseModel
 	 *
 	 * @package Continut\Core\Mvc\Model
+	 * @MappedSuperclass
 	 */
-	class BaseModel {
+	abstract class BaseModel {
 		/**
 		 * @var int model unique identifier
+		 *
+		 * @Column(name="id", type="integer", nullable=false)
+		 * @Id
+		 * @GeneratedValue(strategy="IDENTITY")
 		 */
-		protected $uid;
+		protected $id;
 
 		/**
 		 * @return int Model's unique id in the database
 		 */
-		public function getUid() {
-			return $this->uid;
+		public function getId() {
+			return $this->id;
 		}
 
 		/**
-		 * @param int $uid new uid to use
+		 * @param int $id new id to use
 		 */
-		public function setUid($uid) {
-			$this->uid = $uid;
+		public function setId($iid) {
+			$this->id = $id;
 		}
 
 		/**

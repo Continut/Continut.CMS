@@ -41,7 +41,7 @@ namespace Continut\Extensions\Local\News\Classes\Domain\Model {
 		 */
 		public function dataMapper() {
 			return [
-				"uid"         => $this->uid,
+				"id"          => $this->id,
 				"title"       => $this->title,
 				"description" => $this->description,
 				"is_visible"  => $this->is_visible,

@@ -27,7 +27,7 @@ namespace Continut\Core\System\Domain\Model {
 		/**
 		 * @var int The uid of this element's parent
 		 */
-		protected $parent_uid;
+		protected $parent_id;
 
 		/**
 		 * @var bool Is the content element visible?
@@ -47,12 +47,12 @@ namespace Continut\Core\System\Domain\Model {
 		/**
 		 * @var int Id of the page where the element is stored
 		 */
-		protected $page_uid;
+		protected $page_id;
 
 		/**
-		 * @var int The reference uid, if this is a reference content element
+		 * @var int The reference id, if this is a reference content element
 		 */
-		protected $reference_uid;
+		protected $reference_id;
 
 		/**
 		 * @var int Field used for the sorting order of content elements
@@ -76,11 +76,11 @@ namespace Continut\Core\System\Domain\Model {
 		 */
 		public function dataMapper() {
 			return [
-				"page_uid"    => $this->page_uid,
+				"page_id"    => $this->page_id,
 				"type"        => $this->type,
 				"title"       => $this->title,
 				"column_id"      => $this->column_id,
-				"parent_uid"  => $this->parent_uid,
+				"parent_id"  => $this->parent_id,
 				"value"       => $this->value,
 				"is_deleted"  => $this->is_deleted,
 				"is_visible"  => $this->is_visible,
@@ -91,19 +91,19 @@ namespace Continut\Core\System\Domain\Model {
 		/**
 		 * @return int Get the parent id of this content element
 		 */
-		public function getParentUid() {
-			return $this->parent_uid;
+		public function getParentId() {
+			return $this->parent_id;
 		}
 
 		/**
-		 * Set parent uid
+		 * Set parent id
 		 *
-		 * @param int $parentUid
+		 * @param int $parentId
 		 *
 		 * @return $this
 		 */
-		public function setParentUid($parentUid) {
-			$this->parent_uid = $parentUid;
+		public function setParentId($parentId) {
+			$this->parent_id = $parentId;
 
 			return $this;
 		}
@@ -127,33 +127,33 @@ namespace Continut\Core\System\Domain\Model {
 		/**
 		 * @return int
 		 */
-		public function getPageUid()
+		public function getPageId()
 		{
-			return $this->page_uid;
+			return $this->page_id;
 		}
 
 		/**
-		 * @param int $page_uid
+		 * @param int $page_id
 		 */
-		public function setPageUid($page_uid)
+		public function setPageId($page_id)
 		{
-			$this->page_uid = $page_uid;
+			$this->page_id = $page_id;
 		}
 
 		/**
 		 * @return int
 		 */
-		public function getReferenceUid()
+		public function getReferenceId()
 		{
-			return $this->reference_uid;
+			return $this->reference_id;
 		}
 
 		/**
-		 * @param int $reference_uid
+		 * @param int $reference_id
 		 */
-		public function setReferenceUid($reference_uid)
+		public function setReferenceId($reference_id)
 		{
-			$this->reference_uid = $reference_uid;
+			$this->reference_id = $reference_id;
 		}
 
 		/**

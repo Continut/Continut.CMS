@@ -30,7 +30,7 @@ namespace Continut\Core {
 		static $extensionsConfiguration = [];
 
 		/**
-		 * @var \Core\Mvc\Request Request variable
+		 * @var \Continut\Core\Mvc\Request Request variable
 		 */
 		static $request;
 
@@ -40,12 +40,12 @@ namespace Continut\Core {
 		static $databaseHandler = NULL;
 
 		/**
-		 * @var \Core\System\Cache\FileCache
+		 * @var \Continut\Core\System\Cache\FileCache
 		 */
 		static $cacheHandler = NULL;
 
 		/**
-		 * @var \Core\System\Session\UserSession Current user session data
+		 * @var \Continut\Core\System\Session\UserSession Current user session data
 		 */
 		static $session = NULL;
 
@@ -60,7 +60,7 @@ namespace Continut\Core {
 		static $applicationScope;
 
 		/**
-		 * @var \Extensions\System\Debug\DebugBar\StandardDebugBar
+		 * @var \Debug\DebugBar\StandardDebugBar
 		 */
 		static $debug;
 
@@ -78,6 +78,11 @@ namespace Continut\Core {
 		 * @var \Continut\Core\Autoloader Autoloader class
 		 */
 		static $autoloader;
+
+		/**
+		 * @var \Doctrine\ORM\EntityManager
+		 */
+		static $entityManager;
 
 		/**
 		 * @var string Application environment, Development, Test or Production
@@ -130,6 +135,7 @@ namespace Continut\Core {
 		public static function setApplicationScope($applicationScope, $applicationEnvironment) {
 			static::$applicationScope = $applicationScope;
 			static::$applicationEnvironment = $applicationEnvironment;
+			Utility::$autoloader->addNamespace("Debug", "Lib/Debug");
 
 			// load environment configuration
 			require_once (__ROOTCMS__ . "/Extensions/configuration.php");
@@ -181,25 +187,24 @@ namespace Continut\Core {
 		 * @throws \Core\Tools\Exception
 		 */
 		public static function connectToDatabase() {
-			try {
-				$pdo = new \PDO(
-					static::getConfiguration("Database/Connection"),
-					static::getConfiguration("Database/Username"),
-					static::getConfiguration("Database/Password"),
-					array(\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8")
-				);
-				// if debugging is enabled
-				if (static::getConfiguration("System/Debug/Enabled")) {
-					static::$databaseHandler = new \Extensions\System\Debug\DebugBar\DataCollector\PDO\TraceablePDO($pdo);
-					static::debug()->addCollector(new \Extensions\System\Debug\DebugBar\DataCollector\PDO\PDOCollector(static::$databaseHandler));
-				} else {
-					static::$databaseHandler = $pdo;
-				}
-				static::$databaseHandler->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-			}
-			catch (\PDOException $e) {
-				throw new DatabaseException("Cannot connect to the database. Please check username, password and host", 20000001);
-			}
+			$annotationConfig = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
+				array(
+					__ROOTCMS__ . DS . "Core" . DS . "System" . DS . "Domain" . DS . "Model",
+					//__ROOTCMS__ . DS . "Core" . DS . "System" . DS . "Domain" . DS . "Collection",
+					__ROOTCMS__ . DS . "Core" . DS . "Mvc" . DS . "Model",
+					//__ROOTCMS__ . DS . "Core" . DS . "Mvc" . DS . "Collection"
+				),
+				(static::$applicationEnvironment == "Development")
+			);
+			$dbConfig = [
+				"driver" => static::getConfiguration("Database/Driver"),
+				"user"   => static::getConfiguration("Database/Username"),
+				"pass"   => static::getConfiguration("Database/Password"),
+				"dbname" => static::getConfiguration("Database/Database"),
+				"host"   => static::getConfiguration("Database/Host"),
+				"path"   => static::getConfiguration("Database/Path")
+			];
+			Utility::$entityManager = \Doctrine\ORM\EntityManager::create($dbConfig, $annotationConfig);
 		}
 
 		/**
@@ -220,13 +225,11 @@ namespace Continut\Core {
 		 * @throws Exception
 		 */
 		public static function setCurrentWebsite() {
-			$domainUrls = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\DomainUrlCollection")
-				->findByUrl($_SERVER["SERVER_NAME"]);
+			$domainUrl = Utility::$entityManager->getRepository("\\Continut\\Core\\System\\Domain\\Model\\DomainUrl")->findOneBy(array('url' => $_SERVER["SERVER_NAME"]));
 
-			if ($domainUrls->isEmpty()) {
+			if (!$domainUrl) {
 				throw new HttpException(404, "The domain you are currently trying to access is not configured inside the CMS application!");
 			} else {
-				$domainUrl = $domainUrls->getFirst();
 				static::$site = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Model\\Site")
 					->setDomainUrl($domainUrl);
 			}
@@ -497,7 +500,7 @@ namespace Continut\Core {
 			if (static::getConfiguration("System/Debug/Enabled")) {
 				switch ($type) {
 					case "config":
-						Utility::debug()->addCollector(new \Continut\Extensions\System\Debug\DebugBar\DataCollector\ConfigCollector($value));
+						Utility::debug()->addCollector(new \Debug\DebugBar\DataCollector\ConfigCollector($value));
 						break;
 					case "exception":
 						Utility::debug()['exceptions']->addException($value);
@@ -520,11 +523,11 @@ namespace Continut\Core {
 		/**
 		 * Returns the debug object
 		 *
-		 * @return \Extensions\System\Debug\DebugBar\StandardDebugBar
+		 * @return \DebugBar\StandardDebugBar
 		 */
 		public static function debug() {
 			if (!static::$debug) {
-				static::$debug = new \Extensions\System\Debug\DebugBar\StandardDebugBar();
+				static::$debug = new \Debug\DebugBar\StandardDebugBar();
 			}
 			return static::$debug;
 		}

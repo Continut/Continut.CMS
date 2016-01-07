@@ -56,6 +56,7 @@ namespace Continut\Core {
 			Utility::$autoloader = new \Continut\Core\Autoloader();
 			Utility::$autoloader->register();
 			Utility::$autoloader->addNamespace("Continut", __ROOTCMS__);
+			Utility::$autoloader->addNamespace("Doctrine", __ROOTCMS__ . DS . "Lib" . DS . "Doctrine");
 
 			set_exception_handler([$this, "handleException"]);
 			set_error_handler([$this, 'handleError']);

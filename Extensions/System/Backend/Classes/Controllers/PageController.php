@@ -30,7 +30,7 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 			$domainsCollection->where("is_visible = :is_visible ORDER BY sorting ASC", ["is_visible" => 1]);
 
 			$languagesCollection = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\DomainUrlCollection");
-			$languagesCollection->where("domain_uid = :domain_uid ORDER BY sorting ASC", ["domain_uid" => $domainsCollection->getFirst()->getUid()]);
+			$languagesCollection->where("domain_id = :domain_id ORDER BY sorting ASC", ["domain_id" => $domainsCollection->getFirst()->getId()]);
 
 			$this->getView()->assign("domains", $domainsCollection);
 			$this->getView()->assign("languages", $languagesCollection);
@@ -49,30 +49,30 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 			// get the domains collection
 			$domainsCollection = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\DomainCollection");
 
-			$domainUid = $this->getRequest()->getArgument("domain_uid", 0);
-			if ($domainUid == 0) {
-				// fetch the first visible domain, ordered by sorting, if no domain_uid is sent
+			$domainId = $this->getRequest()->getArgument("domain_id", 0);
+			if ($domainId == 0) {
+				// fetch the first visible domain, ordered by sorting, if no domain_id is sent
 				$domain = $domainsCollection->where("is_visible = 1 ORDER BY sorting ASC")
 					->getFirst();
 			} else {
-				$domain = $domainsCollection->where("uid = :uid ORDER BY sorting ASC", [ "uid" => $domainUid ])
+				$domain = $domainsCollection->where("id = :id ORDER BY sorting ASC", [ "id" => $domainId ])
 					->getFirst();
 			}
 
 			// then the domains url collection
 			$domainsUrlCollection = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\DomainUrlCollection");
 			// see if a domain url was sent, if not get the first one found for this domain
-			$domainUrlUid = $this->getRequest()->getArgument("domain_url_uid", 0);
-			if ($domainUrlUid == 0) {
+			$domainUrlId = $this->getRequest()->getArgument("domain_url_id", 0);
+			if ($domainUrlId == 0) {
 				$domainUrl = $domainsUrlCollection->where(
-					"domain_uid = :domain_uid ORDER BY sorting ASC",
-					[ "domain_uid" => $domain->getUid() ]
+					"domain_id = :domain_id ORDER BY sorting ASC",
+					[ "domain_id" => $domain->getId() ]
 				)
 					->getFirst();
 			} else {
 				$domainUrl = $domainsUrlCollection->where(
-					"domain_uid = :domain_uid AND uid = :uid ORDER BY sorting ASC",
-					[ "domain_uid" => $domain->getUid(), "uid" => $domainUrlUid ]
+					"domain_id = :domain_id AND id = :id ORDER BY sorting ASC",
+					[ "domain_id" => $domain->getId(), "id" => $domainUrlId ]
 				)
 					->getFirst();
 			}
@@ -81,18 +81,18 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 			// if the search filter is not empty, filter on page titles
 			if (mb_strlen($term) > 0) {
 				$pagesCollection->where(
-					"domain_url_uid = :domain_url_uid AND title LIKE :title ORDER BY parent_uid ASC, sorting ASC",
-					[ "domain_url_uid" => $domainUrl->getUid(), "title" => "%$term%" ]
+					"domain_url_id = :domain_url_id AND title LIKE :title ORDER BY parent_id ASC, sorting ASC",
+					[ "domain_url_id" => $domainUrl->getId(), "title" => "%$term%" ]
 				);
 			} else {
 				$pagesCollection->where(
-					"domain_url_uid = :domain_url_uid ORDER BY parent_uid ASC, sorting ASC",
-					[ "domain_url_uid" => $domainUrl->getUid() ]
+					"domain_url_id = :domain_url_id ORDER BY parent_id ASC, sorting ASC",
+					[ "domain_url_id" => $domainUrl->getId() ]
 				);
 			}
 
 			$languagesCollection = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\DomainUrlCollection");
-			$languagesCollection->where("domain_uid = :domain_uid", ["domain_uid" => $domain->getUid()]);
+			$languagesCollection->where("domain_id = :domain_id", ["domain_id" => $domain->getId()]);
 
 			$pagesData = [
 				"pages" => $pagesCollection->buildJsonTree(),
@@ -108,9 +108,9 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function editAction() {
-			$pageUid = (int)$this->getRequest()->getArgument("page_uid");
+			$pageId = (int)$this->getRequest()->getArgument("page_id");
 			$pageModel = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\PageCollection")
-				->where("uid = :uid", ["uid" => $pageUid])
+				->where("id = :id", ["id" => $pageId])
 				->getFirst();
 			$pageModel->mergeOriginal();
 
@@ -125,10 +125,10 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		 */
 		public function savePropertiesAction() {
 			$data = $this->getRequest()->getArgument("data");
-			$uid = (int)$data["uid"];
+			$id = (int)$data["id"];
 
 			$pageCollection = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\PageCollection");
-			$pageModel = $pageCollection->findByUid($uid);
+			$pageModel = $pageCollection->findById($id);
 			$pageModel->update($data);
 
 			// We store a cached version for the FE and BE versions, this way we avoid looking for layouts all the time
@@ -145,10 +145,10 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 				->add($pageModel)
 				->save();
 
-			$this->getRequest()->setArgument("page_uid", $uid);
+			$this->getRequest()->setArgument("page_id", $id);
 			$this->forward('show');
 
-			//return json_encode(["success" => 1, "uid" => $uid]);
+			//return json_encode(["success" => 1, "id" => $id]);
 		}
 
 		/**
@@ -160,9 +160,9 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 			Utility::debugData("page_rendering", "start", "Page rendering");
 			// Load the pages collection model
 			$pagesCollection = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\PageCollection");
-			// Using the collection, load the page specified in the argument "page_uid"
-			$pageUid = (int)$this->getRequest()->getArgument("page_uid", 0);
-			$pageModel = $pagesCollection->findByUid($pageUid);
+			// Using the collection, load the page specified in the argument "page_id"
+			$pageId = (int)$this->getRequest()->getArgument("page_id", 0);
+			$pageModel = $pagesCollection->findById($pageId);
 			$pageModel->mergeOriginal();
 
 			// The breadcrumbs path is cached in the variable "cached_path" as a comma separated list of values
@@ -170,13 +170,13 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 			$breadcrumbs = [];
 			if ($pageModel->getCachedPath()) {
 				$breadcrumbs = $pagesCollection
-					->where("uid IN (" . $pageModel->getCachedPath() . ") ORDER BY uid ASC")
+					->where("id IN (" . $pageModel->getCachedPath() . ") ORDER BY id ASC")
 					->getAll();
 			}
 
-			// Load the content collection model and then find all the content elements that belong to this page_uid
+			// Load the content collection model and then find all the content elements that belong to this page_id
 			$contentCollection = Utility::createInstance("\\Continut\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
-			$contentCollection->where("page_uid = :page_uid AND is_deleted = 0 ORDER BY sorting ASC", [":page_uid" => $pageUid]);
+			$contentCollection->where("page_id = :page_id AND is_deleted = 0 ORDER BY sorting ASC", [":page_id" => $pageId]);
 
 			// Since content elements can have containers and be recursive, we need to build a Tree object to handle them
 			$contentTree = $contentCollection->buildTree();
@@ -206,11 +206,11 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function toggleVisibilityAction() {
-			$pageUid = (int)$this->getRequest()->getArgument("page_uid", 0);
+			$pageId = (int)$this->getRequest()->getArgument("page_id", 0);
 
 			// Load the pages collection model
 			$pagesCollection = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\PageCollection");
-			$pageModel = $pagesCollection->findByUid($pageUid);
+			$pageModel = $pagesCollection->findById($pageId);
 
 			$pageModel->setIsVisible(!$pageModel->getIsVisible());
 
@@ -221,7 +221,7 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 
 			return json_encode([
 				"visible" => $pageModel->getIsVisible(),
-				"pid" => $pageModel->getUid()
+				"pid" => $pageModel->getId()
 			]);
 		}
 
@@ -231,11 +231,11 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function toggleMenuAction() {
-			$pageUid = (int)$this->getRequest()->getArgument("page_uid", 0);
+			$pageId = (int)$this->getRequest()->getArgument("page_id", 0);
 
 			// Load the pages collection model
 			$pagesCollection = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\PageCollection");
-			$pageModel = $pagesCollection->findByUid($pageUid);
+			$pageModel = $pagesCollection->findById($pageUid);
 
 			$pageModel->setIsInMenu(!$pageModel->getIsInMenu());
 
@@ -247,7 +247,7 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 			//$this->getView()->assign("page", $pageModel);
 			return json_encode([
 				"isInMenu" => $pageModel->getIsInMenu(),
-				"pid" => $pageModel->getUid()
+				"pid" => $pageModel->getId()
 			]);
 		}
 
@@ -263,32 +263,32 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		}
 
 		/**
-		 * Saves a page's new parentUid once it is moved in the tree
+		 * Saves a page's new parentId once it is moved in the tree
 		 *
 		 * @return string
 		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function treeMoveAction() {
 			// We get the id of the page that has been drag & dropped
-			$pageUid = (int)$this->getRequest()->getArgument("movedId");
+			$pageId = (int)$this->getRequest()->getArgument("movedId");
 			// move type can be "after", "before" or "inside"
 			$moveType = $this->getRequest()->getArgument("position");
 			// new parent to move into, or after
-			$newParentUid = (int)$this->getRequest()->getArgument("newParentId");
+			$newParentId = (int)$this->getRequest()->getArgument("newParentId");
 
 			// Then we load it's Page Model
 			$pagesCollection = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\PageCollection");
-			$pageModel = $pagesCollection->where("uid = :uid", ["uid" => $pageUid])->getFirst();
+			$pageModel = $pagesCollection->where("id = :id", ["id" => $pageId])->getFirst();
 
-			// If the page is valid, we change it's parentUid field and then save the value
+			// If the page is valid, we change it's parentId field and then save the value
 			if ($pageModel) {
 				switch ($moveType) {
 					// if it's moved inside a page then it's easy, we just get it's parent
 					case "inside":
-						$pageModel->setParentUid($newParentUid);
+						$pageModel->setParentId($newParentId);
 						// for jqTree INSIDE is actually when it will be the first child of this parent
 						// so we need to get the current sorting of it's child, if any, and update the sorting
-						$firstChild = $pagesCollection->where("parent_uid = :parent_uid ORDER BY sorting ASC", ["parent_uid" => $newParentUid])
+						$firstChild = $pagesCollection->where("parent_id = :parent_id ORDER BY sorting ASC", ["parent_id" => $newParentId])
 							->getFirst();
 						// if we found the first child, get it's sorting and increment the rest
 						if ($firstChild) {
@@ -309,11 +309,11 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 						break;
 					// if it's after we need to check if it's on the same level or another one
 					case "after":
-						$otherPage = $pagesCollection->where("uid = :uid", ["uid" => $newParentUid])
+						$otherPage = $pagesCollection->where("id = :id", ["id" => $newParentId])
 							->getFirst();
 						// if it's on a different level, set the new parent
-						if ($otherPage->getParentUid() != $pageModel->getParentUid()) {
-							$pageModel->setParentUid($otherPage->getParentUid());
+						if ($otherPage->getParentId() != $pageModel->getParentId()) {
+							$pageModel->setParentId($otherPage->getParentId());
 						}
 						// it will be placed AFTER the element, so we increase it's sorting by 1
 						$pageModel->setSorting($otherPage->getSorting() + 1);
@@ -327,10 +327,10 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 
 						break;
 					case "before":
-						$otherPage = $pagesCollection->where("uid = :uid", ["uid" => $newParentUid])
+						$otherPage = $pagesCollection->where("id = :id", ["id" => $newParentId])
 							->getFirst();
-						if ($otherPage->getParentUid() != $pageModel->getParentUid()) {
-							$pageModel->setParentUid($otherPage->getParentUid());
+						if ($otherPage->getParentId() != $pageModel->getParentId()) {
+							$pageModel->setParentId($otherPage->getParentId());
 						} else {
 							$pageModel->setSorting($otherPage->getSorting());
 							// then we increment by 1 the sorting of all the other pages AFTER this one
@@ -347,7 +347,7 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 					->add($pageModel)
 					->save();
 				// save a cached version of the breadcrumb
-				/*$pageModel->setCachedPath(implode(",", $pagesCollection->cachedBreadcrumb($pageModel->getParentUid())));
+				/*$pageModel->setCachedPath(implode(",", $pagesCollection->cachedBreadcrumb($pageModel->getParentId())));
 				$pagesCollection
 					->reset()
 					->add($pageModel)
@@ -361,11 +361,11 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		 * Called when a page is deleted
 		 */
 		public function deleteAction() {
-			$pageUid = (int)$this->getRequest()->getArgument("pid");
+			$pageId = (int)$this->getRequest()->getArgument("pid");
 
 			$pagesCollection = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\PageCollection");
 			// A page can have multiple children so we get it's tree and we delete all subpages
-			$pageTree = $pagesCollection->where("is_deleted = 0")->buildTree($pageUid);
+			$pageTree = $pagesCollection->where("is_deleted = 0")->buildTree($pageId);
 
 		}
 
@@ -373,9 +373,9 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		 * Called when the page creation wizard should be displayed
 		 */
 		public function wizardAction() {
-			$pageUid = (int)$this->getRequest()->getArgument("uid");
+			$pageId = (int)$this->getRequest()->getArgument("id");
 			$pageModel = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\PageCollection")
-				->findByUid($pageUid);
+				->findById($pageId);
 
 			$this->getView()->assign('page', $pageModel);
 		}
@@ -384,7 +384,7 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		 * Add one or multiple pages to the tree
 		 */
 		public function addAction() {
-			$pageUid = (int)$this->getRequest()->getArgument("uid");
+			$pageId = (int)$this->getRequest()->getArgument("id");
 			$pagePlacement = $this->getRequest()->getArgument("page_placement");
 			$pages = $this->getRequest()->getArgument("page");
 
@@ -393,13 +393,13 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 			foreach ($pages["names"] as $title) {
 				$pageModel = Utility::createInstance("Continut\\Core\\System\\Domain\\Model\\Page");
 				if ($pagePlacement == "inside") {
-					$pageModel->setParentUid($pageUid);
+					$pageModel->setParentId($pageId);
 				}
 				$pageModel->setLanguageIso3("rou");
 				$pageModel->setSlug($title);
-				$pageModel->setOriginalUid(0);
+				$pageModel->setOriginalId(0);
 				$pageModel->setTitle($title);
-				//$pageModel->setDomainUrlUid(Utility::getSite()->getDomainUrl()->getUid());
+				//$pageModel->setDomainUrlId(Utility::getSite()->getDomainUrl()->getId());
 
 				$pageCollection->add($pageModel);
 			}

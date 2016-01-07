@@ -25,7 +25,7 @@ namespace Continut\Extensions\System\Frontend\Classes\Domain\Model\Content {
 			$variables = $configuration["container"]["data"];
 
 			$container = Utility::createInstance("\\Continut\\Core\\Mvc\\View\\Container");
-			$container->setUid($this->getUid());
+			$container->setId($this->getId());
 			$container->setElements($elements);
 			$container->setTemplate(
 				Utility::getResource(

@@ -10,18 +10,10 @@
  */
 namespace Continut\Core\System\Domain\Collection {
 
-	use Continut\Core\Mvc\Model\BaseCollection;
+	use Continut\Core\Mvc\Model\BaseRepository;
 	use Continut\Core\Utility;
 
-	class PageCollection extends BaseCollection {
-
-		/**
-		 * Set tablename and each element's class
-		 */
-		public function __construct() {
-			$this->_tablename = "sys_pages";
-			$this->_elementClass = "\\Continut\\Core\\System\\Domain\\Model\\Page";
-		}
+	class PageCollection extends BaseRepository {
 
 		/**
 		 * Build a tree out of the returned pages
@@ -29,15 +21,15 @@ namespace Continut\Core\System\Domain\Collection {
 		 *
 		 * @return array
 		 */
-		public function buildTree($childUid = 0) {
+		public function buildTree($childId = 0) {
 			$children = [];
 			foreach ($this->getAll() as $item) {
-				$children[$item->getParentUid()][] = $item;
+				$children[$item->getParentId()][] = $item;
 			}
 
 			foreach ($this->getAll() as $item) {
-				if (isset($children[$item->getUid()])) {
-					$item->children = $children[$item->getUid()];
+				if (isset($children[$item->getId()])) {
+					$item->children = $children[$item->getId()];
 				} else {
 					$item->children = [];
 				}
@@ -45,8 +37,8 @@ namespace Continut\Core\System\Domain\Collection {
 
 			$tree = [];
 			if (sizeof($children) > 0) {
-				if ($childUid > 0) {
-					$tree = $children[$childUid];
+				if ($childId > 0) {
+					$tree = $children[$childId];
 				} else {
 					$tree = reset($children);
 				}
@@ -65,8 +57,8 @@ namespace Continut\Core\System\Domain\Collection {
 
 			foreach ($this->getAll() as $item) {
 				$data           = new \stdClass();
-				$data->id       = $item->getUid();
-				$data->parentId = $item->getParentUid();
+				$data->id       = $item->getId();
+				$data->parentId = $item->getParentId();
 				$data->label    = $item->getTitle() . " [id: $data->id]";
 				$data->type     = "file";
 				$data->state    = "normal";
@@ -101,14 +93,14 @@ namespace Continut\Core\System\Domain\Collection {
 		}
 
 		/**
-		 * @param int $pageUid
+		 * @param int $pageId
 		 *
 		 * @return array
 		 */
-		public function cachedBreadcrumb($pageUid) {
+		public function cachedBreadcrumb($pageId) {
 			$cachedPath = [];
 
-			$this->fetchParent($cachedPath, $pageUid);
+			$this->fetchParent($cachedPath, $pageId);
 
 			return $cachedPath;
 		}
@@ -118,42 +110,42 @@ namespace Continut\Core\System\Domain\Collection {
 		 * @param $id
 		 */
 		protected function fetchParent(&$path, $id) {
-			$page = $this->findByUid($id);
+			$page = $this->findById($id);
 			$path[] = $id;
-			if ($page->getParentUid() == 0) {
+			if ($page->getParentId() == 0) {
 				return;
 			} else {
-				return $this->fetchParent($path, $page->getParentUid());
+				return $this->fetchParent($path, $page->getParentId());
 			}
 		}
 
 		/**
-		 * Finds a page either by uid, if not zero, or by its slug
+		 * Finds a page either by id, if not zero, or by its slug
 		 *
-		 * @param int    $uid
+		 * @param int    $id
 		 * @param string $slug
 		 *
 		 * @return Continut\Core\System\Domain\Model\Page
 		 */
-		public function findWithUidOrSlug($uid, $slug) {
-			$domainUrlUid = Utility::getSite()->getDomainUrl()->getUid();
+		public function findWithIdOrSlug($id, $slug) {
+			$domainUrlId = Utility::getSite()->getDomainUrl()->getId();
 
-			if ($uid == 0) {
+			if ($id == 0) {
 				$page = $this->where(
-					"slug LIKE :slug AND is_visible = 1 AND is_deleted = 0 AND domain_url_uid = :domain_url_uid",
-					[ "slug" => $slug, "domain_url_uid" => $domainUrlUid ]
+					"slug LIKE :slug AND is_visible = 1 AND is_deleted = 0 AND domain_url_id = :domain_url_id",
+					[ "slug" => $slug, "domain_url_id" => $domainUrlId ]
 				)->getFirst();
 			} else {
 				$page = $this->where(
-					"uid = :uid AND is_visible = 1 AND is_deleted = 0 AND domain_url_uid = :domain_url_uid",
-					[ "uid" => $uid, "domain_url_uid" => $domainUrlUid ]
+					"id = :id AND is_visible = 1 AND is_deleted = 0 AND domain_url_id = :domain_url_id",
+					[ "id" => $id, "domain_url_id" => $domainUrlId ]
 				)->getFirst();
 			}
-			// if no uid or slug is provided we should show the homepage, if one exists
+			// if no id or slug is provided we should show the homepage, if one exists
 			if (!$page) {
 				$page = $this->where(
-					"is_visible = 1 AND is_deleted = 0 AND parent_uid = 0 AND domain_url_uid = :domain_url_uid ORDER BY sorting ASC",
-					[ "domain_url_uid" => $domainUrlUid ]
+					"is_visible = 1 AND is_deleted = 0 AND parent_id = 0 AND domain_url_id = :domain_url_id ORDER BY sorting ASC",
+					[ "domain_url_id" => $domainUrlId ]
 				)->getFirst();
 			}
 			return $page;

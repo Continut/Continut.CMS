@@ -10,6 +10,12 @@
     "folder": "Backend",
     "type": "System",
     "description": "Adds most of the Backend functionality of the CMS",
+    "autoloader": {
+      "debugbar": {
+        "namespace": "Debug",
+        "path": "Lib/Debug"
+      }
+    },
     "backend": {
       "mainMenu": {
         "module_web": {

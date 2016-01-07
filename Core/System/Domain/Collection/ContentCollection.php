@@ -32,12 +32,12 @@ namespace Continut\Core\System\Domain\Collection {
 			$children = [];
 
 			foreach ($this->getAll() as $item) {
-				$children[$item->getParentUid()][] = $item;
+				$children[$item->getParentId()][] = $item;
 			}
 
 			foreach ($this->getAll() as $item) {
-				if (isset($children[$item->getUid()])) {
-					$item->children = $children[$item->getUid()];
+				if (isset($children[$item->getId()])) {
+					$item->children = $children[$item->getId()];
 				} else {
 					$item->children = [];
 				}
@@ -52,33 +52,33 @@ namespace Continut\Core\System\Domain\Collection {
 		}
 
 		/**
-		 * Returns the entire tree for a leaf with a certain uid
+		 * Returns the entire tree for a leaf with a certain id
 		 *
-		 * @param int $uid
+		 * @param int $id
 		 *
 		 * @return mixed
 		 */
-		public function findChildrenForUid($uid) {
+		public function findChildrenForId($id) {
 			$tree = $this->buildTree();
 
-			return $this->browseChildren($tree, $uid);
+			return $this->browseChildren($tree, $id);
 		}
 
 		/**
-		 * Called recursively by findChildrenForUid
+		 * Called recursively by findChildrenForId
 		 *
 		 * @param $elements
-		 * @param $uid
+		 * @param $id
 		 *
 		 * @return mixed
 		 */
-		protected function browseChildren($elements, $uid) {
+		protected function browseChildren($elements, $id) {
 			if ($elements) {
 				foreach ($elements as $child) {
-					if ($child->getUid() == $uid) {
+					if ($child->getId() == $id) {
 						return $child;
 					} else {
-						$this->browseChildren($child->children, $uid);
+						$this->browseChildren($child->children, $id);
 					}
 				}
 			}

@@ -19,17 +19,16 @@ namespace Continut\Extensions\System\Frontend\Classes\Controllers {
 		public function indexAction() {
 			//Utility::debugData("page_rendering", "start", "Page rendering");
 			// get page id request
-			$pageUid = (int)$this->getRequest()->getArgument("pid");
+			$pageId = (int)$this->getRequest()->getArgument("pid");
 			// or slug, whichever is sent
 			$pageSlug = $this->getRequest()->getArgument("slug");
 
-			/*if ($cache = Utility::getCache()->getByUid($pageUid, "page")) {
+			/*if ($cache = Utility::getCache()->getById($pageId, "page")) {
 				return $cache;
 			} else {*/
 
-				// Load the page model from the database, by uid or slug
-				$pageModel = Utility::createInstance("\\Continut\\Extensions\\System\\Frontend\\Classes\\Domain\\Collection\\FrontendPageCollection")
-					->findWithUidOrSlug($pageUid, $pageSlug);
+				// Load the page model from the database, by id or slug
+				$pageModel = Utility::$entityManager->getRepository("Continut\\Core\\System\\Domain\\Model\\Page")->findOneBy(["slug" => $pageSlug]);
 
 				if (!$pageModel) {
 					throw new Exception($this->__("exception.page.notFound"));
@@ -41,7 +40,7 @@ namespace Continut\Extensions\System\Frontend\Classes\Controllers {
 
 				// get all elements from the database that belong to this page and are not hidden or deleted
 				$contentCollection = Utility::createInstance("\\Continut\\Extensions\\System\\Frontend\\Classes\\Domain\\Collection\\FrontendContentCollection");
-				$contentCollection->where("page_uid = :page_uid AND is_deleted = 0 AND is_visible = 1 ORDER BY sorting ASC", [":page_uid" => $pageModel->getUid()]);
+				$contentCollection->where("page_id = :page_id AND is_deleted = 0 AND is_visible = 1 ORDER BY sorting ASC", [":page_id" => $pageModel->getId()]);
 
 				$contentTree = $contentCollection->buildTree();
 
@@ -57,7 +56,7 @@ namespace Continut\Extensions\System\Frontend\Classes\Controllers {
 
 				// dump it all on screen
 				$cache = $pageView->render();
-				//Utility::getCache()->setByUid($pageUid, "page", $cache);
+				//Utility::getCache()->setById($pageId, "page", $cache);
 			//}
 			//Utility::debugData("page_rendering", "stop");
 			return $cache;

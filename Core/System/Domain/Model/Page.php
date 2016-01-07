@@ -12,159 +12,168 @@
 namespace Continut\Core\System\Domain\Model {
 
 	use Continut\Core\Mvc\Model\BaseModel;
-	use Continut\Core\Utility;
+	use Doctrine\ORM\Mapping AS ORM;
 
+	/**
+	 * @Table(name="sys_pages")
+	 * @Entity(repositoryClass="Continut\Core\System\Domain\Collection\PageCollection")
+	 */
 	class Page extends BaseModel {
 
 		/**
 		 * @var string Page title
+		 * @Column(type="string")
 		 */
 		protected $title = "Unnamed page";
 
 		/**
-		 * @var \Continut\Core\System\Domain\Model\Page
+		 * @var \Continut\Core\System\Domain\Model\DomainUrl
+		 *
+		 * @Column(type="integer", name="parent_id")
+		 * @OneToOne(targetEntity="Page")
+		 * @JoinColumn(name="parent_id", referencedColumnName="id")
 		 */
 		protected $parent;
 
 		/**
-		 * @var int Parent page id
-		 */
-		protected $parent_uid;
-
-		/**
 		 * @var string iso3 code of this page's language
+		 *
+		 * @Column(name="language_iso3", type="string", length=3, nullable=false)
 		 */
-		protected $language_iso3 = "";
+		protected $languageIso3 = "";
 
 		/**
 		 * @var bool Is our Page visible in the Frontend?
+		 *
+		 * @Column(name="is_visible", type="boolean", nullable=true)
 		 */
-		protected $is_visible = TRUE;
+		protected $isVisible = TRUE;
 
 		/**
 		 * @var bool Is our page shown in frontend menus?
+		 *
+		 * @Column(name="is_in_menu", type="boolean", nullable=true)
 		 */
-		protected $is_in_menu = TRUE;
+		protected $isInMenu = TRUE;
 
 		/**
 		 * @var bool Has our Page been deleted?
+		 *
+		 * @Column(name="is_deleted", type="boolean", nullable=true)
 		 */
-		protected $is_deleted = FALSE;
+		protected $isDeleted = FALSE;
 
 		/**
 		 * @var int The id of the domain url this page belongs to
+		 *
+		 * @Column(type="integer", name="domain_url_id")
+		 * @OneToOne(targetEntity="\Continut\Core\System\Domain\Model\DomainUrl")
+		 * @JoinColumn(name="domain_url_id", referencedColumnName="id")
 		 */
-		protected $domain_url_uid = 0;
+		protected $domainUrl;
 
 		/**
 		 * @var string Layout for this page
+		 *
+		 * @Column(type="string")
 		 */
 		protected $layout;
 
 		/**
 		 * @var bool Are templates inherited recursively or not?
+		 *
+		 * @Column(name="layout_recursive", type="boolean", nullable=true)
 		 */
-		protected $layout_recursive;
+		protected $layoutRecursive;
 
 		/**
 		 * @var string Frontend cached layout path for this page
+		 *
+		 * @Column(name="frontend_layout", type="string", length=255, nullable=true)
 		 */
-		protected $frontend_layout;
+		protected $frontendLayout;
 
 		/**
 		 * @var string Backend cached layout path for this page
+		 *
+		 * @Column(name="backend_layout", type="string", length=255, nullable=true)
 		 */
-		protected $backend_layout;
+		protected $backendLayout;
 
 		/**
-		 * @var string Cached path used for breadcrumb (List of comma separated values of parent uids)
+		 * @var string Cached path used for breadcrumb (List of comma separated values of parent ids)
+		 *
+		 * @Column(name="cached_path", type="string", length=255, nullable=true)
 		 */
-		protected $cached_path;
+		protected $cachedPath;
 
 		/**
 		 * @var string Page slug
+		 *
+		 * @Column(name="slug", type="string", length=255, nullable=false)
 		 */
 		protected $slug;
 
 		/**
 		 * @var int Sorting order
+		 *
+		 * @Column(name="sorting", type="integer", nullable=true)
 		 */
 		protected $sorting;
 
 		/**
-		 * @var string
+		 * @var string Meta keywords for the page
+		 *
+		 * @Column(name="meta_keywords", type="string", length=255, nullable=true)
 		 */
-		protected $meta_keywords;
+		protected $metaKeywords;
 
 		/**
-		 * @var string
+		 * @var string Meta description for the page
+		 *
+		 * @Column(name="meta_description", type="text", length=65535, nullable=true)
 		 */
-		protected $meta_description;
+		protected $metaDescription;
 
 		/**
-		 * @var int
-		 */
-		protected $original_uid;
-
-		/**
-		 * @var \Continut\Core\System\Domain\Model\Page Original page, if this is a translated one
+		 * @var int Original page record, used for translated pages. It is the original page from which this one was translated
+		 *
+		 * @Column(type="integer", name="original_id")
+		 * @OneToOne(targetEntity="Page")
+		 * @JoinColumn(name="original_id", referencedColumnName="id")
 		 */
 		protected $original;
 
 		/**
-		 * @var \DateTime
+		 * @var \DateTime Start date from when the page should be visible in the frontend
+		 *
+		 * @Column(name="start_date", type="datetime", nullable=true)
 		 */
-		protected $start_date;
+		protected $startDate;
 
 		/**
-		 * @var \DateTime
+		 * @var \DateTime End date until the page will be visible in the frontend
+		 *
+		 * @Column(name="end_date", type="datetime", nullable=true)
 		 */
-		protected $end_date;
-
-		/**
-		 * Simple datamapper used for the database
-		 * @return array
-		 */
-		public function dataMapper() {
-			return [
-				"parent_uid"       => $this->parent_uid,
-				"title"            => $this->title,
-				"slug"             => $this->slug,
-				"language_iso3"    => $this->language_iso3,
-				"cached_path"      => $this->cached_path,
-				"domain_url_uid"   => $this->domain_url_uid,
-				"is_deleted"       => $this->is_deleted,
-				"is_in_menu"       => $this->is_in_menu,
-				"is_visible"       => $this->is_visible,
-				"layout"           => $this->layout,
-				"layout_recursive" => $this->layout_recursive,
-				"frontend_layout"  => $this->frontend_layout,
-				"backend_layout"   => $this->backend_layout,
-				"original_uid"     => $this->original_uid,
-				"sorting"          => $this->sorting,
-				"meta_keywords"    => $this->meta_keywords,
-				"meta_description" => $this->meta_description,
-				"start_date"       => $this->start_date,
-				"end_date"         => $this->end_date
-			];
-		}
+		protected $endDate;
 
 		/**
 		 * @return boolean
 		 */
 		public function getIsInMenu()
 		{
-			return $this->is_in_menu;
+			return $this->isInMenu;
 		}
 
 		/**
-		 * @param boolean $is_in_menu
+		 * @param boolean $isInMenu
 		 *
-		 * @return $this
+		 * @return Page
 		 */
-		public function setIsInMenu($is_in_menu)
+		public function setIsInMenu($isInMenu)
 		{
-			$this->is_in_menu = $is_in_menu;
+			$this->isInMenu = $isInMenu;
 
 			return $this;
 		}
@@ -190,15 +199,15 @@ namespace Continut\Core\System\Domain\Model {
 		 */
 		public function getMetaKeywords()
 		{
-			return $this->meta_keywords;
+			return $this->metaKeywords;
 		}
 
 		/**
-		 * @param string $meta_keywords
+		 * @param string $metaKeywords
 		 */
-		public function setMetaKeywords($meta_keywords)
+		public function setMetaKeywords($metaKeywords)
 		{
-			$this->meta_keywords = $meta_keywords;
+			$this->metaKeywords = $metaKeywords;
 		}
 
 		/**
@@ -206,15 +215,15 @@ namespace Continut\Core\System\Domain\Model {
 		 */
 		public function getMetaDescription()
 		{
-			return $this->meta_description;
+			return $this->metaDescription;
 		}
 
 		/**
-		 * @param string $meta_description
+		 * @param string $metaDescription
 		 */
-		public function setMetaDescription($meta_description)
+		public function setMetaDescription($metaDescription)
 		{
-			$this->meta_description = $meta_description;
+			$this->metaDescription = $metaDescription;
 		}
 
 		/**
@@ -227,10 +236,14 @@ namespace Continut\Core\System\Domain\Model {
 
 		/**
 		 * @param int $sorting
+		 *
+		 * @return Page
 		 */
 		public function setSorting($sorting)
 		{
 			$this->sorting = $sorting;
+
+			return $this;
 		}
 
 		/**
@@ -238,47 +251,59 @@ namespace Continut\Core\System\Domain\Model {
 		 */
 		public function getIsVisible()
 		{
-			return $this->is_visible;
+			return $this->isVisible;
 		}
 
 		/**
-		 * @param boolean $is_visible
+		 * @param boolean $isVisible
+		 *
+		 * @return Page
 		 */
-		public function setIsVisible($is_visible)
+		public function setIsVisible($isVisible)
 		{
-			$this->is_visible = $is_visible;
+			$this->isVisible = $isVisible;
+
+			return $this;
 		}
 
 		/**
-		 * @return boor
+		 * @return boolean
 		 */
 		public function getIsDeleted()
 		{
-			return $this->is_deleted;
+			return $this->isDeleted;
 		}
 
 		/**
-		 * @param boor $is_deleted
+		 * @param boolean $isDeleted
+		 *
+		 * @return Page
 		 */
-		public function setIsDeleted($is_deleted)
+		public function setIsDeleted($isDeleted)
 		{
-			$this->is_deleted = $is_deleted;
+			$this->isDeleted = $isDeleted;
+
+			return $this;
 		}
 
 		/**
-		 * @return int
+		 * @return \Continut\Core\System\Domain\Model\DomainUrl
 		 */
-		public function getDomainUrlUid()
+		public function getDomainUrl()
 		{
-			return $this->domain_url_uid;
+			return $this->domainUrl;
 		}
 
 		/**
-		 * @param int $domain_url_uid
+		 * @param \Continut\Core\System\Domain\Model\DomainUrl $domainUrl
+		 *
+		 * @return Page
 		 */
-		public function setDomainUrlUid($domain_url_uid)
+		public function setDomainUrl($domainUrl)
 		{
-			$this->domain_url_uid = $domain_url_uid;
+			$this->domainUrl = $domainUrl;
+
+			return $this;
 		}
 
 		/**
@@ -295,7 +320,7 @@ namespace Continut\Core\System\Domain\Model {
 		 *
 		 * @param $title
 		 *
-		 * @return $this
+		 * @return Page
 		 */
 		public function setTitle($title) {
 			$this->title = $title;
@@ -307,50 +332,35 @@ namespace Continut\Core\System\Domain\Model {
 		 * @return string
 		 */
 		public function getLanguageIso3() {
-			return $this->language_iso3;
+			return $this->languageIso3;
 		}
 
 		/**
-		 * @param string $language_iso3
+		 * @param string $languageIso3
 		 *
-		 * @return mixed
+		 * @return Page
 		 */
-		public function setLanguageIso3($language_iso3) {
-			return $this->language_iso3 = $language_iso3;
-		}
-
-		/**
-		 * @param $parentUid
-		 *
-		 * @return $this
-		 */
-		public function setParentUid($parentUid) {
-			$this->parent_uid = $parentUid;
+		public function setLanguageIso3($languageIso3) {
+			$this->languageIso3 = $languageIso3;
 
 			return $this;
 		}
 
 		/**
-		 * @return int
+		 * @param Page $parent
+		 *
+		 * @return Page
 		 */
-		public function getParentUid() {
-			return $this->parent_uid;
+		public function setParent($parent) {
+			$this->parent = $parent;
+
+			return $this;
 		}
 
 		/**
-		 * Get parent PageModel
-		 *
-		 * @return mixed
-		 * @throws \Continut\Core\Tools\Exception
+		 * @return Page
 		 */
 		public function getParent() {
-			if ($this->parent_uid) {
-				if (empty($this->parent)) {
-					$this->parent = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\PageCollection")
-						->findByUid($this->getParentUid());
-				}
-			}
-
 			return $this->parent;
 		}
 
@@ -359,10 +369,10 @@ namespace Continut\Core\System\Domain\Model {
 		 * Settings like the frontend or backend layout to use are only specified on the original page, and thus
 		 * need to be re-added to the translated one too
 		 *
-		 * @return $this
+		 * @return Page
 		 */
 		public function mergeOriginal() {
-			if ($this->original_uid > 0) {
+			if ($this->getOriginal()) {
 				$originalPage = $this->getOriginal();
 				$this->setBackendLayout($originalPage->getBackendLayout());
 				$this->setFrontendLayout($originalPage->getFrontendLayout());
@@ -373,48 +383,19 @@ namespace Continut\Core\System\Domain\Model {
 
 		/**
 		 * @return Page
-		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function getOriginal() {
-			if ($this->original_uid) {
-				if (empty($this->original)) {
-					$this->original = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\PageCollection")
-						->findByUid($this->getOriginalUid());
-				}
-			}
-
 			return $this->original;
 		}
 
 		/**
-		 * @return int
+		 * @param Page $original
+		 *
+		 * @return Page
 		 */
-		public function getOriginalUid()
+		public function setOriginal($original)
 		{
-			return $this->original_uid;
-		}
-
-		/**
-		 * @param int $original_uid
-		 *
-		 * @return $this
-		 */
-		public function setOriginalUid($original_uid)
-		{
-			$this->original_uid = $original_uid;
-
-			return $this;
-		}
-
-		/**
-		 * Set this page's parent
-		 *
-		 * @param \Continut\Core\System\Domain\Model\Page $parent
-		 *
-		 * @return $this
-		 */
-		public function setParent($parent) {
-			$this->parent = $parent;
+			$this->original = $original;
 
 			return $this;
 		}
@@ -424,17 +405,17 @@ namespace Continut\Core\System\Domain\Model {
 		 * @return string
 		 */
 		public function getFrontendLayout() {
-			return $this->frontend_layout;
+			return $this->frontendLayout;
 		}
 
 		/**
 		 * Sets the layout to be used in the frontend
-		 * @param $frontend_layout
+		 * @param string $frontendLayout
 		 *
-		 * @return $this
+		 * @return Page
 		 */
-		public function setFrontendLayout($frontend_layout) {
-			$this->frontend_layout = $frontend_layout;
+		public function setFrontendLayout($frontendLayout) {
+			$this->frontendLayout = $frontendLayout;
 
 			return $this;
 		}
@@ -445,16 +426,16 @@ namespace Continut\Core\System\Domain\Model {
 		 * @return string
 		 */
 		public function getBackendLayout() {
-			return $this->backend_layout;
+			return $this->backendLayout;
 		}
 
 		/**
-		 * @param string $backend_layout
+		 * @param string $backendLayout
 		 *
-		 * @return $this
+		 * @return Page
 		 */
-		public function setBackendLayout($backend_layout) {
-			$this->backend_layout = $backend_layout;
+		public function setBackendLayout($backendLayout) {
+			$this->backendLayout = $backendLayout;
 
 			return $this;
 		}
@@ -469,10 +450,14 @@ namespace Continut\Core\System\Domain\Model {
 
 		/**
 		 * @param string $layout
+		 *
+		 * @return Page
 		 */
 		public function setLayout($layout)
 		{
 			$this->layout = $layout;
+
+			return $this;
 		}
 
 		/**
@@ -481,15 +466,19 @@ namespace Continut\Core\System\Domain\Model {
 		 * @return string
 		 */
 		public function getCachedPath() {
-			return $this->cached_path;
+			return $this->cachedPath;
 		}
 
 		/**
-		 * @param string $cached_path
+		 * @param string $cachedPath
+		 *
+		 * @return Page
 		 */
-		public function setCachedPath($cached_path)
+		public function setCachedPath($cachedPath)
 		{
-			$this->cached_path = $cached_path;
+			$this->cachedPath = $cachedPath;
+
+			return $this;
 		}
 
 		/**
@@ -497,15 +486,19 @@ namespace Continut\Core\System\Domain\Model {
 		 */
 		public function getLayoutRecursive()
 		{
-			return $this->layout_recursive;
+			return $this->layoutRecursive;
 		}
 
 		/**
-		 * @param boolean $layout_recursive
+		 * @param boolean $layoutRecursive
+		 *
+		 * @return Page
 		 */
-		public function setLayoutRecursive($layout_recursive)
+		public function setLayoutRecursive($layoutRecursive)
 		{
-			$this->layout_recursive = $layout_recursive;
+			$this->layoutRecursive = $layoutRecursive;
+
+			return $this;
 		}
 
 		/**
@@ -513,15 +506,19 @@ namespace Continut\Core\System\Domain\Model {
 		 */
 		public function getStartDate()
 		{
-			return $this->start_date;
+			return $this->startDate;
 		}
 
 		/**
-		 * @param \DateTime $start_date
+		 * @param \DateTime $startDate
+		 *
+		 * @return Page
 		 */
-		public function setStartDate($start_date)
+		public function setStartDate($startDate)
 		{
-			$this->start_date = $start_date;
+			$this->startDate = $startDate;
+
+			return $this;
 		}
 
 		/**
@@ -529,15 +526,19 @@ namespace Continut\Core\System\Domain\Model {
 		 */
 		public function getEndDate()
 		{
-			return $this->end_date;
+			return $this->endDate;
 		}
 
 		/**
-		 * @param \DateTime $end_date
+		 * @param \DateTime $endDate
+		 *
+		 * @return Page
 		 */
-		public function setEndDate($end_date)
+		public function setEndDate($endDate)
 		{
-			$this->end_date = $end_date;
+			$this->endDate = $endDate;
+
+			return $this;
 		}
 	}
 }

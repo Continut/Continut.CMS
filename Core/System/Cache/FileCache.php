@@ -20,16 +20,16 @@ namespace Continut\Core\System\Cache {
 		 */
 		protected $_lifetime = 3600;
 
-		public function getByUid($uid, $type) {
+		public function getById($id, $type) {
 			return NULL;
-			$filename = __ROOTCMS__ . self::CACHE_DIR . $type . "_" . $uid;
+			$filename = __ROOTCMS__ . self::CACHE_DIR . $type . "_" . $id;
 			if (file_exists($filename)) {
 				return file_get_contents($filename);
 			}
 		}
 
-		public function setByUid($uid, $type, $data) {
-			$filename = __ROOTCMS__ . self::CACHE_DIR . $type . "_" . $uid;
+		public function setById($id, $type, $data) {
+			$filename = __ROOTCMS__ . self::CACHE_DIR . $type . "_" . $id;
 			file_put_contents($filename, $data);
 		}
 
