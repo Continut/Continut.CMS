@@ -16,7 +16,24 @@ namespace Continut\Core\Tools {
 		 */
 		public function __construct($message, $code = 0) {
 			$message = $message . " | Error occured in the file " . $this->getFile() . " on line " . $this->getLine();
+			$message .= $this->simpleTrace();
 			parent::__construct($message, $code);
+		}
+
+		protected function simpleTrace() {
+			$trace = explode("\n", $this->getTraceAsString());
+			$trace = array_reverse($trace);
+			array_shift($trace);
+			array_pop($trace);
+			$length = count($trace);
+			$result = array();
+
+			for ($i = 0; $i < $length; $i++)
+			{
+				$result[] = ($i + 1)  . ')' . substr($trace[$i], strpos($trace[$i], ' '));
+			}
+
+			return "\t" . implode("\n\t", $result);
 		}
 	}
 

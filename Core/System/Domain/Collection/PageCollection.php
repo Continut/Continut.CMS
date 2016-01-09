@@ -21,13 +21,13 @@ namespace Continut\Core\System\Domain\Collection {
 		 *
 		 * @return array
 		 */
-		public function buildTree($childId = 0) {
+		public function buildTree($items, $childId = 0) {
 			$children = [];
-			foreach ($this->getAll() as $item) {
-				$children[$item->getParentId()][] = $item;
+			foreach ($items as $item) {
+				$children[$item->getParent()][] = $item;
 			}
 
-			foreach ($this->getAll() as $item) {
+			foreach ($items as $item) {
 				if (isset($children[$item->getId()])) {
 					$item->children = $children[$item->getId()];
 				} else {
@@ -50,15 +50,17 @@ namespace Continut\Core\System\Domain\Collection {
 		/**
 		 * Build a json tree of pages, specifically useful for JSON consuming javascript plugins
 		 *
+		 * @var array $items
+		 *
 		 * @return array
 		 */
-		public function buildJsonTree() {
+		protected function buildJsonTree($items) {
 			$children = [];
 
-			foreach ($this->getAll() as $item) {
+			foreach ($items as $item) {
 				$data           = new \stdClass();
 				$data->id       = $item->getId();
-				$data->parentId = $item->getParentId();
+				$data->parentId = $item->getParent();
 				$data->label    = $item->getTitle() . " [id: $data->id]";
 				$data->type     = "file";
 				$data->state    = "normal";
@@ -90,33 +92,6 @@ namespace Continut\Core\System\Domain\Collection {
 			}
 
 			return $tree;
-		}
-
-		/**
-		 * @param int $pageId
-		 *
-		 * @return array
-		 */
-		public function cachedBreadcrumb($pageId) {
-			$cachedPath = [];
-
-			$this->fetchParent($cachedPath, $pageId);
-
-			return $cachedPath;
-		}
-
-		/**
-		 * @param $path
-		 * @param $id
-		 */
-		protected function fetchParent(&$path, $id) {
-			$page = $this->findById($id);
-			$path[] = $id;
-			if ($page->getParentId() == 0) {
-				return;
-			} else {
-				return $this->fetchParent($path, $page->getParentId());
-			}
 		}
 
 		/**
@@ -168,6 +143,41 @@ namespace Continut\Core\System\Domain\Collection {
 			}
 
 			return $page;
+		}
+
+		/**
+		 * @param Continut\Core\System\Domain\Model\Domain $domainUrl
+		 * @param string $term
+		 *
+		 * @return mixed
+		 * @throws \Doctrine\ORM\NonUniqueResultException
+		 */
+		public function findLikeInDomainUrl($domainUrl, $term = "") {
+			$db = $this->getEntityManager()->createQueryBuilder();
+
+			$db->select('p')
+				->from($this->_entityName, 'p')
+				->where('p.domainUrl = :domainUrl')
+				->setParameter("domainUrl", $domainUrl)
+				->addOrderBy("p.parent", "ASC")
+				->addOrderBy("p.sorting", "ASC");
+			if (mb_strlen($term) > 0) {
+				$db->andWhere('p.title LIKE :term')
+					->setParameter("term", "%$term%");
+			}
+			return $db->getQuery()->getResult();
+		}
+
+		/**
+		 * Returns a JSON tree of pages belonging to a domainUrl
+		 *
+		 * @param Continut\Core\System\Domain\Model\Domain $domainUrl
+		 * @param string $term Search term
+		 *
+		 * @return array
+		 */
+		public function backendJsonTree($domainUrl, $term) {
+			return $this->buildJsonTree($this->findLikeInDomainUrl($domainUrl, $term));
 		}
 	}
 

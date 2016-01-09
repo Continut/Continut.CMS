@@ -14,39 +14,58 @@ namespace Continut\Extensions\System\Backend\Classes\Domain\Collection {
 	use Continut\Core\Utility;
 
 	class BackendContentCollection extends ContentCollection {
+
 		/**
-		 * Set tablename and element class
+		 * Returns all the content elements found on a page
+		 *
+		 * @param int $pageId
+		 *
+		 * @return array
 		 */
-		public function __construct() {
-			$this->_tablename = "sys_content";
-			$this->_elementClass = "\\Continut\\Extensions\\System\\Backend\\Classes\\Domain\\Model\\BackendContent";
+		public function findWithPageId($pageId, $isVisible = 1, $isDeleted = 0) {
+			$db = $this->getEntityManager()->createQueryBuilder();
+
+			$db->select('p')
+				->from($this->_entityName, 'p')
+				->where('p.page = :page')
+				//->andWhere('p.isVisible = :isVisible')
+				//->andWhere('p.isDeleted = :isDeleted')
+				->setParameters([ "page" => $pageId ])
+				->addOrderBy("p.sorting", "ASC");
+			$rows = $db->getQuery()->getArrayResult();
+
+			$elements = [];
+
+			foreach ($rows as $row) {
+				switch ($row["type"]) {
+					case "plugin":    $element = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Model\Content\BackendPluginContent'); break;
+					case "container": $element = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Model\Content\BackendContainerContent'); break;
+					case "reference": $element = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Model\Content\BackendReferenceContent'); break;
+					default:          $element = Utility::createInstance($this->_entityName);
+				}
+				$element->setTitle($row['title']);
+				$element->setType($row['type']);
+				$element->setValue($row['value']);
+				$element->setIsVisible($row['isVisible']);
+				$element->setIsDeleted($row['isDeleted']);
+				$element->setParent($row['parent']);
+				$element->setColumnId($row['columnId']);
+				$element->setPage($row['page']);
+				$element->setId($row['id']);
+				$elements[] = $element;
+			}
+			return $elements;
 		}
 
 		/**
-		 * Do a custom where on the collection and return different type objects
+		 * Returns all the content elements found on a page as a tree, with children set accordingly
 		 *
-		 * @param $conditions
-		 * @param $values
+		 * @param int $pageId
 		 *
-		 * @return $this
+		 * @return array
 		 */
-		public function where($conditions, $values = []) {
-			$this->_elements = [];
-			$sth = Utility::getDatabase()->prepare("SELECT * FROM $this->_tablename WHERE " . $conditions);
-			$sth->execute($values);
-			$sth->setFetchMode(\PDO::FETCH_ASSOC);
-			while ($row = $sth->fetch()) {
-				switch ($row["type"]) {
-					case "plugin":    $element = Utility::createInstance("\\Continut\\Extensions\\System\\Backend\\Classes\\Domain\\Model\\Content\\BackendPluginContent"); break;
-					case "container": $element = Utility::createInstance("\\Continut\\Extensions\\System\\Backend\\Classes\\Domain\\Model\\Content\\BackendContainerContent"); break;
-					case "reference": $element = Utility::createInstance("\\Continut\\Extensions\\System\\Backend\\Classes\\Domain\\Model\\Content\\BackendReferenceContent"); break;
-					default:          $element = Utility::createInstance($this->_elementClass);
-				}
-				$element->update($row);
-				$this->add($element);
-			}
-
-			return $this;
+		public function buildTreeForPageId($pageId) {
+			return $this->buildTree($this->findWithPageId($pageId));
 		}
 	}
 

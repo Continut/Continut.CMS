@@ -10,32 +10,31 @@
  */
 namespace Continut\Core\System\Domain\Collection {
 
-	use Continut\Core\Mvc\Model\BaseCollection;
+	use Continut\Core\Mvc\Model\BaseRepository;
 
-	class ContentCollection extends BaseCollection {
-
-		/**
-		 * Set tablename and element class
-		 */
-		public function __construct() {
-			$this->_tablename = "sys_content";
-			$this->_elementClass = "\\Continut\\Core\\System\\Domain\\Model\\Content";
-		}
+	/**
+	 * Class ContentCollection
+	 *
+	 * @package Continut\Core\System\Domain\Collection
+	 */
+	class ContentCollection extends BaseRepository {
 
 		/**
 		 * Build a tree of content elements from this collection
 		 *
+		 * @param array $items
+		 *
 		 * @return null
 		 */
-		public function buildTree() {
+		public function buildTree($items) {
 			// Build content tree
 			$children = [];
 
-			foreach ($this->getAll() as $item) {
-				$children[$item->getParentId()][] = $item;
+			foreach ($items as $item) {
+				$children[$item->getParent()][] = $item;
 			}
 
-			foreach ($this->getAll() as $item) {
+			foreach ($items as $item) {
 				if (isset($children[$item->getId()])) {
 					$item->children = $children[$item->getId()];
 				} else {
@@ -54,14 +53,15 @@ namespace Continut\Core\System\Domain\Collection {
 		/**
 		 * Returns the entire tree for a leaf with a certain id
 		 *
-		 * @param int $id
+		 * @param int $pageId
+		 * @param int $elementId
 		 *
 		 * @return mixed
 		 */
-		public function findChildrenForId($id) {
-			$tree = $this->buildTree();
+		public function findChildrenForId($pageId, $elementId) {
+			$tree = $this->buildTree($this->findBy(["page" => $pageId]));
 
-			return $this->browseChildren($tree, $id);
+			return $this->browseChildren($tree, $elementId);
 		}
 
 		/**

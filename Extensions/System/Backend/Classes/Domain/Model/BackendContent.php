@@ -13,6 +13,13 @@ namespace Continut\Extensions\System\Backend\Classes\Domain\Model {
 	use Continut\Core\System\Domain\Model\Content;
 	use Continut\Core\Utility;
 
+	/**
+	 * Class BackendContent
+	 *
+	 * @package Continut\Extensions\System\Backend\Classes\Domain\Model
+	 * @Entity(repositoryClass="Continut\Extensions\System\Backend\Classes\Domain\Collection\BackendContentCollection")
+	 * @Table(name="sys_content")
+	 */
 	class BackendContent extends Content {
 
 		/**

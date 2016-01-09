@@ -10,17 +10,9 @@
  */
 namespace Continut\Core\System\Domain\Collection {
 
-	use Continut\Core\Mvc\Model\BaseCollection;
+	use Continut\Core\Mvc\Model\BaseRepository;
 
-	class BackendUserCollection extends BaseCollection {
-
-		/**
-		 * Set tablename and element class
-		 */
-		public function __construct() {
-			$this->_tablename = "sys_backend_users";
-			$this->_elementClass = "\\Continut\\Core\\System\\Domain\\Model\\BackendUser";
-		}
+	class BackendUserCollection extends BaseRepository {
 	}
 
 }

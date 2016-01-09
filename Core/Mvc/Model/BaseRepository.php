@@ -14,6 +14,5 @@ namespace Continut\Core\Mvc\Model {
 
 	class BaseRepository extends EntityRepository
 	{
-
 	}
 }

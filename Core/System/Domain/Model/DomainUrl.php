@@ -37,7 +37,7 @@ namespace Continut\Core\System\Domain\Model {
 		 * @var Domain
 		 *
 		 * @Column(type="integer", name="domain_id")
-		 * @OneToOne(targetEntity="Domain")
+		 * @OneToOne(targetEntity="Domain", inversedBy="domainUrls")
 		 * @JoinColumn(name="domain_id", referencedColumnName="id")
 		 */
 		protected $domain;

@@ -26,14 +26,12 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function indexAction() {
-			$domainsCollection = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\DomainCollection");
-			$domainsCollection->where("is_visible = :is_visible ORDER BY sorting ASC", ["is_visible" => 1]);
+			$domains = Utility::$entityManager->getRepository('\Continut\Core\System\Domain\Model\Domain')->findBy(["isVisible" => 1], ["sorting" => "ASC"]);
+			//$languages = $domains[0]$domains[0]->getDomainUrls();
+			$languages = Utility::$entityManager->getRepository('\Continut\Core\System\Domain\Model\DomainUrl')->findBy(["domain" => $domains[0]->getId()], ["sorting" => "ASC"]);
 
-			$languagesCollection = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\DomainUrlCollection");
-			$languagesCollection->where("domain_id = :domain_id ORDER BY sorting ASC", ["domain_id" => $domainsCollection->getFirst()->getId()]);
-
-			$this->getView()->assign("domains", $domainsCollection);
-			$this->getView()->assign("languages", $languagesCollection);
+			$this->getView()->assign("domains", $domains);
+			$this->getView()->assign("languages", $languages);
 		}
 
 		/**
@@ -44,59 +42,33 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function treeAction($term = "") {
-			$pagesCollection = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\PageCollection");
-
-			// get the domains collection
-			$domainsCollection = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\DomainCollection");
-
 			$domainId = $this->getRequest()->getArgument("domain_id", 0);
-			if ($domainId == 0) {
-				// fetch the first visible domain, ordered by sorting, if no domain_id is sent
-				$domain = $domainsCollection->where("is_visible = 1 ORDER BY sorting ASC")
-					->getFirst();
-			} else {
-				$domain = $domainsCollection->where("id = :id ORDER BY sorting ASC", [ "id" => $domainId ])
-					->getFirst();
-			}
-
-			// then the domains url collection
-			$domainsUrlCollection = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\DomainUrlCollection");
 			// see if a domain url was sent, if not get the first one found for this domain
 			$domainUrlId = $this->getRequest()->getArgument("domain_url_id", 0);
+
+			// get the domains collection
+			if ($domainId == 0) {
+				// fetch the first visible domain, ordered by sorting, if no domain_id is sent
+				$domainCriteria = ["isVisible" => 1];
+			} else {
+				$domainCriteria = ["id" => $domainId];
+			}
+			$domain = Utility::$entityManager->getRepository('\Continut\Core\System\Domain\Model\Domain')->findOneBy($domainCriteria, ["sorting" => "ASC"]);
+
 			if ($domainUrlId == 0) {
-				$domainUrl = $domainsUrlCollection->where(
-					"domain_id = :domain_id ORDER BY sorting ASC",
-					[ "domain_id" => $domain->getId() ]
-				)
-					->getFirst();
+				$domainUrlCriteria = ["domain" => $domain->getId()];
 			} else {
-				$domainUrl = $domainsUrlCollection->where(
-					"domain_id = :domain_id AND id = :id ORDER BY sorting ASC",
-					[ "domain_id" => $domain->getId(), "id" => $domainUrlId ]
-				)
-					->getFirst();
+				$domainUrlCriteria = ["domain" => $domain->getId(), "id" => $domainUrlId];
 			}
+			$domainUrl = Utility::$entityManager->getRepository('\Continut\Core\System\Domain\Model\DomainUrl')->findOneBy($domainUrlCriteria, ["sorting" => "ASC"]);
 
-			// get all the pages that belong to this domain
-			// if the search filter is not empty, filter on page titles
-			if (mb_strlen($term) > 0) {
-				$pagesCollection->where(
-					"domain_url_id = :domain_url_id AND title LIKE :title ORDER BY parent_id ASC, sorting ASC",
-					[ "domain_url_id" => $domainUrl->getId(), "title" => "%$term%" ]
-				);
-			} else {
-				$pagesCollection->where(
-					"domain_url_id = :domain_url_id ORDER BY parent_id ASC, sorting ASC",
-					[ "domain_url_id" => $domainUrl->getId() ]
-				);
-			}
-
-			$languagesCollection = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\DomainUrlCollection");
-			$languagesCollection->where("domain_id = :domain_id", ["domain_id" => $domain->getId()]);
+			$pages     = Utility::$entityManager->getRepository('\Continut\Core\System\Domain\Model\Page')->backendJsonTree($domainUrl, $term);
+			$languages = Utility::$entityManager->getRepository('\Continut\Core\System\Domain\Model\DomainUrl')->findBy(["domain" => $domain->getId()], ["sorting" => "ASC"]);
 
 			$pagesData = [
-				"pages" => $pagesCollection->buildJsonTree(),
-				"languages" => $languagesCollection->toSimplifiedArray()
+				"pages" => $pages,
+				"languages" => $languages
+				// @TODO $languages->toSimplifiedArray() check if it is used
 			];
 
 			return json_encode($pagesData, JSON_UNESCAPED_UNICODE);
@@ -109,14 +81,13 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		 */
 		public function editAction() {
 			$pageId = (int)$this->getRequest()->getArgument("page_id");
-			$pageModel = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\PageCollection")
-				->where("id = :id", ["id" => $pageId])
-				->getFirst();
-			$pageModel->mergeOriginal();
+
+			$page = Utility::$entityManager->getRepository('\Continut\Core\System\Domain\Model\Page')->find($pageId);
+			$page->mergeOriginal();
 
 			$layouts  = Utility::getLayouts();
 
-			$this->getView()->assign('page', $pageModel);
+			$this->getView()->assign('page', $page);
 			$this->getView()->assign('layouts', $layouts);
 		}
 
@@ -158,34 +129,28 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		 */
 		public function showAction() {
 			Utility::debugData("page_rendering", "start", "Page rendering");
-			// Load the pages collection model
-			$pagesCollection = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\PageCollection");
-			// Using the collection, load the page specified in the argument "page_id"
+
 			$pageId = (int)$this->getRequest()->getArgument("page_id", 0);
-			$pageModel = $pagesCollection->findById($pageId);
-			$pageModel->mergeOriginal();
+			$page = Utility::$entityManager->getRepository('\Continut\Core\System\Domain\Model\Page')->find($pageId);
+			$page->mergeOriginal();
 
 			// The breadcrumbs path is cached in the variable "cached_path" as a comma separated list of values
 			// so that we can easily traverse it in 1 query
 			$breadcrumbs = [];
-			if ($pageModel->getCachedPath()) {
+			/*if ($page->getCachedPath()) {
 				$breadcrumbs = $pagesCollection
 					->where("id IN (" . $pageModel->getCachedPath() . ") ORDER BY id ASC")
 					->getAll();
-			}
+			}*/
 
 			// Load the content collection model and then find all the content elements that belong to this page_id
-			$contentCollection = Utility::createInstance("\\Continut\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
-			$contentCollection->where("page_id = :page_id AND is_deleted = 0 ORDER BY sorting ASC", [":page_id" => $pageId]);
-
-			// Since content elements can have containers and be recursive, we need to build a Tree object to handle them
-			$contentTree = $contentCollection->buildTree();
+			$contentTree = Utility::$entityManager->getRepository('\Continut\Extensions\System\Backend\Classes\Domain\Model\BackendContent')->buildTreeForPageId($pageId);
 
 			// A PageView is the model that we use to load a layout and render the elements
 			$pageView = Utility::createInstance("\\Continut\\Core\\System\\View\\BackendPageView");
 			$pageView
-				->setPageModel($pageModel)
-				->setLayoutFromTemplate(__ROOTCMS__ . $pageModel->getBackendLayout());
+				->setPageModel($page)
+				->setLayoutFromTemplate(__ROOTCMS__ . $page->getBackendLayout());
 
 			// Send the tree of elements to this page's layout
 			$pageView->getLayout()->setElements($contentTree);
@@ -194,7 +159,7 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 			$pageContent = $pageView->render();
 
 			// Send all the data to the view
-			$this->getView()->assign("page", $pageModel);
+			$this->getView()->assign("page", $page);
 			$this->getView()->assign("pageContent", $pageContent);
 			$this->getView()->assign("breadcrumbs", $breadcrumbs);
 			Utility::debugData("page_rendering", "stop");

@@ -26,10 +26,8 @@ namespace Continut\Extensions\System\Backend\Classes\Domain\Model\Content {
 			$value = "";
 			if ($reference > 0) {
 				// Load the content collection model and then find all the content elements that belong to this page_id
-				$contentCollection = Utility::createInstance("\\Continut\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
-				$referencedContent = $contentCollection
-					->where("is_deleted = 0 AND id = :id ORDER BY sorting ASC", [":id" => $reference])
-					->getFirst();
+				$referencedContent = Utility::$entityManager->getRepository('Continut\Extensions\System\Backend\Classes\Domain\Model\BackendContent')->findOneBy(["isDeleted" => 0, "id" => $reference]);
+
 				// set the element's id to the reference id, so that we do not modify the original
 				if ($referencedContent) {
 					$referencedContent->setId($this->getId());
@@ -40,9 +38,7 @@ namespace Continut\Extensions\System\Backend\Classes\Domain\Model\Content {
 						$value = $referencedContent->setFromReference(TRUE)->render(NULL);
 					// otherwise render all it's children
 					} else {
-						$contentCollection
-							->where("page_id = :page_id", ["page_id" => $referencedContent->getPageId()]);
-						$elements = $contentCollection->findChildrenForId($reference);
+						$elements = Utility::$entityManager->getRepository('Continut\Extensions\System\Backend\Classes\Domain\Model\BackendContent')->findChildrenForId($referencedContent->getPageId(), $reference);
 						$value = $referencedContent->setFromReference(TRUE)->render($elements->children);
 					}
 

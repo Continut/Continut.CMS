@@ -19,12 +19,11 @@ namespace Continut\Extensions\Local\News\Classes\Controllers {
 		}
 
 		public function backendPreviewAction() {
-			$newsCollection = Utility::createInstance("\\Continut\\Extensions\\Local\\News\\Classes\\Domain\\Collection\\NewsCollection");
-
 			$limit = (isset($this->data["limit"])) ? $this->data["limit"] : 1;
-			$newsCollection->where("1=1 LIMIT $limit");
 
-			$this->getView()->assign('news', $newsCollection);
+			$news = Utility::$entityManager->getRepository('\Continut\Extensions\Local\News\Classes\Domain\Model\News')->findBy([], [], $limit);
+
+			$this->getView()->assign('news', $news);
 			$this->getView()->assign('data', $this->data);
 		}
 	}

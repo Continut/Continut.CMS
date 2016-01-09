@@ -10,7 +10,6 @@
  */
 
 namespace Continut\Core\Mvc\Model {
-	use Continut\Core\Utility;
 
 	/**
 	 * Class BaseModel
@@ -38,49 +37,8 @@ namespace Continut\Core\Mvc\Model {
 		/**
 		 * @param int $id new id to use
 		 */
-		public function setId($iid) {
+		public function setId($id) {
 			$this->id = $id;
-		}
-
-		/**
-		 * Simple datamapper used for the database
-		 * @return array
-		 */
-		public function dataMapper() {
-			return [];
-		}
-
-		/**
-		 * Updates the values of this model
-		 *
-		 * @param array $values Array of key/value pairs to update the model with
-		 *
-		 * @return $this
-		 */
-		public function update($values) {
-			foreach ($values as $key => $value) {
-				if (property_exists($this, $key)) {
-					$method = "set" . Utility::toCamelCase($key, TRUE);
-					$this->$method($value);
-				}
-			}
-
-			return $this;
-		}
-
-		/**
-		 * Returns directly a value by property name
-		 *
-		 * @param $key
-		 *
-		 * @return mixed
-		 */
-		public function fetchFromField($key) {
-			if (property_exists($this, $key)) {
-				$method = "get" . Utility::toCamelCase($key, TRUE);
-				return $this->$method();
-			}
-			return null;
 		}
 	}
 }

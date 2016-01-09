@@ -19,12 +19,12 @@ namespace Continut\Core\System\Domain\Collection {
 		 *
 		 * @return array
 		 */
-		public function toSimplifiedArray($addEmpty = false, $emptyTitle = "") {
+		public function toSimplifiedArray($items, $addEmpty = false, $emptyTitle = "") {
 			$data = [];
 			if ($addEmpty) {
 				$data = [0 => ["title" => $emptyTitle, "flag" => "eu"]];
 			}
-			foreach ($this->getAll() as $language) {
+			foreach ($items as $language) {
 				$data[$language->getId()] = [
 					"title" => $language->getTitle(),
 					"flag"  => $language->getFlag()

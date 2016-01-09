@@ -68,15 +68,14 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		public function editAction() {
 			$id = (int)$this->getRequest()->getArgument("id");
 
-			$contentCollection = Utility::createInstance("\\Continut\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
-			$content = $contentCollection->where("id = :id AND is_deleted = 0", ["id" => $id])->getFirst();
+			$content = Utility::$entityManager->getRepository('Continut\Extensions\System\Backend\Classes\Domain\Model\BackendContent')->find($id);
 
 			$this->getView()->assign("element", $content);
 
 			$data = json_decode($content->getValue(), TRUE);
 			$wizardData = $data[$content->getType()];
 
-			$wizard = Utility::createInstance("Continut\\Core\\Mvc\\View\\BaseView");
+			$wizard = Utility::createInstance('Continut\Core\Mvc\View\BaseView');
 			$wizardTemplate = ucfirst($content->getType()) . "s/" . $wizardData["template"];
 			$wizard->setTemplate(Utility::getResource($wizardTemplate, $wizardData["extension"], "Frontend", "Wizard"));
 			if (!isset($wizardData["data"]["title"])) {

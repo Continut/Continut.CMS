@@ -10,10 +10,19 @@
  */
 namespace Continut\Core\System\Domain\Model {
 
+	/**
+	 * Class BackendUser
+	 *
+	 * @package Continut\Core\System\Domain\Model
+	 * @Table(name="sys_backend_users")
+	 * @Entity(repositoryClass="Continut\Core\System\Domain\Collection\BackendUserCollection")
+	 */
 	class BackendUser extends User {
 
 		/**
 		 * @var string Fullname of backend user
+		 *
+		 * @Column(name="name", type="string")
 		 */
 		protected $name;
 
@@ -27,10 +36,14 @@ namespace Continut\Core\System\Domain\Model {
 
 		/**
 		 * @param string $name
+		 *
+		 * @return BackendUser
 		 */
 		public function setName($name)
 		{
 			$this->name = $name;
+
+			return $this;
 		}
 
 	}

@@ -12,6 +12,13 @@ namespace Continut\Extensions\System\Frontend\Classes\Domain\Model\Content {
 	use Continut\Core\Utility;
 	use Continut\Extensions\System\Frontend\Classes\Domain\Model\FrontendContent;
 
+	/**
+	 * Class FrontendContainerContent
+	 *
+	 * @package Continut\Extensions\System\Frontend\Classes\Domain\Model\Content
+	 * @Entity(repositoryClass="Continut\Extensions\System\Frontend\Classes\Domain\Collection\FrontendContentCollection")
+	 * @Table(name="sys_content")
+	 */
 	class FrontendContainerContent extends FrontendContent {
 		/**
 		 * Outputs "regular" content, of type "content" in the database

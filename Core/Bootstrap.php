@@ -57,6 +57,7 @@ namespace Continut\Core {
 			Utility::$autoloader->register();
 			Utility::$autoloader->addNamespace("Continut", __ROOTCMS__);
 			Utility::$autoloader->addNamespace("Doctrine", __ROOTCMS__ . DS . "Lib" . DS . "Doctrine");
+			Utility::$autoloader->addNamespace("Debug",    __ROOTCMS__ . DS . "Lib" . DS . "Debug");
 
 			set_exception_handler([$this, "handleException"]);
 			set_error_handler([$this, 'handleError']);
@@ -107,7 +108,8 @@ namespace Continut\Core {
 		 * @throws Exception
 		 */
 		public function handleError($code, $message, $file, $line) {
-			throw new ErrorException($message, $code);
+			echo $code.$message.$file;
+			//throw new ErrorException($message, $code);
 		}
 
 		/**

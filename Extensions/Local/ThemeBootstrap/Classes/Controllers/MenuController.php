@@ -21,10 +21,7 @@ namespace Continut\Extensions\Local\ThemeBootstrap\Classes\Controllers {
 		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function showMenuAction() {
-			$pageCollection = Utility::createInstance("\\Continut\\Extensions\\System\\Frontend\\Classes\\Domain\\Collection\\FrontendPageCollection")
-				->where("is_in_menu = 1 AND is_visible = 1 AND is_deleted = 0 ORDER BY sorting ASC");
-
-			$pageTree = $pageCollection->buildTree();
+			$pageTree = Utility::$entityManager->getRepository('Continut\Extensions\System\Frontend\Classes\Domain\Model\FrontendPage')->buildMenuTree();
 
 			$this->getView()->assign("pageTree", $pageTree);
 		}

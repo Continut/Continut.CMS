@@ -135,7 +135,6 @@ namespace Continut\Core {
 		public static function setApplicationScope($applicationScope, $applicationEnvironment) {
 			static::$applicationScope = $applicationScope;
 			static::$applicationEnvironment = $applicationEnvironment;
-			Utility::$autoloader->addNamespace("Debug", "Lib/Debug");
 
 			// load environment configuration
 			require_once (__ROOTCMS__ . "/Extensions/configuration.php");
@@ -190,9 +189,10 @@ namespace Continut\Core {
 			$annotationConfig = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
 				array(
 					__ROOTCMS__ . DS . "Core" . DS . "System" . DS . "Domain" . DS . "Model",
-					__ROOTCMS__ . DS . "Core" . DS . "System" . DS . "Domain" . DS . "Collection",
+					__ROOTCMS__ . DS . "Extensions" . DS . "Local" . DS . "News" . DS . "Classes" . DS . "Domain" . DS . "Model",
+					//__ROOTCMS__ . DS . "Core" . DS . "System" . DS . "Domain" . DS . "Collection",
 					__ROOTCMS__ . DS . "Core" . DS . "Mvc" . DS . "Model",
-					__ROOTCMS__ . DS . "Core" . DS . "Mvc" . DS . "Collection"
+					//__ROOTCMS__ . DS . "Core" . DS . "Mvc" . DS . "Collection"
 				),
 				(static::$applicationEnvironment == "Development")
 			);

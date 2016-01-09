@@ -10,18 +10,9 @@
  */
 namespace Continut\Extensions\Local\News\Classes\Domain\Collection {
 
-	use Continut\Core\Mvc\Model\BaseCollection;
+	use Continut\Core\Mvc\Model\BaseRepository;
 
-	class NewsCollection extends BaseCollection
+	class NewsCollection extends BaseRepository
 	{
-
-		/**
-		 * Set tablename and each element's class
-		 */
-		public function __construct()
-		{
-			$this->_tablename = "ext_news";
-			$this->_elementClass = "\\Continut\\Extensions\\Local\\News\\Classes\\Domain\\Model\\News";
-		}
 	}
 }

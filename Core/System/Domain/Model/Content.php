@@ -9,45 +9,70 @@
  * Project: Conţinut CMS
  */
 namespace Continut\Core\System\Domain\Model {
-	use Continut\Core\Mvc\Model\BaseModel;
-	use \Continut\Core\Utility;
 
+	use Continut\Core\Mvc\Model\BaseModel;
+
+	/**
+	 * Class Content
+	 *
+	 * @package Continut\Core\System\Domain\Model
+	 * @Entity(repositoryClass="Continut\Core\System\Domain\Collection\ContentCollection")
+	 * @Table(name="sys_content")
+	 */
 	class Content extends BaseModel {
 
 		/**
 		 * @var string value of the content element
+		 *
+		 * @Column(name="value", type="text")
 		 */
 		protected $value;
 
 		/**
 		 * @var string type of content element
+		 *
+		 * @Column(name="type", type="string")
 		 */
 		protected $type;
 
 		/**
 		 * @var int The uid of this element's parent
+		 *
+		 * @Column(type="integer", name="parent_id")
+		 * @OneToOne(targetEntity="Content")
+		 * @JoinColumn(name="parent_id", referencedColumnName="id")
 		 */
-		protected $parent_id;
+		protected $parent;
 
 		/**
 		 * @var bool Is the content element visible?
+		 *
+		 * @Column(name="is_visible", type="boolean")
 		 */
-		protected $is_visible;
+		protected $isVisible;
 
 		/**
 		 * @var bool Is the content element deleted?
+		 *
+		 * @Column(name="is_deleted", type="boolean")
 		 */
-		protected $is_deleted;
+		protected $isDeleted;
 
 		/**
 		 * @var int Column id
+		 *
+		 * @Column(name="column_id", type="integer")
 		 */
-		protected $column_id;
+		protected $columnId;
 
 		/**
-		 * @var int Id of the page where the element is stored
+		 * @var \Continut\Core\System\Domain\Model\Page
+		 *
+		 * @Column(type="integer", name="page_id")
+		 * @OneToOne(targetEntity="\Continut\Core\System\Domain\Model\Page")
+		 * @JoinColumn(name="page_id", referencedColumnName="id")
 		 */
-		protected $page_id;
+		protected $page;
 
 		/**
 		 * @var int The reference id, if this is a reference content element
@@ -56,6 +81,8 @@ namespace Continut\Core\System\Domain\Model {
 
 		/**
 		 * @var int Field used for the sorting order of content elements
+		 *
+		 * @Column(name="sorting", type="integer")
 		 */
 		protected $sorting;
 
@@ -66,44 +93,27 @@ namespace Continut\Core\System\Domain\Model {
 
 		/**
 		 * @var string
+		 *
+		 * @Column(name="title", type="string")
 		 */
 		protected $title;
 
 		/**
-		 * Datamapper for this model
-		 *
-		 * @return array
+		 * @return Content Get the parent of this content element
 		 */
-		public function dataMapper() {
-			return [
-				"page_id"    => $this->page_id,
-				"type"        => $this->type,
-				"title"       => $this->title,
-				"column_id"      => $this->column_id,
-				"parent_id"  => $this->parent_id,
-				"value"       => $this->value,
-				"is_deleted"  => $this->is_deleted,
-				"is_visible"  => $this->is_visible,
-				"sorting"     => $this->sorting
-			];
+		public function getParent() {
+			return $this->parent;
 		}
 
 		/**
-		 * @return int Get the parent id of this content element
-		 */
-		public function getParentId() {
-			return $this->parent_id;
-		}
-
-		/**
-		 * Set parent id
+		 * Set parent
 		 *
-		 * @param int $parentId
+		 * @param Content $parent
 		 *
-		 * @return $this
+		 * @return Content
 		 */
-		public function setParentId($parentId) {
-			$this->parent_id = $parentId;
+		public function setParent($parent) {
+			$this->parent = $parent;
 
 			return $this;
 		}
@@ -125,19 +135,23 @@ namespace Continut\Core\System\Domain\Model {
 		}
 
 		/**
-		 * @return int
+		 * @return Page
 		 */
-		public function getPageId()
+		public function getPage()
 		{
-			return $this->page_id;
+			return $this->page;
 		}
 
 		/**
-		 * @param int $page_id
+		 * @param int $page
+		 *
+		 * @return Content
 		 */
-		public function setPageId($page_id)
+		public function setPage($page)
 		{
-			$this->page_id = $page_id;
+			$this->page = $page;
+
+			return $this;
 		}
 
 		/**
@@ -150,17 +164,21 @@ namespace Continut\Core\System\Domain\Model {
 
 		/**
 		 * @param int $reference_id
+		 *
+		 * @return Content
 		 */
 		public function setReferenceId($reference_id)
 		{
 			$this->reference_id = $reference_id;
+
+			return $this;
 		}
 
 		/**
 		 * @return int Get id of column where content is stored
 		 */
 		public function getColumnId() {
-			return $this->column_id;
+			return $this->columnId;
 		}
 
 		/**
@@ -168,10 +186,10 @@ namespace Continut\Core\System\Domain\Model {
 		 *
 		 * @param $columnId
 		 *
-		 * @return $this
+		 * @return Content
 		 */
 		public function setColumnId($columnId) {
-			$this->column_id = $columnId;
+			$this->columnId = $columnId;
 
 			return $this;
 		}
@@ -186,7 +204,7 @@ namespace Continut\Core\System\Domain\Model {
 		/**
 		 * @param $title
 		 *
-		 * @return $this
+		 * @return Content
 		 */
 		public function setTitle($title) {
 			$this->title = $title;
@@ -203,18 +221,13 @@ namespace Continut\Core\System\Domain\Model {
 
 		/**
 		 * @param string $type
+		 *
+		 * @return Content
 		 */
 		public function setType($type) {
 			$this->type = $type;
-		}
 
-		/**
-		 * Sets the element's serialized values
-		 *
-		 * @param string $value
-		 */
-		public function setValue($value) {
-			$this->value = $value;
+			return $this;
 		}
 
 		/**
@@ -227,17 +240,34 @@ namespace Continut\Core\System\Domain\Model {
 		}
 
 		/**
-		 * @param $pageView
+		 * Sets the element's serialized values
+		 *
+		 * @param string $value
+		 *
+		 * @return Content
 		 */
-		public function setPageView($pageView) {
-			$this->_pageView = $pageView;
+		public function setValue($value) {
+			$this->value = $value;
+
+			return $this;
 		}
 
 		/**
 		 * @return \Continut\Core\Mvc\View\PageViews
 		 */
-		public function getPage() {
+		public function getPageView() {
 			return $this->_pageView;
+		}
+
+		/**
+		 * @param $pageView
+		 *
+		 * @return Content
+		 */
+		public function setPageView($pageView) {
+			$this->_pageView = $pageView;
+
+			return $this;
 		}
 
 		/**
@@ -245,31 +275,39 @@ namespace Continut\Core\System\Domain\Model {
 		 */
 		public function getIsVisible()
 		{
-			return $this->is_visible;
+			return $this->isVisible;
 		}
 
 		/**
-		 * @param mixed $is_visible
+		 * @param mixed $isVisible
+		 *
+		 * @return Content
 		 */
-		public function setIsVisible($is_visible)
+		public function setIsVisible($isVisible)
 		{
-			$this->is_visible = $is_visible;
+			$this->isVisible = $isVisible;
+
+			return $this;
 		}
 
 		/**
 		 * @return boolean
 		 */
-		public function isIsDeleted()
+		public function getIsDeleted()
 		{
-			return $this->is_deleted;
+			return $this->isDeleted;
 		}
 
 		/**
-		 * @param boolean $is_deleted
+		 * @param boolean $isDeleted
+		 *
+		 * @return Content
 		 */
-		public function setIsDeleted($is_deleted)
+		public function setIsDeleted($isDeleted)
 		{
-			$this->is_deleted = $is_deleted;
+			$this->isDeleted = $isDeleted;
+
+			return $this;
 		}
 
 		/**

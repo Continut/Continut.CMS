@@ -16,13 +16,7 @@ namespace Continut\Extensions\Local\ThemeBootstrapModerna\Classes\Controllers {
 	class MenuController extends FrontendController {
 
 		public function showMenuAction() {
-			$pageCollection = Utility::createInstance("\\Continut\\Extensions\\System\\Frontend\\Classes\\Domain\\Collection\\FrontendPageCollection")
-				->where(
-					"is_in_menu = 1 AND is_visible = 1 AND is_deleted = 0 AND domain_url_id = :domain_url_id ORDER BY parent_id ASC, sorting ASC",
-					[ "domain_url_id" => Utility::getSite()->getDomainUrl()->getId() ]
-				);
-
-			$pageTree = $pageCollection->buildTree();
+			$pageTree = Utility::$entityManager->getRepository('Continut\Extensions\System\Frontend\Classes\Domain\Model\FrontendPage')->buildMenuTree(Utility::getSite()->getDomainUrl()->getId());
 
 			$this->getView()->assign("pageTree", $pageTree);
 		}
@@ -32,21 +26,21 @@ namespace Continut\Extensions\Local\ThemeBootstrapModerna\Classes\Controllers {
 		}
 
 		public function showBreadcrumbAction() {
-			$pagesCollection = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\PageCollection");
+			$pages = Utility::$entityManager->getRepository('Continut\Extensions\System\Frontend\Classes\Domain\Model\FrontendPage')->findAll();
 
 			$pageId    = (int)$this->getRequest()->getArgument("pid");
 			$pageSlug  = $this->getRequest()->getArgument("slug");
-			$pageModel = $pagesCollection->findWithIdOrSlug($pageId, $pageSlug);
+			$page = Utility::$entityManager->getRepository('Continut\Extensions\System\Frontend\Classes\Domain\Model\FrontendPage')->findWithIdOrSlug($pageId, $pageSlug);
 
-			$breadcrumbs = [];
-			if ($pageModel->getCachedPath()) {
+			/*$breadcrumbs = [];
+			if ($page->getCachedPath()) {
 				$breadcrumbs = $pagesCollection
-					->where("id IN (" . $pageModel->getCachedPath() . ") ORDER BY id ASC")
+					->where("id IN (" . $page->getCachedPath() . ") ORDER BY id ASC")
 					->getAll();
-			}
+			}*/
 
-			$this->getView()->assign("breadcrumbs", $breadcrumbs);
-			$this->getView()->assign("page", $pageModel);
+			$this->getView()->assign("breadcrumbs", "");
+			$this->getView()->assign("page", $page);
 		}
 	}
 

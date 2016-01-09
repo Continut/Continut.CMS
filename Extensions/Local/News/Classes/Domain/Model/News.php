@@ -11,43 +11,43 @@
 namespace Continut\Extensions\Local\News\Classes\Domain\Model {
 
 	use Continut\Core\Mvc\Model\BaseModel;
-	use Continut\Core\Mvc\Model\Content;
 
+	/**
+	 * Class News
+	 *
+	 * @package Continut\Extensions\Local\News\Classes\Domain\Model
+	 * @Entity(repositoryClass="Continut\Extensions\Local\News\Classes\Domain\Collection\NewsCollection")
+	 * @Table(name="ext_news")
+	 */
 	class News extends BaseModel {
 
 		/**
 		 * @var string
+		 *
+		 * @Column(name="title", type="string")
 		 */
 		protected $title;
 
 		/**
 		 * @var string
+		 *
+		 * @Column(name="description", type="text")
 		 */
 		protected $description;
 
 		/**
 		 * @var bool
+		 *
+		 * @Column(name="is_visible", type="boolean")
 		 */
-		protected $is_visible;
+		protected $isVisible;
 
 		/**
 		 * @var int
+		 *
+		 * @Column(name="author", type="string")
 		 */
 		protected $author;
-
-		/**
-		 * Simple datamapper used for the database
-		 * @return array
-		 */
-		public function dataMapper() {
-			return [
-				"id"          => $this->id,
-				"title"       => $this->title,
-				"description" => $this->description,
-				"is_visible"  => $this->is_visible,
-				"author"      => $this->author
-			];
-		}
 
 		/**
 		 * @return string
@@ -59,10 +59,14 @@ namespace Continut\Extensions\Local\News\Classes\Domain\Model {
 
 		/**
 		 * @param string $title
+		 *
+		 * @return News
 		 */
 		public function setTitle($title)
 		{
 			$this->title = $title;
+
+			return $this;
 		}
 
 		/**
@@ -70,15 +74,19 @@ namespace Continut\Extensions\Local\News\Classes\Domain\Model {
 		 */
 		public function getIsVisible()
 		{
-			return $this->is_visible;
+			return $this->isVisible;
 		}
 
 		/**
-		 * @param boolean $is_visible
+		 * @param boolean $isVisible
+		 *
+		 * @return News
 		 */
-		public function setIsVisible($is_visible)
+		public function setIsVisible($isVisible)
 		{
-			$this->is_visible = $is_visible;
+			$this->isVisible = $isVisible;
+
+			return $this;
 		}
 
 		/**
@@ -91,10 +99,14 @@ namespace Continut\Extensions\Local\News\Classes\Domain\Model {
 
 		/**
 		 * @param string $description
+		 *
+		 * @return News
 		 */
 		public function setDescription($description)
 		{
 			$this->description = $description;
+
+			return $this;
 		}
 
 		/**
@@ -107,10 +119,14 @@ namespace Continut\Extensions\Local\News\Classes\Domain\Model {
 
 		/**
 		 * @param int $author
+		 *
+		 * @return News
 		 */
 		public function setAuthor($author)
 		{
 			$this->author = $author;
+
+			return $this;
 		}
 
 	}

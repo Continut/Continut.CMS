@@ -42,13 +42,9 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 			$username = $this->getRequest()->getArgument("cms_username");
 			$password = $this->getRequest()->getArgument("cms_password");
 
-			$userCollection = Utility::createInstance("Continut\\Core\\System\\Domain\\Collection\\BackendUserCollection");
-			$backendUser = $userCollection->where("username = :username AND password = :password AND is_deleted = 0 AND is_active = 1",
-				[
-					"username" => $username,
-					"password" => $password
-				]
-			)->getFirst();
+			$backendUser = Utility::$entityManager->getRepository('Continut\Core\System\Domain\Model\BackendUser')->findOneBy(
+				["username" => $username, "password" => $password, "isDeleted" => 0, "isActive" => 1]
+			);
 
 			if (!$backendUser) {
 				$this->getSession()->addFlashMessage(Utility::helper("Localization")->translate("login.error.incorrect"), UserSession::FLASH_ERROR);

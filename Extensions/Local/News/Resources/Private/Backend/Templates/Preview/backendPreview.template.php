@@ -1,7 +1,7 @@
 <?php if (isset($data["limit"])): ?>
 	<p><?= $this->__("backend.news.preview.lastXArticles", ["limit" => $data["limit"]]) ?></p>
 <?php endif ?>
-<?php foreach ($news->getAll() as $newsItem): ?>
+<?php foreach ($news as $newsItem): ?>
 <div class="media">
 	<div class="media-left">
 		<a href="#">

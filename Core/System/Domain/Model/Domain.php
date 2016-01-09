@@ -11,40 +11,47 @@
 namespace Continut\Core\System\Domain\Model {
 
 	use Continut\Core\Mvc\Model\BaseModel;
-	use Continut\Core\Utility;
+	use Doctrine\Common\Collections\ArrayCollection;
 
+	/**
+	 * Class Domain
+	 *
+	 * @package Continut\Core\System\Domain\Model
+	 * @Table(name="sys_domains")
+	 * @Entity(repositoryClass="Continut\Core\System\Domain\Collection\DomainCollection")
+	 */
 	class Domain extends BaseModel {
 
 		/**
 		 * @var string
+		 *
+		 * @Column(name="title", type="string")
 		 */
 		protected $title;
 
 		/**
 		 * @var boolean
+		 *
+		 * @Column(name="is_visible", type="boolean")
 		 */
-		protected $is_visible;
+		protected $isVisible;
 
 		/**
 		 * @var int
+		 *
+		 * @Column(name="sorting", type="integer")
 		 */
 		protected $sorting;
 
 		/**
-		 * @var array
+		 * @var ArrayCollection
+		 * @OneToMany(targetEntity="DomainUrl", mappedBy="domain")
 		 */
-		protected $domain_urls;
+		protected $domainUrls;
 
-		/**
-		 * Simple datamapper used for the database
-		 * @return array
-		 */
-		public function dataMapper() {
-			return [
-				"title"           => $this->title,
-				"is_visible"      => $this->is_visible,
-				"sorting"         => $this->sorting
- 			];
+		public function __construct()
+		{
+			$this->domainUrls = new ArrayCollection();
 		}
 
 		/**
@@ -56,25 +63,33 @@ namespace Continut\Core\System\Domain\Model {
 
 		/**
 		 * @param $title
+		 *
+		 * @return Domain
 		 */
 		public function setTitle($title) {
 			$this->title = $title;
+
+			return $this;
 		}
 
 		/**
 		 * @return boolean
 		 */
-		public function isIsVisible()
+		public function getIsVisible()
 		{
-			return $this->is_visible;
+			return $this->isVisible;
 		}
 
 		/**
-		 * @param boolean $is_visible
+		 * @param boolean $isVisible
+		 *
+		 * @return Domain
 		 */
-		public function setIsVisible($is_visible)
+		public function setIsVisible($isVisible)
 		{
-			$this->is_visible = $is_visible;
+			$this->isVisible = $isVisible;
+
+			return $this;
 		}
 
 		/**
@@ -87,21 +102,29 @@ namespace Continut\Core\System\Domain\Model {
 
 		/**
 		 * @param int $sorting
+		 *
+		 * @return Domain
 		 */
 		public function setSorting($sorting)
 		{
 			$this->sorting = $sorting;
+
+			return $this;
 		}
 
 		/**
-		 * @return array
-		 * @throws \Continut\Core\Tools\Exception
+		 *
 		 */
 		public function getDomainUrls() {
-			if ($this->domain_urls == null) {
-				$this->domain_urls = Utility::createInstance("Continut\\Core\\System\\Domain\\Collection\\DomainUrlCollection")->findByDomain_uid($this->id)->getAll();
-			}
-			return $this->domain_urls;
+			return $this->domainUrls;
+		}
+
+		/**
+		 * @param DomainUrl $domainUrl
+		 */
+		public function addDomainUrl($domainUrl) {
+			$domainUrl->setDomain($this);
+			$this->domainUrls[] = $domainUrl;
 		}
 	}
 
