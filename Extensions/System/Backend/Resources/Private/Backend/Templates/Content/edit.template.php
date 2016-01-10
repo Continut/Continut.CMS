@@ -8,7 +8,7 @@
 				<?php else: ?>
 					<?= $element->getTitle() ?>
 				<?php endif ?>
-				(<?= $element->getUid() ?>)
+				(<?= $element->getId() ?>)
 			</li>
 		</ol>
 	</div>
@@ -16,7 +16,7 @@
 <?= $this->partial("Content/editArea", "Backend", "Backend") ?>
 <div class="row">
 	<div class="col-sm-12">
-		<form method="post" id="form_content" class="form-content" action="<?= $this->helper("Url")->linkToAction("Backend", "Content", "update", ["uid" => $element->getUid()]) ?>">
+		<form method="post" id="form_content" class="form-content" action="<?= $this->helper("Url")->linkToAction("Backend", "Content", "update", ["id" => $element->getId()]) ?>">
 			<?= $content ?>
 		</form>
 	</div>

@@ -29,7 +29,7 @@ namespace Core\System\Domain\Model {
 		/**
 		 * @var int Parent page id
 		 */
-		protected $parent_uid;
+		protected $parent_id;
 
 		/**
 		 * @var string iso3 code of this page's language
@@ -54,7 +54,7 @@ namespace Core\System\Domain\Model {
 		/**
 		 * @var int The id of the domain url this page belongs to
 		 */
-		protected $domain_url_uid = 0;
+		protected $domain_url_id = 0;
 
 		/**
 		 * @var string Layout for this page
@@ -77,7 +77,7 @@ namespace Core\System\Domain\Model {
 		protected $backend_layout;
 
 		/**
-		 * @var string Cached path used for breadcrumb (List of comma separated values of parent uids)
+		 * @var string Cached path used for breadcrumb (List of comma separated values of parent ids)
 		 */
 		protected $cached_path;
 
@@ -104,7 +104,7 @@ namespace Core\System\Domain\Model {
 		/**
 		 * @var int
 		 */
-		protected $original_uid;
+		protected $original_id;
 
 		/**
 		 * @var \Core\System\Domain\Model\Page Original page, if this is a translated one
@@ -127,12 +127,12 @@ namespace Core\System\Domain\Model {
 		 */
 		public function dataMapper() {
 			return [
-				"parent_uid"       => $this->parent_uid,
+				"parent_id"       => $this->parent_id,
 				"title"            => $this->title,
 				"slug"             => $this->slug,
 				"language_iso3"    => $this->language_iso3,
 				"cached_path"      => $this->cached_path,
-				"domain_url_uid"   => $this->domain_url_uid,
+				"domain_url_id"   => $this->domain_url_id,
 				"is_deleted"       => $this->is_deleted,
 				"is_in_menu"       => $this->is_in_menu,
 				"is_visible"       => $this->is_visible,
@@ -140,7 +140,7 @@ namespace Core\System\Domain\Model {
 				"layout_recursive" => $this->layout_recursive,
 				"frontend_layout"  => $this->frontend_layout,
 				"backend_layout"   => $this->backend_layout,
-				"original_uid"     => $this->original_uid,
+				"original_id"     => $this->original_id,
 				"sorting"          => $this->sorting,
 				"meta_keywords"    => $this->meta_keywords,
 				"meta_description" => $this->meta_description,
@@ -268,17 +268,17 @@ namespace Core\System\Domain\Model {
 		/**
 		 * @return int
 		 */
-		public function getDomainUrlUid()
+		public function getDomainUrlId()
 		{
-			return $this->domain_url_uid;
+			return $this->domain_url_id;
 		}
 
 		/**
-		 * @param int $domain_url_uid
+		 * @param int $domain_url_id
 		 */
-		public function setDomainUrlUid($domain_url_uid)
+		public function setDomainUrlId($domain_url_id)
 		{
-			$this->domain_url_uid = $domain_url_uid;
+			$this->domain_url_id = $domain_url_id;
 		}
 
 		/**
@@ -320,12 +320,12 @@ namespace Core\System\Domain\Model {
 		}
 
 		/**
-		 * @param $parentUid
+		 * @param $parentId
 		 *
 		 * @return $this
 		 */
-		public function setParentUid($parentUid) {
-			$this->parent_uid = $parentUid;
+		public function setParentId($parentId) {
+			$this->parent_id = $parentId;
 
 			return $this;
 		}
@@ -333,8 +333,8 @@ namespace Core\System\Domain\Model {
 		/**
 		 * @return int
 		 */
-		public function getParentUid() {
-			return $this->parent_uid;
+		public function getParentId() {
+			return $this->parent_id;
 		}
 
 		/**
@@ -344,10 +344,10 @@ namespace Core\System\Domain\Model {
 		 * @throws \Core\Tools\Exception
 		 */
 		public function getParent() {
-			if ($this->parent_uid) {
+			if ($this->parent_id) {
 				if (empty($this->parent)) {
 					$this->parent = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection")
-						->findByUid($this->getParentUid());
+						->findById($this->getParentId());
 				}
 			}
 
@@ -362,7 +362,7 @@ namespace Core\System\Domain\Model {
 		 * @return $this
 		 */
 		public function mergeOriginal() {
-			if ($this->original_uid > 0) {
+			if ($this->original_id > 0) {
 				$originalPage = $this->getOriginal();
 				$this->setBackendLayout($originalPage->getBackendLayout());
 				$this->setFrontendLayout($originalPage->getFrontendLayout());
@@ -376,10 +376,10 @@ namespace Core\System\Domain\Model {
 		 * @throws \Core\Tools\Exception
 		 */
 		public function getOriginal() {
-			if ($this->original_uid) {
+			if ($this->original_id) {
 				if (empty($this->original)) {
 					$this->original = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection")
-						->findByUid($this->getOriginalUid());
+						->findById($this->getOriginalId());
 				}
 			}
 
@@ -389,19 +389,19 @@ namespace Core\System\Domain\Model {
 		/**
 		 * @return int
 		 */
-		public function getOriginalUid()
+		public function getOriginalId()
 		{
-			return $this->original_uid;
+			return $this->original_id;
 		}
 
 		/**
-		 * @param int $original_uid
+		 * @param int $original_id
 		 *
 		 * @return $this
 		 */
-		public function setOriginalUid($original_uid)
+		public function setOriginalId($original_id)
 		{
-			$this->original_uid = $original_uid;
+			$this->original_id = $original_id;
 
 			return $this;
 		}

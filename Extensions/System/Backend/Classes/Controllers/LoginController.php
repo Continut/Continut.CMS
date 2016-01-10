@@ -55,8 +55,8 @@ namespace Extensions\System\Backend\Classes\Controllers {
 				$this->redirect(Utility::helper("Url")->linkToAction("Backend", "Login", "index"));
 			}
 
-			// We set user as "connected", meaning we store their uid
-			$this->getSession()->set("user_id", $backendUser->getUid());
+			// We set user as "connected", meaning we store their id
+			$this->getSession()->set("user_id", $backendUser->getId());
 			$this->getSession()->set("fullname", $backendUser->getName());
 
 			// and we redirect them to the dashboard

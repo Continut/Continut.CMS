@@ -22,12 +22,12 @@ namespace Core\System\Domain\Model {
 		/**
 		 * @var int
 		 */
-		protected $parent_uid;
+		protected $parent_id;
 
 		/**
 		 * @var int
 		 */
-		protected $domain_uid;
+		protected $domain_id;
 
 		/**
 		 * @var string
@@ -66,8 +66,8 @@ namespace Core\System\Domain\Model {
 		public function dataMapper() {
 			return [
 				"is_alias"      => $this->is_alias,
-				"parent_uid"    => $this->parent_uid,
-				"domain_uid"    => $this->domain_uid,
+				"parent_id"    => $this->parent_id,
+				"domain_id"    => $this->domain_id,
 				"sorting"       => $this->sorting,
 				"locale"        => $this->locale,
 				"flag"          => $this->flag,
@@ -95,17 +95,17 @@ namespace Core\System\Domain\Model {
 		/**
 		 * @return int
 		 */
-		public function getParentUid()
+		public function getParentId()
 		{
-			return $this->parent_uid;
+			return $this->parent_id;
 		}
 
 		/**
-		 * @param int $parent_uid
+		 * @param int $parent_id
 		 */
-		public function setParentUid($parent_uid)
+		public function setParentId($parent_id)
 		{
-			$this->parent_uid = $parent_uid;
+			$this->parent_id = $parent_id;
 		}
 
 		/**
@@ -175,17 +175,17 @@ namespace Core\System\Domain\Model {
 		/**
 		 * @return int
 		 */
-		public function getDomainUid()
+		public function getDomainId()
 		{
-			return $this->domain_uid;
+			return $this->domain_id;
 		}
 
 		/**
-		 * @param int $domain_uid
+		 * @param int $domain_id
 		 */
-		public function setDomainUid($domain_uid)
+		public function setDomainId($domain_id)
 		{
-			$this->domain_uid = $domain_uid;
+			$this->domain_id = $domain_id;
 		}
 
 		/**
@@ -210,7 +210,7 @@ namespace Core\System\Domain\Model {
 		 */
 		public function getDomain() {
 			if ($this->domain == null) {
-				$this->domain = Utility::createInstance("Core\\System\\Domain\\Collection\\DomainCollection")->findByUid($this->domain_uid);
+				$this->domain = Utility::createInstance("Core\\System\\Domain\\Collection\\DomainCollection")->findById($this->domain_id);
 			}
 			return $this->domain;
 		}

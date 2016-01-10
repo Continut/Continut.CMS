@@ -22,23 +22,23 @@ namespace Extensions\System\Frontend\Classes\Domain\Model\Content {
 		 * @return string
 		 */
 		public function render($elements) {
-			$reference = (int)$this->getReferenceUid();
+			$reference = (int)$this->getReferenceId();
 			$value = "";
 			if ($reference > 0) {
-				// Load the content collection model and then find all the content elements that belong to this page_uid
+				// Load the content collection model and then find all the content elements that belong to this page_id
 				$contentCollection = Utility::createInstance("\\Extensions\\System\\Frontend\\Classes\\Domain\\Collection\\FrontendContentCollection");
 				$referencedContent = $contentCollection
-					->where("is_deleted = 0 AND uid = :uid ORDER BY sorting ASC", [":uid" => $reference])
+					->where("is_deleted = 0 AND id = :id ORDER BY sorting ASC", [":id" => $reference])
 					->getFirst();
 				// set the element's id to the reference id, so that we do not modify the original
-				$referencedContent->setUid($this->getUid());
+				$referencedContent->setId($this->getId());
 				if ($referencedContent) {
 					if ($referencedContent->getType() != "container") {
 						$value = $referencedContent->render(null);
 					} else {
 						$contentCollection
-							->where("page_uid = :page_uid", ["page_uid" => $referencedContent->getPageUid()]);
-						$elements = $contentCollection->findChildrenForUid($reference);
+							->where("page_id = :page_id", ["page_id" => $referencedContent->getPageId()]);
+						$elements = $contentCollection->findChildrenForId($reference);
 						$value = $referencedContent->render($elements->children);
 					}
 				}

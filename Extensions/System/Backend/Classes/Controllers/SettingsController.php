@@ -25,19 +25,19 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			$domainsCollection->where("is_visible = :is_visible ORDER BY sorting ASC", ["is_visible" => 1]);
 
 			$languagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\DomainUrlCollection");
-			$languagesCollection->where("domain_uid = :domain_uid ORDER BY sorting ASC", ["domain_uid" => $domainsCollection->getFirst()->getUid()]);
+			$languagesCollection->where("domain_id = :domain_id ORDER BY sorting ASC", ["domain_id" => $domainsCollection->getFirst()->getId()]);
 
 			$this->getView()->assign("domains", $domainsCollection);
 			$this->getView()->assign("languages", $languagesCollection);
 		}
 
 		public function languagesAction() {
-			$domainUid = $this->getRequest()->getArgument("domain_uid", 0);
+			$domainId = $this->getRequest()->getArgument("domain_id", 0);
 
 			$languagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\DomainUrlCollection");
 
-			if ($domainUid > 0) {
-				$languagesCollection->where("domain_uid = :domain_uid ORDER BY sorting ASC", ["domain_uid" => $domainUid]);
+			if ($domainId > 0) {
+				$languagesCollection->where("domain_id = :domain_id ORDER BY sorting ASC", ["domain_id" => $domainId]);
 			}
 			$languages = $languagesCollection->toSimplifiedArray(TRUE, "All");
 

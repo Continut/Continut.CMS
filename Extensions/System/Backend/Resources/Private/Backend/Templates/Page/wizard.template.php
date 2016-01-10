@@ -3,7 +3,7 @@
 <?php else: ?>
 	<p class="lead"><?= $this->__('backend.page.wizard.title.root') ?></p>
 <?php endif ?>
-<form method="post" id="form_page_wizard" class="form" action="<?= $this->helper("Url")->linkToAction("Backend", "Page", "add", ["uid" => (($page) ? $page->getUid() : 0)]) ?>">
+<form method="post" id="form_page_wizard" class="form" action="<?= $this->helper("Url")->linkToAction("Backend", "Page", "add", ["id" => (($page) ? $page->getId() : 0)]) ?>">
 	<div class="row">
 		<div class="col-sm-12 col-md-4">
 			<p><strong><?= $this->__('backend.page.wizard.placement.title') ?></strong></p>

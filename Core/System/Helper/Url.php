@@ -53,16 +53,16 @@ namespace Core\System\Helper {
 		/**
 		 * Frontend link to a page by using it's id
 		 *
-		 * @param int $pageUid Uid of the page to link to
+		 * @param int $pageId id of the page to link to
 		 *
 		 * @return string
 		 */
-		public function linkToPage($pageUid) {
+		public function linkToPage($pageId) {
 			$params = [
 				"_extension" => "Frontend",
 				"_controller" => "Index",
 				"_action" => "index",
-				"pid" => $pageUid
+				"pid" => $pageId
 			];
 			return $this->linkTo($params);
 		}

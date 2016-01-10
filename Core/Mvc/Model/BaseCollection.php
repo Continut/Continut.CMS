@@ -123,15 +123,15 @@ namespace Core\Mvc\Model {
 		}
 
 		/**
-		 * Return 1 record by uid
+		 * Return 1 record by id
 		 *
-		 * @param $uid
+		 * @param $id
 		 *
 		 * @return mixed
 		 */
-		public function findByUid($uid) {
-			$sth = Utility::getDatabase()->prepare("SELECT * FROM $this->_tablename WHERE uid = :uid");
-			$sth->execute(["uid" => $uid]);
+		public function findByid($id) {
+			$sth = Utility::getDatabase()->prepare("SELECT * FROM $this->_tablename WHERE id = :id");
+			$sth->execute(["id" => $id]);
 			$sth->setFetchMode(\PDO::FETCH_CLASS, $this->_elementClass);
 
 			$element = $sth->fetch();
@@ -160,7 +160,7 @@ namespace Core\Mvc\Model {
 				$listOfFields = implode(",", array_keys($dataMapper));
 				$listOfValues = [];
 				// element does not exist, insert it
-				if (is_null($element->getUid())) {
+				if (is_null($element->getId())) {
 					foreach ($dataMapper as $key => $value) {
 						$listOfValues[] = ":" . $key;
 					}
@@ -172,8 +172,8 @@ namespace Core\Mvc\Model {
 						$listOfValues[] = $key . "= :" . $key;
 					}
 					$listOfValues = implode(",", $listOfValues);
-					$sth = Utility::getDatabase()->prepare("UPDATE $this->_tablename SET $listOfValues WHERE uid = :uid");
-					$dataMapper["uid"] = $element->getUid();
+					$sth = Utility::getDatabase()->prepare("UPDATE $this->_tablename SET $listOfValues WHERE id = :id");
+					$dataMapper["id"] = $element->getId();
 				}
 				$sth->execute($dataMapper);
 			}
@@ -183,9 +183,9 @@ namespace Core\Mvc\Model {
 
 		public function delete() {
 			foreach ($this->_elements as $element) {
-				if (!is_null($element->getUid)) {
-					$sth = Utility::getDatabase()->prepare("DELETE FROM $this->_tablename WHERE uid = :uid");
-					$sth->execute(["uid" => $element->getUid()]);
+				if (!is_null($element->getId)) {
+					$sth = Utility::getDatabase()->prepare("DELETE FROM $this->_tablename WHERE id = :id");
+					$sth->execute(["id" => $element->getId()]);
 				}
 			}
 		}

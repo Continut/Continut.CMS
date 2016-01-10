@@ -35,7 +35,7 @@ namespace Core\Mvc\View {
 		 */
 		protected $_title;
 
-		protected $_uid;
+		protected $_id;
 
 		/**
 		 * @var array Template variables
@@ -60,19 +60,19 @@ namespace Core\Mvc\View {
 		 * @return mixed
 		 */
 
-		public function getUid()
+		public function getId()
 		{
-			return $this->_uid;
+			return $this->_id;
 		}
 
 		/**
-		 * @param mixed $uid
+		 * @param mixed $id
 		 *
 		 * @return $this
 		 */
-		public function setUid($uid)
+		public function setId($id)
 		{
-			$this->_uid = $uid;
+			$this->_id = $id;
 
 			return $this;
 		}
@@ -148,7 +148,7 @@ namespace Core\Mvc\View {
 		 * @return $this
 		 */
 		public function addElement($element) {
-			$this->_elements[$element->getUid()] = $element;
+			$this->_elements[$element->getId()] = $element;
 
 			return $this;
 		}

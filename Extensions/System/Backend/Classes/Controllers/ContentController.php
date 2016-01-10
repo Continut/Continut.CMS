@@ -25,10 +25,10 @@ namespace Extensions\System\Backend\Classes\Controllers {
 		 * @throws \Core\Tools\Exception
 		 */
 		public function deleteAction() {
-			$uid = (int)$this->getRequest()->getArgument("uid");
+			$id = (int)$this->getRequest()->getArgument("id");
 
 			$contentCollection = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
-			$contentElement = $contentCollection->where("uid = :uid AND is_deleted = 0", ["uid" => $uid])->getFirst();
+			$contentElement = $contentCollection->where("id = :id AND is_deleted = 0", ["id" => $id])->getFirst();
 
 			$contentElement->setIsDeleted(true);
 
@@ -38,7 +38,7 @@ namespace Extensions\System\Backend\Classes\Controllers {
 				->save();
 
 			return json_encode([
-				"uid" => $contentElement->getUid(),
+				"id" => $contentElement->getId(),
 				"operation" => "delete"
 			]);
 		}
@@ -47,10 +47,10 @@ namespace Extensions\System\Backend\Classes\Controllers {
 		 * Toggles an element's visibility
 		 */
 		public function toggleVisibilityAction() {
-			$uid = (int)$this->getRequest()->getArgument("uid");
+			$id = (int)$this->getRequest()->getArgument("id");
 
 			$contentCollection = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
-			$content = $contentCollection->findByUid($uid);
+			$content = $contentCollection->findById($id);
 
 			$content->setIsVisible(!$content->getIsVisible());
 
@@ -60,16 +60,16 @@ namespace Extensions\System\Backend\Classes\Controllers {
 				->save();
 
 			return json_encode([
-				"uid"       => $content->getUid(),
+				"id"       => $content->getId(),
 				"operation" => "toggleVisibility"
 			]);
 		}
 
 		public function editAction() {
-			$uid = (int)$this->getRequest()->getArgument("uid");
+			$id = (int)$this->getRequest()->getArgument("id");
 
 			$contentCollection = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
-			$content = $contentCollection->where("uid = :uid AND is_deleted = 0", ["uid" => $uid])->getFirst();
+			$content = $contentCollection->where("id = :id AND is_deleted = 0", ["id" => $id])->getFirst();
 
 			$this->getView()->assign("element", $content);
 
@@ -87,7 +87,7 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			$this->getView()->assign("content", $wizard->render());
 
 			return json_encode([
-				"uid"       => $content->getUid(),
+				"id"       => $content->getId(),
 				"html"      => $this->getView()->render(),
 				"operation" => "edit"
 			]);
@@ -100,11 +100,11 @@ namespace Extensions\System\Backend\Classes\Controllers {
 		 * @throws \Core\Tools\Exception
 		 */
 		public function updateAction() {
-			$uid  = (int)$this->getRequest()->getArgument("uid");
+			$id  = (int)$this->getRequest()->getArgument("id");
 			$data = $this->getRequest()->getArgument("data", null);
-			if ($data && $uid > 0) {
+			if ($data && $id > 0) {
 				$contentCollection = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
-				$content = $contentCollection->findByUid($uid);
+				$content = $contentCollection->findById($id);
 				$values = json_decode($content->getValue(), TRUE);
 				if (isset($data["title"])) {
 					$content->setTitle($data["title"]);
@@ -130,22 +130,22 @@ namespace Extensions\System\Backend\Classes\Controllers {
 		 * @throws \Core\Tools\Exception
 		 */
 		public function updateContainerAction() {
-			$newParent = (int)$this->getRequest()->getArgument("parent_uid");
+			$newParent = (int)$this->getRequest()->getArgument("parent_id");
 			$newColumn = (int)$this->getRequest()->getArgument("column_id");
-			$uid       = (int)$this->getRequest()->getArgument("uid");
-			$beforeUid = (int)$this->getRequest()->getArgument("before_uid");
+			$id       = (int)$this->getRequest()->getArgument("id");
+			$beforeId = (int)$this->getRequest()->getArgument("before_id");
 
 			$contentCollection = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
-			$contentElement = $contentCollection->where("uid = :uid AND is_deleted = 0", ["uid" => $uid])->getFirst();
+			$contentElement = $contentCollection->where("id = :id AND is_deleted = 0", ["id" => $id])->getFirst();
 
-			// the element was either added before one, ar at the very end of a container, in which case the $beforeUid is not present
-			if ($beforeUid) {
-				$otherElement = $contentCollection->where("uid = :uid", ["uid" => $beforeUid])
+			// the element was either added before one, ar at the very end of a container, in which case the $beforeId is not present
+			if ($beforeId) {
+				$otherElement = $contentCollection->where("id = :id", ["id" => $beforeId])
 					->getFirst();
 				$contentElement->setSorting($otherElement->getSorting());
 				$elementsToModify = $contentCollection->where(
-					"column_id = :column_id AND parent_uid = :parent_uid AND sorting >= :sorting_value",
-					["column_id" => $newColumn, "parent_uid" => $newParent, "sorting_value" => $otherElement->getSorting()]
+					"column_id = :column_id AND parent_id = :parent_id AND sorting >= :sorting_value",
+					["column_id" => $newColumn, "parent_id" => $newParent, "sorting_value" => $otherElement->getSorting()]
 				);
 				foreach ($elementsToModify->getAll() as $element) {
 					$element->setSorting($element->getSorting() + 1);
@@ -153,8 +153,8 @@ namespace Extensions\System\Backend\Classes\Controllers {
 				$elementsToModify->save();
 			} else {
 				$otherElement = $contentCollection->where(
-					"column_id = :column_id AND parent_uid = :parent_uid ORDER BY sorting DESC",
-					["column_id" => $newColumn, "parent_uid" => $newParent]
+					"column_id = :column_id AND parent_id = :parent_id ORDER BY sorting DESC",
+					["column_id" => $newColumn, "parent_id" => $newParent]
 				)->getFirst();
 				if ($otherElement) {
 					$contentElement->setSorting($otherElement->getSorting() + 1);
@@ -164,7 +164,7 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			}
 
 			$contentElement
-				->setParentUid($newParent)
+				->setParentId($newParent)
 				->setColumnId($newColumn);
 
 			$contentCollection

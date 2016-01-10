@@ -9,14 +9,14 @@
 						<select id="select_website" class="selectpicker" data-width="100%">
 							<option value="0">- Global -</option>
 							<?php foreach ($domains->getAll() as $domain): ?>
-								<option value="<?= $domain->getUid() ?>"><?= $domain->getTitle() ?></option>
+								<option value="<?= $domain->getId() ?>"><?= $domain->getTitle() ?></option>
 							<?php endforeach ?>
 						</select>
 						<script type="text/javascript">
 							$('#select_website').on('change', function (event) {
 								$.ajax({
 										url: '<?= $this->helper("Url")->linkToAction("Backend", "Settings", "languages") ?>',
-										data: { domain_uid: this.value }
+										data: { domain_id: this.value }
 									})
 									.done(function( data ) {
 										var $languages = $('#select_language');
@@ -33,7 +33,7 @@
 						<select id="select_language" class="selectpicker" data-width="100%">
 							<option value="0">- All languages -</option>
 							<?php foreach ($languages->getAll() as $language): ?>
-								<option data-icon="flag-icon flag-icon-<?= $language->getFlag() ?>" value="<?= $language->getUid() ?>"><?= $language->getTitle() ?></option>
+								<option data-icon="flag-icon flag-icon-<?= $language->getFlag() ?>" value="<?= $language->getId() ?>"><?= $language->getTitle() ?></option>
 							<?php endforeach ?>
 						</select>
 					</div>
@@ -71,11 +71,11 @@
 											<ul class="list-readable list-enclosed">
 												<?php foreach ($domains->getAll() as $domain): ?>
 													<li>
-														<label><strong><input type="checkbox" name="domains[]" value="<?= $domain->getUid() ?>"> <?= $domain->getTitle() ?></strong></label>
+														<label><strong><input type="checkbox" name="domains[]" value="<?= $domain->getId() ?>"> <?= $domain->getTitle() ?></strong></label>
 														<ul class="list-readable">
 															<?php foreach ($domain->getDomainUrls() as $language): ?>
 																<li>
-																	<label><input type="checkbox" name="domain_urls[]" value="<?= $language->getUid() ?>"> <i class="flag-icon flag-icon-<?= $language->getFlag() ?>"></i> <?= $language->getTitle() ?></label>
+																	<label><input type="checkbox" name="domain_urls[]" value="<?= $language->getId() ?>"> <i class="flag-icon flag-icon-<?= $language->getFlag() ?>"></i> <?= $language->getTitle() ?></label>
 																	<i class="fa fa-icon fa-globe"></i> <?= $language->getUrl() ?>
 																</li>
 															<?php endforeach; ?>

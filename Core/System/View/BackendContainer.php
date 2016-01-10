@@ -29,7 +29,7 @@ namespace Core\System\View {
 				}
 			}
 
-			return sprintf('<div data-parent="%s" data-id="%s" class="container-receiver">%s</div>', $this->getUid(), $id, $htmlElements);
+			return sprintf('<div data-parent="%s" data-id="%s" class="container-receiver">%s</div>', $this->getId(), $id, $htmlElements);
 		}
 	}
 }

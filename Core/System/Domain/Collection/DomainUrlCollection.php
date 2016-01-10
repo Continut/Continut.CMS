@@ -32,7 +32,7 @@ namespace Core\System\Domain\Collection {
 				$data = [0 => ["title" => $emptyTitle, "flag" => "eu"]];
 			}
 			foreach ($this->getAll() as $language) {
-				$data[$language->getUid()] = [
+				$data[$language->getId()] = [
 					"title" => $language->getTitle(),
 					"flag"  => $language->getFlag()
 				];

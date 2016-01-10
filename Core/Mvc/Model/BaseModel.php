@@ -21,20 +21,20 @@ namespace Core\Mvc\Model {
 		/**
 		 * @var int model unique identifier
 		 */
-		protected $uid;
+		protected $id;
 
 		/**
 		 * @return int Model's unique id in the database
 		 */
-		public function getUid() {
-			return $this->uid;
+		public function getId() {
+			return $this->id;
 		}
 
 		/**
-		 * @param int $uid new uid to use
+		 * @param int $id new id to use
 		 */
-		public function setUid($uid) {
-			$this->uid = $uid;
+		public function setId($id) {
+			$this->id = $id;
 		}
 
 		/**
