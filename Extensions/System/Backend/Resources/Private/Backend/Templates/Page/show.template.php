@@ -47,7 +47,7 @@
 	$('.page-link').on('click', function() {
 		$.ajax({
 			url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "show") ?>',
-			data: { page_id: $(this).data('page-id') }
+			data: { id: $(this).data('page-id') }
 		})
 		.done(function (data) {
 			$('#content').html(data);
@@ -56,7 +56,7 @@
 	$('#page-visibility-frontend').on('click', function() {
 		$.ajax({
 			url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "toggleVisibility") ?>',
-			data: { page_id: <?= $page->getId() ?> },
+			data: { id: <?= $page->getId() ?> },
 			dataType: 'json'
 		})
 			.done(function (data) {
@@ -75,7 +75,7 @@
 	$('#page-visibility-menu').on('click', function() {
 		$.ajax({
 			url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "toggleMenu") ?>',
-			data: { page_id: <?= $page->getId() ?> },
+			data: { id: <?= $page->getId() ?> },
 			dataType: 'json'
 		})
 			.done(function (data) {
@@ -94,7 +94,7 @@
 	$('#page-edit').on('click', function() {
 		$.ajax({
 			url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "edit") ?>',
-			data: { page_id: <?= $page->getId() ?> }
+			data: { id: <?= $page->getId() ?> }
 		}).done(function (data) {
 			$('#page_edit').html(data);
 		});
@@ -109,7 +109,7 @@
 				if(result) {
 					$.getJSON({
 						url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "delete") ?>',
-						data: { page_id: <?= $page->getId() ?> }
+						data: { id: <?= $page->getId() ?> }
 					}).done(function (data) {
 						console.log(data);
 					});
@@ -133,7 +133,6 @@
 
 		$.getJSON(url, function (data) {
 			if (data.operation == "delete") {
-				console.log(data);
 				$('#panel-backend-content-' + data.id).remove();
 			}
 			if (data.operation == "edit") {

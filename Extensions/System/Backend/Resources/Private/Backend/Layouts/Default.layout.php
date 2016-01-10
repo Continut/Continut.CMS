@@ -1,6 +1,6 @@
 <?php
 $this->getPage()
-	->addCssAsset( [ "identifier" => "bootstrap", "extension" => "Backend", "file" => "bootstrap-themes/simplex.min.css" ])
+	->addCssAsset( [ "identifier" => "bootstrap", "extension" => "Backend", "file" => "bootstrap/bootstrap.min.css" ])
 	->addCssAsset( [ "identifier" => "bootstrap-select", "extension" => "Backend", "file" => "bootstrap-select/bootstrap-select.css" ])
 	->addCssAsset( [ "identifier" => "bootstrap-dialog", "extension"  => "Backend", "file" => "bootstrap-dialog/bootstrap-dialog.css" ])
 	->addCssAsset( [ "identifier" => "datetimepicker", "extension" => "Backend", "file" => "datetimepicker/DateTimePicker.css" ])

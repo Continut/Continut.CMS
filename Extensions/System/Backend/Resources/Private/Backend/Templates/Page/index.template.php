@@ -139,7 +139,7 @@
 							if (event.node) {
 								$.ajax({
 									url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "show") ?>',
-									data: {page_id: event.node.id},
+									data: {id: event.node.id},
 									beforeSend: function (xhr) {
 										$(event.node.element).find('.jqtree-element').eq(0).append('<span class="pull-right fa fa-spinner fa-pulse"></span>');
 									}

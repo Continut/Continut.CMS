@@ -138,7 +138,6 @@ namespace Continut\Core\System\Domain\Model {
 		/**
 		 * @var int Original page record, used for translated pages. It is the original page from which this one was translated
 		 *
-		 * @Column(type="integer", name="original_id")
 		 * @OneToOne(targetEntity="Page")
 		 * @JoinColumn(name="original_id", referencedColumnName="id")
 		 */

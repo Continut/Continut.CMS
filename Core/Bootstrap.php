@@ -57,7 +57,9 @@ namespace Continut\Core {
 			Utility::$autoloader->register();
 			Utility::$autoloader->addNamespace("Continut", __ROOTCMS__);
 			Utility::$autoloader->addNamespace("Doctrine", __ROOTCMS__ . DS . "Lib" . DS . "Doctrine");
-			Utility::$autoloader->addNamespace("Debug",    __ROOTCMS__ . DS . "Lib" . DS . "Debug");
+			Utility::$autoloader->addNamespace("DebugBar", __ROOTCMS__ . DS . "Lib" . DS . "DebugBar");
+			Utility::$autoloader->addNamespace("Symfony",  __ROOTCMS__ . DS . "Lib" . DS . "Symfony");
+			Utility::$autoloader->addNamespace("Psr",      __ROOTCMS__ . DS . "Lib" . DS . "Psr");
 
 			set_exception_handler([$this, "handleException"]);
 			set_error_handler([$this, 'handleError']);
@@ -90,7 +92,7 @@ namespace Continut\Core {
 			// For all the other environments, "Test", "Development" or your custom ones, we show the errors
 			if (Utility::getApplicationEnvironment() == "Production") {
 				// TODO Create log class and log data
-				$view = Utility::createInstance("\\Continut\\Core\\Mvc\\View\\BaseView");
+				$view = Utility::createInstance('Continut\Core\Mvc\View\BaseView');
 				$view->setTemplate($errorTemplate);
 				echo $view->render();
 			} else {

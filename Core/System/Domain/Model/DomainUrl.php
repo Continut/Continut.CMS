@@ -27,7 +27,6 @@ namespace Continut\Core\System\Domain\Model {
 		/**
 		 * @var DomainUrl
 		 *
-		 * @Column(type="integer", name="parent_id")
 		 * @OneToOne(targetEntity="DomainUrl")
 		 * @JoinColumn(name="parent_id", referencedColumnName="id")
 		 */
@@ -36,8 +35,7 @@ namespace Continut\Core\System\Domain\Model {
 		/**
 		 * @var Domain
 		 *
-		 * @Column(type="integer", name="domain_id")
-		 * @OneToOne(targetEntity="Domain", inversedBy="domainUrls")
+		 * @ManyToOne(targetEntity="Continut\Core\System\Domain\Model\Domain", inversedBy="domainUrls")
 		 * @JoinColumn(name="domain_id", referencedColumnName="id")
 		 */
 		protected $domain;

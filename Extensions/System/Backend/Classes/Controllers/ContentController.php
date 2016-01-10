@@ -49,15 +49,11 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		public function toggleVisibilityAction() {
 			$id = (int)$this->getRequest()->getArgument("id");
 
-			$contentCollection = Utility::createInstance("\\Continut\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
-			$content = $contentCollection->findById($id);
-
+			$content = Utility::getRepository('Continut\Core\System\Domain\Model\Content')->find($id);
 			$content->setIsVisible(!$content->getIsVisible());
 
-			$contentCollection
-				->reset()
-				->add($content)
-				->save();
+			Utility::$entityManager->persist($content);
+			Utility::$entityManager->flush();
 
 			return json_encode([
 				"id"       => $content->getId(),
@@ -68,7 +64,7 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		public function editAction() {
 			$id = (int)$this->getRequest()->getArgument("id");
 
-			$content = Utility::$entityManager->getRepository('Continut\Extensions\System\Backend\Classes\Domain\Model\BackendContent')->find($id);
+			$content = Utility::getRepository('Continut\Core\System\Domain\Model\Content')->find($id);
 
 			$this->getView()->assign("element", $content);
 
@@ -102,8 +98,7 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 			$id  = (int)$this->getRequest()->getArgument("id");
 			$data = $this->getRequest()->getArgument("data", null);
 			if ($data && $id > 0) {
-				$contentCollection = Utility::createInstance("\\Continut\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
-				$content = $contentCollection->findById($id);
+				$content = Utility::getRepository('Continut\Core\System\Domain\Model\Content')->find($id);
 				$values = json_decode($content->getValue(), TRUE);
 				if (isset($data["title"])) {
 					$content->setTitle($data["title"]);
@@ -111,10 +106,8 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 				}
 				$values[$content->getType()]["data"] = $data;
 				$content->setValue(json_encode($values));
-				$contentCollection
-					->reset()
-					->add($content)
-					->save();
+				Utility::$entityManager->persist($content);
+				Utility::$entityManager->flush();
 			}
 
 			return json_encode([

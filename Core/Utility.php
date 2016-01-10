@@ -10,7 +10,6 @@
  */
 namespace Continut\Core {
 
-	use Continut\Core\Tools\DatabaseException;
 	use Continut\Core\Tools\ErrorException;
 	use Continut\Core\Tools\Exception;
 	use Continut\Core\Tools\HttpException;
@@ -35,11 +34,6 @@ namespace Continut\Core {
 		static $request;
 
 		/**
-		 * @var \PDO Database handler
-		 */
-		static $databaseHandler = NULL;
-
-		/**
 		 * @var \Continut\Core\System\Cache\FileCache
 		 */
 		static $cacheHandler = NULL;
@@ -60,7 +54,7 @@ namespace Continut\Core {
 		static $applicationScope;
 
 		/**
-		 * @var \Debug\DebugBar\StandardDebugBar
+		 * @var \DebugBar\StandardDebugBar
 		 */
 		static $debug;
 
@@ -188,11 +182,10 @@ namespace Continut\Core {
 		public static function connectToDatabase() {
 			$annotationConfig = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
 				array(
-					__ROOTCMS__ . DS . "Core" . DS . "System" . DS . "Domain" . DS . "Model",
+					/*__ROOTCMS__ . DS . "Core" . DS . "System" . DS . "Domain" . DS . "Model",
 					__ROOTCMS__ . DS . "Extensions" . DS . "Local" . DS . "News" . DS . "Classes" . DS . "Domain" . DS . "Model",
-					//__ROOTCMS__ . DS . "Core" . DS . "System" . DS . "Domain" . DS . "Collection",
-					__ROOTCMS__ . DS . "Core" . DS . "Mvc" . DS . "Model",
-					//__ROOTCMS__ . DS . "Core" . DS . "Mvc" . DS . "Collection"
+					__ROOTCMS__ . DS . "Extensions" . DS . "System" . DS . "Backend" . DS . "Classes" . DS . "Domain" . DS . "Model",
+					__ROOTCMS__ . DS . "Core" . DS . "Mvc" . DS . "Model",*/
 				),
 				(static::$applicationEnvironment == "Development")
 			);
@@ -205,32 +198,25 @@ namespace Continut\Core {
 				"path"   => static::getConfiguration("Database/Path")
 			];
 			Utility::$entityManager = \Doctrine\ORM\EntityManager::create($dbConfig, $annotationConfig);
-		}
 
-		/**
-		 * Disconnect from database
-		 */
-		public static function disconnectFromDatabase() {
-			static::$databaseHandler = NULL;
-		}
-
-		/**
-		 * @return \PDO
-		 */
-		public static function getDatabase() {
-			return static::$databaseHandler;
+			// load doctrine debug stack, if debug is enabled
+			if (static::getConfiguration("System/Debug/Enabled")) {
+				$debugStack = new \Doctrine\DBAL\Logging\DebugStack();
+				Utility::$entityManager->getConnection()->getConfiguration()->setSQLLogger($debugStack);
+				Utility::$debug->addCollector(new \DebugBar\Bridge\DoctrineCollector($debugStack));
+			}
 		}
 
 		/**
 		 * @throws Exception
 		 */
 		public static function setCurrentWebsite() {
-			$domainUrl = Utility::$entityManager->getRepository("\\Continut\\Core\\System\\Domain\\Model\\DomainUrl")->findOneBy(array('url' => $_SERVER["SERVER_NAME"]));
+			$domainUrl = Utility::getRepository('\Continut\Core\System\Domain\Model\DomainUrl')->findOneBy(array('url' => $_SERVER["SERVER_NAME"]));
 
 			if (!$domainUrl) {
 				throw new HttpException(404, "The domain you are currently trying to access is not configured inside the CMS application!");
 			} else {
-				static::$site = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Model\\Site")
+				static::$site = Utility::createInstance('\Continut\Core\System\Domain\Model\Site')
 					->setDomainUrl($domainUrl);
 			}
 		}
@@ -260,6 +246,15 @@ namespace Continut\Core {
 		 */
 		public static function getSession() {
 			return static::$session;
+		}
+
+		/**
+		 * @param string $repository
+		 *
+		 * @return Doctrine\Orm\EntityRepository
+		 */
+		public static function getRepository($repository) {
+			return static::$entityManager->getRepository($repository);
 		}
 
 		/**
@@ -500,7 +495,7 @@ namespace Continut\Core {
 			if (static::getConfiguration("System/Debug/Enabled")) {
 				switch ($type) {
 					case "config":
-						Utility::debug()->addCollector(new \Debug\DebugBar\DataCollector\ConfigCollector($value));
+						Utility::debug()->addCollector(new \DebugBar\DataCollector\ConfigCollector($value));
 						break;
 					case "exception":
 						Utility::debug()['exceptions']->addException($value);
@@ -527,7 +522,7 @@ namespace Continut\Core {
 		 */
 		public static function debug() {
 			if (!static::$debug) {
-				static::$debug = new \Debug\DebugBar\StandardDebugBar();
+				static::$debug = new \DebugBar\StandardDebugBar();
 			}
 			return static::$debug;
 		}

@@ -113,10 +113,21 @@ namespace Continut\Core\System\Domain\Model {
 		}
 
 		/**
-		 *
+		 * @return ArrayCollection
 		 */
 		public function getDomainUrls() {
 			return $this->domainUrls;
+		}
+
+		/**
+		 * @param ArrayCollection $domainUrls
+		 *
+		 * @return Domain
+		 */
+		public function setDomainUrls($domainUrls) {
+			$this->domainUrls = $domainUrls;
+
+			return $this;
 		}
 
 		/**

@@ -104,7 +104,7 @@ namespace Continut\Core\Mvc\View {
 			if (Utility::getConfiguration("System/Debug/Enabled")) {
 				$pageContent .= Utility::debug()
 					->getJavascriptRenderer()
-					->setBaseUrl('Extensions/System/Debug/DebugBar/Resources')
+					->setBaseUrl('Lib/DebugBar/Resources')
 					->setEnableJqueryNoConflict(TRUE)
 					->render();
 				$pageHeader .= Utility::debug()

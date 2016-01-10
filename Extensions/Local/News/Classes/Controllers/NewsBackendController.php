@@ -20,7 +20,7 @@ namespace Continut\Extensions\Local\News\Classes\Controllers {
 		}
 
 		public function indexAction() {
-			$grid = Utility::createInstance("\\Continut\\Extensions\\System\\Backend\\Classes\\View\\GridView");
+			$grid = Utility::createInstance('\Continut\Extensions\System\Backend\Classes\View\GridView');
 
 			$grid
 				->setFormAction(Utility::helper("Url")->linkToAction("News", "NewsBackend", "index"))

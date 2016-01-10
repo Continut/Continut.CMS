@@ -11,6 +11,7 @@
 namespace Continut\Core\System\Domain\Model {
 
 	use Continut\Core\Mvc\Model\BaseModel;
+	use Continut\Core\Utility;
 
 	/**
 	 * Class Content
@@ -68,7 +69,6 @@ namespace Continut\Core\System\Domain\Model {
 		/**
 		 * @var \Continut\Core\System\Domain\Model\Page
 		 *
-		 * @Column(type="integer", name="page_id")
 		 * @OneToOne(targetEntity="\Continut\Core\System\Domain\Model\Page")
 		 * @JoinColumn(name="page_id", referencedColumnName="id")
 		 */
@@ -76,8 +76,9 @@ namespace Continut\Core\System\Domain\Model {
 
 		/**
 		 * @var int The reference id, if this is a reference content element
+		 * @Column(name="reference_id", type="integer")
 		 */
-		protected $reference_id;
+		protected $referenceId;
 
 		/**
 		 * @var int Field used for the sorting order of content elements
@@ -97,6 +98,11 @@ namespace Continut\Core\System\Domain\Model {
 		 * @Column(name="title", type="string")
 		 */
 		protected $title;
+
+		/**
+		 * @var bool if rendered from inside a reference, certain menu elements are disabled
+		 */
+		protected $fromReference = FALSE;
 
 		/**
 		 * @return Content Get the parent of this content element
@@ -135,7 +141,7 @@ namespace Continut\Core\System\Domain\Model {
 		}
 
 		/**
-		 * @return Page
+		 * @return \Continut\Core\System\Domain\Model\Page
 		 */
 		public function getPage()
 		{
@@ -143,7 +149,7 @@ namespace Continut\Core\System\Domain\Model {
 		}
 
 		/**
-		 * @param int $page
+		 * @param \Continut\Core\System\Domain\Model\Page $page
 		 *
 		 * @return Content
 		 */
@@ -159,17 +165,17 @@ namespace Continut\Core\System\Domain\Model {
 		 */
 		public function getReferenceId()
 		{
-			return $this->reference_id;
+			return $this->referenceId;
 		}
 
 		/**
-		 * @param int $reference_id
+		 * @param int $referenceId
 		 *
 		 * @return Content
 		 */
-		public function setReferenceId($reference_id)
+		public function setReferenceId($referenceId)
 		{
-			$this->reference_id = $reference_id;
+			$this->referenceId = $referenceId;
 
 			return $this;
 		}
@@ -311,10 +317,123 @@ namespace Continut\Core\System\Domain\Model {
 		}
 
 		/**
+		 * @return boolean
+		 */
+		public function getFromReference()
+		{
+			return $this->fromReference;
+		}
+
+		/**
+		 * @param boolean $fromReference
+		 *
+		 * @return $this;
+		 */
+		public function setFromReference($fromReference)
+		{
+			$this->fromReference = $fromReference;
+
+			return $this;
+		}
+
+		/**
 		 * @param mixed $elements
 		 */
 		public function render($elements) {
+			$scope = Utility::getApplicationScope();
 
+			$title = $this->getTitle();
+			if ($scope == Utility::SCOPE_BACKEND) {
+				if ( $title == "" ) {
+					$title = Utility::helper("Localization")->translate("backend.content.noTitle");
+				}
+			}
+
+			$configuration = json_decode($this->getValue(), TRUE);
+			$variables = $configuration["content"]["data"];
+			$variables["title"] = $title;
+			$view = Utility::createInstance("Continut\\Core\\Mvc\\View\\BaseView");
+			$view->setTemplate(Utility::getResource(
+				$configuration["content"]["template"],
+				$configuration["content"]["extension"],
+				$scope,
+				"Content"
+			));
+			$view->assignMultiple($variables);
+
+			$value = $view->render();
+			if ($scope == Utility::SCOPE_BACKEND) {
+				return $this->formatBackendBlock("content", $title, $value);
+			}
+
+			return $value;
+		}
+
+		/**
+		 * Renders the backend editable part of a content element
+		 *
+		 * @param string $type    The type of content element we're formating
+		 * @param string $title   The title of the content element, if any
+		 * @param string $content The content of the element
+		 * @param bool   $fromReference Rendered from inside a reference?
+		 *
+		 * @return string
+		 */
+		protected function formatBackendBlock($type, $title, $content) {
+			$linkToEdit   = sprintf('<a title="%s" class="btn btn-default content-operation-link" href="%s"><i class="fa fa-pencil fa-fw"></i></a>',
+				Utility::helper("Localization")->translate("backend.content.operation.edit"),
+				Utility::helper("Url")->linkToAction("Backend", "Content", "edit", ["id" => $this->getId()])
+			);
+
+			$linkToDelete = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-trash-o fa-fw"></i> %s</a>',
+				Utility::helper("Localization")->translate("backend.content.operation.delete"),
+				Utility::helper("Url")->linkToAction("Backend", "Content", "delete", ["id" => $this->getId()]),
+				Utility::helper("Localization")->translate("backend.content.operation.delete")
+			);
+
+			$linkToCopy   = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-copy fa-fw"></i> %s</a>',
+				Utility::helper("Localization")->translate("backend.content.operation.copy"),
+				Utility::helper("Url")->linkToAction("Backend", "Content", "copy", ["id" => $this->getId()]),
+				Utility::helper("Localization")->translate("backend.content.operation.copy")
+			);
+
+			$linkToHide   = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-eye fa-fw"></i> %s</a>',
+				Utility::helper("Localization")->translate("backend.content.operation.hide"),
+				Utility::helper("Url")->linkToAction("Backend", "Content", "toggleVisibility", ["id" => $this->getId(), "show" => 0]),
+				Utility::helper("Localization")->translate("backend.content.operation.hide")
+			);
+
+			$linkToShow   = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-eye-slash fa-fw"></i> %s</a>',
+				Utility::helper("Localization")->translate("backend.content.operation.show"),
+				Utility::helper("Url")->linkToAction("Backend", "Content", "toggleVisibility", ["id" => $this->getId(), "show" => 1]),
+				Utility::helper("Localization")->translate("backend.content.operation.show")
+			);
+
+			if ($this->getIsVisible()) {
+				$visibilityLink = $linkToHide;
+				$visibilityClass = "panel-visible";
+			} else {
+				$visibilityLink = $linkToShow;
+				$visibilityClass = "panel-hidden";
+				$title .= Utility::helper("Localization")->translate("backend.content.headerIsHidden");
+			}
+
+			if ($this->getFromReference()) {
+				$linkToCopy = "";
+				$visibilityLink = "";
+			}
+
+			$operationLinks = sprintf('<div class="btn-group btn-group-sm pull-right no-pep" role="group" aria-label="Element actions">%s<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button><ul class="dropdown-menu" role="menu"><li>%s</li><li>%s</li><li>%s</li></div>',
+				$linkToEdit, $linkToCopy, $visibilityLink, $linkToDelete);
+
+			// not used so far, in stand by
+			/*$moveElementLink = sprintf('<a class="btn btn-default btn-sm drag-controller" title="%s"><i class="fa fa-fw fa-arrows"></i></a>',
+				Utility::helper("Localization")->translate("backend.content.operation.move")
+			);*/
+
+			$overallWrap = '<div id="panel-backend-content-%s" data-id="%s" class="content-type-%s panel panel-backend-content content-drag-sender %s"><div class="panel-heading"><strong>%s</strong>%s</div><div class="panel-body no-pep">%s</div></div>';
+
+			return sprintf($overallWrap, $this->getId(), $this->getId(), $this->getType(), $visibilityClass, $title, $operationLinks, $content);
 		}
 	}
 

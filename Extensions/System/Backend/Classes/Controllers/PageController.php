@@ -15,6 +15,9 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 
 	class PageController extends BackendController {
 
+		/**
+		 * PageController constructor
+		 */
 		public function __construct() {
 			parent::__construct();
 			$this->setLayoutTemplate(Utility::getResource("Default", "Backend", "Backend", "Layout"));
@@ -22,13 +25,10 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 
 		/**
 		 * Called when the pagetree is shown for the page module
-		 *
-		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function indexAction() {
-			$domains = Utility::$entityManager->getRepository('\Continut\Core\System\Domain\Model\Domain')->findBy(["isVisible" => 1], ["sorting" => "ASC"]);
-			//$languages = $domains[0]$domains[0]->getDomainUrls();
-			$languages = Utility::$entityManager->getRepository('\Continut\Core\System\Domain\Model\DomainUrl')->findBy(["domain" => $domains[0]->getId()], ["sorting" => "ASC"]);
+			$domains = Utility::getRepository('\Continut\Core\System\Domain\Model\Domain')->findBy(["isVisible" => 1], ["sorting" => "ASC"]);
+			$languages = $domains[0]->getDomainUrls();
 
 			$this->getView()->assign("domains", $domains);
 			$this->getView()->assign("languages", $languages);
@@ -42,33 +42,29 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function treeAction($term = "") {
-			$domainId = $this->getRequest()->getArgument("domain_id", 0);
-			// see if a domain url was sent, if not get the first one found for this domain
+			$domainId    = $this->getRequest()->getArgument("domain_id", 0);
 			$domainUrlId = $this->getRequest()->getArgument("domain_url_id", 0);
 
-			// get the domains collection
 			if ($domainId == 0) {
-				// fetch the first visible domain, ordered by sorting, if no domain_id is sent
 				$domainCriteria = ["isVisible" => 1];
 			} else {
-				$domainCriteria = ["id" => $domainId];
+				$domainCriteria = ["isVisible" => 1, "id" => $domainId];
 			}
-			$domain = Utility::$entityManager->getRepository('\Continut\Core\System\Domain\Model\Domain')->findOneBy($domainCriteria, ["sorting" => "ASC"]);
+			$domain = Utility::getRepository('\Continut\Core\System\Domain\Model\Domain')->findOneBy($domainCriteria, ["sorting" => "ASC"]);
 
 			if ($domainUrlId == 0) {
 				$domainUrlCriteria = ["domain" => $domain->getId()];
 			} else {
 				$domainUrlCriteria = ["domain" => $domain->getId(), "id" => $domainUrlId];
 			}
-			$domainUrl = Utility::$entityManager->getRepository('\Continut\Core\System\Domain\Model\DomainUrl')->findOneBy($domainUrlCriteria, ["sorting" => "ASC"]);
+			$domainUrl = Utility::getRepository('\Continut\Core\System\Domain\Model\DomainUrl')->findOneBy($domainUrlCriteria, ["sorting" => "ASC"]);
 
-			$pages     = Utility::$entityManager->getRepository('\Continut\Core\System\Domain\Model\Page')->backendJsonTree($domainUrl, $term);
-			$languages = Utility::$entityManager->getRepository('\Continut\Core\System\Domain\Model\DomainUrl')->findBy(["domain" => $domain->getId()], ["sorting" => "ASC"]);
+			$pages     = Utility::getRepository('\Continut\Core\System\Domain\Model\Page')->backendJsonTree($domainUrl, $term);
+			$languages = Utility::getRepository('\Continut\Core\System\Domain\Model\DomainUrl')->findLanguagesForDomain($domain);
 
 			$pagesData = [
-				"pages" => $pages,
+				"pages"     => $pages,
 				"languages" => $languages
-				// @TODO $languages->toSimplifiedArray() check if it is used
 			];
 
 			return json_encode($pagesData, JSON_UNESCAPED_UNICODE);
@@ -80,9 +76,9 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function editAction() {
-			$pageId = (int)$this->getRequest()->getArgument("page_id");
+			$id = (int)$this->getRequest()->getArgument("id");
 
-			$page = Utility::$entityManager->getRepository('\Continut\Core\System\Domain\Model\Page')->find($pageId);
+			$page = Utility::getRepository('\Continut\Core\System\Domain\Model\Page')->find($id);
 			$page->mergeOriginal();
 
 			$layouts  = Utility::getLayouts();
@@ -98,25 +94,22 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 			$data = $this->getRequest()->getArgument("data");
 			$id = (int)$data["id"];
 
-			$pageCollection = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\PageCollection");
-			$pageModel = $pageCollection->findById($id);
-			$pageModel->update($data);
+			$page = Utility::getRepository('\Continut\Core\System\Domain\Model\Page')->find($id);
+			$page->update($data);
 
 			// We store a cached version for the FE and BE versions, this way we avoid looking for layouts all the time
-			$extensionName = substr($pageModel->getLayout(), 0, strpos($pageModel->getLayout(), "."));
-			$layoutId      = substr($pageModel->getLayout(), strlen($extensionName) + 1);
+			$extensionName = substr($page->getLayout(), 0, strpos($page->getLayout(), "."));
+			$layoutId      = substr($page->getLayout(), strlen($extensionName) + 1);
 			$settings      = Utility::getExtensionSettings($extensionName);
 			if (isset($settings["ui"]["layout"][$layoutId])) {
-				$pageModel->setBackendLayout($settings["ui"]["layout"][$layoutId]["backendFile"]);
-				$pageModel->setFrontendLayout($settings["ui"]["layout"][$layoutId]["frontendFile"]);
+				$page->setBackendLayout($settings["ui"]["layout"][$layoutId]["backendFile"]);
+				$page->setFrontendLayout($settings["ui"]["layout"][$layoutId]["frontendFile"]);
 			}
 
-			$pageCollection
-				->reset()
-				->add($pageModel)
-				->save();
+			Utility::$entityManager->persist($page);
+			Utility::$entityManager->flush();
 
-			$this->getRequest()->setArgument("page_id", $id);
+			$this->getRequest()->setArgument("id", $id);
 			$this->forward('show');
 
 			//return json_encode(["success" => 1, "id" => $id]);
@@ -130,8 +123,8 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		public function showAction() {
 			Utility::debugData("page_rendering", "start", "Page rendering");
 
-			$pageId = (int)$this->getRequest()->getArgument("page_id", 0);
-			$page = Utility::$entityManager->getRepository('\Continut\Core\System\Domain\Model\Page')->find($pageId);
+			$id = (int)$this->getRequest()->getArgument("id", 0);
+			$page = Utility::getRepository('\Continut\Core\System\Domain\Model\Page')->find($id);
 			$page->mergeOriginal();
 
 			// The breadcrumbs path is cached in the variable "cached_path" as a comma separated list of values
@@ -143,11 +136,11 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 					->getAll();
 			}*/
 
-			// Load the content collection model and then find all the content elements that belong to this page_id
-			$contentTree = Utility::$entityManager->getRepository('\Continut\Extensions\System\Backend\Classes\Domain\Model\BackendContent')->buildTreeForPageId($pageId);
+			// Load the content collection model and then find all the content elements that belong to this page
+			$contentTree = Utility::getRepository('\Continut\Core\System\Domain\Model\Content')->buildTreeForPage($page);
 
 			// A PageView is the model that we use to load a layout and render the elements
-			$pageView = Utility::createInstance("\\Continut\\Core\\System\\View\\BackendPageView");
+			$pageView = Utility::createInstance('\Continut\Core\System\View\BackendPageView');
 			$pageView
 				->setPageModel($page)
 				->setLayoutFromTemplate(__ROOTCMS__ . $page->getBackendLayout());
@@ -155,12 +148,9 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 			// Send the tree of elements to this page's layout
 			$pageView->getLayout()->setElements($contentTree);
 
-			// Render the Tree elements and save them in a variable
-			$pageContent = $pageView->render();
-
 			// Send all the data to the view
 			$this->getView()->assign("page", $page);
-			$this->getView()->assign("pageContent", $pageContent);
+			$this->getView()->assign("pageContent", $pageView->render());
 			$this->getView()->assign("breadcrumbs", $breadcrumbs);
 			Utility::debugData("page_rendering", "stop");
 		}
@@ -171,22 +161,18 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function toggleVisibilityAction() {
-			$pageId = (int)$this->getRequest()->getArgument("page_id", 0);
+			$id = (int)$this->getRequest()->getArgument("id", 0);
 
-			// Load the pages collection model
-			$pagesCollection = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\PageCollection");
-			$pageModel = $pagesCollection->findById($pageId);
+			$page = Utility::getRepository('\Continut\Core\System\Domain\Model\Page')->find($id);
 
-			$pageModel->setIsVisible(!$pageModel->getIsVisible());
+			$page->setIsVisible(!$page->getIsVisible());
 
-			$pagesCollection
-				->reset()
-				->add($pageModel)
-				->save();
+			Utility::$entityManager->persist($page);
+			Utility::$entityManager->flush();
 
 			return json_encode([
-				"visible" => $pageModel->getIsVisible(),
-				"pid" => $pageModel->getId()
+				"visible" => $page->getIsVisible(),
+				"pid"     => $page->getId()
 			]);
 		}
 
@@ -196,23 +182,18 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function toggleMenuAction() {
-			$pageId = (int)$this->getRequest()->getArgument("page_id", 0);
+			$id = (int)$this->getRequest()->getArgument("id", 0);
 
-			// Load the pages collection model
-			$pagesCollection = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\PageCollection");
-			$pageModel = $pagesCollection->findById($pageUid);
+			$page = Utility::getRepository('\Continut\Core\System\Domain\Model\Page')->find($id);
 
-			$pageModel->setIsInMenu(!$pageModel->getIsInMenu());
+			$page->setIsInMenu(!$page->getIsInMenu());
 
-			$pagesCollection
-				->reset()
-				->add($pageModel)
-				->save();
+			Utility::$entityManager->persist($page);
+			Utility::$entityManager->flush();
 
-			//$this->getView()->assign("page", $pageModel);
 			return json_encode([
-				"isInMenu" => $pageModel->getIsInMenu(),
-				"pid" => $pageModel->getId()
+				"isInMenu" => $page->getIsInMenu(),
+				"pid"      => $page->getId()
 			]);
 		}
 
@@ -326,9 +307,9 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		 * Called when a page is deleted
 		 */
 		public function deleteAction() {
-			$pageId = (int)$this->getRequest()->getArgument("pid");
+			$id = (int)$this->getRequest()->getArgument("pid");
 
-			$pagesCollection = Utility::createInstance("\\Continut\\Core\\System\\Domain\\Collection\\PageCollection");
+			$page = Utility::getRepository('\Continut\Core\System\Domain\Model\Page')->find($id);
 			// A page can have multiple children so we get it's tree and we delete all subpages
 			$pageTree = $pagesCollection->where("is_deleted = 0")->buildTree($pageId);
 

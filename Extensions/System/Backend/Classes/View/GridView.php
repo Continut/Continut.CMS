@@ -21,7 +21,7 @@ namespace Continut\Extensions\System\Backend\Classes\View {
 		protected $fields;
 
 		/**
-		 * @var Continut\Core\Mvc\Model\BaseCollection
+		 * @var Continut\Core\Mvc\Model\BaseRepository
 		 */
 		protected $collection;
 
@@ -46,7 +46,7 @@ namespace Continut\Extensions\System\Backend\Classes\View {
 		protected $formAction;
 
 		/**
-		 * @return mixed
+		 * @return Continut\Core\Mvc\Model\BaseRepository
 		 */
 		public function getCollection()
 		{
@@ -81,7 +81,7 @@ namespace Continut\Extensions\System\Backend\Classes\View {
 		}
 
 		/**
-		 * @param mixed $collection
+		 * @param Continut\Core\Mvc\Model\BaseRepository $collection
 		 *
 		 * @return $this
 		 */

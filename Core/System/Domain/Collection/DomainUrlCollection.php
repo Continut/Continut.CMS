@@ -14,12 +14,22 @@ namespace Continut\Core\System\Domain\Collection {
 	class DomainUrlCollection extends BaseRepository {
 
 		/**
+		 * @param Continut\Core\System\Domain\Model\Domain $domain
 		 * @param bool   $addEmpty   Should an initial empty value be added?
 		 * @param string $emptyTitle If so, what title should be shown, if any
 		 *
 		 * @return array
 		 */
-		public function toSimplifiedArray($items, $addEmpty = false, $emptyTitle = "") {
+		public function findLanguagesForDomain($domain, $addEmpty = false, $emptyTitle = "") {
+			$db = $this->getEntityManager()->createQueryBuilder();
+
+			$db->select('d')
+				->from($this->_entityName, 'd')
+				->where('d.domain = :domain')
+				->setParameter('domain', $domain)
+				->addOrderBy("d.sorting", "ASC");
+			$items = $db->getQuery()->getResult();
+
 			$data = [];
 			if ($addEmpty) {
 				$data = [0 => ["title" => $emptyTitle, "flag" => "eu"]];

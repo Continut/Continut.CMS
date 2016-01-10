@@ -39,7 +39,7 @@ namespace Continut\Extensions\System\Frontend\Classes\Controllers {
 			$pageView = Utility::createInstance("\\Continut\\Core\\Mvc\\View\\PageView");
 
 			// get all elements from the database that belong to this page and are not hidden or deleted
-			$contentTree = Utility::$entityManager->getRepository('Continut\Extensions\System\Frontend\Classes\Domain\Model\FrontendContent')->buildTreeForPageId($page->getId());
+			$contentTree = Utility::$entityManager->getRepository('Continut\Core\System\Domain\Model\Content')->buildTreeForPage($page);
 
 			$pageView
 				->setPageModel($page)

@@ -22,24 +22,20 @@ namespace Continut\Extensions\System\Frontend\Classes\Domain\Model\Content {
 		 * @return string
 		 */
 		public function render($elements) {
-			$reference = (int)$this->getReferenceId();
+			$id = (int)$this->getReferenceId();
 			$value = "";
-			if ($reference > 0) {
-				// Load the content collection model and then find all the content elements that belong to this page_id
-				$contentCollection = Utility::createInstance("\\Continut\\Extensions\\System\\Frontend\\Classes\\Domain\\Collection\\FrontendContentCollection");
-				$referencedContent = $contentCollection
-					->where("is_deleted = 0 AND id = :id ORDER BY sorting ASC", [":id" => $reference])
-					->getFirst();
+			if ($id > 0) {
+				$reference = Utility::getRepository('Continut\Core\System\Domain\Model\Content')->findOneBy(['isDeleted' => 0, 'id' => $id], ['sorting' => 'ASC']);
 				// set the element's id to the reference id, so that we do not modify the original
-				$referencedContent->setId($this->getId());
-				if ($referencedContent) {
-					if ($referencedContent->getType() != "container") {
-						$value = $referencedContent->render(null);
+				$reference->setId($this->getId());
+				if ($reference) {
+					if ($reference->getType() != "container") {
+						$value = $reference->render(null);
 					} else {
 						$contentCollection
-							->where("page_id = :page_id", ["page_id" => $referencedContent->getPageId()]);
+							->where("page_id = :page_id", ["page_id" => $reference->getPageId()]);
 						$elements = $contentCollection->findChildrenForId($reference);
-						$value = $referencedContent->render($elements->children);
+						$value = $reference->render($elements->children);
 					}
 				}
 			}
