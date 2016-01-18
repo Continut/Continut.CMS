@@ -7,7 +7,7 @@
  * Date: 01.08.2015 @ 14:54
  * Project: Conţinut CMS
  */
-namespace Core\System\Storage {
+namespace Continut\Core\System\Storage {
 
 	class Folder
 	{

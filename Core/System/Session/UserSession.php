@@ -8,10 +8,10 @@
  * Date: 04.04.2015 @ 20:41
  * Project: Conţinut CMS
  */
-namespace Core\System\Session {
+namespace Continut\Core\System\Session {
 
-	use Core\Mvc\Model\BaseModel;
-	use Core\Utility;
+	use Continut\Core\Mvc\Model\BaseModel;
+	use Continut\Core\Utility;
 
 	class UserSession extends BaseModel implements \SessionHandlerInterface {
 

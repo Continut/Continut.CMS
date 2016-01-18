@@ -8,10 +8,10 @@
  * Date: 20.04.2015 @ 21:27
  * Project: Conţinut CMS
  */
-namespace Extensions\System\Backend\Classes\Controllers {
+namespace Continut\Extensions\System\Backend\Classes\Controllers {
 
-	use Core\Mvc\Controller\BackendController;
-	use Core\Utility;
+	use Continut\Core\Mvc\Controller\BackendController;
+	use Continut\Core\Utility;
 
 	class MediaController extends BackendController {
 
@@ -24,7 +24,7 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			parent::__construct();
 			$this->setLayoutTemplate(Utility::getResource("Default", "Backend", "Backend", "Layout"));
 
-			$this->storage = Utility::createInstance("\\Core\\System\\Storage\\LocalStorage");
+			$this->storage = Utility::createInstance('Continut\Core\System\Storage\LocalStorage');
 		}
 
 		/**

@@ -9,19 +9,20 @@
  * Project: Conţinut CMS
  */
 
-namespace Core\Mvc\Controller {
-	use \Core\Utility;
+namespace Continut\Core\Mvc\Controller {
+
+	use Continut\Core\Utility;
 
 	/**
 	 * Base Controller Class, used by Frontend and Backend Controllers
-	 * @package Core\Mvc\Controller
+	 * @package Continut\Core\Mvc\Controller
 	 */
 	class ActionController {
 
 		/**
 		 * Request class
 		 *
-		 * @var \Core\Mvc\Request
+		 * @var Continut\Core\Mvc\Request
 		 */
 		protected $_request;
 
@@ -31,7 +32,7 @@ namespace Core\Mvc\Controller {
 		protected $_name;
 
 		/**
-		 * @var \Core\System\Session\User Current session user
+		 * @var Continut\Core\System\Session\User Current session user
 		 */
 		protected $_user;
 
@@ -83,7 +84,7 @@ namespace Core\Mvc\Controller {
 		protected $_action = "index";
 
 		public function __construct() {
-			$this->_view    = Utility::createInstance("\\Core\\Mvc\\View\\BaseView");
+			$this->_view    = Utility::createInstance('Continut\Core\Mvc\View\BaseView');
 			$this->_request = Utility::getRequest();
 			//$this->_user    = Utility::getUser();
 		}

@@ -42,7 +42,7 @@ $this->getPage()
 </div>
 <nav class="navbar navbar-default" id="mainmenu">
 	<div class="container-fluid">
-		<?= \Core\Utility::callPlugin("Backend", "Index", "mainmenu"); ?>
+		<?= \Continut\Core\Utility::callPlugin("Backend", "Index", "mainmenu"); ?>
 	</div>
 </nav>
 <div id="container" class="container-fluid">

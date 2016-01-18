@@ -8,10 +8,10 @@
  * Date: 02.01.2016 @ 16:33
  * Project: Conţinut CMS
  */
-namespace Extensions\System\Backend\Classes\View {
+namespace Continut\Extensions\System\Backend\Classes\View {
 
-	use Core\Mvc\View\BaseView;
-	use Core\Utility;
+	use Continut\Core\Mvc\View\BaseView;
+	use Continut\Core\Utility;
 
 	class GridView extends BaseView {
 
@@ -99,7 +99,7 @@ namespace Extensions\System\Backend\Classes\View {
 		 */
 		public function setFields($fields) {
 			foreach ($fields as $name => $fieldValues) {
-				$field = Utility::createInstance("Extensions\\System\\Backend\\Classes\\Domain\\Model\\Grid\\Field");
+				$field = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Model\Grid\Field');
 				$field
 					->setName($name)
 					->update($fieldValues)

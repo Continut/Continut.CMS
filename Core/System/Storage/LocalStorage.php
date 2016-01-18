@@ -7,9 +7,9 @@
  * Date: 01.08.2015 @ 13:41
  * Project: Conţinut CMS
  */
-namespace Core\System\Storage {
+namespace Continut\Core\System\Storage {
 
-	use Core\Utility;
+	use Continut\Core\Utility;
 
 	/**
 	 * Class LocalStorage
@@ -17,7 +17,7 @@ namespace Core\System\Storage {
 	 * Local filesystem file storage
 	 * It only deals with files and folders INSIDE "/Media/"
 	 *
-	 * @package Core\System\Storage
+	 * @package Continut\Core\System\Storage
 	 */
 	class LocalStorage implements StorageInterface
 	{
@@ -53,7 +53,7 @@ namespace Core\System\Storage {
 					if ($existingFile->getType() == "file") {
 						$fileRelativePath = $path . DS . $existingFile->getFilename();
 
-						$fileObject = Utility::createInstance("\\Core\\System\\Storage\\File");
+						$fileObject = Utility::createInstance('Continut\Core\System\Storage\File');
 						$fileObject->setName($existingFile->getBasename("." . $existingFile->getExtension()));
 						$fileObject->setExtension(strtoupper($existingFile->getExtension()));
 						$fileObject->setRelativePath($path);
@@ -91,7 +91,7 @@ namespace Core\System\Storage {
 			foreach ($existingFolders as $existingFolder) {
 				try {
 					if ($existingFolder->getType() == "dir") {
-						$folderObject = Utility::createInstance("\\Core\\System\\Storage\\Folder");
+						$folderObject = Utility::createInstance('Continut\Core\System\Storage\Folder');
 
 						$folderObject->setName($existingFolder->getFilename());
 						$folderObject->setAbsolutePath($existingFolder->getPathname());

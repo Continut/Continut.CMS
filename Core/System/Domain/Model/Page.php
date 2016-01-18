@@ -9,10 +9,10 @@
  * Project: Conţinut CMS
  */
 
-namespace Core\System\Domain\Model {
+namespace Continut\Core\System\Domain\Model {
 
-	use Core\Mvc\Model\BaseModel;
-	use Core\Utility;
+	use Continut\Core\Mvc\Model\BaseModel;
+	use Continut\Core\Utility;
 
 	class Page extends BaseModel {
 
@@ -378,7 +378,7 @@ namespace Core\System\Domain\Model {
 		public function getOriginal() {
 			if ($this->original_id) {
 				if (empty($this->original)) {
-					$this->original = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection")
+					$this->original = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection')
 						->findById($this->getOriginalId());
 				}
 			}

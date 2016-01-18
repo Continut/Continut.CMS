@@ -7,14 +7,14 @@
  * Date: 01.08.2015 @ 13:40
  * Project: Conţinut CMS
  */
-namespace Core\System\Storage {
+namespace Continut\Core\System\Storage {
 
 	/**
 	 * Interface StorageInterface
 	 *
 	 * Used to manipulate files either in a local or cloud storage
 	 *
-	 * @package Core\System\Storage
+	 * @package Continut\Core\System\Storage
 	 */
 	interface StorageInterface
 	{

@@ -7,10 +7,10 @@
  * Date: 02.08.2015 @ 21:30
  * Project: Conţinut CMS
  */
-namespace Extensions\System\Frontend\Classes\Domain\Model\Content {
+namespace Continut\Extensions\System\Frontend\Classes\Domain\Model\Content {
 
-	use Core\Utility;
-	use Extensions\System\Frontend\Classes\Domain\Model\FrontendContent;
+	use Continut\Core\Utility;
+	use Continut\Extensions\System\Frontend\Classes\Domain\Model\FrontendContent;
 
 	class FrontendPluginContent extends FrontendContent {
 		/**

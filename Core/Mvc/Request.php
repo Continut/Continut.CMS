@@ -9,13 +9,13 @@
  * Project: Conţinut CMS
  */
 
-namespace Core\Mvc {
+namespace Continut\Core\Mvc {
 
-	use Core\Tools\Exception;
+	use Continut\Core\Tools\Exception;
 
 	/**
 	 * Request Class Handler
-	 * @package Core\Mvc
+	 * @package Continut\Core\Mvc
 	 */
 	class Request {
 		/**

@@ -9,46 +9,35 @@
  * Project: Conţinut CMS
  */
 
-namespace Core {
+namespace Continut\Core {
 
-	use Core\Tools\ErrorException;
-	use Core\Tools\Exception;
-	use Core\Tools\HttpException;
+	use Continut\Core\Tools\Exception;
+	use Continut\Core\Tools\HttpException;
 
 	/**
 	 * Main Class that bootstraps the system
-	 * @package Core
+	 *
+	 * @package Continut\Core
 	 */
 	class Bootstrap {
 
 		/**
 		 * Current Bootstrap instance
 		 *
-		 * @var \Core\Boostrap
+		 * @var \Continut\Core\Boostrap
 		 */
 		static protected $_instance;
 
 		/**
 		 * Returns or creates a Bootstrap instance
 		 *
-		 * @return Boostrap
+		 * @return \Continut\Core\Boostrap
 		 */
 		public static function getInstance() {
 			if (empty(static::$_instance)) {
 				static::$_instance = new static();
 			}
 			return static::$_instance;
-		}
-
-		/**
-		 * A simple basic class loader so far
-		 * Class caching and mapping will be provided shortly
-		 *
-		 * @param string $class Namespace + classname to load
-		 */
-		public function loadClasses($class) {
-			$class = __ROOTCMS__ . DS . str_replace("\\", DS, $class) . ".php";
-			include_once $class;
 		}
 
 		/**
@@ -60,8 +49,16 @@ namespace Core {
 		 * @return $this
 		 */
 		public function setEnvironment($applicationScope, $environment) {
-			// @TODO - move the load_classes method to a proper class that does Class caching
-			spl_autoload_register([$this, "loadClasses"], TRUE, FALSE);
+			require_once "Autoloader.php";
+			require_once "Utility.php";
+
+			Utility::$autoloader = new \Continut\Core\Autoloader();
+			Utility::$autoloader->register();
+			Utility::$autoloader->addNamespace("Continut", __ROOTCMS__);
+			Utility::$autoloader->addNamespace("DebugBar", __ROOTCMS__ . DS . "Lib" . DS . "DebugBar");
+			Utility::$autoloader->addNamespace("Symfony",  __ROOTCMS__ . DS . "Lib" . DS . "Symfony");
+			Utility::$autoloader->addNamespace("Psr",      __ROOTCMS__ . DS . "Lib" . DS . "Psr");
+
 			set_exception_handler([$this, "handleException"]);
 			set_error_handler([$this, 'handleError']);
 
@@ -93,7 +90,7 @@ namespace Core {
 			// For all the other environments, "Test", "Development" or your custom ones, we show the errors
 			if (Utility::getApplicationEnvironment() == "Production") {
 				// TODO Create log class and log data
-				$view = Utility::createInstance("Core\\Mvc\\View\\BaseView");
+				$view = Utility::createInstance('Continut\Core\Mvc\View\BaseView');
 				$view->setTemplate($errorTemplate);
 				echo $view->render();
 			} else {
@@ -111,7 +108,8 @@ namespace Core {
 		 * @throws Exception
 		 */
 		public function handleError($code, $message, $file, $line) {
-			throw new ErrorException($message, $code);
+			echo $code.$message.$file;
+			//throw new ErrorException($message, $code);
 		}
 
 		/**
@@ -151,7 +149,7 @@ namespace Core {
 		 *
 		 * @return $this
 		 *
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function connectFrontendController() {
 			Utility::debugData("controller_call", "start", "Main call and rendering");
@@ -177,10 +175,10 @@ namespace Core {
 
 			try {
 
-				$layout = Utility::createInstance("\\Core\\System\\View\\BackendLayout");
+				$layout = Utility::createInstance("\\Continut\\Core\\System\\View\\BackendLayout");
 				$layout->setTemplate("/Extensions/System/Backend/Resources/Private/Backend/Layouts/Default.layout.php");
 
-				$pageView = Utility::createInstance("\\Core\\Mvc\\View\\PageView");
+				$pageView = Utility::createInstance("\\Continut\\Core\\Mvc\\View\\PageView");
 				$pageView->setLayout($layout);
 
 				$request = Utility::getRequest();
@@ -244,7 +242,7 @@ namespace Core {
 		 */
 		public function startSession() {
 			// Create our session handler
-			$userSession = Utility::createInstance("\\Core\\System\\Session\\UserSession");
+			$userSession = Utility::createInstance('Continut\Core\System\Session\UserSession');
 			session_name("ContinutCMS");
 			session_set_save_handler($userSession, true);
 			session_start();

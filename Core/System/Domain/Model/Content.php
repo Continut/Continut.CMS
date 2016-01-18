@@ -8,9 +8,9 @@
  * Date: 03.04.2015 @ 20:38
  * Project: Conţinut CMS
  */
-namespace Core\System\Domain\Model {
-	use Core\Mvc\Model\BaseModel;
-	use \Core\Utility;
+namespace Continut\Core\System\Domain\Model {
+
+	use Continut\Core\Mvc\Model\BaseModel;
 
 	class Content extends BaseModel {
 

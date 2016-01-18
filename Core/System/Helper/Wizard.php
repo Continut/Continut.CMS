@@ -8,7 +8,7 @@
  * Date: 17.05.2015 @ 10:31
  * Project: Conţinut CMS
  */
-namespace Core\System\Helper {
+namespace Continut\Core\System\Helper {
 
 	class Wizard {
 

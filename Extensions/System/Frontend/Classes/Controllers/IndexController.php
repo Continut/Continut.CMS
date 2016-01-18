@@ -8,11 +8,11 @@
  * Date: 04.04.2015 @ 13:16
  * Project: Conţinut CMS
  */
-namespace Extensions\System\Frontend\Classes\Controllers {
+namespace Continut\Extensions\System\Frontend\Classes\Controllers {
 
-	use Core\Mvc\Controller\FrontendController;
-	use Core\Tools\Exception;
-	use Core\Utility;
+	use Continut\Core\Mvc\Controller\FrontendController;
+	use Continut\Core\Tools\Exception;
+	use Continut\Core\Utility;
 
 	class IndexController extends FrontendController {
 
@@ -28,7 +28,7 @@ namespace Extensions\System\Frontend\Classes\Controllers {
 			} else {*/
 
 				// Load the page model from the database, by id or slug
-				$pageModel = Utility::createInstance("\\Extensions\\System\\Frontend\\Classes\\Domain\\Collection\\FrontendPageCollection")
+				$pageModel = Utility::createInstance('Continut\Extensions\System\Frontend\Classes\Domain\Collection\FrontendPageCollection')
 					->findWithIdOrSlug($pageId, $pageSlug);
 
 				if (!$pageModel) {
@@ -37,10 +37,10 @@ namespace Extensions\System\Frontend\Classes\Controllers {
 				$pageModel->mergeOriginal();
 
 				// load the pageview renderer
-				$pageView = Utility::createInstance("\\Core\\Mvc\\View\\PageView");
+				$pageView = Utility::createInstance('Continut\Core\Mvc\View\PageView');
 
 				// get all elements from the database that belong to this page and are not hidden or deleted
-				$contentCollection = Utility::createInstance("\\Extensions\\System\\Frontend\\Classes\\Domain\\Collection\\FrontendContentCollection");
+				$contentCollection = Utility::createInstance('Continut\Extensions\System\Frontend\Classes\Domain\Collection\FrontendContentCollection');
 				$contentCollection->where("page_id = :page_id AND is_deleted = 0 AND is_visible = 1 ORDER BY sorting ASC", [":page_id" => $pageModel->getId()]);
 
 				$contentTree = $contentCollection->buildTree();

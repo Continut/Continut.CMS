@@ -8,9 +8,9 @@
  * Date: 06.04.2015 @ 19:31
  * Project: Conţinut CMS
  */
-namespace Core\System\View {
+namespace Continut\Core\System\View {
 
-	use Core\Mvc\View\BaseLayout;
+	use Continut\Core\Mvc\View\BaseLayout;
 
 	class BackendLayout extends BaseLayout {
 		protected $_content = NULL;

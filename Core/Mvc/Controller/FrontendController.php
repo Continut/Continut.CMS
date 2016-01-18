@@ -9,13 +9,14 @@
  * Project: Conţinut CMS
  */
 
-namespace Core\Mvc\Controller {
-	use \Core\Mvc\Controller\ActionController;
+namespace Continut\Core\Mvc\Controller {
+
+	use Continut\Core\Mvc\Controller\ActionController;
 
 	/**
 	 * Frontend Controller base class
 	 *
-	 * @package Core\Mvc\Controller
+	 * @package Continut\Core\Mvc\Controller
 	 */
 	class FrontendController extends ActionController {
 

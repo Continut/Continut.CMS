@@ -8,10 +8,10 @@
  * Date: 03.01.2016 @ 17:50
  * Project: Conţinut CMS
  */
-namespace Extensions\System\Backend\Classes\Domain\Model\Grid {
+namespace Continut\Extensions\System\Backend\Classes\Domain\Model\Grid {
 
-	use Core\Mvc\Model\BaseModel;
-	use Core\Utility;
+	use Continut\Core\Mvc\Model\BaseModel;
+	use Continut\Core\Utility;
 
 	class Field extends BaseModel {
 
@@ -138,7 +138,7 @@ namespace Extensions\System\Backend\Classes\Domain\Model\Grid {
 		{
 			$this->renderer = $renderer;
 			if (!isset($renderer["class"])) {
-				$renderer["class"] = "\\Extensions\\System\\Backend\\Classes\\View\\Renderer\\TextRenderer";
+				$renderer["class"] = 'Continut\Extensions\System\Backend\Classes\View\Renderer\TextRenderer';
 			}
 			$this->rendererObject = Utility::createInstance($renderer["class"]);
 			if (isset($renderer["parameters"])) {

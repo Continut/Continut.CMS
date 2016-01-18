@@ -8,9 +8,9 @@
  * Date: 04.04.2015 @ 11:54
  * Project: Conţinut CMS
  */
-namespace Core\Mvc\Model {
+namespace Continut\Core\Mvc\Model {
 
-	use Core\Utility;
+	use Continut\Core\Utility;
 
 	class BaseCollection {
 		/**

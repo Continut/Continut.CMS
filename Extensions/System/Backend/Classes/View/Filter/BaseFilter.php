@@ -8,14 +8,14 @@
  * Date: 02.01.2016 @ 16:33
  * Project: Conţinut CMS
  */
-namespace Extensions\System\Backend\Classes\View\Filter {
+namespace Continut\Extensions\System\Backend\Classes\View\Filter {
 
-	use Core\Mvc\View\BaseView;
+	use Continut\Core\Mvc\View\BaseView;
 
 	class BaseFilter extends BaseView {
 
 		/**
-		 * @var \Extensions\System\Backend\Classes\Domain\Model\Grid\Field
+		 * @var Continut\Extensions\System\Backend\Classes\Domain\Model\Grid\Field
 		 */
 		protected $field;
 
@@ -25,7 +25,7 @@ namespace Extensions\System\Backend\Classes\View\Filter {
 		protected $values;
 
 		/**
-		 * @return \Extensions\System\Backend\Classes\Domain\Model\Grid\Field
+		 * @return Continut\Extensions\System\Backend\Classes\Domain\Model\Grid\Field
 		 */
 		public function getField()
 		{
@@ -33,7 +33,7 @@ namespace Extensions\System\Backend\Classes\View\Filter {
 		}
 
 		/**
-		 * @param \Extensions\System\Backend\Classes\Domain\Model\Grid\Field $field
+		 * @param Continut\Extensions\System\Backend\Classes\Domain\Model\Grid\Field $field
 		 *
 		 * @return $this
 		 */

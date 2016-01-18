@@ -8,9 +8,9 @@
  * Date: 04.04.2015 @ 20:46
  * Project: Conţinut CMS
  */
-namespace Core\System\Domain\Model {
+namespace Continut\Core\System\Domain\Model {
 
-	use Core\Mvc\Model\BaseModel;
+	use Continut\Core\Mvc\Model\BaseModel;
 
 	class User extends BaseModel {
 

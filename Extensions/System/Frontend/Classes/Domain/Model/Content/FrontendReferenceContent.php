@@ -7,10 +7,10 @@
  * Date: 02.08.2015 @ 21:28
  * Project: Conţinut CMS
  */
-namespace Extensions\System\Frontend\Classes\Domain\Model\Content {
+namespace Continut\Extensions\System\Frontend\Classes\Domain\Model\Content {
 
-	use Core\Utility;
-	use Extensions\System\Frontend\Classes\Domain\Model\FrontendContent;
+	use Continut\Core\Utility;
+	use Continut\Extensions\System\Frontend\Classes\Domain\Model\FrontendContent;
 
 	class FrontendReferenceContent extends FrontendContent {
 
@@ -26,7 +26,7 @@ namespace Extensions\System\Frontend\Classes\Domain\Model\Content {
 			$value = "";
 			if ($reference > 0) {
 				// Load the content collection model and then find all the content elements that belong to this page_id
-				$contentCollection = Utility::createInstance("\\Extensions\\System\\Frontend\\Classes\\Domain\\Collection\\FrontendContentCollection");
+				$contentCollection = Utility::createInstance('Continut\Extensions\System\\Frontend\Classes\Domain\Collection\FrontendContentCollection');
 				$referencedContent = $contentCollection
 					->where("is_deleted = 0 AND id = :id ORDER BY sorting ASC", [":id" => $reference])
 					->getFirst();

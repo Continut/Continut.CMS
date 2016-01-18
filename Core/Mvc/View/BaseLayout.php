@@ -8,10 +8,9 @@
  * Date: 03.04.2015 @ 18:55
  * Project: Conţinut CMS
  */
-namespace Core\Mvc\View {
+namespace Continut\Core\Mvc\View {
 
-	use Core\Tools\Exception;
-	use Core\Utility;
+	use Continut\Core\Utility;
 
 	class BaseLayout extends BaseView {
 

@@ -8,12 +8,12 @@
  * Date: 02.04.2015 @ 22:10
  * Project: Conţinut CMS
  */
-namespace Core {
+namespace Continut\Core {
 
-	use Core\Tools\DatabaseException;
-	use Core\Tools\ErrorException;
-	use Core\Tools\Exception;
-	use Core\Tools\HttpException;
+	use Continut\Core\Tools\ErrorException;
+	use Continut\Core\Tools\Exception;
+	use Continut\Core\Tools\HttpException;
+	use Continut\Core\Tools\DatabaseException;
 
 	/**
 	 * Class Utility
@@ -30,7 +30,7 @@ namespace Core {
 		static $extensionsConfiguration = [];
 
 		/**
-		 * @var \Core\Mvc\Request Request variable
+		 * @var \Continut\Core\Mvc\Request Request variable
 		 */
 		static $request;
 
@@ -40,12 +40,12 @@ namespace Core {
 		static $databaseHandler = NULL;
 
 		/**
-		 * @var \Core\System\Cache\FileCache
+		 * @var \Continut\Core\System\Cache\FileCache
 		 */
 		static $cacheHandler = NULL;
 
 		/**
-		 * @var \Core\System\Session\UserSession Current user session data
+		 * @var \Continut\Core\System\Session\UserSession Current user session data
 		 */
 		static $session = NULL;
 
@@ -60,7 +60,7 @@ namespace Core {
 		static $applicationScope;
 
 		/**
-		 * @var \Extensions\System\Debug\DebugBar\StandardDebugBar
+		 * @var \DebugBar\StandardDebugBar
 		 */
 		static $debug;
 
@@ -70,9 +70,14 @@ namespace Core {
 		static $configuration;
 
 		/**
-		 * @var Core\System\Domain\Model\Site
+		 * @var \Continut\Core\System\Domain\Model\Site
 		 */
 		static $site;
+
+		/**
+		 * @var \Continut\Core\Autoloader Autoloader class
+		 */
+		static $autoloader;
 
 		/**
 		 * @var string Application environment, Development, Test or Production
@@ -96,17 +101,12 @@ namespace Core {
 		public static function createInstance($classToLoad) {
 			$class = $classToLoad;
 
+			// @TODO : implement a class mapper so overwriting is easily done in the configuration.json
 			if (array_key_exists($classToLoad, static::$classMappings)) {
 				$class = static::$classMappings[$classToLoad];
 			}
 
-			$absolutePath = __ROOTCMS__ . DS . $class;
-			$absolutePath = str_replace("\\", DS, $absolutePath);
-
-			if (!file_exists($absolutePath . ".php")) {
-				throw new ErrorException("The PHP class you are trying to load does not exist: " . $classToLoad, 30000001);
-			}
-			return new $classToLoad();
+			return new $class();
 		}
 
 		/**
@@ -190,8 +190,8 @@ namespace Core {
 				);
 				// if debugging is enabled
 				if (static::getConfiguration("System/Debug/Enabled")) {
-					static::$databaseHandler = new \Extensions\System\Debug\DebugBar\DataCollector\PDO\TraceablePDO($pdo);
-					static::debug()->addCollector(new \Extensions\System\Debug\DebugBar\DataCollector\PDO\PDOCollector(static::$databaseHandler));
+					static::$databaseHandler = new \DebugBar\DataCollector\PDO\TraceablePDO($pdo);
+					static::debug()->addCollector(new \DebugBar\DataCollector\PDO\PDOCollector(static::$databaseHandler));
 				} else {
 					static::$databaseHandler = $pdo;
 				}
@@ -220,20 +220,20 @@ namespace Core {
 		 * @throws Exception
 		 */
 		public static function setCurrentWebsite() {
-			$domainUrls = Utility::createInstance("Core\\System\\Domain\\Collection\\DomainUrlCollection")
+			$domainUrls = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection')
 				->findByUrl($_SERVER["SERVER_NAME"]);
 
 			if ($domainUrls->isEmpty()) {
 				throw new HttpException(404, "The domain you are currently trying to access is not configured inside the CMS application!");
 			} else {
 				$domainUrl = $domainUrls->getFirst();
-				static::$site = Utility::createInstance("Core\\System\\Domain\\Model\\Site")
+				static::$site = Utility::createInstance('Continut\Core\System\Domain\Model\Site')
 					->setDomainUrl($domainUrl);
 			}
 		}
 
 		/**
-		 * @return Core\System\Domain\Model\Site
+		 * @return \Continut\Core\System\Domain\Model\Site
 		 */
 		public static function getSite() {
 			return static::$site;
@@ -245,7 +245,7 @@ namespace Core {
 		 */
 		public static function getRequest() {
 			if (static::$request == null) {
-				static::$request = static::createInstance("\\Core\\Mvc\\Request");
+				static::$request = static::createInstance('Continut\Core\Mvc\Request');
 			}
 			return static::$request;
 		}
@@ -297,6 +297,18 @@ namespace Core {
 				// also load localizations for the extension, if available
 				static::helper("Localization")->loadLabelsFromFile($folderPath . DS . "labels_" . strtolower(static::$applicationScope) .  ".json");
 				static::$extensionsConfiguration = array_merge(static::$extensionsConfiguration, json_decode(file_get_contents($folderPath . DS . "configuration.json"), true));
+			}
+
+			// Register autoloaders
+			// @TODO Move these lines into their own initialisation method
+			foreach (static::$extensionsConfiguration as $extName => $extValues) {
+				if ( isset($extValues["autoloader"]) ) {
+					foreach ( $extValues["autoloader"] as $autoloader ) {
+						$path = __ROOTCMS__ . DS . $autoloader["path"];
+						$namespace = $autoloader["namespace"];
+						Utility::$autoloader->addNamespace($namespace, $path);
+					}
+				}
 			}
 		}
 
@@ -354,7 +366,7 @@ namespace Core {
 			$contextAction     .= "Action";
 
 			$extensionType = static::getExtensionSettings($contextExtension)["type"];
-			$classToLoad = "Extensions\\$extensionType\\$contextExtension\\Classes\\Controllers\\$contextController";
+			$classToLoad = "Continut\\Extensions\\$extensionType\\$contextExtension\\Classes\\Controllers\\$contextController";
 
 			// Instantiate the controller
 			$controller = Utility::createInstance($classToLoad);
@@ -457,7 +469,7 @@ namespace Core {
 		 */
 		public static function getCache() {
 			if (static::$cacheHandler === NULL) {
-				static::$cacheHandler = static::createInstance("\\Core\\System\\Cache\\FileCache");
+				static::$cacheHandler = static::createInstance('Continut\Core\System\Cache\FileCache');
 			}
 			return static::$cacheHandler;
 		}
@@ -469,7 +481,7 @@ namespace Core {
 		 */
 		public static function helper($helperName) {
 			if (!isset(static::$helpers[$helperName])) {
-				static::$helpers[$helperName] = static::createInstance("\\Core\\System\\Helper\\$helperName");
+				static::$helpers[$helperName] = static::createInstance("Continut\\Core\\System\\Helper\\$helperName");
 			}
 			return static::$helpers[$helperName];
 		}
@@ -485,7 +497,7 @@ namespace Core {
 			if (static::getConfiguration("System/Debug/Enabled")) {
 				switch ($type) {
 					case "config":
-						Utility::debug()->addCollector(new \Extensions\System\Debug\DebugBar\DataCollector\ConfigCollector($value));
+						Utility::debug()->addCollector(new \DebugBar\DataCollector\ConfigCollector($value));
 						break;
 					case "exception":
 						Utility::debug()['exceptions']->addException($value);
@@ -508,11 +520,11 @@ namespace Core {
 		/**
 		 * Returns the debug object
 		 *
-		 * @return \Extensions\System\Debug\DebugBar\StandardDebugBar
+		 * @return \DebugBar\StandardDebugBar
 		 */
 		public static function debug() {
 			if (!static::$debug) {
-				static::$debug = new \Extensions\System\Debug\DebugBar\StandardDebugBar();
+				static::$debug = new \DebugBar\StandardDebugBar();
 			}
 			return static::$debug;
 		}

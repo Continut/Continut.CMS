@@ -8,10 +8,10 @@
  * Date: 03.01.2016 @ 15:00
  * Project: Conţinut CMS
  */
-namespace Extensions\Local\News\Classes\View\Renderer {
+namespace Continut\Extensions\Local\News\Classes\View\Renderer {
 
-	use Core\Utility;
-	use Extensions\System\Backend\Classes\View\Renderer\BaseRenderer;
+	use Continut\Core\Utility;
+	use Continut\Extensions\System\Backend\Classes\View\Renderer\BaseRenderer;
 
 	class PhotoRenderer extends BaseRenderer {
 		/**

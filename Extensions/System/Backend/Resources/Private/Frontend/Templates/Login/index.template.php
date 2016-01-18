@@ -7,7 +7,7 @@
 					<div class="panel panel-cms page-panel">
 						<div class="panel-heading"><?= $this->__("login.header") ?></div>
 						<div class="panel-body">
-							<?= $this->helper("Session")->showFlashMessages(\Core\System\Session\UserSession::FLASH_ERROR); ?>
+							<?= $this->helper("Session")->showFlashMessages(\Continut\Core\System\Session\UserSession::FLASH_ERROR); ?>
 							<form method="post" action="<?= $this->helper("Url")->linkToAction("Backend", "Login", "checkLogin") ?>">
 								<div class="form-group">
 									<label for="cms_username"><span class="fa fa-fw fa-user-secret"></span> <?= $this->__("login.username") ?></label>

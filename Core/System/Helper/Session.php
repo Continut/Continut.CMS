@@ -8,9 +8,9 @@
  * Date: 08.05.2015 @ 23:07
  * Project: Conţinut CMS
  */
-namespace Core\System\Helper {
+namespace Continut\Core\System\Helper {
 
-	use Core\Utility;
+	use Continut\Core\Utility;
 
 	class Session {
 

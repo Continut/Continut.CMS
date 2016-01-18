@@ -8,7 +8,7 @@
  * Date: 19.04.2015 @ 17:31
  * Project: Conţinut CMS
  */
-namespace Core\System\Helper {
+namespace Continut\Core\System\Helper {
 
 	class String {
 

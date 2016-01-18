@@ -7,7 +7,7 @@
  * Date: 09.08.2015 @ 14:44
  * Project: Conţinut CMS
  */
-namespace Core\Tools {
+namespace Continut\Core\Tools {
 
 	class HttpException extends Exception {
 

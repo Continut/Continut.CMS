@@ -8,10 +8,10 @@
  * Date: 11.04.2015 @ 18:48
  * Project: Conţinut CMS
  */
-namespace Extensions\Local\News\Classes\Controllers {
+namespace Continut\Extensions\Local\News\Classes\Controllers {
 
-	use Core\Mvc\Controller\BackendController;
-	use Core\Utility;
+	use Continut\Core\Mvc\Controller\BackendController;
+	use Continut\Core\Utility;
 
 	class PreviewController extends BackendController {
 		public function backendConfigureAction() {
@@ -19,7 +19,7 @@ namespace Extensions\Local\News\Classes\Controllers {
 		}
 
 		public function backendPreviewAction() {
-			$newsCollection = Utility::createInstance("\\Extensions\\Local\\News\\Classes\\Domain\\Collection\\NewsCollection");
+			$newsCollection = Utility::createInstance('Continut\Extensions\Local\News\Classes\Domain\Collection\NewsCollection');
 
 			$limit = (isset($this->data["limit"])) ? $this->data["limit"] : 1;
 			$newsCollection->where("1=1 LIMIT $limit");

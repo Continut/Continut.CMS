@@ -8,10 +8,10 @@
  * Date: 25.04.2015 @ 21:18
  * Project: Conţinut CMS
  */
-namespace Extensions\System\Backend\Classes\Controllers {
+namespace Continut\Extensions\System\Backend\Classes\Controllers {
 
-	use Core\Mvc\Controller\BackendController;
-	use Core\Utility;
+	use Continut\Core\Mvc\Controller\BackendController;
+	use Continut\Core\Utility;
 
 	class PageController extends BackendController {
 
@@ -26,10 +26,10 @@ namespace Extensions\System\Backend\Classes\Controllers {
 		 * @throws \Core\Tools\Exception
 		 */
 		public function indexAction() {
-			$domainsCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\DomainCollection");
+			$domainsCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection');
 			$domainsCollection->where("is_visible = :is_visible ORDER BY sorting ASC", ["is_visible" => 1]);
 
-			$languagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\DomainUrlCollection");
+			$languagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection');
 			$languagesCollection->where("domain_id = :domain_id ORDER BY sorting ASC", ["domain_id" => $domainsCollection->getFirst()->getId()]);
 
 			$this->getView()->assign("domains", $domainsCollection);
@@ -44,10 +44,10 @@ namespace Extensions\System\Backend\Classes\Controllers {
 		 * @throws \Core\Tools\Exception
 		 */
 		public function treeAction($term = "") {
-			$pagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection");
+			$pagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection');
 
 			// get the domains collection
-			$domainsCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\DomainCollection");
+			$domainsCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection');
 
 			$domainId = $this->getRequest()->getArgument("domain_id", 0);
 			if ($domainId == 0) {
@@ -60,7 +60,7 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			}
 
 			// then the domains url collection
-			$domainsUrlCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\DomainUrlCollection");
+			$domainsUrlCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection');
 			// see if a domain url was sent, if not get the first one found for this domain
 			$domainUrlId = $this->getRequest()->getArgument("domain_url_id", 0);
 			if ($domainUrlId == 0) {
@@ -91,7 +91,7 @@ namespace Extensions\System\Backend\Classes\Controllers {
 				);
 			}
 
-			$languagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\DomainUrlCollection");
+			$languagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection');
 			$languagesCollection->where("domain_id = :domain_id", ["domain_id" => $domain->getId()]);
 
 			$pagesData = [
@@ -109,7 +109,7 @@ namespace Extensions\System\Backend\Classes\Controllers {
 		 */
 		public function editAction() {
 			$pageId = (int)$this->getRequest()->getArgument("page_id");
-			$pageModel = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection")
+			$pageModel = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection')
 				->where("id = :id", ["id" => $pageId])
 				->getFirst();
 			$pageModel->mergeOriginal();
@@ -127,7 +127,7 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			$data = $this->getRequest()->getArgument("data");
 			$id = (int)$data["id"];
 
-			$pageCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection");
+			$pageCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection');
 			$pageModel = $pageCollection->findById($id);
 			$pageModel->update($data);
 
@@ -159,7 +159,7 @@ namespace Extensions\System\Backend\Classes\Controllers {
 		public function showAction() {
 			Utility::debugData("page_rendering", "start", "Page rendering");
 			// Load the pages collection model
-			$pagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection");
+			$pagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection');
 			// Using the collection, load the page specified in the argument "page_id"
 			$pageId = (int)$this->getRequest()->getArgument("page_id", 0);
 			$pageModel = $pagesCollection->findById($pageId);
@@ -175,14 +175,14 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			}
 
 			// Load the content collection model and then find all the content elements that belong to this page_id
-			$contentCollection = Utility::createInstance("\\Extensions\\System\\Backend\\Classes\\Domain\\Collection\\BackendContentCollection");
+			$contentCollection = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Collection\BackendContentCollection');
 			$contentCollection->where("page_id = :page_id AND is_deleted = 0 ORDER BY sorting ASC", [":page_id" => $pageId]);
 
 			// Since content elements can have containers and be recursive, we need to build a Tree object to handle them
 			$contentTree = $contentCollection->buildTree();
 
 			// A PageView is the model that we use to load a layout and render the elements
-			$pageView = Utility::createInstance("\\Core\\System\\View\\BackendPageView");
+			$pageView = Utility::createInstance('Continut\Core\System\View\BackendPageView');
 			$pageView
 				->setPageModel($pageModel)
 				->setLayoutFromTemplate(__ROOTCMS__ . $pageModel->getBackendLayout());
@@ -209,7 +209,7 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			$pageId = (int)$this->getRequest()->getArgument("page_id", 0);
 
 			// Load the pages collection model
-			$pagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection");
+			$pagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection');
 			$pageModel = $pagesCollection->findById($pageId);
 
 			$pageModel->setIsVisible(!$pageModel->getIsVisible());
@@ -234,7 +234,7 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			$pageId = (int)$this->getRequest()->getArgument("page_id", 0);
 
 			// Load the pages collection model
-			$pagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection");
+			$pagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection');
 			$pageModel = $pagesCollection->findById($pageId);
 
 			$pageModel->setIsInMenu(!$pageModel->getIsInMenu());
@@ -277,7 +277,7 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			$newParentId = (int)$this->getRequest()->getArgument("newParentId");
 
 			// Then we load it's Page Model
-			$pagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection");
+			$pagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection');
 			$pageModel = $pagesCollection->where("id = :id", ["id" => $pageId])->getFirst();
 
 			// If the page is valid, we change it's parentId field and then save the value
@@ -363,7 +363,7 @@ namespace Extensions\System\Backend\Classes\Controllers {
 		public function deleteAction() {
 			$pageId = (int)$this->getRequest()->getArgument("pid");
 
-			$pagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection");
+			$pagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection');
 			// A page can have multiple children so we get it's tree and we delete all subpages
 			$pageTree = $pagesCollection->where("is_deleted = 0")->buildTree($pageId);
 
@@ -374,7 +374,7 @@ namespace Extensions\System\Backend\Classes\Controllers {
 		 */
 		public function wizardAction() {
 			$pageId = (int)$this->getRequest()->getArgument("id");
-			$pageModel = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection")
+			$pageModel = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection')
 				->findById($pageId);
 
 			$this->getView()->assign('page', $pageModel);
@@ -388,10 +388,10 @@ namespace Extensions\System\Backend\Classes\Controllers {
 			$pagePlacement = $this->getRequest()->getArgument("page_placement");
 			$pages = $this->getRequest()->getArgument("page");
 
-			$pageCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\PageCollection");
+			$pageCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection');
 
 			foreach ($pages["names"] as $title) {
-				$pageModel = Utility::createInstance("Core\\System\\Domain\\Model\\Page");
+				$pageModel = Utility::createInstance('Continut\Core\System\Domain\Model\Page');
 				if ($pagePlacement == "inside") {
 					$pageModel->setParentId($pageId);
 				}

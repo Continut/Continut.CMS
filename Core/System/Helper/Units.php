@@ -7,9 +7,9 @@
  * Date: 02.08.2015 @ 12:54
  * Project: Conţinut CMS
  */
-namespace Core\System\Helper {
+namespace Continut\Core\System\Helper {
 
-	use Core\Utility;
+	use Continut\Core\Utility;
 
 	class Units {
 

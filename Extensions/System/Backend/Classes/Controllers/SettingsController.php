@@ -8,10 +8,10 @@
  * Date: 31.12.2015 @ 14:46
  * Project: Conţinut CMS
  */
-namespace Extensions\System\Backend\Classes\Controllers {
+namespace Continut\Extensions\System\Backend\Classes\Controllers {
 
-	use Core\Mvc\Controller\BackendController;
-	use Core\Utility;
+	use Continut\Core\Mvc\Controller\BackendController;
+	use Continut\Core\Utility;
 
 	class SettingsController extends BackendController
 	{
@@ -21,10 +21,10 @@ namespace Extensions\System\Backend\Classes\Controllers {
 		}
 
 		public function indexAction() {
-			$domainsCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\DomainCollection");
+			$domainsCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection');
 			$domainsCollection->where("is_visible = :is_visible ORDER BY sorting ASC", ["is_visible" => 1]);
 
-			$languagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\DomainUrlCollection");
+			$languagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection');
 			$languagesCollection->where("domain_id = :domain_id ORDER BY sorting ASC", ["domain_id" => $domainsCollection->getFirst()->getId()]);
 
 			$this->getView()->assign("domains", $domainsCollection);
@@ -34,7 +34,7 @@ namespace Extensions\System\Backend\Classes\Controllers {
 		public function languagesAction() {
 			$domainId = $this->getRequest()->getArgument("domain_id", 0);
 
-			$languagesCollection = Utility::createInstance("\\Core\\System\\Domain\\Collection\\DomainUrlCollection");
+			$languagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection');
 
 			if ($domainId > 0) {
 				$languagesCollection->where("domain_id = :domain_id ORDER BY sorting ASC", ["domain_id" => $domainId]);

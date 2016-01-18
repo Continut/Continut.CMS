@@ -8,10 +8,10 @@
  * Date: 02.01.2016 @ 17:57
  * Project: Conţinut CMS
  */
-namespace Extensions\Local\News\Classes\Domain\Model {
+namespace Continut\Extensions\Local\News\Classes\Domain\Model {
 
-	use Core\Mvc\Model\BaseModel;
-	use Core\Mvc\Model\Content;
+	use Continut\Core\Mvc\Model\BaseModel;
+	use Continut\Core\Mvc\Model\Content;
 
 	class News extends BaseModel {
 
