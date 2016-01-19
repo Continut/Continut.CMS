@@ -15,7 +15,7 @@
  * @see https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader-examples.md
  */
 
-namespace Continut\Core {
+namespace Continut\Core\Tools {
 
 	class Autoloader
 	{

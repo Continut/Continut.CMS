@@ -15,7 +15,7 @@ namespace Continut\Extensions\System\Backend\Classes\View\Filter {
 	class BaseFilter extends BaseView {
 
 		/**
-		 * @var Continut\Extensions\System\Backend\Classes\Domain\Model\Grid\Field
+		 * @var \Continut\Extensions\System\Backend\Classes\Domain\Model\Grid\Field
 		 */
 		protected $field;
 
@@ -25,7 +25,7 @@ namespace Continut\Extensions\System\Backend\Classes\View\Filter {
 		protected $values;
 
 		/**
-		 * @return Continut\Extensions\System\Backend\Classes\Domain\Model\Grid\Field
+		 * @return \Continut\Extensions\System\Backend\Classes\Domain\Model\Grid\Field
 		 */
 		public function getField()
 		{
@@ -33,7 +33,7 @@ namespace Continut\Extensions\System\Backend\Classes\View\Filter {
 		}
 
 		/**
-		 * @param Continut\Extensions\System\Backend\Classes\Domain\Model\Grid\Field $field
+		 * @param \Continut\Extensions\System\Backend\Classes\Domain\Model\Grid\Field $field
 		 *
 		 * @return $this
 		 */

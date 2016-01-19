@@ -50,7 +50,7 @@ namespace Continut\Extensions\Local\News\Classes\Controllers {
 							"label"    => "backend.news.grid.field.description",
 							"css"      => "col-sm-3",
 							"renderer" => [
-								"parameters" => ["crop" => 400, "cropAppend" => "...", "removeHtml" => TRUE]
+								"parameters" => ["crop" => 300, "cropAppend" => "...", "removeHtml" => TRUE]
 							],
 							"filter"   => [
 								"class" => "Continut\\Extensions\\System\\Backend\\Classes\\View\\Filter\\TextFilter"

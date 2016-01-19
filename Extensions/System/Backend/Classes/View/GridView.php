@@ -21,7 +21,7 @@ namespace Continut\Extensions\System\Backend\Classes\View {
 		protected $fields;
 
 		/**
-		 * @var Core\Mvc\Model\BaseCollection
+		 * @var \Continut\Core\Mvc\Model\BaseCollection
 		 */
 		protected $collection;
 

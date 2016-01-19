@@ -111,7 +111,7 @@ namespace Continut\Core\Mvc\View {
 		/**
 		 * @return string
 		 *
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function render() {
 			$fullpath = $this->_template;
@@ -121,14 +121,14 @@ namespace Continut\Core\Mvc\View {
 				return $this->__("backend.content.templateMissing");
 			} else {
 				Utility::debugData("View loaded: " . $this->getRelativePath(), "message");
-				Utility::debugData("view_render" . md5($this->_template), "start", "View render ". str_replace(__ROOTCMS__, "", $this->_template));
+				Utility::debugData("View render ". str_replace(__ROOTCMS__, "", $this->_template), "start");
 				if (!empty($this->_variables)) {
 					extract($this->_variables);
 				}
 				ob_start();
 				include($fullpath);
 				$content = ob_get_clean();
-				Utility::debugData("view_render" . md5($this->_template), "stop");
+				Utility::debugData("View render ". str_replace(__ROOTCMS__, "", $this->_template), "stop");
 
 				return $content;
 			}

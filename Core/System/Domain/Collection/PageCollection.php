@@ -133,7 +133,7 @@ namespace Continut\Core\System\Domain\Collection {
 		 * @param int    $id
 		 * @param string $slug
 		 *
-		 * @return Continut\Core\System\Domain\Model\Page
+		 * @return \Continut\Core\System\Domain\Model\Page
 		 */
 		public function findWithIdOrSlug($id, $slug) {
 			$domainUrlId = Utility::getSite()->getDomainUrl()->getId();

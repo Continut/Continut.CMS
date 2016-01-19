@@ -14,7 +14,7 @@ namespace Continut\Core\Mvc\View {
 
 	class PageView {
 		/**
-		 * @var \Core\Mvc\View\BaseLayout Layout used by this page
+		 * @var \Continut\Core\Mvc\View\BaseLayout Layout used by this page
 		 */
 		protected $_layout;
 
@@ -29,12 +29,12 @@ namespace Continut\Core\Mvc\View {
 		protected $_title;
 
 		/**
-		 * @var Continut\Core\System\Domain\Model\Page
+		 * @var \Continut\Core\System\Domain\Model\Page
 		 */
 		protected $_pageModel;
 
 		/**
-		 * @param Continut\Core\Mvc\View\BaseLayout $layout Set page layout
+		 * @param \Continut\Core\Mvc\View\BaseLayout $layout Set page layout
 		 *
 		 * @return $this
 		 */
@@ -50,7 +50,7 @@ namespace Continut\Core\Mvc\View {
 		 *
 		 * @return $this
 		 *
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function setLayoutFromTemplate($template) {
 			$this->_layout = Utility::createInstance('Continut\Core\System\View\FrontendLayout');
@@ -69,7 +69,7 @@ namespace Continut\Core\Mvc\View {
 		}
 
 		/**
-		 * @return Continut\Core\System\Domain\Model\Page
+		 * @return \Continut\Core\System\Domain\Model\Page
 		 */
 		public function getPageModel()
 		{
@@ -77,7 +77,7 @@ namespace Continut\Core\Mvc\View {
 		}
 
 		/**
-		 * @param Continut\Core\System\Domain\Model\Page $pageModel
+		 * @param \Continut\Core\System\Domain\Model\Page $pageModel
 		 *
 		 * @return $this
 		 */
@@ -90,10 +90,12 @@ namespace Continut\Core\Mvc\View {
 
 		// TODO: General layout should be defined in an external file
 		public function render() {
-			Utility::debugData("layout_rendering", "start", "Layout rendering");
-			Utility::debugData("Layout used: " . str_replace(__ROOTCMS__, "", $this->_layout->getTemplate()), "message");
+			$debugPath = str_replace(__ROOTCMS__, "", $this->_layout->getTemplate());
+			Utility::debugData("Layout rendered " . $debugPath, "start");
+			Utility::debugData("Layout used: " . $debugPath, "message");
 			$pageContent = $this->_layout->render();
-			Utility::debugData("layout_rendering", "stop");
+			Utility::debugData("Layout rendered " . $debugPath, "stop");
+
 			$pageHeader  = $this->renderHeader();
 			$pageTitle   = $this->getTitle();
 			$url         = $_SERVER["HTTP_HOST"];
@@ -105,7 +107,7 @@ namespace Continut\Core\Mvc\View {
 			if (Utility::getConfiguration("System/Debug/Enabled")) {
 				$pageContent .= Utility::debug()
 					->getJavascriptRenderer()
-					->setBaseUrl('Lib/DebugBar/Resources')
+					->setBaseUrl("Lib/DebugBar/Resources")
 					->setEnableJqueryNoConflict(TRUE)
 					->render();
 				$pageHeader .= Utility::debug()

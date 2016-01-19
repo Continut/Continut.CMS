@@ -17,7 +17,8 @@ namespace Continut\Core {
 
 	/**
 	 * Class Utility
-	 * @package Core
+	 *
+	 * @package Continut\Core
 	 */
 	class Utility {
 		/**
@@ -75,9 +76,14 @@ namespace Continut\Core {
 		static $site;
 
 		/**
-		 * @var \Continut\Core\Autoloader Autoloader class
+		 * @var \Continut\Core\Tools\Autoloader Autoloader class
 		 */
 		static $autoloader;
+
+		/**
+		 * @var \Intervention\Image\ImageManager ImageManager class
+		 */
+		static $imageManager;
 
 		/**
 		 * @var string Application environment, Development, Test or Production
@@ -145,9 +151,11 @@ namespace Continut\Core {
 				$result[ join('/', $keys) ] = $leaf;
 			}
 			static::$configuration = $result;
-			Utility::debugData($result, "config");
+			static::debugData($result, "config");
 
 			unset($config);
+
+			static::$imageManager = new \Intervention\Image\ImageManager(array('driver' => 'imagick'));
 
 			// Set multibyte encoding to utf-8 and use the mb_ functions for proper multilanguage handling
 			// see: http://php.net/manual/en/ref.mbstring.php
@@ -178,7 +186,7 @@ namespace Continut\Core {
 		/**
 		 * Create a database handler and connect to the database
 		 *
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public static function connectToDatabase() {
 			try {
@@ -403,7 +411,7 @@ namespace Continut\Core {
 		 * @param string $resourcePlacement Placement of the resource, either in Backend or Frontend
 		 * @param string $resourceType      Type of resource (Template, Container, Partial, Layout) - in singular form
 		 *
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 *
 		 * @return string Absolute path to the resource to load
 		 */
@@ -415,7 +423,7 @@ namespace Continut\Core {
 			$resourcePath = __ROOTCMS__ . "/Extensions/$extensionType/$contextExtension/Resources/Private/$resourcePlacement/$resourceType/$resourceName$resourceExtension";
 
 			/*if (!file_exists($resourcePath)) {
-				throw new \Core\Tools\Exception("Resource cannot be found: " . $resourcePath);
+				throw new \Continut\Core\Tools\Exception("Resource cannot be found: " . $resourcePath);
 			}*/
 
 			return $resourcePath;
@@ -464,7 +472,7 @@ namespace Continut\Core {
 		/**
 		 * Returns the current cache handler
 		 *
-		 * @return \Core\System\Cache\CacheInterface
+		 * @return \Continut\Core\System\Cache\CacheInterface
 		 * @throws Tools\Exception
 		 */
 		public static function getCache() {
@@ -489,30 +497,33 @@ namespace Continut\Core {
 		/**
 		 * Sets a debug message/value, if debugging is enabled
 		 *
-		 * @param mixed  $value
+		 * @param mixed  $name
 		 * @param string $type  Type of debug info to set
-		 * @param string $label
 		 */
-		public static function debugData($value, $type, $label = "") {
+		public static function debugData($name, $type) {
 			if (static::getConfiguration("System/Debug/Enabled")) {
-				switch ($type) {
-					case "config":
-						Utility::debug()->addCollector(new \DebugBar\DataCollector\ConfigCollector($value));
-						break;
-					case "exception":
-						Utility::debug()['exceptions']->addException($value);
-						break;
-					case "start":
-						Utility::debug()['time']->startMeasure($value, $label);
-						break;
-					case "stop":
-						Utility::debug()['time']->stopMeasure($value);
-						break;
-					case "error":
-						Utility::debug()['messages']->error($value);
-						break;
-					default: // message
-						Utility::debug()['messages']->info($value);
+				try {
+					switch ( $type ) {
+						case "config":
+							static::debug()->addCollector(new \DebugBar\DataCollector\ConfigCollector($name));
+							break;
+						case "exception":
+							static::debug()['exceptions']->addException($name);
+							break;
+						case "start":
+							static::debug()['time']->startMeasure($name);
+							break;
+						case "stop":
+							static::debug()['time']->stopMeasure($name);
+							break;
+						case "error":
+							static::debug()['messages']->error($name);
+							break;
+						default: // message
+							static::debug()['messages']->info($name);
+					}
+				} catch (\DebugBar\DebugBarException $e) {
+					//throw new Exception("Debugbar");
 				}
 			}
 		}

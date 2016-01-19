@@ -50,7 +50,7 @@ namespace Continut\Core\System\Domain\Model {
 		protected $locale;
 
 		/**
-		 * @var Continut\Core\System\Domain\Model\Domain
+		 * @var \Continut\Core\System\Domain\Model\Domain
 		 */
 		protected $domain = NULL;
 
@@ -205,8 +205,8 @@ namespace Continut\Core\System\Domain\Model {
 		}
 
 		/**
-		 * @return Continut\Core\System\Domain\Model\Domain
-		 * @throws Continut\Core\Tools\Exception
+		 * @return \Continut\Core\System\Domain\Model\Domain
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function getDomain() {
 			if ($this->domain == null) {

@@ -14,8 +14,8 @@ namespace Continut\Extensions\Local\News\Classes\Controllers {
 	use Continut\Core\Utility;
 
 	class PreviewController extends BackendController {
-		public function backendConfigureAction() {
 
+		public function backendConfigureAction() {
 		}
 
 		public function backendPreviewAction() {

@@ -23,7 +23,7 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		/**
 		 * Called when the pagetree is shown for the page module
 		 *
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function indexAction() {
 			$domainsCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection');
@@ -41,7 +41,7 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		 *
 		 * @param string $term Search term to use
 		 * @return string
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function treeAction($term = "") {
 			$pagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection');
@@ -105,7 +105,7 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		/**
 		 * Called when a page's properties are edited in the backend
 		 *
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function editAction() {
 			$pageId = (int)$this->getRequest()->getArgument("page_id");
@@ -154,7 +154,7 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		/**
 		 * Called when the user clicks on a page in the page tree. It shows the details of the page on the right side
 		 *
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function showAction() {
 			Utility::debugData("page_rendering", "start", "Page rendering");
@@ -203,7 +203,7 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		/**
 		 * Hide or show a page in the frontend (toggle it's is_visible value)
 		 *
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function toggleVisibilityAction() {
 			$pageId = (int)$this->getRequest()->getArgument("page_id", 0);
@@ -228,7 +228,7 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		/**
 		 * Hide or show a page in any frontend menu (toggle it's is_in_menu value)
 		 *
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function toggleMenuAction() {
 			$pageId = (int)$this->getRequest()->getArgument("page_id", 0);
@@ -266,7 +266,7 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		 * Saves a page's new parentId once it is moved in the tree
 		 *
 		 * @return string
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function treeMoveAction() {
 			// We get the id of the page that has been drag & dropped

@@ -16,7 +16,7 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 	class MediaController extends BackendController {
 
 		/**
-		 * @var Core\System\Storage\StorageInterface
+		 * @var \Continut\Core\System\Storage\StorageInterface
 		 */
 		protected $storage;
 

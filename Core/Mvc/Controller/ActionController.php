@@ -22,7 +22,7 @@ namespace Continut\Core\Mvc\Controller {
 		/**
 		 * Request class
 		 *
-		 * @var Continut\Core\Mvc\Request
+		 * @var \Continut\Core\Mvc\Request
 		 */
 		protected $_request;
 
@@ -32,7 +32,7 @@ namespace Continut\Core\Mvc\Controller {
 		protected $_name;
 
 		/**
-		 * @var Continut\Core\System\Session\User Current session user
+		 * @var \Continut\Core\System\Session\User Current session user
 		 */
 		protected $_user;
 
@@ -54,7 +54,7 @@ namespace Continut\Core\Mvc\Controller {
 		protected $_response;
 
 		/**
-		 * @var \Core\Mvc\View\BaseView
+		 * @var \Continut\Core\Mvc\View\BaseView
 		 */
 		protected $_view;
 
@@ -69,7 +69,7 @@ namespace Continut\Core\Mvc\Controller {
 		public $data;
 
 		/**
-		 * @var \Core\System\Session\UserSession Reference to the current user session
+		 * @var \Continut\Core\System\Session\UserSession Reference to the current user session
 		 */
 		protected $_session;
 
@@ -90,7 +90,7 @@ namespace Continut\Core\Mvc\Controller {
 		}
 
 		/**
-		 * @return \Core\System\Session\User
+		 * @return \Continut\Core\System\Session\User
 		 */
 		public function getUser() {
 			return $this->_user;
@@ -135,7 +135,7 @@ namespace Continut\Core\Mvc\Controller {
 		/**
 		 * Get view instance
 		 *
-		 * @return \Core\Mvc\View\BaseView
+		 * @return \Continut\Core\Mvc\View\BaseView
 		 */
 		public function getView() {
 			return $this->_view;
@@ -145,7 +145,7 @@ namespace Continut\Core\Mvc\Controller {
 		 * Returns the final render from the action called, or it's rendered template
 		 *
 		 * @return string
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function getRenderOutput() {
 			$action = $this->_action . "Action";
@@ -161,7 +161,7 @@ namespace Continut\Core\Mvc\Controller {
 		/**
 		 * Get user session
 		 *
-		 * @return \Core\System\Session\UserSession
+		 * @return \Continut\Core\System\Session\UserSession
 		 */
 		public function getSession() {
 			return Utility::getSession();
@@ -192,7 +192,7 @@ namespace Continut\Core\Mvc\Controller {
 		/**
 		 * Get request object
 		 *
-		 * @return \Core\Mvc\Request
+		 * @return \Continut\Core\Mvc\Request
 		 */
 		public function getRequest() {
 			return $this->_request;

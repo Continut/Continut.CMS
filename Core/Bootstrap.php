@@ -49,21 +49,25 @@ namespace Continut\Core {
 		 * @return $this
 		 */
 		public function setEnvironment($applicationScope, $environment) {
-			require_once "Autoloader.php";
+			require_once "Tools/Autoloader.php";
 			require_once "Utility.php";
 
-			Utility::$autoloader = new \Continut\Core\Autoloader();
+			Utility::$autoloader = new Tools\Autoloader();
 			Utility::$autoloader->register();
+			// Main namespace for app
 			Utility::$autoloader->addNamespace("Continut", __ROOTCMS__);
+			// Debugbar: http://phpdebugbar.com
 			Utility::$autoloader->addNamespace("DebugBar", __ROOTCMS__ . DS . "Lib" . DS . "DebugBar");
 			Utility::$autoloader->addNamespace("Symfony",  __ROOTCMS__ . DS . "Lib" . DS . "Symfony");
 			Utility::$autoloader->addNamespace("Psr",      __ROOTCMS__ . DS . "Lib" . DS . "Psr");
+			// Image resize capabilities: http://image.intervention.io
+			Utility::$autoloader->addNamespace("Intervention",      __ROOTCMS__ . DS . "Lib" . DS . "Intervention");
 
 			set_exception_handler([$this, "handleException"]);
 			set_error_handler([$this, 'handleError']);
 
-			Utility::debugData("application", "start", "Application context");
 			Utility::setApplicationScope($applicationScope, $environment);
+			Utility::debugData("Application", "start");
 
 			return $this;
 		}
@@ -119,10 +123,10 @@ namespace Continut\Core {
 		 */
 		public function loadExtensionsConfiguration() {
 			// Load Local and System extensions configuration data
-			Utility::debugData("load_extensions_configuration", "start", "Loading extensions configuration");
+			Utility::debugData("Loading extensions configuration", "start");
 			Utility::loadExtensionsConfigurationFromFolder(__ROOTCMS__ . DS . "Extensions" . DS . "Local");
 			Utility::loadExtensionsConfigurationFromFolder(__ROOTCMS__ . DS . "Extensions" . DS . "System");
-			Utility::debugData("load_extensions_configuration", "stop");
+			Utility::debugData("Loading extensions configuration", "stop");
 
 			return $this;
 		}
@@ -152,7 +156,7 @@ namespace Continut\Core {
 		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function connectFrontendController() {
-			Utility::debugData("controller_call", "start", "Main call and rendering");
+			Utility::debugData("Main frontend controller called", "start");
 
 			$request = Utility::getRequest();
 			$request->mapRouting();
@@ -163,13 +167,14 @@ namespace Continut\Core {
 			$contextAction     = $request->getArgument("_action",     "index");
 
 			$content = Utility::callPlugin($contextExtension, $contextController, $contextAction);
+			// @TODO Replace it with a variable that is displayed at the very end of the execution chain
 			echo $content;
 
 			return $this;
 		}
 
 		public function connectBackendController() {
-			Utility::debugData("controller_call", "start", "Main call and rendering");
+			Utility::debugData("Main backend controller called", "start");
 
 			$content = "";
 

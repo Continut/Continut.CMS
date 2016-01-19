@@ -107,7 +107,7 @@ namespace Continut\Extensions\System\Backend\Classes\Domain\Model\Grid {
 		 * @param array $filter Configuration array for the filter
 		 *
 		 * @return $this
-		 * @throws \Core\Tools\ErrorException
+		 * @throws \Continut\Core\Tools\ErrorException
 		 */
 		public function setFilter($filter)
 		{

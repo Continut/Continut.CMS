@@ -22,7 +22,7 @@ namespace Continut\Core\System\Domain\Model {
 		protected $title = "Unnamed page";
 
 		/**
-		 * @var \Core\System\Domain\Model\Page
+		 * @var \Continut\Core\System\Domain\Model\Page
 		 */
 		protected $parent;
 
@@ -107,7 +107,7 @@ namespace Continut\Core\System\Domain\Model {
 		protected $original_id;
 
 		/**
-		 * @var \Core\System\Domain\Model\Page Original page, if this is a translated one
+		 * @var \Continut\Core\System\Domain\Model\Page Original page, if this is a translated one
 		 */
 		protected $original;
 
@@ -341,7 +341,7 @@ namespace Continut\Core\System\Domain\Model {
 		 * Get parent PageModel
 		 *
 		 * @return mixed
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function getParent() {
 			if ($this->parent_id) {
@@ -373,7 +373,7 @@ namespace Continut\Core\System\Domain\Model {
 
 		/**
 		 * @return Page
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function getOriginal() {
 			if ($this->original_id) {
@@ -409,7 +409,7 @@ namespace Continut\Core\System\Domain\Model {
 		/**
 		 * Set this page's parent
 		 *
-		 * @param \Core\System\Domain\Model\Page $parent
+		 * @param \Continut\Core\System\Domain\Model\Page $parent
 		 *
 		 * @return $this
 		 */

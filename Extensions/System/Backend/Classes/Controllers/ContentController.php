@@ -22,7 +22,7 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		 * Delete a content element in the backend
 		 *
 		 * @return string
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function deleteAction() {
 			$id = (int)$this->getRequest()->getArgument("id");
@@ -97,7 +97,7 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 			 * Saves the changes made to a content element in the backend
 		 *
 		 * @return string
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function updateAction() {
 			$id  = (int)$this->getRequest()->getArgument("id");
@@ -127,7 +127,7 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		 * Update content element's container once it is dragged & dropped
 		 *
 		 * @return string
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function updateContainerAction() {
 			$newParent = (int)$this->getRequest()->getArgument("parent_id");

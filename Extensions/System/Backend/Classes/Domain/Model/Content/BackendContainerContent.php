@@ -20,7 +20,7 @@ namespace Continut\Extensions\System\Backend\Classes\Domain\Model\Content {
 		 * @param mixed $elements Chidren elements to render
 		 *
 		 * @return mixed|string
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function render($elements) {
 			$title = $this->getContentTitle();

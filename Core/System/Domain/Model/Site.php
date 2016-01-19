@@ -12,7 +12,7 @@ namespace Continut\Core\System\Domain\Model {
 	class Site {
 
 		/**
-		 * @var Continut\Core\System\Domain\Model\DomainUrl
+		 * @var \Continut\Core\System\Domain\Model\DomainUrl
 		 */
 		protected $domainUrl;
 
@@ -24,7 +24,7 @@ namespace Continut\Core\System\Domain\Model {
 		}
 
 		/**
-		 * @return Continut\Core\System\Domain\Model\DomainUrl
+		 * @return \Continut\Core\System\Domain\Model\DomainUrl
 		 */
 		public function getDomainUrl()
 		{
@@ -32,7 +32,7 @@ namespace Continut\Core\System\Domain\Model {
 		}
 
 		/**
-		 * @param Continut\Core\System\Domain\Model\DomainUrl $domainUrl
+		 * @param \Continut\Core\System\Domain\Model\DomainUrl $domainUrl
 		 *
 		 * @return $this
 		 */
@@ -43,7 +43,7 @@ namespace Continut\Core\System\Domain\Model {
 		}
 
 		/**
-		 * @return Continut\Core\System\Domain\Model\Domain
+		 * @return \Continut\Core\System\Domain\Model\Domain
 		 */
 		public function getDomain() {
 			return $this->domainUrl->getDomain();

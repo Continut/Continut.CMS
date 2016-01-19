@@ -60,7 +60,7 @@ namespace Continut\Core\System\Domain\Model {
 		protected $sorting;
 
 		/**
-		 * @var \Core\Mvc\View\PageView Link to the parent PageView
+		 * @var \Continut\Core\Mvc\View\PageView Link to the parent PageView
 		 */
 		protected $_pageView;
 
@@ -234,7 +234,7 @@ namespace Continut\Core\System\Domain\Model {
 		}
 
 		/**
-		 * @return \Core\Mvc\View\PageViews
+		 * @return \Continut\Core\Mvc\View\PageViews
 		 */
 		public function getPage() {
 			return $this->_pageView;

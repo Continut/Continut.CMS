@@ -72,7 +72,7 @@ namespace Continut\Extensions\System\Backend\Classes\View\Renderer {
 		}
 
 		/**
-		 * @return \Core\Mvc\Model\BaseModel\BaseModel
+		 * @return \Continut\Core\Mvc\Model\BaseModel\BaseModel
 		 */
 		public function getRecord()
 		{

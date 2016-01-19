@@ -36,7 +36,7 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		/**
 		 * Checks the login data and connects the user to the backend or redirects to the login form if the credentials are incorrect
 		 *
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function checkLoginAction() {
 			$username = $this->getRequest()->getArgument("cms_username");

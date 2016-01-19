@@ -95,7 +95,7 @@ namespace Continut\Core\System\Domain\Model {
 
 		/**
 		 * @return array
-		 * @throws \Core\Tools\Exception
+		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function getDomainUrls() {
 			if ($this->domain_urls == null) {
