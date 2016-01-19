@@ -89,14 +89,14 @@ namespace Continut\Core\Mvc\View {
 
 			$htmlElements = "";
 
-			Utility::debugData("container_rendering", "start", "Container (" . $id . ") rendering completed");
-			Utility::debugData("Container with id follows: " . $id, "message");
+			Utility::debugData("Container ($id) rendering", "start");
+			Utility::debugData("Container id: " . $id, "message");
 			foreach ($this->getElements() as $element) {
 				if ($element->getColumnId() == $id) {
 					$htmlElements .= $element->render($element->children);
 				}
 			}
-			Utility::debugData("container_rendering", "stop");
+			Utility::debugData("Container ($id) rendering", "stop");
 			return $htmlElements;
 		}
 	}

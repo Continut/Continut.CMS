@@ -93,7 +93,7 @@ namespace Continut\Core\Mvc\View {
 			$debugPath = str_replace(__ROOTCMS__, "", $this->_layout->getTemplate());
 			Utility::debugData("Layout rendered " . $debugPath, "start");
 			Utility::debugData("Layout used: " . $debugPath, "message");
-			$pageContent = $this->_layout->render();
+			$pageContent = $this->getLayout()->render();
 			Utility::debugData("Layout rendered " . $debugPath, "stop");
 
 			$pageHeader  = $this->renderHeader();

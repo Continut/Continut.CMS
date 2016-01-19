@@ -155,7 +155,7 @@ namespace Continut\Core {
 
 			unset($config);
 
-			static::$imageManager = new \Intervention\Image\ImageManager(array('driver' => 'imagick'));
+			static::$imageManager = new \Intervention\Image\ImageManager();
 
 			// Set multibyte encoding to utf-8 and use the mb_ functions for proper multilanguage handling
 			// see: http://php.net/manual/en/ref.mbstring.php

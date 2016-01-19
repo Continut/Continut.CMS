@@ -48,16 +48,15 @@
 				<div class="row">
 					<?php foreach ($files as $file): ?>
 						<div class="col-xs-6 col-md-2">
-							<a href="#" class="thumbnail">
-								<?php if ($file->getExtension() == "JPG"): ?>
-									<img src="<?= $this->helper("Image")->resize($file->getRelativeFilename(), 100, 100, "storage") ?>" alt=""/>
+							<a href="#" class="thumbnail filetype-<?= $file->getExtension() ?>">
+								<span class="extension"><?= $file->getExtension() ?>: <?= $this->helper("Units")->formatBytes($file->getSize()); ?></span>
+								<?php if (in_array($file->getExtension(), array("JPG", "PNG", "GIF", "BMP"))): ?>
+									<img src="<?= $this->helper("Image")->resize($file->getRelativeFilename(), 300, 300, "storage") ?>" alt=""/>
 								<?php else: ?>
-									<span class="extension"><?= $file->getExtension() ?></span>
 									<i class="fa fa-file" style="font-size: 100px"></i>
 								<?php endif; ?>
 								<div class="caption">
-									<p><?= $file->getFullname(); ?><br/>
-									<?= $this->helper("Units")->formatBytes($file->getSize()); ?></p>
+									<p><?= $file->getFullname(); ?></p>
 								</div>
 							</a>
 						</div>

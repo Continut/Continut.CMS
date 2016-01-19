@@ -112,10 +112,34 @@ li a.helper-icon {
 	background: #f5f5f5;
 	border-radius: 0;
 	padding: 9px;
+	min-height: 170px;
+	overflow: hidden;
+}
+
+.thumbnail > img, .thumbnail a > img {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	top: 0;
+	margin: auto;
+}
+
+.panel-media .thumbnail.filetype-JPG,
+.panel-media .thumbnail.filetype-GIF,
+.panel-media .thumbnail.filetype-PNG {
+	padding: 0;
 }
 
 .panel-media .thumbnail .caption {
-	padding: 9px 0 0;
+	padding: 2%;
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	left: 0;
+	overflow: hidden;
+	background: #111111;
+	color: white;
 }
 
 .panel-media .thumbnail p {
@@ -129,6 +153,7 @@ li a.helper-icon {
 	background: #111;
 	padding: 5px;
 	color: white;
+	z-index: 100;
 }
 
 .folders-list {
