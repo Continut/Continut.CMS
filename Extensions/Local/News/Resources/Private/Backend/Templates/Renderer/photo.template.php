@@ -1,4 +1,5 @@
 <p class="text-center">
-	<img src="http://placehold.it/100x100" alt="" /><br/>
-	id: <?= $this->getRecord()->getId() ?>
+	<?php if ($this->getRecord()->getImages()->count() > 0): ?>
+		<img src="<?= $this->helper('Image')->resize($this->getRecord()->getImages()->getFirst()->getRelativePath(), 100, 100, 'news') ?>" alt="" />
+	<?php endif ?>
 </p>

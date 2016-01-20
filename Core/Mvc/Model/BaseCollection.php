@@ -111,6 +111,28 @@ namespace Continut\Core\Mvc\Model {
 		}
 
 		/**
+		 * Execute a custom sql query while returning elements of the same class the repository represents
+		 *
+		 * @param       $classToReturn
+		 * @param       $sql
+		 * @param array $values
+		 *
+		 * @return $this
+		 */
+		public function sql($sql, $values = []) {
+			$this->_elements = [];
+			$sth = Utility::getDatabase()->prepare($sql);
+
+			$sth->execute($values);
+			$sth->setFetchMode(\PDO::FETCH_CLASS, $this->_elementClass);
+			while ($element = $sth->fetch()) {
+				$this->add($element);
+			}
+
+			return $this;
+		}
+
+		/**
 		 * @param string $conditions
 		 * @param array  $values
 		 *

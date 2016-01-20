@@ -3,6 +3,7 @@
 namespace Continut\Extensions\Local\News\Classes\Controllers {
 
 	use Continut\Core\Mvc\Controller\FrontendController;
+	use Continut\Core\Utility;
 
 	class IndexController extends FrontendController {
 		protected $test;
@@ -20,8 +21,13 @@ namespace Continut\Extensions\Local\News\Classes\Controllers {
 		}
 
 		public function showAction() {
-			$this->templateStorage = "Resources/Private";
-			$this->getView()->setTemplate(__ROOTCMS__ . DS . "Extensions" . DS . $this->getExtensionType() . DS . $this->getExtension() . DS . $this->templateStorage . DS ."Frontend/Templates/Index" . DS . "Show.template.php");
+			$newsCollection = Utility::createInstance('Continut\Extensions\Local\News\Classes\Domain\Collection\NewsCollection');
+
+			$limit = (isset($this->data["limit"])) ? $this->data["limit"] : 1;
+			$newsCollection->where("1=1 LIMIT $limit");
+
+			$this->getView()->assign('news', $newsCollection);
+			$this->getView()->assign('data', $this->data);
 		}
 
 	}

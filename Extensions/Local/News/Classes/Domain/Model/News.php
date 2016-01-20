@@ -12,6 +12,7 @@ namespace Continut\Extensions\Local\News\Classes\Domain\Model {
 
 	use Continut\Core\Mvc\Model\BaseModel;
 	use Continut\Core\Mvc\Model\Content;
+	use Continut\Core\Utility;
 
 	class News extends BaseModel {
 
@@ -34,6 +35,18 @@ namespace Continut\Extensions\Local\News\Classes\Domain\Model {
 		 * @var int
 		 */
 		protected $author;
+
+		/**
+		 * @var \Continut\Core\System\Domain\Model\File[]
+		 */
+		protected $images;
+
+		/**
+		 * If you want to prevent loading the collection after each getImages call, then cache it
+		 *
+		 * @var bool
+		 */
+		private $imagesLoaded = false;
 
 		/**
 		 * Simple datamapper used for the database
@@ -59,10 +72,14 @@ namespace Continut\Extensions\Local\News\Classes\Domain\Model {
 
 		/**
 		 * @param string $title
+		 *
+		 * @return News
 		 */
 		public function setTitle($title)
 		{
 			$this->title = $title;
+
+			return $this;
 		}
 
 		/**
@@ -75,10 +92,14 @@ namespace Continut\Extensions\Local\News\Classes\Domain\Model {
 
 		/**
 		 * @param boolean $is_visible
+		 *
+		 * @return News
 		 */
 		public function setIsVisible($is_visible)
 		{
 			$this->is_visible = $is_visible;
+
+			return $this;
 		}
 
 		/**
@@ -91,10 +112,14 @@ namespace Continut\Extensions\Local\News\Classes\Domain\Model {
 
 		/**
 		 * @param string $description
+		 *
+		 * @return News
 		 */
 		public function setDescription($description)
 		{
 			$this->description = $description;
+
+			return $this;
 		}
 
 		/**
@@ -107,10 +132,32 @@ namespace Continut\Extensions\Local\News\Classes\Domain\Model {
 
 		/**
 		 * @param int $author
+		 *
+		 * @return News
 		 */
 		public function setAuthor($author)
 		{
 			$this->author = $author;
+
+			return $this;
+		}
+
+		/**
+		 * @return \Continut\Core\System\Domain\Model\FileReference[]
+		 */
+		public function getImages() {
+			if (!$this->imagesLoaded) {
+				$this->images = Utility::createInstance('Continut\Core\System\Domain\Collection\FileCollection')->sql('SELECT * FROM sys_files LEFT JOIN sys_file_references ON sys_files.id=sys_file_references.file_id WHERE sys_file_references.tablename=:tablename AND sys_file_references.foreign_id=:id AND sys_file_references.is_deleted=0 AND sys_file_references.is_visible=1', ['tablename' => 'ext_news', 'id' => $this->id]);
+				$this->imagesLoaded = true;
+			}
+			return $this->images;
+		}
+
+		/**
+		 * @param \Continut\Core\System\Domain\Model\FileReference[] $images
+		 */
+		public function setImages($images) {
+			$this->images = $images;
 		}
 
 	}
