@@ -30,11 +30,14 @@ namespace Continut\Core\System\Helper {
 			$newFilename = "Cache/Temp/Images/" . $prefix . "_" . md5($image . $width . $height) . "." . $extension;
 			$newFilenameFullpath = __ROOTCMS__ . "/$newFilename";
 
+			$absoluteFilename = __ROOTCMS__ . $image;
+
 			if (file_exists($newFilenameFullpath)) {
 				return $newFilename;
 			}
-
-			$absoluteFilename = __ROOTCMS__ . $image;
+			if (!file_exists($absoluteFilename)) {
+				return "";
+			}
 
 			Utility::$imageManager->make($absoluteFilename)->resize($width, $height, function ($constraint) {
 				$constraint->aspectRatio();
