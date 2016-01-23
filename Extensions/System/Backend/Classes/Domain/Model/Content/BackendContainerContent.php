@@ -79,9 +79,10 @@ namespace Continut\Extensions\System\Backend\Classes\Domain\Model\Content {
 				Utility::helper("Localization")->translate("backend.content.operation.hide")
 			);
 
-			$linkToShow   = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-eye-slash text-danger fa-fw"></i></a>',
+			$linkToShow   = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-eye-slash text-danger fa-fw"></i> %s</a>',
 				Utility::helper("Localization")->translate("backend.content.operation.show"),
-				Utility::helper("Url")->linkToAction("Backend", "Content", "toggleVisibility", ["id" => $this->getId(), "show" => 1])
+				Utility::helper("Url")->linkToAction("Backend", "Content", "toggleVisibility", ["id" => $this->getId(), "show" => 1]),
+				Utility::helper("Localization")->translate("backend.content.operation.show")
 			);
 
 			$linkNewElement = sprintf('<a class="btn btn-sm btn-success content-wizard" title="%s" href="%s"><i class="fa fa-plus fa-fw"></i></a>',
