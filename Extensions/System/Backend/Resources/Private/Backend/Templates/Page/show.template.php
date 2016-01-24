@@ -36,9 +36,9 @@
 	<img src="<?= $this->helper("Image")->getPath("Images/spin.svg", "Backend") ?>" alt="" />
 </div>
 
-<div id="page_edit" class="row"></div>
+<div id="page_edit_block" class="row"></div>
 <div class="panel panel-warning page-panel">
-	<div class="panel-heading"><i class="fa fa-fw fa-file-o"></i> <?= $page->getTitle() ?></div>
+	<div class="panel-heading"><i class="fa fa-fw fa-file-o"></i> <span class="current-page-title"><?= $page->getTitle() ?></span></div>
 	<div class="panel-body">
 		<?= $pageContent ?>
 	</div>
@@ -92,12 +92,14 @@
 			});
 	});
 	$('#page-edit').on('click', function() {
-		$.ajax({
-			url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "edit") ?>',
-			data: { page_id: <?= $page->getId() ?> }
-		}).done(function (data) {
-			$('#page_edit').html(data);
-		});
+		if ($('#page_edit_block').is(':empty')) {
+			$.ajax({
+				url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "edit") ?>',
+				data: {page_id: <?= $page->getId() ?> }
+			}).done(function (data) {
+				$('#page_edit_block').html(data);
+			});
+		}
 	});
 	$('#page-delete').on('click', function() {
 		BootstrapDialog.confirm({

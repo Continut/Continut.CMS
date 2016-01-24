@@ -46,12 +46,16 @@
 			</div>
 			<div class="panel-footer">
 				<input type="submit" name="submit" class="btn btn-primary" value="<?= $this->__("backend.page.properties.saveChanges") ?>" />
+				<a class="close-button btn btn-danger pull-right"><?= $this->__("general.cancel") ?></a>
 			</div>
 		</div>
 	</div>
 </form>
 
 <script>
+	$('#page_edit_template .close-button').on('click', function() {
+		$('#page_edit_block').empty();
+	});
 	// Post form using FormData, if supported
 	$('#page_edit_template').on('submit', function() {
 		var form = $(this);
@@ -72,7 +76,7 @@
 			}
 		})
 		.done(function (data) {
-			$('#page_edit').empty();
+			$('#page_edit_block').empty();
 			$('.loader-page-save-properties').hide();
 			$('#content').html(data);
 		});

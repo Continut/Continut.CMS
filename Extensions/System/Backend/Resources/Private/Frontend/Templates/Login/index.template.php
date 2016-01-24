@@ -4,7 +4,7 @@
 			<div class="row">
 				<div class="col-sm-4 col-sm-offset-4">
 					<p><?= $this->__("copyright.text", ["file" => "LICENSE.TXT"]); ?></p>
-					<div class="panel panel-cms page-panel">
+					<div class="panel panel-cms">
 						<div class="panel-heading"><?= $this->__("login.header") ?></div>
 						<div class="panel-body">
 							<?= $this->helper("Session")->showFlashMessages(\Continut\Core\System\Session\UserSession::FLASH_ERROR); ?>

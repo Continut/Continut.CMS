@@ -39,16 +39,18 @@
         }
       }
     },
-    "plugins": {
-      "news": {
-        "label": "News plugin",
-        "execute": {
-          "controller": "Preview",
-          "action": "backendConfigure"
-        },
-        "preview": {
-          "controller": "Preview",
-          "action": "backendPreview"
+    "elements": {
+      "plugins": {
+        "news": {
+          "label": "News plugin",
+          "frontend": {
+            "controller": "Index",
+            "action": "index"
+          },
+          "backend": {
+            "controller": "Preview",
+            "action": "backendPreview"
+          }
         }
       }
     }

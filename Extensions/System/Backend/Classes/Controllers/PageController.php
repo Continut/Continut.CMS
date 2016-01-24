@@ -27,7 +27,7 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		 */
 		public function indexAction() {
 			$domainsCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection');
-			$domainsCollection->where("is_visible = :is_visible ORDER BY sorting ASC", ["is_visible" => 1]);
+			$domainsCollection->sql("SELECT sys_domains.* FROM sys_domains LEFT JOIN sys_domain_urls ON sys_domains.id=sys_domain_urls.domain_id WHERE sys_domain_urls.domain_id IS NOT NULL AND sys_domains.is_visible =:is_visible GROUP BY (sys_domains.id) ORDER BY sys_domains.sorting ASC", ["is_visible" => 1]);
 
 			$languagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection');
 			$languagesCollection->where("domain_id = :domain_id ORDER BY sorting ASC", ["domain_id" => $domainsCollection->getFirst()->getId()]);
@@ -77,6 +77,11 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 					->getFirst();
 			}
 
+			// if no domain url is found, then unfortunatelly there is nothing that we can show
+			if (!$domainUrl) {
+				return json_encode(["success" => 0, "languages" => []]);
+			}
+
 			// get all the pages that belong to this domain
 			// if the search filter is not empty, filter on page titles
 			if (mb_strlen($term) > 0) {
@@ -95,6 +100,7 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 			$languagesCollection->where("domain_id = :domain_id", ["domain_id" => $domain->getId()]);
 
 			$pagesData = [
+				"success" => 1,
 				"pages" => $pagesCollection->buildJsonTree(),
 				"languages" => $languagesCollection->toSimplifiedArray()
 			];

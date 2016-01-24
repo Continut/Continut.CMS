@@ -21,14 +21,22 @@ namespace Continut\Extensions\System\Frontend\Classes\Domain\Model\Content {
 		 * @return string
 		 */
 		public function render($elements) {
-			$configuration = json_decode($this->getValue(), TRUE);
+			$value = "";
 
-			return Utility::callPlugin(
-				$configuration["plugin"]["extension"],
-				$configuration["plugin"]["controller"],
-				$configuration["plugin"]["action"],
-				$configuration["plugin"]["data"]
-			);
+			$configuration     = json_decode($this->getValue(), TRUE);
+			$extensionSettings = Utility::getExtensionSettings($configuration["plugin"]["extension"]);
+
+			if (isset($extensionSettings["elements"]["plugins"][$configuration["plugin"]["identifier"]])) {
+				$modulePreviewSettings = $extensionSettings["elements"]["plugins"][$configuration["plugin"]["identifier"]]["frontend"];
+				$value = Utility::callPlugin(
+					$configuration["plugin"]["extension"],
+					$modulePreviewSettings["controller"],
+					$modulePreviewSettings["action"],
+					$configuration["plugin"]["data"]
+				);
+			}
+
+			return $value;
 		}
 	}
 

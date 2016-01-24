@@ -18,14 +18,20 @@
 									data: { domain_id: this.value }
 								})
 									.done(function( data ) {
+										var json = $.parseJSON(data);
 										var $languages = $('#select_language');
-										$languages.empty();
-										$.each($.parseJSON(data).languages, function (value, key) {
-											$languages.append($("<option data-icon='flag-icon flag-icon-" + key.flag + "'></option>").attr("value", value).text(key.title));
-										});
-										$languages.selectpicker('refresh');
-										$('#cms_tree').tree('loadData', $.parseJSON(data).pages);
-										$('#content').empty();
+										if (json.success == 1) {
+											$languages.empty();
+											$.each(json.languages, function (value, key) {
+												$languages.append($("<option data-icon='flag-icon flag-icon-" + key.flag + "'></option>").attr("value", value).text(key.title));
+											});
+											$languages.selectpicker('refresh');
+											$('#cms_tree').tree('loadData', json.pages);
+											$('#content').empty();
+										} else {
+											$('#cms_tree').tree('loadData', []);
+											$languages.empty().selectpicker('refresh');
+										}
 									});
 							});
 						</script>

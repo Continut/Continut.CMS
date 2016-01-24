@@ -91,7 +91,7 @@ li a.helper-icon {
 
 .page-panel {
 	margin-top: 10px;
-	box-shadow: 0 0 4px #666;
+	background: #9b479f;
 }
 
 .panel-hidden .panel-body {
@@ -262,7 +262,7 @@ ul.jqtree-tree li.jqtree-folder {
 .breadcrumb-page-tree {
 	font-size: 12px;
 	padding: 5px;
-	margin-bottom: 10px;
+	margin-bottom: 3px;
 	border-radius: 0;
 }
 

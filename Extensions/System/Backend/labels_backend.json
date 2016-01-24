@@ -3,6 +3,7 @@
     "en_US": {
       "general.yes": "Yes",
       "general.no": "No",
+      "general.cancel": "Cancel",
       "copyright.text": "Conţinut CMS is an open-source software licensed under the GPL-3 license. For more details, please consult our %(file) file.",
       "copyright.footer": "&copy; Copyright %(link) 2015",
       "login.helpmenu.gettingStarted": "Just getting started?",
@@ -128,6 +129,7 @@
     "ro_RO": {
       "general.yes": "Da",
       "general.no": "Nu",
+      "general.cancel": "Anulare",
       "copyright.text": "Conţinut CMS este un program open-source sub licenţă GPL-3. Pentru mai multe detalii vă rugăm să consultaţi fişierul %(file).",
       "copyright.footer": "&copy; Copyright %(link) 2015",
       "login.helpmenu.gettingStarted": "Sunteţi la început?",
@@ -253,6 +255,7 @@
     "fr_FR": {
       "general.yes": "Oui",
       "general.no": "Non",
+      "general.cancel": "Annuler",
       "copyright.text": "Conţinut CMS est un logiciel open-source sous license GPL-3. Pour plus de details consultez svp. le fichier %(file).",
       "copyright.footer": "&copy; Copyright %(link) 2015",
       "login.helpmenu.gettingStarted": "Vous avez besoin d'aide?",

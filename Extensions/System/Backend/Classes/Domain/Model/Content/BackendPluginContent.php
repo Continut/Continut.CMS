@@ -26,8 +26,8 @@ namespace Continut\Extensions\System\Backend\Classes\Domain\Model\Content {
 
 			$extensionSettings = Utility::getExtensionSettings($configuration["plugin"]["extension"]);
 
-			if (isset($extensionSettings["plugins"][$configuration["plugin"]["identifier"]])) {
-				$modulePreviewSettings = $extensionSettings["plugins"][$configuration["plugin"]["identifier"]]["preview"];
+			if (isset($extensionSettings["elements"]["plugins"][$configuration["plugin"]["identifier"]])) {
+				$modulePreviewSettings = $extensionSettings["elements"]["plugins"][$configuration["plugin"]["identifier"]]["backend"];
 				$value = Utility::callPlugin(
 					$configuration["plugin"]["extension"],
 					$modulePreviewSettings["controller"],
