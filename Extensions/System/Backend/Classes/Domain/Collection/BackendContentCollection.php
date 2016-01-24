@@ -36,17 +36,28 @@ namespace Continut\Extensions\System\Backend\Classes\Domain\Collection {
 			$sth->execute($values);
 			$sth->setFetchMode(\PDO::FETCH_ASSOC);
 			while ($row = $sth->fetch()) {
-				switch ($row["type"]) {
-					case "plugin":    $element = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Model\Content\BackendPluginContent'); break;
-					case "container": $element = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Model\Content\BackendContainerContent'); break;
-					case "reference": $element = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Model\Content\BackendReferenceContent'); break;
-					default:          $element = Utility::createInstance($this->_elementClass);
-				}
+				$element = $this->createEmptyFromType($row["type"]);
 				$element->update($row);
 				$this->add($element);
 			}
 
 			return $this;
+		}
+
+		/**
+		 * @param string $type Type of instance to create
+		 *
+		 * @return mixed
+		 */
+		public function createEmptyFromType($type) {
+			switch ($type) {
+				case "plugin":    $element = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Model\Content\BackendPluginContent'); break;
+				case "container": $element = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Model\Content\BackendContainerContent'); break;
+				case "reference": $element = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Model\Content\BackendReferenceContent'); break;
+				default:          $element = Utility::createInstance($this->_elementClass);
+			}
+
+			return $element;
 		}
 	}
 

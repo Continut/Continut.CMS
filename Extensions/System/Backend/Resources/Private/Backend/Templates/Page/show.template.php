@@ -163,7 +163,7 @@
 					$.getJSON('<?= $this->helper("Url")->linkToAction("Backend", "Content", "updateContainer") ?>',
 						{ parent_id: target.data('parent'), column_id: target.data('id'), id: this.$el.data('id'), before_id: beforeId })
 						.done( function (data) {
-						if (data.status == "ok") {
+						if (data.success == 1) {
 
 						}
 					});

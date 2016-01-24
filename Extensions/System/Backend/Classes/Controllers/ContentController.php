@@ -15,7 +15,22 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 
 	class ContentController extends BackendController {
 
+		/**
+		 * Shows the "add content element" wizard
+		 */
 		public function wizardAction() {
+			$configuration = Utility::getExtensionSettings();
+
+			$types = [];
+			foreach ($configuration as $extensionName => $values) {
+				if (isset($values["elements"])) {
+					foreach ($values["elements"] as $type => $elementValues) {
+						$types[$type][] = ["extension" => $extensionName, "configuration" => $elementValues];
+					}
+				}
+			}
+
+			$this->getView()->assign("types", $types);
 		}
 
 		/**
@@ -65,6 +80,29 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 			]);
 		}
 
+		/**
+		 * Adds a content element to the page
+		 */
+		public function addAction() {
+			$page = $this->getRequest()->getArgument("page_id", 0);
+			$settings = $this->getRequest()->getArgument("settings");
+
+			$wizard = Utility::createInstance('Continut\Core\Mvc\View\BaseView');
+			$wizardTemplate = ucfirst($settings["type"] . DS . $settings["template"]);
+			$wizard->setTemplate(Utility::getResource($wizardTemplate, $settings["extension"], "Frontend", "Wizard"));
+
+			$contentCollection = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Collection\BackendContentCollection');
+
+			$this->getView()->assign("element", $contentCollection->createEmptyFromType($settings["type"]));
+			$this->getView()->assign("content", $wizard->render());
+
+			return json_encode([
+				"id"       => null,
+				"html"      => $this->getView()->render(),
+				"operation" => "add"
+			]);
+		}
+
 		public function editAction() {
 			$id = (int)$this->getRequest()->getArgument("id");
 
@@ -102,6 +140,7 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		public function updateAction() {
 			$id  = (int)$this->getRequest()->getArgument("id");
 			$data = $this->getRequest()->getArgument("data", null);
+			$success = 0;
 			if ($data && $id > 0) {
 				$contentCollection = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Collection\BackendContentCollection');
 				$content = $contentCollection->findById($id);
@@ -116,10 +155,11 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 					->reset()
 					->add($content)
 					->save();
+				$success = 1;
 			}
 
 			return json_encode([
-				"status" => "ok"
+				"success" => $success
 			]);
 		}
 
@@ -173,7 +213,7 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 				->save();
 
 			return json_encode([
-				"status" => "ok"
+				"success" => 1
 			]);
 		}
 	}

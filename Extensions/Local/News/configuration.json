@@ -42,7 +42,9 @@
     "elements": {
       "plugins": {
         "news": {
-          "label": "News plugin",
+          "label": "plugin.news.title",
+          "description": "plugin.news.description",
+          "icon": "Icons/news.png",
           "frontend": {
             "controller": "Index",
             "action": "index"

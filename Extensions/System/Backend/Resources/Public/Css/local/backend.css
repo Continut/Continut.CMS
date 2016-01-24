@@ -181,6 +181,7 @@ li a.helper-icon {
 .tab-elements .media-object {
 	float: left;
 	margin-right: 10px;
+	border: 1px solid #111111;
 }
 
 .tab-elements a {

@@ -1,67 +1,48 @@
 <div role="tabpanel">
 	<ul class="nav nav-tabs" role="tablist">
-		<li role="presentation" class="active">
-			<a href="#wizard_tab_general" aria-controls="general" role="tab" data-toggle="tab">Element general de conţinut</a>
-		</li>
-		<li role="presentation"><a href="#wizard_tab_container" aria-controls="container" role="tab" data-toggle="tab">Container</a></li>
-		<li role="presentation"><a href="#wizard_tab_plugin" aria-controls="plugin" role="tab" data-toggle="tab">Plugin</a></li>
+		<?php $counter = 0; ?>
+		<?php foreach ($types as $type => $elements): ?>
+			<li role="presentation" <?= ($counter == 0) ? 'class="active"' : ''; ?>><a href="#wizard_tab_<?= $type ?>" aria-controls="<?= $type ?>" role="tab" data-toggle="tab"><?= $this->__("backend.content.wizard.type.$type") ?></a></li>
+			<?php $counter++; ?>
+		<?php endforeach ?>
 	</ul>
 
 	<div class="tab-content">
-		<div role="tabpanel" class="tab-pane active" id="wizard_tab_general">
-			<ul class="nav tab-elements">
-				<li>
-					<a href="">
-						<img src="<?= $this->publicAsset("Images/Wizard/content_generic.png", "Backend") ?>" width="64" height="64" class="media-object" alt="">
-						<p class="title">Conţinut text şi/sau imagini</p>
-						<p>Permite crearea unui element de conţinut format din mai multe paragrafe de text ce pot de asemenea conţine şi imagini</p>
-					</a>
-				</li>
-				<li>
-					<a href="">
-						<img src="<?= $this->publicAsset("Images/Wizard/content_generic.png", "Backend") ?>" width="64" height="64" class="media-object" alt="">
-						<p class="title">Formular simplu de contact</p>
-						<p>Permite crearea unui formular de contact simplu ce poate fi trimis prin email</p>
-					</a>
-				</li>
-				<li>
-					<a href="">
-						<img src="<?= $this->publicAsset("Images/Wizard/content_generic.png", "Backend") ?>" width="64" height="64" class="media-object" alt="">
-						<p class="title">Meniu spre pagini din arborescenţă</p>
-						<p>Permite crearea unui meniu spre paginile si subpaginile selecţionate din arborescenţă</p>
-					</a>
-				</li>
-			</ul>
-		</div>
-		<div role="tabpanel" class="tab-pane" id="wizard_tab_container">
-			<ul class="nav tab-elements">
-				<li>
-					<a href="">
-						<img src="<?= $this->publicAsset("Images/Wizard/container_2columns.png", "Backend") ?>" width="64" height="64" class="media-object" alt="">
-						<p class="title">Container cu 2 coloane</p>
-						<p>Acest container vă permite să adăugaţi elemente de conţinut în 2 coloane</p>
-					</a>
-				</li>
-				<li>
-					<a href="">
-						<img src="<?= $this->publicAsset("Images/Wizard/container_3columns.png", "Backend") ?>" width="64" height="64" class="media-object" alt="">
-						<p class="title">Container cu 3 coloane</p>
-						<p>Acest container vă permite să adăugaţi elemente de conţinut în 3 coloane</p>
-					</a>
-				</li>
-			</ul>
-		</div>
-		<div role="tabpanel" class="tab-pane" id="wizard_tab_plugin">
-			<ul class="nav tab-elements">
-				<li>
-					<a href="">
-						<img src="<?= $this->publicAsset("Images/Wizard/plugin_news.png", "Backend") ?>" width="64" height="64" class="media-object" alt="">
-						<p class="title">Ştiri / Articole</p>
-						<p>Permite afişarea ştirilor sau articolelor şi configurarea diferitelor setări legate de acestea.</p>
-					</a>
-				</li>
-			</ul>
-		</div>
+		<?php $counter = 0; ?>
+		<?php foreach ($types as $type => $elements): ?>
+			<div role="tabpanel" class="tab-pane <?= ($counter == 0) ? 'active' : ''; ?>" id="wizard_tab_<?= $type ?>">
+				<ul class="nav tab-elements">
+					<?php foreach ($elements as $element): ?>
+						<?php foreach ($element["configuration"] as $identifier => $value): ?>
+							<li>
+								<a href="<?= $this->helper("Url")->linkToAction("Backend", "Content", "add", ["settings" => ["extension" => $element["extension"], "identifier" => $identifier, "type" => $type, "template" => $value["template"]]]) ?>" class="content-wizard-element">
+									<?php if (isset($value["icon"])): ?>
+										<img src="<?= $this->publicAsset($value["icon"], $element["extension"]); ?>" width="64" height="64" class="media-object" alt="" />
+									<?php endif ?>
+									<p class="title"><?= $this->__($value["label"]) ?></p>
+									<p><?= $this->__($value["description"]) ?></p>
+								</a>
+							</li>
+						<?php endforeach ?>
+					<?php endforeach ?>
+				</ul>
+			</div>
+			<?php $counter++; ?>
+		<?php endforeach ?>
 	</div>
 
 </div>
+
+<script>
+	$('.content-wizard-element').on('click', function() {
+		$.getJSON($(this).attr('href'), function (data) {
+			if (data.operation == "add") {
+				$('#content').html(data.html);
+				$.each(BootstrapDialog.dialogs, function(id, dialog){
+					dialog.close();
+				});
+			}
+		});
+		return false;
+	});
+</script>

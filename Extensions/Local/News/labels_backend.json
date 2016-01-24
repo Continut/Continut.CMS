@@ -11,7 +11,9 @@
       "backend.news.grid.field.title": "Title",
       "backend.news.grid.field.description": "Description",
       "backend.news.grid.field.isVisible": "Is visible",
-      "backend.news.preview.lastXArticles": "Showing last <strong>%(limit)</strong> articles"
+      "backend.news.preview.lastXArticles": "Showing last <strong>%(limit)</strong> articles",
+      "plugin.news.title": "News plugin",
+      "plugin.news.description": "The news plugin allows you to show news on your website."
     },
     "ro_RO": {
       "backend.news.header": "Ştiri/Articole",
@@ -24,7 +26,9 @@
       "backend.news.grid.field.title": "Titlu",
       "backend.news.grid.field.description": "Descriere",
       "backend.news.grid.field.isVisible": "Este afișat pe site",
-      "backend.news.preview.lastXArticles": "Afișare ultimele <strong>%(limit)</strong> articole"
+      "backend.news.preview.lastXArticles": "Afișare ultimele <strong>%(limit)</strong> articole",
+      "plugin.news.title": "Extensie știri/articole",
+      "plugin.news.description": "Extensia de știri vă permite să afișați știri/articole pe site."
     },
     "fr_FR": {
       "backend.news.header": "Articles",
@@ -37,7 +41,9 @@
       "backend.news.grid.field.title": "Titre",
       "backend.news.grid.field.description": "Description",
       "backend.news.grid.field.isVisible": "Visible sur le site",
-      "backend.news.preview.lastXArticles": "Afichage des <strong>%(limit)</strong> dernieres articles"
+      "backend.news.preview.lastXArticles": "Afichage des <strong>%(limit)</strong> dernieres articles",
+      "plugin.news.title": "Extension articles",
+      "plugin.news.description": "L'extension vous permet d'afficher des articles sur votre site web"
     }
   }
 }

@@ -28,6 +28,60 @@
           "frontendFile": "/Extensions/Local/ThemeBootstrapModerna/Resources/Private/Frontend/Layouts/Homepage.layout.php"
         }
       }
+    },
+    "elements": {
+      "contents": {
+        "textWithImage": {
+          "label": "backend.themeBootstrapModerna.type.content.textWithImage.title",
+          "description": "backend.themeBootstrapModerna.type.content.textWithImage.description",
+          "icon": "Icons/text_with_image.png",
+          "template": "TextWithImage"
+        },
+        "box": {
+          "label": "backend.themeBootstrapModerna.type.content.box.title",
+          "description": "backend.themeBootstrapModerna.type.content.box.description",
+          "icon": "Icons/box.png",
+          "template": "Box"
+        },
+        "callAction": {
+          "label": "backend.themeBootstrapModerna.type.content.callAction.title",
+          "description": "backend.themeBootstrapModerna.type.content.callAction.description",
+          "icon": "Icons/call_action.png",
+          "template": "CallAction"
+        },
+        "solidLine": {
+          "label": "backend.themeBootstrapModerna.type.content.solidLine.title",
+          "description": "backend.themeBootstrapModerna.type.content.solidLine.description",
+          "icon": "Icons/solid_line.png",
+          "template": "SolidLine"
+        }
+      },
+      "containers": {
+        "1column": {
+          "label": "backend.themeBootstrapModerna.type.container.1column.title",
+          "description": "backend.themeBootstrapModerna.type.container.1column.description",
+          "icon": "Icons/container_1column.png",
+          "template": "1column"
+        },
+        "2columns": {
+          "label": "backend.themeBootstrapModerna.type.container.2columns.title",
+          "description": "backend.themeBootstrapModerna.type.container.2columns.description",
+          "icon": "Icons/container_2columns.png",
+          "template": "2columns"
+        },
+        "3columns": {
+          "label": "backend.themeBootstrapModerna.type.container.3columns.title",
+          "description": "backend.themeBootstrapModerna.type.container.3columns.description",
+          "icon": "Icons/container_3columns.png",
+          "template": "3columns"
+        },
+        "4columns": {
+          "label": "backend.themeBootstrapModerna.type.container.4columns.title",
+          "description": "backend.themeBootstrapModerna.type.container.4columns.description",
+          "icon": "Icons/container_4columns.png",
+          "template": "4columns"
+        }
+      }
     }
   }
 }
