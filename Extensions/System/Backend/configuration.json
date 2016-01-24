@@ -4,7 +4,7 @@
     "name": "CMS Backend",
     "author": {
       "web": "www.pixelplant.ch",
-      "name": "Radu Mogo\u0219",
+      "name": "Radu Mogoș",
       "email": "radu.mogos@pixelplant.ch"
     },
     "folder": "Backend",
@@ -12,7 +12,7 @@
     "description": "Adds most of the Backend functionality of the CMS",
     "backend": {
       "mainMenu": {
-        "module_web": {
+        "moduleWeb": {
           "label": "backend.menu.web",
           "icon": "fa fa-fw fa-globe",
           "items": {
@@ -35,71 +35,71 @@
             }
           }
         },
-        "module_users": {
+        "moduleUsers": {
           "label": "backend.menu.users",
           "icon": "fa fa-fw fa-users",
           "items": {
-            "header_backend": {
+            "headerBackend": {
               "label": "backend.menu.users.backend.header",
               "type": "header"
             },
-            "backend_users_all": {
+            "backendUsersAll": {
               "label": "backend.menu.users.backend.all",
               "icon": "fa fa-fw fa-users",
               "extension": "Backend",
               "controller": "Users",
               "action": "test"
             },
-            "backend_user_add": {
+            "backendUserAdd": {
               "label": "backend.menu.users.backend.add",
               "icon": "fa fa-fw fa-plus",
               "extension": "Backend",
               "controller": "Users",
               "action": "test"
             },
-            "backend_usergroup_all": {
+            "backendUsergroupAll": {
               "label": "backend.menu.usergroups.backend.all",
               "icon": "fa fa-fw fa-users",
               "extension": "Backend",
               "controller": "Users",
               "action": "test"
             },
-            "backend_usergroup_add": {
+            "backendUsergroupAdd": {
               "label": "backend.menu.usergroups.backend.add",
               "icon": "fa fa-fw fa-plus",
               "extension": "Backend",
               "controller": "Users",
               "action": "test"
             },
-            "divider_groups": {
+            "dividerGroups": {
               "type": "divider"
             },
-            "header_frontend": {
+            "headerFrontend": {
               "label": "backend.menu.users.frontend.header",
               "type": "header"
             },
-            "frontend_users_all": {
+            "frontendUsersAll": {
               "label": "backend.menu.users.frontend.all",
               "icon": "fa fa-fw fa-users",
               "extension": "Backend",
               "controller": "Users",
               "action": "test"
             },
-            "frontend_user_add": {
+            "frontendUserAdd": {
               "label": "backend.menu.users.frontend.add",
               "icon": "fa fa-fw fa-plus",
               "extension": "Backend",
               "controller": "Users",
               "action": "test"
             },
-            "frontend_usergroup_all": {
+            "frontendUsergroupAll": {
               "label": "backend.menu.usergroups.frontend.all",
               "icon": "fa fa-fw fa-users",
               "extension": "Backend",
               "controller": "Users",
               "action": "test"
             },
-            "frontend_usergroup_add": {
+            "frontendUsergroupAdd": {
               "label": "backend.menu.usergroups.frontend.add",
               "icon": "fa fa-fw fa-plus",
               "extension": "Backend",
@@ -111,7 +111,7 @@
           "controller": "Users",
           "action": ""
         },
-        "module_media": {
+        "moduleMedia": {
           "label": "backend.menu.media",
           "icon": "fa fa-fw fa-picture-o",
           "extension": "Backend",
@@ -120,22 +120,22 @@
         }
       },
       "secondaryMenu": {
-        "module_cache": {
+        "moduleCache": {
           "label": "backend.menu.cache",
           "icon": "fa fa-fw fa-hdd-o",
           "items": {
-            "cache_content": {
+            "cacheContent": {
               "label": "backend.menu.cache.clearContent",
               "icon": "fa fa-fw fa-trash-o text-danger"
             },
-            "cache_configuration": {
+            "cacheConfiguration": {
               "label": "backend.menu.cache.clearConfiguration",
               "icon": "fa fa-fw fa-ban text-danger"
             },
-            "divider_cache": {
+            "dividerCache": {
               "type": "divider"
             },
-            "cache_memcache": {
+            "cacheMemcache": {
               "label": "backend.menu.cache.clearMemcache",
               "icon": "fa fa-fw fa-angle-double-right text-danger"
             }

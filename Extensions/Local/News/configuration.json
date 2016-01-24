@@ -17,18 +17,18 @@
     },
     "backend": {
       "mainMenu": {
-        "extension_news": {
+        "extensionNews": {
           "label": "backend.news.header",
           "icon": "fa fa-fw fa-newspaper-o",
           "items": {
-            "show_all": {
+            "showAll": {
               "label": "backend.news.showAll",
               "icon": "fa fa-fw fa-bars",
               "extension": "News",
               "controller": "NewsBackend",
               "action": "index"
             },
-            "add_new": {
+            "addNew": {
               "label": "backend.news.createNew",
               "icon": "fa fa-fw fa-plus",
               "extension": "News",
