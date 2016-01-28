@@ -1,0 +1,28 @@
+{
+  "ThemeAtlas": {
+    "en_US": {
+      "backend.themeAtlas.layout.container.header": "Header section",
+      "backend.themeAtlas.layout.container.main": "Main content",
+      "backend.themeAtlas.type.container.features.title": "Features section",
+      "backend.themeAtlas.type.container.features.description": "",
+      "backend.themeAtlas.type.container.about.title": "About section",
+      "backend.themeAtlas.type.container.about.description": ""
+    },
+    "ro_RO": {
+      "backend.themeAtlas.layout.container.header": "Secţiunea antet",
+      "backend.themeAtlas.layout.container.main": "Conținutul principal",
+      "backend.themeAtlas.type.container.features.title": "Secțiune - Trăsături",
+      "backend.themeAtlas.type.container.features.description": "",
+      "backend.themeAtlas.type.container.about.title": "Secțiune - Despre",
+      "backend.themeAtlas.type.container.about.description": ""
+    },
+    "fr_FR": {
+      "backend.themeAtlas.layout.container.header": "Section entête",
+      "backend.themeAtlas.layout.container.main": "Contenu principal",
+      "backend.themeAtlas.type.container.features.title": "Section Features",
+      "backend.themeAtlas.type.container.features.description": "",
+      "backend.themeAtlas.type.container.about.title": "Section Info",
+      "backend.themeAtlas.type.container.about.description": ""
+    }
+  }
+}

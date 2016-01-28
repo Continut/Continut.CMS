@@ -1,0 +1,44 @@
+{
+  "ThemeAtlas": {
+    "version": "0.0.1",
+    "name": "Bootstrap Theme",
+    "folder": "ThemeAtlas",
+    "type": "Local",
+    "description": "Adds a simple bootstrap theme with basic functionality that can be used as a starting point for your future website",
+    "author": {
+      "web": "www.createwebsite.net",
+      "name": "Create Website",
+      "email": "info@createwebsite.net"
+    },
+    "dependencies": {
+      "sys_backend": {
+        "version": "0.0.1"
+      }
+    },
+    "ui": {
+      "layout": {
+        "default": {
+          "label": "layout.default",
+          "backendFile": "/Extensions/Local/ThemeAtlas/Resources/Private/Backend/Layouts/Default.layout.php",
+          "frontendFile": "/Extensions/Local/ThemeAtlas/Resources/Private/Frontend/Layouts/Default.layout.php"
+        }
+      }
+    },
+    "elements": {
+      "containers": {
+        "features": {
+          "label": "backend.themeAtlas.type.container.features.title",
+          "description": "backend.themeAtlas.type.container.features.description",
+          "icon": "Icons/container_features.png",
+          "template": "features"
+        },
+        "about": {
+          "label": "backend.themeAtlas.type.container.about.title",
+          "description": "backend.themeAtlas.type.container.about.description",
+          "icon": "Icons/container_about.png",
+          "template": "about"
+        }
+      }
+    }
+  }
+}
