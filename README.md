@@ -13,7 +13,7 @@ I hope you will have as much fun using Conţinut CMS as I had developing it.
 ### How do I get set up? ###
 
 1. Git clone the project: `git clone https://pixelplant@bitbucket.org/pixelplant/continut-cms.git`
-2. Import the database schema using your favourite MySql client. The sql file is located inside `Sql/schema.sql`
+2. Import the database schema using your favourite MySql client. The sql file is located inside `Sql/dump.sql`
 3. Create a file called **configuration.php** inside the **Extensions** folder, so the file path would be *Extensions/configuration.php*. 
 Inside this file place the following lines
 
