@@ -19,6 +19,8 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		 * Shows the "add content element" wizard
 		 */
 		public function wizardAction() {
+			$pageId   = (int)$this->getRequest()->getArgument("page_id");
+			$columnId = (int)$this->getRequest()->getArgument("column_id");
 			$configuration = Utility::getExtensionSettings();
 
 			$types = [];
@@ -30,7 +32,13 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 				}
 			}
 
-			$this->getView()->assign("types", $types);
+			$this->getView()->assignMultiple(
+				[
+					"types"    => $types,
+					"pageId"   => $pageId,
+					"columnId" => $columnId
+				]
+			);
 		}
 
 		/**
@@ -84,22 +92,29 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 		 * Adds a content element to the page
 		 */
 		public function addAction() {
-			$page = $this->getRequest()->getArgument("page_id", 0);
+			$pageId   = $this->getRequest()->getArgument("page_id", 0);
+			$columnId = $this->getRequest()->getArgument("column_id", 0);
 			$settings = $this->getRequest()->getArgument("settings");
 
 			$wizard = Utility::createInstance('Continut\Core\Mvc\View\BaseView');
-			$wizardTemplate = ucfirst($settings["type"] . DS . $settings["template"]);
+			$wizardTemplate = ucfirst($settings["type"] ."s" . DS . $settings["template"]);
 			$wizard->setTemplate(Utility::getResource($wizardTemplate, $settings["extension"], "Frontend", "Wizard"));
 
 			$contentCollection = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Collection\BackendContentCollection');
 
-			$this->getView()->assign("element", $contentCollection->createEmptyFromType($settings["type"]));
-			$this->getView()->assign("content", $wizard->render());
+			$this->getView()->assignMultiple(
+				[
+					"element"   => $contentCollection->createEmptyFromType($settings["type"]),
+					"content"   => $wizard->render(),
+					"settings"  => $settings,
+					"pageId"    => $pageId,
+					"columnId"  => $columnId
+				]
+			);
 
 			return json_encode([
-				"id"       => null,
+				"id"        => null,
 				"html"      => $this->getView()->render(),
-				"operation" => "add"
 			]);
 		}
 
@@ -126,8 +141,7 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 
 			return json_encode([
 				"id"       => $content->getId(),
-				"html"      => $this->getView()->render(),
-				"operation" => "edit"
+				"html"      => $this->getView()->render()
 			]);
 		}
 
@@ -160,6 +174,35 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 
 			return json_encode([
 				"success" => $success
+			]);
+		}
+
+		public function createAction() {
+			$pageId   = (int)$this->getRequest()->getArgument("page_id");
+			$columnId = (int)$this->getRequest()->getArgument("column_id");
+			$data     = $this->getRequest()->getArgument("data");
+			$settings = $this->getRequest()->getArgument("settings");
+			$settings["data"] = $data;
+
+			$contentCollection = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Collection\BackendContentCollection');
+
+			$type = $settings["type"];
+			$value = [$type => $settings];
+
+			$content = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Model\BackendContent');
+			$content->setType($type);
+			$content->setPageId($pageId);
+			$content->setIsVisible(TRUE);
+			$content->setIsDeleted(FALSE);
+			$content->setParentId(0);
+			$content->setSorting(0);
+			$content->setColumnId($columnId);
+			$content->setValue(json_encode($value));
+
+			$contentCollection->add($content)->save();
+
+			return json_encode([
+				"success" => 1
 			]);
 		}
 

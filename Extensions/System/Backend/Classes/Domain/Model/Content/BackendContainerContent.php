@@ -87,7 +87,7 @@ namespace Continut\Extensions\System\Backend\Classes\Domain\Model\Content {
 
 			$linkNewElement = sprintf('<a class="btn btn-sm btn-success content-wizard" title="%s" href="%s"><i class="fa fa-plus fa-fw"></i></a>',
 				Utility::helper("Localization")->translate("backend.content.addNew"),
-				Utility::helper("Url")->linkToAction("Backend", "Content", "addElement", ["id" => $this->getId(), "page_id" => Utility::getRequest()->getArgument("page_id")])
+				Utility::helper("Url")->linkToAction("Backend", "Content", "wizard", ["id" => $this->getId(), "page_id" => Utility::getRequest()->getArgument("page_id")])
 			);
 
 			if ($this->getIsVisible()) {

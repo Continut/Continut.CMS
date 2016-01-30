@@ -15,7 +15,7 @@
 					<?php foreach ($elements as $element): ?>
 						<?php foreach ($element["configuration"] as $identifier => $value): ?>
 							<li>
-								<a href="<?= $this->helper("Url")->linkToAction("Backend", "Content", "add", ["settings" => ["extension" => $element["extension"], "identifier" => $identifier, "type" => $type, "template" => $value["template"]]]) ?>" class="content-wizard-element">
+								<a href="<?= $this->helper("Url")->linkToAction("Backend", "Content", "add", ["column_id" => $columnId, "page_id" => $pageId, "settings" => ["extension" => $element["extension"], "identifier" => $identifier, "type" => $type, "template" => $value["template"]]]) ?>" class="content-wizard-element">
 									<?php if (isset($value["icon"])): ?>
 										<img src="<?= $this->publicAsset($value["icon"], $element["extension"]); ?>" width="64" height="64" class="media-object" alt="" />
 									<?php endif ?>
@@ -36,12 +36,10 @@
 <script>
 	$('.content-wizard-element').on('click', function() {
 		$.getJSON($(this).attr('href'), function (data) {
-			if (data.operation == "add") {
-				$('#content').html(data.html);
-				$.each(BootstrapDialog.dialogs, function(id, dialog){
-					dialog.close();
-				});
-			}
+			$('#content').html(data.html);
+			$.each(BootstrapDialog.dialogs, function(id, dialog){
+				dialog.close();
+			});
 		});
 		return false;
 	});

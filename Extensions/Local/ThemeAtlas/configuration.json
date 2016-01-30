@@ -25,7 +25,7 @@
       }
     },
     "elements": {
-      "containers": {
+      "container": {
         "features": {
           "label": "backend.themeAtlas.type.container.features.title",
           "description": "backend.themeAtlas.type.container.features.description",

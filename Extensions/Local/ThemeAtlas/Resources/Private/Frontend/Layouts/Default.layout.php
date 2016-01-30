@@ -114,4 +114,4 @@ $this->getPage()
 		</div><!-- end overlay -->
 	</section><!--/ Video Parallex  End -->
 
-	<?= $this->showContainerColumn(2); ?>
+	<?= $this->showContainerColumn(1); ?>

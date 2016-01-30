@@ -30,7 +30,7 @@
       }
     },
     "elements": {
-      "contents": {
+      "content": {
         "textWithImage": {
           "label": "backend.themeBootstrapModerna.type.content.textWithImage.title",
           "description": "backend.themeBootstrapModerna.type.content.textWithImage.description",
@@ -56,7 +56,7 @@
           "template": "SolidLine"
         }
       },
-      "containers": {
+      "container": {
         "1column": {
           "label": "backend.themeBootstrapModerna.type.container.1column.title",
           "description": "backend.themeBootstrapModerna.type.container.1column.description",

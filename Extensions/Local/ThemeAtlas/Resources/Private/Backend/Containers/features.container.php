@@ -1,5 +1,9 @@
-<section id="features_<?= $this->getId() ?>" class="feature-wrapper">
-	<div class="container">
-		<?= $this->showContainerColumn(4); ?>
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-warning">
+			<div class="panel-body">
+				<?= $this->showContainerColumn(4); ?>
+			</div>
+		</div>
 	</div>
-</section>
+</div>
