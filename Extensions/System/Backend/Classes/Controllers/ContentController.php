@@ -166,7 +166,6 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 				$values = json_decode($content->getValue(), TRUE);
 				if (isset($data["title"])) {
 					$content->setTitle($data["title"]);
-					unset($data["title"]);
 				}
 				$values[$content->getType()]["data"] = $data;
 				$content->setValue(json_encode($values));
@@ -202,6 +201,9 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 			$content->setParentId(0);
 			$content->setSorting(0);
 			$content->setColumnId($columnId);
+			if (isset($data["title"])) {
+				$content->setTitle($data["title"]);
+			}
 			$content->setValue(json_encode($value));
 
 			$contentCollection->add($content)->save();

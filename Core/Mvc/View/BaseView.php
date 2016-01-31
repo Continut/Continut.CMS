@@ -114,8 +114,7 @@ namespace Continut\Core\Mvc\View {
 		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function render() {
-			$fullpath = $this->_template;
-			if (!is_file($fullpath)) {
+			if (!is_file($this->_template)) {
 				Utility::debugData("View missing: " . $this->getRelativePath(), "error");
 				throw new ErrorException("The specified template file does not exist " . $this->_template, 10000001);
 				return $this->__("backend.content.templateMissing");
@@ -126,16 +125,12 @@ namespace Continut\Core\Mvc\View {
 					extract($this->_variables);
 				}
 				ob_start();
-				include($fullpath);
+				include($this->_template);
 				$content = ob_get_clean();
 				Utility::debugData("View render ". str_replace(__ROOTCMS__, "", $this->_template), "stop");
 
 				return $content;
 			}
-		}
-
-		public function useLayout($layoutName) {
-
 		}
 
 		/**
@@ -164,6 +159,14 @@ namespace Continut\Core\Mvc\View {
 			return Utility::helper($helperName);
 		}
 
+		/**
+		 * Call a plugin
+		 *
+		 * @param $extensionName
+		 * @param $controller
+		 * @param $action
+		 * @return mixed
+		 */
 		public function plugin($extensionName, $controller, $action) {
 			return Utility::callPlugin($extensionName, $controller, $action);
 		}

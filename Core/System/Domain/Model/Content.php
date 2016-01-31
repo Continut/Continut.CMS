@@ -76,11 +76,11 @@ namespace Continut\Core\System\Domain\Model {
 		 */
 		public function dataMapper() {
 			return [
-				"page_id"    => $this->page_id,
+				"page_id"     => $this->page_id,
 				"type"        => $this->type,
 				"title"       => $this->title,
-				"column_id"      => $this->column_id,
-				"parent_id"  => $this->parent_id,
+				"column_id"   => $this->column_id,
+				"parent_id"   => $this->parent_id,
 				"value"       => $this->value,
 				"is_deleted"  => $this->is_deleted,
 				"is_visible"  => $this->is_visible,

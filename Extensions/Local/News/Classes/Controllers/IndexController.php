@@ -24,7 +24,21 @@ namespace Continut\Extensions\Local\News\Classes\Controllers {
 			$newsCollection = Utility::createInstance('Continut\Extensions\Local\News\Classes\Domain\Collection\NewsCollection');
 
 			$limit = (isset($this->data["limit"])) ? $this->data["limit"] : 1;
-			$newsCollection->where("1=1 LIMIT $limit");
+			$ordering = "";
+			if (isset($this->data["order"])) {
+				$order = $this->data["order"];
+			}
+			if (isset($this->data["direction"])) {
+				$direction = $this->data["direction"];
+			}
+			if ($order && $direction) {
+				$ordering = " ORDER BY $order $direction";
+			}
+			$newsCollection->where("1=1 $ordering LIMIT $limit");
+
+			if (isset($this->data["template"])) {
+				$this->getView()->setTemplate($this->data["template"]);
+			}
 
 			$this->getView()->assign('news', $newsCollection);
 			$this->getView()->assign('data', $this->data);

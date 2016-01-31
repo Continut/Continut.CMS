@@ -26,8 +26,8 @@ namespace Continut\Extensions\System\Frontend\Classes\Domain\Model\Content {
 			$configuration     = json_decode($this->getValue(), TRUE);
 			$extensionSettings = Utility::getExtensionSettings($configuration["plugin"]["extension"]);
 
-			if (isset($extensionSettings["elements"]["plugins"][$configuration["plugin"]["identifier"]])) {
-				$modulePreviewSettings = $extensionSettings["elements"]["plugins"][$configuration["plugin"]["identifier"]]["frontend"];
+			if (isset($extensionSettings["elements"]["plugin"][$configuration["plugin"]["identifier"]])) {
+				$modulePreviewSettings = $extensionSettings["elements"]["plugin"][$configuration["plugin"]["identifier"]]["frontend"];
 				$value = Utility::callPlugin(
 					$configuration["plugin"]["extension"],
 					$modulePreviewSettings["controller"],

@@ -31,6 +31,12 @@
           "description": "",
           "icon": "",
           "template": "FeatureImage"
+        },
+        "heading": {
+          "label": "Heading",
+          "description": "",
+          "icon": "",
+          "template": "Heading"
         }
       },
       "container": {
@@ -45,6 +51,12 @@
           "description": "backend.themeAtlas.type.container.about.description",
           "icon": "Icons/container_about.png",
           "template": "about"
+        },
+        "parallax": {
+          "label": "Parallax",
+          "description": "",
+          "icon": "",
+          "template": "parallax"
         }
       }
     }

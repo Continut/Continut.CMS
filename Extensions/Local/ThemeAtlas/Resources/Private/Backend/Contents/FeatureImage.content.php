@@ -1,3 +1,5 @@
-	<div class="text-center">
-		<img class="img-responsive" src="<?= $this->helper('Image')->resize($image, 800, 800) ?>" alt=""/>
-	</div>
+<?php
+	$width  = (!isset($width)) ? 800 : $width;
+	$height = (!isset($height)) ? null : $height;
+?>
+<img class="img-responsive img-centered" src="<?= $this->helper('Image')->resize($image, $width, $height, "backend") ?>" alt=""/>

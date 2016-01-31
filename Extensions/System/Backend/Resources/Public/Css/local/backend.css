@@ -284,6 +284,10 @@ ul.jqtree-tree li.jqtree-folder {
 	border-radius: 0;
 }
 
+.img-centered {
+	margin: 0 auto;
+}
+
 /* dashboard */
 .panel-dashboard {
 	background: #dcdcdc;

@@ -172,6 +172,10 @@ namespace Continut\Core\Mvc\View {
 			return $htmlElements;
 		}
 
+		public function helper($helperName) {
+			return Utility::helper($helperName);
+		}
+
 		/**
 		 * Returns a localized label by its key
 		 *
@@ -183,8 +187,10 @@ namespace Continut\Core\Mvc\View {
 			return Utility::helper("Localization")->translate($labelKey);
 		}
 
-		public function assignMultiple($variables) {
-			$this->_variables = $variables;
+		public function assignMultiple($values) {
+			foreach ($values as $key => $value) {
+				$this->_variables[$key] = $value;
+			}
 		}
 
 	}
