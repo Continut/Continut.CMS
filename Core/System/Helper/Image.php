@@ -28,7 +28,7 @@ namespace Continut\Core\System\Helper {
 
 			$extension = pathinfo($image, PATHINFO_EXTENSION);
 			$newFilename = "Cache/Temp/Images/" . $prefix . "_" . md5($image . $width . $height) . "." . $extension;
-			$newFilenameFullpath = __ROOTCMS__ . "/$newFilename";
+			$newFilenameFullpath = __ROOTCMS__ . DS . $newFilename;
 
 			$absoluteFilename = __ROOTCMS__ . $image;
 

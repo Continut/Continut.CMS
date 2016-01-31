@@ -1,5 +1,5 @@
 <blockquote>
-	<p><i class="fa fa-fw fa-info"></i> <?= $this->__("backend.wizard.containers.info", ["count" => "2"]) ?></p>
+	<p><i class="fa fa-fw fa-info"></i> <?= $this->__("backend.wizard.containers.info", ["count" => "3"]) ?></p>
 	<footer><?= $this->__("backend.wizard.containers.info.footer") ?></footer>
 </blockquote>
 <div class="form-group">

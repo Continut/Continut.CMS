@@ -8,9 +8,9 @@ $this->getPage()
 	->addCssAsset([ "identifier" => "prettyPhoto", "extension" => "ThemeAtlas", "file" => "prettyPhoto.css" ])
 	->addCssAsset([ "identifier" => "animation", "extension" => "ThemeAtlas", "file" => "animation.css" ])
 	->addCssAsset([ "identifier" => "style", "extension" => "ThemeAtlas", "file" => "style.css" ])
-	->addJsAsset([ "identifier" => "gmap", "extension" => "ThemeAtlas", "external" => TRUE, "file" => "http://maps.google.com/maps/api/js?sensor=false" ])
+	//->addJsAsset([ "identifier" => "gmap", "extension" => "ThemeAtlas", "external" => TRUE, "file" => "http://maps.google.com/maps/api/js?sensor=false" ])
 	->addJsAsset([ "identifier" => "jquery", "extension" => "ThemeAtlas", "file" => "jquery.js" ])
-	->addJsAsset([ "identifier" => "bootstrap", "extension" => "ThemeAtlas", "file" => "bootstrap.js" ])
+	->addJsAsset([ "identifier" => "bootstrap", "extension" => "ThemeAtlas", "file" => "bootstrap.min.js" ])
 	->addJsAsset([ "identifier" => "smooth", "extension" => "ThemeAtlas", "file" => "smooth-scroll.js" ])
 	->addJsAsset([ "identifier" => "parallax", "extension" => "ThemeAtlas", "file" => "jquery.parallax-1.1.3.js" ])
 	->addJsAsset([ "identifier" => "easypiechart", "extension" => "ThemeAtlas", "file" => "jquery.easypiechart.min.js" ])
@@ -19,8 +19,8 @@ $this->getPage()
 	->addJsAsset([ "identifier" => "custom", "extension" => "ThemeAtlas", "file" => "custom.js" ])
 	->addJsAsset([ "identifier" => "unveilEffects", "extension" => "ThemeAtlas", "file" => "jquery.unveilEffects.js" ])
 	->addJsAsset([ "identifier" => "isotope", "extension" => "ThemeAtlas", "file" => "jquery.isotope.min.js" ])
-	->addJsAsset([ "identifier" => "revolution", "extension" => "ThemeAtlas", "file" => "jquery.themepunch.revolution.min.js" ])
 	->addJsAsset([ "identifier" => "plugins", "extension" => "ThemeAtlas", "file" => "jquery.themepunch.plugins.min.js" ])
+	->addJsAsset([ "identifier" => "revolution", "extension" => "ThemeAtlas", "file" => "jquery.themepunch.revolution.min.js" ])
 	->addJsAsset([ "identifier" => "scrollReveal", "extension" => "ThemeAtlas", "file" => "scrollReveal.js" ])
 	->addJsAsset([ "identifier" => "prettyPhoto", "extension" => "ThemeAtlas", "file" => "jquery.prettyPhoto.js" ])
 	->addJsAsset([ "identifier" => "YTPlayer", "extension" => "ThemeAtlas", "file" => "jquery.mb.YTPlayer.js" ])
@@ -97,7 +97,7 @@ $this->getPage()
 
 	<section id="home" class="videobg clearfix text-center">
 		<a id="volume" onclick="$('#bgndVideo').toggleVolume()"><i class="fa fa-volume-down"></i></a>
-		<a id="bgndVideo" class="player" data-property="{videoURL:'-JMvrEibkck',containment:'body',autoPlay:true, mute:false, startAt:33, opacity:1}">youtube</a>
+		<a id="bgndVideo" class="player" data-property="{videoURL:'oNUeGxUrSkY',containment:'body',autoPlay:true, mute:false, startAt:33, opacity:1}">youtube</a>
 		<div class="videooverlay">
 			<div class="container">
 				<div id="owl-intro" class="owl-carousel owl-theme">

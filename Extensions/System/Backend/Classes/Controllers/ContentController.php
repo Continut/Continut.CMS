@@ -24,19 +24,22 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 			$configuration = Utility::getExtensionSettings();
 
 			$types = [];
+			$extensions = [];
 			foreach ($configuration as $extensionName => $values) {
 				if (isset($values["elements"])) {
 					foreach ($values["elements"] as $type => $elementValues) {
 						$types[$type][] = ["extension" => $extensionName, "configuration" => $elementValues];
+						$extensions[$extensionName] = $extensionName;
 					}
 				}
 			}
 
 			$this->getView()->assignMultiple(
 				[
-					"types"    => $types,
-					"pageId"   => $pageId,
-					"columnId" => $columnId
+					"types"      => $types,
+					"extensions" => $extensions,
+					"pageId"     => $pageId,
+					"columnId"   => $columnId
 				]
 			);
 		}
@@ -115,6 +118,7 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 			return json_encode([
 				"id"        => null,
 				"html"      => $this->getView()->render(),
+				"operation" => "add"
 			]);
 		}
 
@@ -140,8 +144,9 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 			$this->getView()->assign("content", $wizard->render());
 
 			return json_encode([
-				"id"       => $content->getId(),
-				"html"      => $this->getView()->render()
+				"id"        => $content->getId(),
+				"html"      => $this->getView()->render(),
+				"operation" => "edit"
 			]);
 		}
 

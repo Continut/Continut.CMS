@@ -25,6 +25,14 @@
       }
     },
     "elements": {
+      "content": {
+        "featureImage": {
+          "label": "Feature image",
+          "description": "",
+          "icon": "",
+          "template": "FeatureImage"
+        }
+      },
       "container": {
         "features": {
           "label": "backend.themeAtlas.type.container.features.title",

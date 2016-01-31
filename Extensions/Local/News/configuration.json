@@ -40,7 +40,7 @@
       }
     },
     "elements": {
-      "plugins": {
+      "plugin": {
         "news": {
           "label": "plugin.news.title",
           "description": "plugin.news.description",
