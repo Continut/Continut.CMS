@@ -24,7 +24,7 @@ namespace Continut\Core\System\Helper {
 		 *
 		 * @return string The fullpath of the newly generated image
 		 */
-		public function resize($image, $width, $height, $prefix = "pic") {
+		public function resize($image, $width, $height, $prefix = "resize") {
 
 			$extension = pathinfo($image, PATHINFO_EXTENSION);
 			$newFilename = "Cache/Temp/Images/" . $prefix . "_" . md5($image . $width . $height) . "." . $extension;
@@ -42,6 +42,27 @@ namespace Continut\Core\System\Helper {
 			Utility::$imageManager->make($absoluteFilename)->resize($width, $height, function ($constraint) {
 				$constraint->aspectRatio();
 			})->save($newFilenameFullpath);
+
+			return $newFilename;
+		}
+
+		public function crop($image, $width, $height, $prefix = "crop") {
+			$extension = pathinfo($image, PATHINFO_EXTENSION);
+			$newFilename = "Cache/Temp/Images/" . $prefix . "_" . md5($image . $width . $height) . "." . $extension;
+			$newFilenameFullpath = __ROOTCMS__ . DS . $newFilename;
+
+			$absoluteFilename = __ROOTCMS__ . $image;
+
+			if (file_exists($newFilenameFullpath)) {
+				return $newFilename;
+			}
+			if (!file_exists($absoluteFilename)) {
+				return "";
+			}
+
+			Utility::$imageManager->make($absoluteFilename)->resize($width, $height, function ($constraint) {
+				$constraint->aspectRatio();
+			})->crop($width, $height)->save($newFilenameFullpath);
 
 			return $newFilename;
 		}

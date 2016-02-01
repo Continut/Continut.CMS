@@ -37,6 +37,18 @@
           "description": "",
           "icon": "",
           "template": "Heading"
+        },
+        "aboutBox": {
+          "label": "About Box",
+          "description": "",
+          "icon": "",
+          "template": "AboutBox"
+        },
+        "counter": {
+          "label": "Milestone Counter",
+          "description": "",
+          "icon": "",
+          "template": "Counter"
         }
       },
       "container": {

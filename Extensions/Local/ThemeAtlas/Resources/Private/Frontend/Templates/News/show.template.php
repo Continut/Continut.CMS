@@ -5,7 +5,7 @@
 		<div class="blog-carousel">
 			<div class="entry">
 				<?php if ($newsItem->getImages()->count() > 0): ?>
-					<img class="img-responsive" src="<?= $this->helper('Image')->resize($newsItem->getImages()->getFirst()->getRelativePath(), 800, 800, 'news') ?>" alt="" />
+					<img class="img-responsive" src="<?= $this->helper('Image')->crop($newsItem->getImages()->getFirst()->getRelativePath(), 800, 800, 'news') ?>" alt="" />
 				<?php endif ?>
 				<div class="magnifier">
 					<div class="buttons">
