@@ -12,26 +12,31 @@ namespace Continut\Core\Mvc\View {
 
 	use Continut\Core\Utility;
 
-	class PageView {
+	class PageView extends BaseView {
 		/**
 		 * @var \Continut\Core\Mvc\View\BaseLayout Layout used by this page
 		 */
-		protected $_layout;
+		protected $layout;
 
 		/**
 		 * @var array List of Css/JavaScript assets to include
 		 */
-		protected $_assets;
+		protected $assets;
 
 		/**
 		 * @var string Page title
 		 */
-		protected $_title;
+		protected $title;
 
 		/**
 		 * @var \Continut\Core\System\Domain\Model\Page
 		 */
-		protected $_pageModel;
+		protected $pageModel;
+
+		/**
+		 * @var string Wrapper template to use for the page (doctype, etc)
+		 */
+		protected $wrapperTemplate = 'Extensions/System/Frontend/Resources/Private/Frontend/Wrappers/Html5';
 
 		/**
 		 * @param \Continut\Core\Mvc\View\BaseLayout $layout Set page layout
@@ -39,8 +44,8 @@ namespace Continut\Core\Mvc\View {
 		 * @return $this
 		 */
 		public function setLayout($layout) {
-			$this->_layout = $layout;
-			$this->_layout->setPage($this);
+			$this->layout = $layout;
+			$this->layout->setPage($this);
 
 			return $this;
 		}
@@ -53,8 +58,8 @@ namespace Continut\Core\Mvc\View {
 		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function setLayoutFromTemplate($template) {
-			$this->_layout = Utility::createInstance('Continut\Core\System\View\FrontendLayout');
-			$this->_layout
+			$this->layout = Utility::createInstance('Continut\Core\System\View\FrontendLayout');
+			$this->layout
 				->setPage($this)
 				->setTemplate($template);
 
@@ -65,7 +70,7 @@ namespace Continut\Core\Mvc\View {
 		 * @return BaseLayout
 		 */
 		public function getLayout() {
-			return $this->_layout;
+			return $this->layout;
 		}
 
 		/**
@@ -73,7 +78,7 @@ namespace Continut\Core\Mvc\View {
 		 */
 		public function getPageModel()
 		{
-			return $this->_pageModel;
+			return $this->pageModel;
 		}
 
 		/**
@@ -83,14 +88,40 @@ namespace Continut\Core\Mvc\View {
 		 */
 		public function setPageModel($pageModel)
 		{
-			$this->_pageModel = $pageModel;
+			$this->pageModel = $pageModel;
 
 			return $this;
 		}
 
-		// TODO: General layout should be defined in an external file
+		/**
+		 * @return string
+		 */
+		public function getWrapperTemplate()
+		{
+			return $this->wrapperTemplate;
+		}
+
+		/**
+		 * @param string $wrapperTemplate
+		 *
+		 * return $this
+		 */
+		public function setWrapperTemplate($wrapperTemplate)
+		{
+			$this->wrapperTemplate = $wrapperTemplate;
+
+			return $this;
+		}
+
+		/**
+		 * Generates the final output of the page
+		 *
+		 * @return string
+		 *
+		 * @throws \Continut\Core\Tools\ErrorException
+		 */
 		public function render() {
-			$debugPath = str_replace(__ROOTCMS__, "", $this->_layout->getTemplate());
+			$debugPath = str_replace(__ROOTCMS__, "", $this->layout->getTemplate());
 			Utility::debugData("Layout rendered " . $debugPath, "start");
 			Utility::debugData("Layout used: " . $debugPath, "message");
 			$pageContent = $this->getLayout()->render();
@@ -115,23 +146,18 @@ namespace Continut\Core\Mvc\View {
 					->renderHead();
 			}
 
-			$main = <<<HER
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<base href="http://$url">
-		<title>$pageTitle</title>
-		$pageHeader
-	</head>
-	<body>
-		$pageContent
-	</body>
-</html>
-HER;
+			$this->setTemplate(__ROOTCMS__ . DS . $this->wrapperTemplate . '.wrapper.php')
+				->assignMultiple(
+				[
+					"pageTitle"   => $pageTitle,
+					"pageHeader"  => $pageHeader,
+					"url"         => $url,
+					"pageContent" => $pageContent,
+					"pageModel"   => $this->getPageModel()
+				]
+			);
 
-			return $main;
+			return parent::render();
 		}
 
 		/**
@@ -142,24 +168,13 @@ HER;
 		public function renderHeader() {
 			$header = "";
 
-			if ($this->_assets) {
-				foreach ($this->_assets as $assetType => $assetValues) {
+			if ($this->assets) {
+				foreach ($this->assets as $assetType => $assetValues) {
 					foreach ($assetValues as $asset) {
-						$header .= $asset . "\n";
+						$header .= "\t" . $asset . "\n";
 					}
 				}
 			}
-
-			// TODO move pageview to an external template and escape/clean the meta values
-			/*if ($this->getPageModel()->getMetaDescription()) {
-				$meta = json_encode($this->getPageModel()->getMetaDescription());
-				$header .= "<meta name='description' value=$meta>";
-			}
-
-			if ($this->getPageModel()->getMetaKeywords()) {
-				$meta = json_encode($this->getPageModel()->getMetaKeywords());
-				$header .= "<meta name='keywords' value=$meta>";
-			}*/
 
 			return $header;
 		}
@@ -168,7 +183,7 @@ HER;
 		 * @return array
 		 */
 		public function getAssets() {
-			return $this->_assets;
+			return $this->assets;
 		}
 
 		/**
@@ -214,18 +229,18 @@ HER;
 			$id = $configuration["identifier"];
 
 			if ($type == "Css") {
-				$this->_assets[$type][$id] = '<link rel="stylesheet" type="text/css" href="' . $filePath . '" />';
+				$this->assets[$type][$id] = '<link rel="stylesheet" type="text/css" href="' . $filePath . '" />';
 			}
 			if ($type == "JavaScript") {
-				$this->_assets[$type][$id] = '<script type="text/javascript" src="' . $filePath . '"></script>';
+				$this->assets[$type][$id] = '<script type="text/javascript" src="' . $filePath . '"></script>';
 			}
 
 			if (isset($configuration["before"])) {
-				$this->_assets[$type] = Utility::arrayInsertBefore(
-					$this->_assets[$type],
+				$this->assets[$type] = Utility::arrayInsertBefore(
+					$this->assets[$type],
 					$configuration["before"],
 					$id,
-					$this->_assets[$type][$id]
+					$this->assets[$type][$id]
 				);
 			}
 		}
@@ -234,7 +249,7 @@ HER;
 		 * @return string
 		 */
 		public function getTitle() {
-			return $this->_title;
+			return $this->title;
 		}
 
 		/**
@@ -243,7 +258,7 @@ HER;
 		 * @return $this
 		 */
 		public function setTitle($title) {
-			$this->_title = $title;
+			$this->title = $title;
 
 			return $this;
 		}

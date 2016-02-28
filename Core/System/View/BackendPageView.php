@@ -15,13 +15,24 @@ namespace Continut\Core\System\View {
 
 	class BackendPageView extends PageView {
 
+		/**
+		 * A custom premade layout is used for this PageView
+		 *
+		 * @param string $template
+		 */
 		public function setLayoutFromTemplate($template) {
-			$this->_layout = Utility::createInstance('Continut\Core\System\View\BackendLayout');
-			$this->_layout
+			$this->layout = Utility::createInstance('Continut\Core\System\View\BackendLayout');
+			$this->layout
 				->setPage($this)
 				->setTemplate($template);
 		}
 
+		/**
+		 * The BackendPageView only renders the content inside <body>, no wrappers (so no <head> parts) and it is only
+		 * used to render the backend pages once selected in the page tree
+		 *
+		 * @return string
+		 */
 		public function render() {
 			return $this->getLayout()->render();
 		}

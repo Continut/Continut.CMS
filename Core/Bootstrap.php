@@ -180,11 +180,13 @@ namespace Continut\Core {
 
 			try {
 
-				$layout = Utility::createInstance("\\Continut\\Core\\System\\View\\BackendLayout");
+				$layout = Utility::createInstance('\Continut\Core\System\View\BackendLayout');
 				$layout->setTemplate("/Extensions/System/Backend/Resources/Private/Backend/Layouts/Default.layout.php");
 
-				$pageView = Utility::createInstance("\\Continut\\Core\\Mvc\\View\\PageView");
-				$pageView->setLayout($layout);
+				$pageView = Utility::createInstance('\Continut\Core\Mvc\View\PageView');
+				$pageView
+					->setWrapperTemplate('Extensions/System/Backend/Resources/Private/Backend/Wrappers/Html5')
+					->setLayout($layout);
 
 				$request = Utility::getRequest();
 

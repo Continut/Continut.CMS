@@ -2,7 +2,7 @@
 	<div class="row">
 		<div id="content" class="col-sm-12">
 			<div class="row">
-				<div class="col-sm-4 col-sm-offset-4">
+				<div class="col-sm-4 col-sm-offset-4 login-columns">
 					<p><?= $this->__("copyright.text", ["file" => "LICENSE.TXT"]); ?></p>
 					<div class="panel panel-cms">
 						<div class="panel-heading"><?= $this->__("login.header") ?></div>
