@@ -24,17 +24,17 @@ namespace Continut\Core\Mvc\View {
 		/**
 		 * @var string The template file to use for the view
 		 */
-		protected $_template;
+		protected $template;
 
 		/**
 		 * @var string Relative template path
 		 */
-		protected $_relativePath;
+		protected $relativePath;
 
 		/**
 		 * @var array List of values sent to the view
 		 */
-		protected $_variables;
+		protected $variables;
 
 		/**
 		 * Assign a variable and value to the View variables list
@@ -45,7 +45,7 @@ namespace Continut\Core\Mvc\View {
 		 * @return $this
 		 */
 		public function assign($key, $value) {
-			$this->_variables[$key] = $value;
+			$this->variables[$key] = $value;
 			return $this;
 		}
 
@@ -58,7 +58,7 @@ namespace Continut\Core\Mvc\View {
 		 */
 		public function assignMultiple(array $values) {
 			foreach ($values as $key => $value) {
-				$this->_variables[$key] = $value;
+				$this->variables[$key] = $value;
 			}
 			return $this;
 		}
@@ -71,8 +71,8 @@ namespace Continut\Core\Mvc\View {
 		 * @return null
 		 */
 		public function getVariable($key) {
-			if (isset($this->_variables[$key])) {
-				return $this->_variables[ $key ];
+			if (isset($this->variables[$key])) {
+				return $this->variables[ $key ];
 			} else {
 				return NULL;
 			}
@@ -86,8 +86,8 @@ namespace Continut\Core\Mvc\View {
 		 * @return $this
 		 */
 		public function setTemplate($template) {
-			$this->_template = $template;
-			$this->_relativePath = str_replace(__ROOTCMS__, "", $this->_template);
+			$this->template = $template;
+			$this->relativePath = str_replace(__ROOTCMS__, "", $this->template);
 
 			return $this;
 		}
@@ -98,14 +98,14 @@ namespace Continut\Core\Mvc\View {
 		 * @return string
 		 */
 		public function getTemplate() {
-			return $this->_template;
+			return $this->template;
 		}
 
 		/**
 		 * @return string
 		 */
 		public function getRelativePath() {
-			return $this->_relativePath;
+			return $this->relativePath;
 		}
 
 		/**
@@ -114,20 +114,20 @@ namespace Continut\Core\Mvc\View {
 		 * @throws \Continut\Core\Tools\Exception
 		 */
 		public function render() {
-			if (!is_file($this->_template)) {
+			if (!is_file($this->template)) {
 				Utility::debugData("View missing: " . $this->getRelativePath(), "error");
-				throw new ErrorException("The specified template file does not exist " . $this->_template, 10000001);
+				throw new ErrorException("The specified template file does not exist " . $this->template, 10000001);
 				return $this->__("backend.content.templateMissing");
 			} else {
 				Utility::debugData("View loaded: " . $this->getRelativePath(), "message");
-				Utility::debugData("View render ". str_replace(__ROOTCMS__, "", $this->_template), "start");
-				if (!empty($this->_variables)) {
-					extract($this->_variables);
+				Utility::debugData("View render ". str_replace(__ROOTCMS__, "", $this->template), "start");
+				if (!empty($this->variables)) {
+					extract($this->variables);
 				}
 				ob_start();
-				include($this->_template);
+				include($this->template);
 				$content = ob_get_clean();
-				Utility::debugData("View render ". str_replace(__ROOTCMS__, "", $this->_template), "stop");
+				Utility::debugData("View render ". str_replace(__ROOTCMS__, "", $this->template), "stop");
 
 				return $content;
 			}

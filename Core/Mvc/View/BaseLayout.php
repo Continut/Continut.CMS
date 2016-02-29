@@ -17,38 +17,38 @@ namespace Continut\Core\Mvc\View {
 		/**
 		 * @var PageView the Pageview this layout is linked to
 		 */
-		protected $_page = NULL;
+		protected $pageView = NULL;
 
 		/**
 		 * Tree of elements to render by this layout
 		 *
 		 * @var mixed
 		 */
-		protected $_elements;
+		protected $elements;
 
 		/**
 		 * @return mixed
 		 */
 		public function getElements() {
-			return $this->_elements;
+			return $this->elements;
 		}
 
 		/**
 		 * @param $elements
 		 */
 		public function setElements($elements) {
-			$this->_elements = $elements;
+			$this->elements = $elements;
 		}
 
 		/**
 		 * Set the PageView this layout belongs to
 		 *
-		 * @param PageView $page
+		 * @param PageView $pageView
 		 *
 		 * @return $this
 		 */
-		public function setPage($page) {
-			$this->_page = $page;
+		public function setPageView($pageView) {
+			$this->pageView = $pageView;
 
 			return $this;
 		}
@@ -56,8 +56,8 @@ namespace Continut\Core\Mvc\View {
 		/**
 		 * @return PageView
 		 */
-		public function getPage() {
-			return $this->_page;
+		public function getPageView() {
+			return $this->pageView;
 		}
 
 		/**
@@ -66,12 +66,12 @@ namespace Continut\Core\Mvc\View {
 		 * @return string
 		 */
 		public function render() {
-			if (!is_file($this->_template)) {
+			if (!is_file($this->template)) {
 				Utility::debugData($this->__("backend.layout.noLayoutSpecified"), "error");
 				return $this->__("backend.layout.noLayoutSpecified");
 			} else {
 				ob_start();
-				include_once $this->_template;
+				include_once $this->template;
 				return ob_get_clean();
 			}
 		}
@@ -84,7 +84,7 @@ namespace Continut\Core\Mvc\View {
 		 * @return string
 		 */
 		public function showContainerColumn($id) {
-			if (empty($this->_elements))
+			if (empty($this->elements))
 				return;
 
 			$htmlElements = "";

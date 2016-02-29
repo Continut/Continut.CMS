@@ -1,5 +1,5 @@
 <?php
-$this->getPage()
+$this->getPageView()
 	->addCssAsset([ "identifier" => "bootstrap",  "extension" => "ThemeBootstrapModerna", "file" => "bootstrap.min.css" ])
 	->addCssAsset([ "identifier" => "fancybox",   "extension" => "ThemeBootstrapModerna", "file" => "fancybox/jquery.fancybox.css" ])
 	->addCssAsset([ "identifier" => "flexslider", "extension" => "ThemeBootstrapModerna", "file" => "flexslider.css" ])

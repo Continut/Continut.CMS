@@ -1,5 +1,5 @@
 <?php
-$this->getPage()
+$this->getPageView()
 	->addCssAsset([ "identifier" => "bootstrap", "extension" => "ThemeBootstrap", "file" => "bootstrap.css" ])
 	->addJsAsset([ "identifier" => "bootstrap", "extension" => "ThemeBootstrap", "file" => "bootstrap.js" ]);
 ?>

@@ -184,6 +184,10 @@ li a.helper-icon {
 	background: white;
 }
 
+.login-page {
+	background: #3a4450;
+}
+
 /* create new element wizard */
 .tab-elements .media-object {
 	float: left;

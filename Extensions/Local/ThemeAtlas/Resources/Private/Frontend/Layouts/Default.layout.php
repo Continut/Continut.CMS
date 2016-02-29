@@ -1,5 +1,5 @@
 <?php
-$this->getPage()
+$this->getPageView()
 	->addCssAsset([ "identifier" => "f1", "extension" => "ThemeAtlas", "external" => TRUE, "file" => "http://fonts.googleapis.com/css?family=Raleway:400,500,600,700,800,300" ])
 	->addCssAsset([ "identifier" => "f2", "extension" => "ThemeAtlas", "external" => TRUE, "file" => "http://fonts.googleapis.com/css?family=Oswald:400,500,600,700,800,300" ])
 	->addCssAsset([ "identifier" => "bootstrap", "extension" => "ThemeAtlas", "file" => "bootstrap.css" ])

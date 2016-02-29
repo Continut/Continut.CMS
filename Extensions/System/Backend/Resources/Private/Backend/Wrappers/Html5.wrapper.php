@@ -12,7 +12,11 @@
 	<meta name="keywords" value="" />
 
 </head>
+<?php if ($bodyClass) : ?>
+<body class="<?= $bodyClass ?>">
+<?php else: ?>
 <body>
+<?php endif ?>
 	<?= $pageContent ?>
 </body>
 </html>

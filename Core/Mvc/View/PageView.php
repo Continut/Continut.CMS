@@ -34,6 +34,11 @@ namespace Continut\Core\Mvc\View {
 		protected $pageModel;
 
 		/**
+		 * @var string Class or classes to be applied to the body tag
+		 */
+		protected $bodyClass;
+
+		/**
 		 * @var string Wrapper template to use for the page (doctype, etc)
 		 */
 		protected $wrapperTemplate = 'Extensions/System/Frontend/Resources/Private/Frontend/Wrappers/Html5';
@@ -45,7 +50,7 @@ namespace Continut\Core\Mvc\View {
 		 */
 		public function setLayout($layout) {
 			$this->layout = $layout;
-			$this->layout->setPage($this);
+			$this->layout->setPageView($this);
 
 			return $this;
 		}
@@ -60,7 +65,7 @@ namespace Continut\Core\Mvc\View {
 		public function setLayoutFromTemplate($template) {
 			$this->layout = Utility::createInstance('Continut\Core\System\View\FrontendLayout');
 			$this->layout
-				->setPage($this)
+				->setPageView($this)
 				->setTemplate($template);
 
 			return $this;
@@ -104,7 +109,7 @@ namespace Continut\Core\Mvc\View {
 		/**
 		 * @param string $wrapperTemplate
 		 *
-		 * return $this
+		 * @return $this
 		 */
 		public function setWrapperTemplate($wrapperTemplate)
 		{
@@ -128,6 +133,7 @@ namespace Continut\Core\Mvc\View {
 			Utility::debugData("Layout rendered " . $debugPath, "stop");
 
 			$pageHeader  = $this->renderHeader();
+			$bodyClass   = $this->getBodyClass();
 			$pageTitle   = $this->getTitle();
 			$url         = $_SERVER["HTTP_HOST"];
 			if (Utility::getApplicationScope() == Utility::SCOPE_FRONTEND) {
@@ -149,9 +155,10 @@ namespace Continut\Core\Mvc\View {
 			$this->setTemplate(__ROOTCMS__ . DS . $this->wrapperTemplate . '.wrapper.php')
 				->assignMultiple(
 				[
+					"url"         => $url,
 					"pageTitle"   => $pageTitle,
 					"pageHeader"  => $pageHeader,
-					"url"         => $url,
+					"bodyClass"   => $bodyClass,
 					"pageContent" => $pageContent,
 					"pageModel"   => $this->getPageModel()
 				]
@@ -259,6 +266,26 @@ namespace Continut\Core\Mvc\View {
 		 */
 		public function setTitle($title) {
 			$this->title = $title;
+
+			return $this;
+		}
+
+		/**
+		 * @return string
+		 */
+		public function getBodyClass()
+		{
+			return $this->bodyClass;
+		}
+
+		/**
+		 * @param string $bodyClass
+		 *
+		 * @return $this
+		 */
+		public function setBodyClass($bodyClass)
+		{
+			$this->bodyClass = $bodyClass;
 
 			return $this;
 		}

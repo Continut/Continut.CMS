@@ -1,13 +1,13 @@
 <?php
-$this->getPage()
+$this->getPageView()
+	->setBodyClass('login-page')
 	->addCssAsset( [ "identifier" => "bootstrap", "extension" => "Backend", "file" => "bootstrap/bootstrap.min.css" ])
 	->addCssAsset( [ "identifier" => "bootstrap-select", "extension" => "Backend", "file" => "bootstrap-select/bootstrap-select.css" ])
 	->addCssAsset( [ "identifier" => "bootstrap-dialog", "extension"  => "Backend", "file" => "bootstrap-dialog/bootstrap-dialog.css" ])
 	->addCssAsset( [ "identifier" => "fontawesome", "extension" => "Backend", "file" => "fontawesome/font-awesome.css" ])
 	->addCssAsset( [ "identifier" => "flagicons", "extension" => "Backend", "file" => "flagicons/flag-icon.css" ])
 	->addCssAsset( [ "identifier" => "local", "extension" => "Backend", "file" => "local/backend.css" ])
-	->addCssAsset( [ "identifier" => "google-roboto-font", "external" => TRUE, "file" => "//fonts.googleapis.com/css?family=Roboto+Condensed&subset=latin,latin-ext,cyrillic-ext,greek-ext,greek,vietnamese,cyrillic"]);
-$this->getPage()
+	->addCssAsset( [ "identifier" => "google-roboto-font", "external" => TRUE, "file" => "//fonts.googleapis.com/css?family=Roboto+Condensed&subset=latin,latin-ext,cyrillic-ext,greek-ext,greek,vietnamese,cyrillic"])
 	->addJsAsset( [ "identifier" => "jquery", "extension"  => "Backend", "file" => "jquery/jquery-1.11.3.min.js" ])
 	->addJsAsset( [ "identifier" => "bootstrap", "extension"  => "Backend", "file" => "bootstrap/bootstrap.min.js" ])
 	->addJsAsset( [ "identifier" => "bootstrap-select", "extension"  => "Backend", "file" => "bootstrap-select/bootstrap-select.js" ])
