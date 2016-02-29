@@ -23,7 +23,7 @@ namespace Continut\Core\System\View {
 		public function setLayoutFromTemplate($template) {
 			$this->layout = Utility::createInstance('Continut\Core\System\View\BackendLayout');
 			$this->layout
-				->setPage($this)
+				->setPageView($this)
 				->setTemplate($template);
 		}
 

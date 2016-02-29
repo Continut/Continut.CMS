@@ -13,14 +13,14 @@ namespace Continut\Core\System\View {
 	use Continut\Core\Mvc\View\BaseLayout;
 
 	class BackendLayout extends BaseLayout {
-		protected $_content = NULL;
+		protected $content = NULL;
 
 		public function showContent() {
-			return $this->_content;
+			return $this->content;
 		}
 
 		public function setContent($content) {
-			$this->_content = $content;
+			$this->content = $content;
 		}
 
 		/**
