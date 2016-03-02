@@ -8,11 +8,11 @@
  * Date: 04.04.2015 @ 12:39
  * Project: Conţinut CMS
  */
-namespace Continut\Extensions\System\Frontend\Classes\Domain\Collection {
+namespace Continut\Extensions\System\Frontend\Classes\Domain\Collection;
 
-	use Continut\Core\System\Domain\Collection\PageCollection;
+use Continut\Core\System\Domain\Collection\PageCollection;
 
-	class FrontendPageCollection extends PageCollection {
-	}
-
+class FrontendPageCollection extends PageCollection
+{
 }
+

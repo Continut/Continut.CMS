@@ -8,186 +8,184 @@
  * Date: 03.01.2016 @ 17:50
  * Project: Conţinut CMS
  */
-namespace Continut\Extensions\System\Backend\Classes\Domain\Model\Grid {
+namespace Continut\Extensions\System\Backend\Classes\Domain\Model\Grid;
 
-	use Continut\Core\Mvc\Model\BaseModel;
-	use Continut\Core\Utility;
+use Continut\Core\Mvc\Model\BaseModel;
+use Continut\Core\Utility;
 
-	class Field extends BaseModel {
+class Field extends BaseModel
+{
+    /**
+     * @var string Input's field name
+     */
+    protected $name;
 
-		/**
-		 * @var string Input's field name
-		 */
-		protected $name;
+    /**
+     * @var mixed Input's value
+     */
+    protected $value;
 
-		/**
-		 * @var mixed Input's value
-		 */
-		protected $value;
+    /**
+     * @var string Css class to use for the field
+     */
+    protected $css;
 
-		/**
-		 * @var string Css class to use for the field
-		 */
-		protected $css;
+    /**
+     * @var string Label of the field
+     */
+    protected $label;
 
-		/**
-		 * @var string Label of the field
-		 */
-		protected $label;
+    /**
+     * @var string
+     */
+    protected $filter;
 
-		/**
-		 * @var string
-		 */
-		protected $filter;
+    /**
+     * @var \Extensions\System\Backend\Classes\View\Filter\BaseFilter
+     */
+    protected $filterObject;
 
-		/**
-		 * @var \Extensions\System\Backend\Classes\View\Filter\BaseFilter
-		 */
-		protected $filterObject;
+    /**
+     * @var string
+     */
+    protected $renderer;
 
-		/**
-		 * @var string
-		 */
-		protected $renderer;
+    /**
+     * @var \Extensions\System\Backend\Classes\View\Renderer\BaseRenderer
+     */
+    protected $rendererObject;
 
-		/**
-		 * @var \Extensions\System\Backend\Classes\View\Renderer\BaseRenderer
-		 */
-		protected $rendererObject;
+    /**
+     * @return string
+     */
+    public function getCss()
+    {
+        return $this->css;
+    }
 
-		/**
-		 * @return string
-		 */
-		public function getCss()
-		{
-			return $this->css;
-		}
+    /**
+     * @param $css
+     *
+     * @return $this
+     */
+    public function setCss($css)
+    {
+        $this->css = $css;
 
-		/**
-		 * @param $css
-		 *
-		 * @return $this
-		 */
-		public function setCss($css)
-		{
-			$this->css = $css;
+        return $this;
+    }
 
-			return $this;
-		}
+    /**
+     * @return string
+     */
+    public function getLabel()
+    {
+        return $this->label;
+    }
 
-		/**
-		 * @return string
-		 */
-		public function getLabel()
-		{
-			return $this->label;
-		}
+    /**
+     * @param $label
+     *
+     * @return $this
+     */
+    public function setLabel($label)
+    {
+        $this->label = $label;
 
-		/**
-		 * @param $label
-		 *
-		 * @return $this
-		 */
-		public function setLabel($label)
-		{
-			$this->label = $label;
+        return $this;
+    }
 
-			return $this;
-		}
+    /**
+     * @return mixed
+     */
+    public function getFilter()
+    {
+        return $this->filterObject;
+    }
 
-		/**
-		 * @return mixed
-		 */
-		public function getFilter()
-		{
-			return $this->filterObject;
-		}
+    /**
+     * @param array $filter Configuration array for the filter
+     *
+     * @return $this
+     * @throws \Continut\Core\Tools\ErrorException
+     */
+    public function setFilter($filter)
+    {
+        $this->filter = $filter;
+        $this->filterObject = Utility::createInstance($filter["class"]);
+        if (isset($filter["values"])) {
+            $this->filterObject->setValues($filter["values"]);
+        }
+        $this->filterObject->setField($this);
 
-		/**
-		 * @param array $filter Configuration array for the filter
-		 *
-		 * @return $this
-		 * @throws \Continut\Core\Tools\ErrorException
-		 */
-		public function setFilter($filter)
-		{
-			$this->filter = $filter;
-			$this->filterObject = Utility::createInstance($filter["class"]);
-			if (isset($filter["values"])) {
-				$this->filterObject->setValues($filter["values"]);
-			}
-			$this->filterObject->setField($this);
+        return $this;
+    }
 
-			return $this;
-		}
+    /**
+     * @return \Extensions\System\Backend\Classes\View\Renderer\BaseRenderer
+     */
+    public function getRenderer()
+    {
+        return $this->rendererObject;
+    }
 
-		/**
-		 * @return \Extensions\System\Backend\Classes\View\Renderer\BaseRenderer
-		 */
-		public function getRenderer()
-		{
-			return $this->rendererObject;
-		}
+    /**
+     * @param $renderer
+     *
+     * @return $this
+     */
+    public function setRenderer($renderer)
+    {
+        $this->renderer = $renderer;
+        if (!isset($renderer["class"])) {
+            $renderer["class"] = 'Continut\Extensions\System\Backend\Classes\View\Renderer\TextRenderer';
+        }
+        $this->rendererObject = Utility::createInstance($renderer["class"]);
+        if (isset($renderer["parameters"])) {
+            $this->rendererObject->setParameters($renderer["parameters"]);
+        }
+        $this->rendererObject->setField($this);
 
-		/**
-		 * @param $renderer
-		 *
-		 * @return $this
-		 */
-		public function setRenderer($renderer)
-		{
-			$this->renderer = $renderer;
-			if (!isset($renderer["class"])) {
-				$renderer["class"] = 'Continut\Extensions\System\Backend\Classes\View\Renderer\TextRenderer';
-			}
-			$this->rendererObject = Utility::createInstance($renderer["class"]);
-			if (isset($renderer["parameters"])) {
-				$this->rendererObject->setParameters($renderer["parameters"]);
-			}
-			$this->rendererObject->setField($this);
+        return $this;
+    }
 
-			return $this;
-		}
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 
-		/**
-		 * @return mixed
-		 */
-		public function getName()
-		{
-			return $this->name;
-		}
+    /**
+     * @param string $name
+     *
+     * @return $this
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
 
-		/**
-		 * @param string $name
-		 *
-		 * @return $this
-		 */
-		public function setName($name)
-		{
-			$this->name = $name;
+        return $this;
+    }
 
-			return $this;
-		}
+    /**
+     * @return mixed
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
 
-		/**
-		 * @return mixed
-		 */
-		public function getValue()
-		{
-			return $this->value;
-		}
+    /**
+     * @param mixed $value
+     *
+     * @return $this
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
 
-		/**
-		 * @param mixed $value
-		 *
-		 * @return $this
-		 */
-		public function setValue($value)
-		{
-			$this->value = $value;
-
-			return $this;
-		}
-	}
-
+        return $this;
+    }
 }

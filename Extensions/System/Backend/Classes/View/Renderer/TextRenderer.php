@@ -8,18 +8,17 @@
  * Date: 03.01.2016 @ 15:00
  * Project: Conţinut CMS
  */
-namespace Continut\Extensions\System\Backend\Classes\View\Renderer {
+namespace Continut\Extensions\System\Backend\Classes\View\Renderer;
 
-	use Continut\Core\Utility;
+use Continut\Core\Utility;
 
-	class TextRenderer extends BaseRenderer {
-		/**
-		 * TextFilter constructor
-		 */
-		public function __construct()
-		{
-			$this->setTemplate(Utility::getResource("Renderer/text", "Backend", "Backend", "Template"));
-		}
-	}
-
+class TextRenderer extends BaseRenderer
+{
+    /**
+     * TextFilter constructor
+     */
+    public function __construct()
+    {
+        $this->setTemplate(Utility::getResource("Renderer/text", "Backend", "Backend", "Template"));
+    }
 }

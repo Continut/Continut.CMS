@@ -7,41 +7,39 @@
  * Date: 02.08.2015 @ 19:34
  * Project: Conţinut CMS
  */
-namespace Continut\Extensions\System\Backend\Classes\Domain\Model\Content {
+namespace Continut\Extensions\System\Backend\Classes\Domain\Model\Content;
 
-	use Continut\Core\Utility;
-	use Continut\Extensions\System\Backend\Classes\Domain\Model\BackendContent;
+use Continut\Core\Utility;
+use Continut\Extensions\System\Backend\Classes\Domain\Model\BackendContent;
 
-	class BackendPluginContent extends BackendContent {
+class BackendPluginContent extends BackendContent
+{
+	/**
+	 * @param $elements Chidren elements to render
+	 *
+	 * @return mixed|string
+	 */
+	public function render($elements) {
+		$title = $this->getContentTitle();
 
-		/**
-		 * @param $elements Chidren elements to render
-		 *
-		 * @return mixed|string
-		 */
-		public function render($elements) {
-			$title = $this->getContentTitle();
+		$configuration = json_decode($this->getValue(), TRUE);
 
-			$configuration = json_decode($this->getValue(), TRUE);
+		$extensionSettings = Utility::getExtensionSettings($configuration["plugin"]["extension"]);
 
-			$extensionSettings = Utility::getExtensionSettings($configuration["plugin"]["extension"]);
-
-			if (isset($extensionSettings["elements"]["plugin"][$configuration["plugin"]["identifier"]])) {
-				$modulePreviewSettings = $extensionSettings["elements"]["plugin"][$configuration["plugin"]["identifier"]]["backend"];
-				$value = Utility::callPlugin(
-					$configuration["plugin"]["extension"],
-					$modulePreviewSettings["controller"],
-					$modulePreviewSettings["action"],
-					$configuration["plugin"]["data"]
-				);
-			} else {
-				$value =
-					"Extension: " . $configuration["plugin"]["extension"] .
-					" | Action: " . $configuration["plugin"]["controller"] .
-					"->" . $configuration["plugin"]["action"];
-			}
-			return $this->formatBlock("plugin", $title, $value);
+		if (isset($extensionSettings["elements"]["plugin"][$configuration["plugin"]["identifier"]])) {
+			$modulePreviewSettings = $extensionSettings["elements"]["plugin"][$configuration["plugin"]["identifier"]]["backend"];
+			$value = Utility::callPlugin(
+				$configuration["plugin"]["extension"],
+				$modulePreviewSettings["controller"],
+				$modulePreviewSettings["action"],
+				$configuration["plugin"]["data"]
+			);
+		} else {
+			$value =
+				"Extension: " . $configuration["plugin"]["extension"] .
+				" | Action: " . $configuration["plugin"]["controller"] .
+				"->" . $configuration["plugin"]["action"];
 		}
+		return $this->formatBlock("plugin", $title, $value);
 	}
-
 }

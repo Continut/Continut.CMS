@@ -8,49 +8,46 @@
  * Date: 20.04.2015 @ 21:27
  * Project: Conţinut CMS
  */
-namespace Continut\Extensions\System\Backend\Classes\Controllers {
+namespace Continut\Extensions\System\Backend\Classes\Controllers;
 
-	use Continut\Core\Mvc\Controller\BackendController;
-	use Continut\Core\Utility;
+use Continut\Core\Mvc\Controller\BackendController;
+use Continut\Core\Utility;
 
-	class MediaController extends BackendController {
+class MediaController extends BackendController
+{
+    /**
+     * @var \Continut\Core\System\Storage\StorageInterface
+     */
+    protected $storage;
 
-		/**
-		 * @var \Continut\Core\System\Storage\StorageInterface
-		 */
-		protected $storage;
+    public function __construct() {
+        parent::__construct();
+        $this->setLayoutTemplate(Utility::getResource("Default", "Backend", "Backend", "Layout"));
 
-		public function __construct() {
-			parent::__construct();
-			$this->setLayoutTemplate(Utility::getResource("Default", "Backend", "Backend", "Layout"));
+        $this->storage = Utility::createInstance('Continut\Core\System\Storage\LocalStorage');
+    }
 
-			$this->storage = Utility::createInstance('Continut\Core\System\Storage\LocalStorage');
-		}
+    /**
+     * Index page
+     */
+    public function indexAction() {
 
-		/**
-		 * Index page
-		 */
-		public function indexAction() {
+        $path = urldecode($this->getRequest()->getArgument("path", ""));
 
-			$path = urldecode($this->getRequest()->getArgument("path", ""));
+        $this->getView()->assign("path", $path);
+        $this->getView()->assign("files", $this->storage->getFiles($path));
+        $this->getView()->assign("folders", $this->storage->getFolders($path));
+    }
 
-			$this->getView()->assign("path", $path);
-			$this->getView()->assign("files", $this->storage->getFiles($path));
-			$this->getView()->assign("folders", $this->storage->getFolders($path));
-		}
+    /**
+     * Create a folder
+     */
+    public function createFolderAction() {
+        $folder = $this->getRequest()->getArgument("folder");
+        $path = urldecode($this->getRequest()->getArgument("path", ""));
 
-		/**
-		 * Create a folder
-		 */
-		public function createFolderAction() {
-			$folder = $this->getRequest()->getArgument("folder");
-			$path = urldecode($this->getRequest()->getArgument("path", ""));
+        $createdFolder = $this->storage->createFolder($folder, $path);
 
-			$createdFolder = $this->storage->createFolder($folder, $path);
-
-			return json_encode(["success" => $createdFolder]);
-		}
-
-	}
-
+        return json_encode(["success" => $createdFolder]);
+    }
 }

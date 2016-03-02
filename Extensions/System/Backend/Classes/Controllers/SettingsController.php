@@ -8,40 +8,39 @@
  * Date: 31.12.2015 @ 14:46
  * Project: Conţinut CMS
  */
-namespace Continut\Extensions\System\Backend\Classes\Controllers {
+namespace Continut\Extensions\System\Backend\Classes\Controllers;
 
-	use Continut\Core\Mvc\Controller\BackendController;
-	use Continut\Core\Utility;
+use Continut\Core\Mvc\Controller\BackendController;
+use Continut\Core\Utility;
 
-	class SettingsController extends BackendController
-	{
-		public function __construct() {
-			parent::__construct();
-			$this->setLayoutTemplate(Utility::getResource("Default", "Backend", "Backend", "Layout"));
-		}
+class SettingsController extends BackendController
+{
+    public function __construct() {
+        parent::__construct();
+        $this->setLayoutTemplate(Utility::getResource("Default", "Backend", "Backend", "Layout"));
+    }
 
-		public function indexAction() {
-			$domainsCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection');
-			$domainsCollection->where("is_visible = :is_visible ORDER BY sorting ASC", ["is_visible" => 1]);
+    public function indexAction() {
+        $domainsCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection');
+        $domainsCollection->where("is_visible = :is_visible ORDER BY sorting ASC", ["is_visible" => 1]);
 
-			$languagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection');
-			$languagesCollection->where("domain_id = :domain_id ORDER BY sorting ASC", ["domain_id" => $domainsCollection->getFirst()->getId()]);
+        $languagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection');
+        $languagesCollection->where("domain_id = :domain_id ORDER BY sorting ASC", ["domain_id" => $domainsCollection->getFirst()->getId()]);
 
-			$this->getView()->assign("domains", $domainsCollection);
-			$this->getView()->assign("languages", $languagesCollection);
-		}
+        $this->getView()->assign("domains", $domainsCollection);
+        $this->getView()->assign("languages", $languagesCollection);
+    }
 
-		public function languagesAction() {
-			$domainId = $this->getRequest()->getArgument("domain_id", 0);
+    public function languagesAction() {
+        $domainId = $this->getRequest()->getArgument("domain_id", 0);
 
-			$languagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection');
+        $languagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection');
 
-			if ($domainId > 0) {
-				$languagesCollection->where("domain_id = :domain_id ORDER BY sorting ASC", ["domain_id" => $domainId]);
-			}
-			$languages = $languagesCollection->toSimplifiedArray(TRUE, "All");
+        if ($domainId > 0) {
+            $languagesCollection->where("domain_id = :domain_id ORDER BY sorting ASC", ["domain_id" => $domainId]);
+        }
+        $languages = $languagesCollection->toSimplifiedArray(TRUE, "All");
 
-			return json_encode(["languages" => $languages]);
-		}
-	}
+        return json_encode(["languages" => $languages]);
+    }
 }

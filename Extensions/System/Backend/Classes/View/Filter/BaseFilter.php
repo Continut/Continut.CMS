@@ -8,64 +8,63 @@
  * Date: 02.01.2016 @ 16:33
  * Project: Conţinut CMS
  */
-namespace Continut\Extensions\System\Backend\Classes\View\Filter {
+namespace Continut\Extensions\System\Backend\Classes\View\Filter;
 
-	use Continut\Core\Mvc\View\BaseView;
+use Continut\Core\Mvc\View\BaseView;
 
-	class BaseFilter extends BaseView {
+class BaseFilter extends BaseView
+{
 
-		/**
-		 * @var \Continut\Extensions\System\Backend\Classes\Domain\Model\Grid\Field
-		 */
-		protected $field;
+    /**
+     * @var \Continut\Extensions\System\Backend\Classes\Domain\Model\Grid\Field
+     */
+    protected $field;
 
-		/**
-		 * @var array
-		 */
-		protected $values;
+    /**
+     * @var array
+     */
+    protected $values;
 
-		/**
-		 * @return \Continut\Extensions\System\Backend\Classes\Domain\Model\Grid\Field
-		 */
-		public function getField()
-		{
-			return $this->field;
-		}
+    /**
+     * @return \Continut\Extensions\System\Backend\Classes\Domain\Model\Grid\Field
+     */
+    public function getField()
+    {
+        return $this->field;
+    }
 
-		/**
-		 * @param \Continut\Extensions\System\Backend\Classes\Domain\Model\Grid\Field $field
-		 *
-		 * @return $this
-		 */
-		public function setField($field)
-		{
-			$this->field = $field;
+    /**
+     * @param \Continut\Extensions\System\Backend\Classes\Domain\Model\Grid\Field $field
+     *
+     * @return $this
+     */
+    public function setField($field)
+    {
+        $this->field = $field;
 
-			return $this;
-		}
+        return $this;
+    }
 
-		/**
-		 * @return array
-		 */
-		public function getValues()
-		{
-			return $this->values;
-		}
+    /**
+     * @return array
+     */
+    public function getValues()
+    {
+        return $this->values;
+    }
 
-		/**
-		 * @param $values
-		 *
-		 * @return $this
-		 */
-		public function setValues($values)
-		{
-			$this->values = $values;
+    /**
+     * @param $values
+     *
+     * @return $this
+     */
+    public function setValues($values)
+    {
+        $this->values = $values;
 
-			return $this;
-		}
+        return $this;
+    }
 
-		public function getQueryText() {}
-		public function getQueryValue() {}
-	}
-
+    public function getQueryText() {}
+    public function getQueryValue() {}
 }
