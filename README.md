@@ -70,33 +70,6 @@ This should be it. **You're good to go** :)
 
 * Radu Mogoş (cms@pixelplant.ch)
 
-#### Code Beautification ####
+#### Coding guideline ####
 
-These are some simple rules that I like to follow in order to make sure code looks the same everywhere.
-
-1. Always use Tabs for indentation in the editor, not spaces.
-	
-2. Always start your namespace at the begining of the file, and end it at the end, like proper namespacing should look like. If you're used to C# then you know what I mean.
-
-	**Bad example:**
-			
-		namespace Namespace\Test;
-
-		class MyClass {
-		...
-		}
-
-	
-
-	**Good example:**
-	
-		namespace Namespace\Test {
-		
-			class MyClass {
-				...
-			}
-		}
-		
-#### Other guidelines ####
-
-//TODO
+Please make sure you respect the PSR-1, PSR-2 and PSR-4 standards
