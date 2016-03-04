@@ -122,14 +122,14 @@ class ContentController extends BackendController
         ]);
     }
 
-		/**
-		 * Allows you to edit a content element
-		 *
-		 * @return string
-		 * @throws \Continut\Core\Tools\ErrorException
-		 */
-		public function editAction() {
-			$id = (int)$this->getRequest()->getArgument("id");
+        /**
+         * Allows you to edit a content element
+         *
+         * @return string
+         * @throws \Continut\Core\Tools\ErrorException
+         */
+        public function editAction() {
+            $id = (int)$this->getRequest()->getArgument("id");
 
         $contentCollection = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Collection\BackendContentCollection');
         $content = $contentCollection->where("id = :id AND is_deleted = 0", ["id" => $id])->getFirst();
@@ -187,35 +187,35 @@ class ContentController extends BackendController
         ]);
     }
 
-		/**
-		 * Adds a content element to the backend page
-		 *
-		 * @return string
-		 */
-		public function createAction() {
-			$pageId   = (int)$this->getRequest()->getArgument("page_id");
-			$columnId = (int)$this->getRequest()->getArgument("column_id");
-			$data     = $this->getRequest()->getArgument("data");
-			$settings = $this->getRequest()->getArgument("settings");
-			$settings["data"] = $data;
+        /**
+         * Adds a content element to the backend page
+         *
+         * @return string
+         */
+        public function createAction() {
+            $pageId   = (int)$this->getRequest()->getArgument("page_id");
+            $columnId = (int)$this->getRequest()->getArgument("column_id");
+            $data     = $this->getRequest()->getArgument("data");
+            $settings = $this->getRequest()->getArgument("settings");
+            $settings["data"] = $data;
 
         $contentCollection = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Collection\BackendContentCollection');
 
         $type = $settings["type"];
         $value = [$type => $settings];
 
-			$content = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Model\BackendContent');
-			$content->setType($type);
-			$content->setPageId($pageId);
-			$content->setIsVisible(1);
-			$content->setIsDeleted(0);
-			$content->setParentId(0);
-			$content->setSorting(0);
-			$content->setColumnId($columnId);
-			if (isset($data["title"])) {
-				$content->setTitle($data["title"]);
-			}
-			$content->setValue(json_encode($value));
+            $content = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Model\BackendContent');
+            $content->setType($type);
+            $content->setPageId($pageId);
+            $content->setIsVisible(1);
+            $content->setIsDeleted(0);
+            $content->setParentId(0);
+            $content->setSorting(0);
+            $content->setColumnId($columnId);
+            if (isset($data["title"])) {
+                $content->setTitle($data["title"]);
+            }
+            $content->setValue(json_encode($value));
 
         $contentCollection->add($content)->save();
 
