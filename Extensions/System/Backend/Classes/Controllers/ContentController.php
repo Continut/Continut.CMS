@@ -122,6 +122,12 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 			]);
 		}
 
+		/**
+		 * Allows you to edit a content element
+		 *
+		 * @return string
+		 * @throws \Continut\Core\Tools\ErrorException
+		 */
 		public function editAction() {
 			$id = (int)$this->getRequest()->getArgument("id");
 
@@ -181,6 +187,11 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 			]);
 		}
 
+		/**
+		 * Adds a content element to the backend page
+		 *
+		 * @return string
+		 */
 		public function createAction() {
 			$pageId   = (int)$this->getRequest()->getArgument("page_id");
 			$columnId = (int)$this->getRequest()->getArgument("column_id");
@@ -196,8 +207,8 @@ namespace Continut\Extensions\System\Backend\Classes\Controllers {
 			$content = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Model\BackendContent');
 			$content->setType($type);
 			$content->setPageId($pageId);
-			$content->setIsVisible(TRUE);
-			$content->setIsDeleted(FALSE);
+			$content->setIsVisible(1);
+			$content->setIsDeleted(0);
 			$content->setParentId(0);
 			$content->setSorting(0);
 			$content->setColumnId($columnId);

@@ -4,6 +4,7 @@
 	<p class="lead"><?= $this->__('backend.page.wizard.title.root') ?></p>
 <?php endif ?>
 <form method="post" id="form_page_wizard" class="form" action="<?= $this->helper("Url")->linkToAction("Backend", "Page", "add", ["id" => (($page) ? $page->getId() : 0)]) ?>">
+	<input type="hidden" name="domain_url_id" value="" />
 	<div class="row">
 		<div class="col-sm-12 col-md-4">
 			<p><strong><?= $this->__('backend.page.wizard.placement.title') ?></strong></p>
@@ -57,6 +58,9 @@
 	</div>
 </form>
 <script>
+
+	$('#form_page_wizard input[name=domain_url_id]').val($('#select_language').val());
+
 	$('.page-wizard-add').on('click', function (event) {
 		$('.page-line').eq(0).clone().appendTo('#wizard_pages');
 	});

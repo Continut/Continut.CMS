@@ -100,6 +100,11 @@ namespace Continut\Extensions\System\Backend\Classes\Domain\Model {
 				Utility::helper("Localization")->translate("backend.content.operation.show")
 			);
 
+			$linkNewElement = sprintf('<a class="btn btn-sm btn-success content-wizard" title="%s" href="%s"><i class="fa fa-plus fa-fw"></i></a>',
+				Utility::helper("Localization")->translate("backend.content.addNew"),
+				Utility::helper("Url")->linkToAction("Backend", "Content", "wizard", ["id" => $this->getId(), "page_id" => Utility::getRequest()->getArgument("page_id")])
+			);
+
 			if ($this->getIsVisible()) {
 				$visibilityLink = $linkToHide;
 				$visibilityClass = "panel-visible";
@@ -114,8 +119,8 @@ namespace Continut\Extensions\System\Backend\Classes\Domain\Model {
 				$visibilityLink = "";
 			}
 
-			$operationLinks = sprintf('<div class="btn-group btn-group-sm pull-right no-pep" role="group" aria-label="Element actions">%s<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button><ul class="dropdown-menu" role="menu"><li>%s</li><li>%s</li><li>%s</li></div>',
-				$linkToEdit, $linkToCopy, $visibilityLink, $linkToDelete);
+			$operationLinks = sprintf('<div class="btn-group btn-group-sm pull-right no-pep" role="group" aria-label="Element actions">%s %s<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button><ul class="dropdown-menu" role="menu"><li>%s</li><li>%s</li><li>%s</li></div>',
+				$linkNewElement, $linkToEdit, $linkToCopy, $visibilityLink, $linkToDelete);
 
 			// not used so far, in stand by
 			/*$moveElementLink = sprintf('<a class="btn btn-default btn-sm drag-controller" title="%s"><i class="fa fa-fw fa-arrows"></i></a>',

@@ -187,7 +187,7 @@
 						BootstrapDialog.show({
 							title: <?= json_encode($this->__("backend.page.wizard.create.title")) ?>,
 							message: $('<div></div>').load('<?= $this->helper("Url")->linkToAction("Backend", "Page", "wizard") ?>&id=' + pid)
-						})
+						});
 					});
 				}
 
