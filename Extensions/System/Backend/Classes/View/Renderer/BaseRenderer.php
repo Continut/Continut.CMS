@@ -8,88 +8,86 @@
  * Date: 02.01.2016 @ 16:33
  * Project: Conţinut CMS
  */
-namespace Continut\Extensions\System\Backend\Classes\View\Renderer {
+namespace Continut\Extensions\System\Backend\Classes\View\Renderer;
 
-	use Continut\Core\Mvc\View\BaseView;
+use Continut\Core\Mvc\View\BaseView;
 
-	class BaseRenderer extends BaseView {
+class BaseRenderer extends BaseView
+{
+    /**
+     * @var \Continut\Extensions\System\Backend\Classes\Domain\Model\Grid\Field
+     */
+    protected $field;
 
-		/**
-		 * @var \Continut\Extensions\System\Backend\Classes\Domain\Model\Grid\Field
-		 */
-		protected $field;
+    /**
+     * @var array Parameters to be sent to the renderer template
+     */
+    protected $parameters;
 
-		/**
-		 * @var array Parameters to be sent to the renderer template
-		 */
-		protected $parameters;
+    /**
+     * The record that this renderer will show
+     *
+     * @var \Continut\Core\Mvc\Model\BaseModel\BaseModel
+     */
+    protected $record;
 
-		/**
-		 * The record that this renderer will show
-		 *
-		 * @var \Continut\Core\Mvc\Model\BaseModel\BaseModel
-		 */
-		protected $record;
+    /**
+     * @return \Continut\Extensions\System\Backend\Classes\Domain\Model\Grid\Field
+     */
+    public function getField()
+    {
+        return $this->field;
+    }
 
-		/**
-		 * @return \Continut\Extensions\System\Backend\Classes\Domain\Model\Grid\Field
-		 */
-		public function getField()
-		{
-			return $this->field;
-		}
+    /**
+     * @param \Continut\Extensions\System\Backend\Classes\Domain\Model\Grid\Field $field
+     *
+     * @return $this
+     */
+    public function setField($field)
+    {
+        $this->field = $field;
 
-		/**
-		 * @param \Continut\Extensions\System\Backend\Classes\Domain\Model\Grid\Field $field
-		 *
-		 * @return $this
-		 */
-		public function setField($field)
-		{
-			$this->field = $field;
+        return $this;
+    }
 
-			return $this;
-		}
+    /**
+     * @return array
+     */
+    public function getParameters()
+    {
+        return $this->parameters;
+    }
 
-		/**
-		 * @return array
-		 */
-		public function getParameters()
-		{
-			return $this->parameters;
-		}
+    /**
+     * @param $parameters
+     *
+     * @return $this
+     */
+    public function setParameters($parameters)
+    {
+        $this->parameters = $parameters;
 
-		/**
-		 * @param $parameters
-		 *
-		 * @return $this
-		 */
-		public function setParameters($parameters)
-		{
-			$this->parameters = $parameters;
+        return $this;
+    }
 
-			return $this;
-		}
+    /**
+     * @return \Continut\Core\Mvc\Model\BaseModel\BaseModel
+     */
+    public function getRecord()
+    {
+        return $this->record;
+    }
 
-		/**
-		 * @return \Continut\Core\Mvc\Model\BaseModel\BaseModel
-		 */
-		public function getRecord()
-		{
-			return $this->record;
-		}
+    /**
+     * @param $record
+     *
+     * @return $this
+     */
+    public function setRecord($record)
+    {
+        $this->record = $record;
 
-		/**
-		 * @param $record
-		 *
-		 * @return $this
-		 */
-		public function setRecord($record)
-		{
-			$this->record = $record;
-
-			return $this;
-		}
-	}
-
+        return $this;
+    }
 }

@@ -16,9 +16,9 @@ define("DS", DIRECTORY_SEPARATOR);
 require __ROOTCMS__ . DS . "Core" . DS . "Bootstrap.php";
 
 \Continut\Core\Bootstrap::getInstance()
-	->setEnvironment("Frontend", "Development") // Change this to "Production" before going LIVE
-	->connectToDatabase()
-	->initializeWebsite()
-	->loadExtensionsConfiguration()
-	->startSession()
-	->connectFrontendController();
+    ->setEnvironment("Frontend", "Development") // Change this to "Production" before going LIVE
+    ->connectToDatabase()
+    ->initializeWebsite()
+    ->loadExtensionsConfiguration()
+    ->startSession()
+    ->connectFrontendController();

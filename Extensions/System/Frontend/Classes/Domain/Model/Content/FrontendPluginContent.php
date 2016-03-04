@@ -7,37 +7,36 @@
  * Date: 02.08.2015 @ 21:30
  * Project: Conţinut CMS
  */
-namespace Continut\Extensions\System\Frontend\Classes\Domain\Model\Content {
+namespace Continut\Extensions\System\Frontend\Classes\Domain\Model\Content;
 
-	use Continut\Core\Utility;
-	use Continut\Extensions\System\Frontend\Classes\Domain\Model\FrontendContent;
+use Continut\Core\Utility;
+use Continut\Extensions\System\Frontend\Classes\Domain\Model\FrontendContent;
 
-	class FrontendPluginContent extends FrontendContent {
-		/**
-		 * Outputs "plugin" content
-		 *
-		 * @param mixed $elements
-		 *
-		 * @return string
-		 */
-		public function render($elements) {
-			$value = "";
+class FrontendPluginContent extends FrontendContent
+{
+    /**
+     * Outputs "plugin" content
+     *
+     * @param mixed $elements
+     *
+     * @return string
+     */
+    public function render($elements) {
+        $value = "";
 
-			$configuration     = json_decode($this->getValue(), TRUE);
-			$extensionSettings = Utility::getExtensionSettings($configuration["plugin"]["extension"]);
+        $configuration     = json_decode($this->getValue(), TRUE);
+        $extensionSettings = Utility::getExtensionSettings($configuration["plugin"]["extension"]);
 
-			if (isset($extensionSettings["elements"]["plugin"][$configuration["plugin"]["identifier"]])) {
-				$modulePreviewSettings = $extensionSettings["elements"]["plugin"][$configuration["plugin"]["identifier"]]["frontend"];
-				$value = Utility::callPlugin(
-					$configuration["plugin"]["extension"],
-					$modulePreviewSettings["controller"],
-					$modulePreviewSettings["action"],
-					$configuration["plugin"]["data"]
-				);
-			}
+        if (isset($extensionSettings["elements"]["plugin"][$configuration["plugin"]["identifier"]])) {
+            $modulePreviewSettings = $extensionSettings["elements"]["plugin"][$configuration["plugin"]["identifier"]]["frontend"];
+            $value = Utility::callPlugin(
+                $configuration["plugin"]["extension"],
+                $modulePreviewSettings["controller"],
+                $modulePreviewSettings["action"],
+                $configuration["plugin"]["data"]
+            );
+        }
 
-			return $value;
-		}
-	}
-
+        return $value;
+    }
 }

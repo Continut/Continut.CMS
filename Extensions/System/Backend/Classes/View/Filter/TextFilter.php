@@ -8,39 +8,37 @@
  * Date: 02.01.2016 @ 16:33
  * Project: Conţinut CMS
  */
-namespace Continut\Extensions\System\Backend\Classes\View\Filter {
+namespace Continut\Extensions\System\Backend\Classes\View\Filter;
 
-	use Continut\Core\Utility;
+use Continut\Core\Utility;
 
-	class TextFilter extends BaseFilter {
+class TextFilter extends BaseFilter
+{
+    /**
+     * TextFilter constructor
+     */
+    public function __construct()
+    {
+        $this->setTemplate(Utility::getResource("Filter/text", "Backend", "Backend", "Template"));
+    }
 
-		/**
-		 * TextFilter constructor
-		 */
-		public function __construct()
-		{
-			$this->setTemplate(Utility::getResource("Filter/text", "Backend", "Backend", "Template"));
-		}
+    /**
+     * @return string
+     */
+    public function getQueryText() {
+        $fieldName = $this->getField()->getName();
+        if ($this->getField()->getValue()) {
+            return "$fieldName LIKE :$fieldName";
+        }
+    }
 
-		/**
-		 * @return string
-		 */
-		public function getQueryText() {
-			$fieldName = $this->getField()->getName();
-			if ($this->getField()->getValue()) {
-				return "$fieldName LIKE :$fieldName";
-			}
-		}
-
-		/**
-		 * @return array
-		 */
-		public function getQueryValue() {
-			$filterValue = $this->getField()->getValue();
-			if ($filterValue) {
-				return [$this->getField()->getName() => "%$filterValue%"];
-			}
-		}
-	}
-
+    /**
+     * @return array
+     */
+    public function getQueryValue() {
+        $filterValue = $this->getField()->getValue();
+        if ($filterValue) {
+            return [$this->getField()->getName() => "%$filterValue%"];
+        }
+    }
 }

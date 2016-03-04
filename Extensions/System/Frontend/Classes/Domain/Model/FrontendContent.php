@@ -7,37 +7,36 @@
  * Date: 02.08.2015 @ 21:41
  * Project: Conţinut CMS
  */
-namespace Continut\Extensions\System\Frontend\Classes\Domain\Model {
+namespace Continut\Extensions\System\Frontend\Classes\Domain\Model;
 
-	use Continut\Core\System\Domain\Model\Content;
-	use Continut\Core\Utility;
+use Continut\Core\System\Domain\Model\Content;
+use Continut\Core\Utility;
 
-	class FrontendContent extends Content {
-		/**
-		 * Outputs "regular" content, of type "content" in the database
-		 *
-		 * @param mixed $elements
-		 *
-		 * @return string
-		 */
-		public function render($elements) {
-			$configuration = json_decode($this->getValue(), TRUE);
+class FrontendContent extends Content
+{
+    /**
+     * Outputs "regular" content, of type "content" in the database
+     *
+     * @param mixed $elements
+     *
+     * @return string
+     */
+    public function render($elements) {
+        $configuration = json_decode($this->getValue(), TRUE);
 
-			$variables = $configuration["content"]["data"];
-			// we overwrite the title, if such a variable exists, with the value of the column "title" in the content table
-			$variables["title"] = $this->getTitle();
+        $variables = $configuration["content"]["data"];
+        // we overwrite the title, if such a variable exists, with the value of the column "title" in the content table
+        $variables["title"] = $this->getTitle();
 
-			$view = Utility::createInstance('Continut\Core\Mvc\View\BaseView');
-			$view->setTemplate(Utility::getResource(
-				$configuration["content"]["template"],
-				$configuration["content"]["extension"],
-				"Frontend",
-				"Content"
-			));
-			$view->assignMultiple($variables);
+        $view = Utility::createInstance('Continut\Core\Mvc\View\BaseView');
+        $view->setTemplate(Utility::getResource(
+            $configuration["content"]["template"],
+            $configuration["content"]["extension"],
+            "Frontend",
+            "Content"
+        ));
+        $view->assignMultiple($variables);
 
-			return $view->render();
-		}
-	}
-
+        return $view->render();
+    }
 }

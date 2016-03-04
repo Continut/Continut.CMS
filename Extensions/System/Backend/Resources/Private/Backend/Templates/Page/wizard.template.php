@@ -1,7 +1,7 @@
 <?php if ($page): ?>
-	<p class="lead"><?= $this->__('backend.page.wizard.create.description', ['page' => $page->getTitle()]) ?></p>
+    <p class="lead"><?= $this->__('backend.page.wizard.create.description', ['page' => $page->getTitle()]) ?></p>
 <?php else: ?>
-	<p class="lead"><?= $this->__('backend.page.wizard.title.root') ?></p>
+    <p class="lead"><?= $this->__('backend.page.wizard.title.root') ?></p>
 <?php endif ?>
 <form method="post" id="form_page_wizard" class="form" action="<?= $this->helper("Url")->linkToAction("Backend", "Page", "add", ["id" => (($page) ? $page->getId() : 0)]) ?>">
 	<input type="hidden" name="domain_url_id" value="" />
@@ -65,32 +65,32 @@
 		$('.page-line').eq(0).clone().appendTo('#wizard_pages');
 	});
 
-	// Post form using FormData, if supported
-	$('#form_page_wizard').on('submit', function() {
-		var form = $(this);
-		var formdata = false;
-		if (window.FormData) {
-			formdata = new FormData(form[0]);
-		}
-		var formAction = form.attr('action');
-		$.ajax({
-			url         : formAction,
-			data        : formdata ? formdata : form.serialize(),
-			cache       : false,
-			contentType : false,
-			processData : false,
-			type        : 'POST',
-			dataType    : 'html',
-			success     : function(data, textStatus, jqXHR){
-				/*$('.ajax-loader').hide();
-				if (data.status) {
-					$('.ajax-saved').show();
-				} else {
-					$('.ajax-not-saved').show();
-				}*/
-			}
-		});
+    // Post form using FormData, if supported
+    $('#form_page_wizard').on('submit', function() {
+        var form = $(this);
+        var formdata = false;
+        if (window.FormData) {
+            formdata = new FormData(form[0]);
+        }
+        var formAction = form.attr('action');
+        $.ajax({
+            url         : formAction,
+            data        : formdata ? formdata : form.serialize(),
+            cache       : false,
+            contentType : false,
+            processData : false,
+            type        : 'POST',
+            dataType    : 'html',
+            success     : function(data, textStatus, jqXHR){
+                /*$('.ajax-loader').hide();
+                if (data.status) {
+                    $('.ajax-saved').show();
+                } else {
+                    $('.ajax-not-saved').show();
+                }*/
+            }
+        });
 
-		return false;
-	});
+        return false;
+    });
 </script>

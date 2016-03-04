@@ -9,54 +9,52 @@
  * Project: Conţinut CMS
  */
 
-namespace Continut\Extensions\System\Backend\Classes\Controllers {
+namespace Continut\Extensions\System\Backend\Classes\Controllers;
 
-	use Continut\Core\Mvc\Controller\BackendController;
-	use Continut\Core\Utility;
+use Continut\Core\Mvc\Controller\BackendController;
+use Continut\Core\Utility;
 
-	/**
-	 * Backend main controller
-	 * @package System\Backend\Classes\Controllers
-	 */
-	class IndexController extends BackendController {
+/**
+ * Backend main controller
+ * @package System\Backend\Classes\Controllers
+ */
+class IndexController extends BackendController
+{
+    public function __construct() {
+        parent::__construct();
+        $this->setLayoutTemplate(Utility::getResource("Default", "Backend", "Backend", "Layout"));
+    }
 
-		public function __construct() {
-			parent::__construct();
-			$this->setLayoutTemplate(Utility::getResource("Default", "Backend", "Backend", "Layout"));
-		}
+    /**
+     * Main dashboard action
+     *
+     * @return string
+     */
+    public function dashboardAction() {
+    }
 
-		/**
-		 * Main dashboard action
-		 *
-		 * @return string
-		 */
-		public function dashboardAction() {
-		}
+    /**
+     * Render the Backend mainmenu based on configuration done in the configuration.json file of every extension
+     * The backend menu items and submenu items are configured inside the "backend" key
+     */
+    public function mainmenuAction() {
+        $allExtensionsSettings = Utility::getExtensionSettings();
 
-		/**
-		 * Render the Backend mainmenu based on configuration done in the configuration.json file of every extension
-		 * The backend menu items and submenu items are configured inside the "backend" key
-		 */
-		public function mainmenuAction() {
-			$allExtensionsSettings = Utility::getExtensionSettings();
+        $mainMenu = [];
+        $secondaryMenu = [];
 
-			$mainMenu = [];
-			$secondaryMenu = [];
+        foreach ($allExtensionsSettings as $extensionName => $configuration) {
+            if (isset($configuration["backend"])) {
+                if (isset($configuration["backend"]["mainMenu"])) {
+                    $mainMenu = array_merge_recursive($mainMenu, $configuration["backend"]["mainMenu"]);
+                }
+                if (isset($configuration["backend"]["secondaryMenu"])) {
+                    $secondaryMenu = array_merge_recursive($secondaryMenu, $configuration["backend"]["secondaryMenu"]);
+                }
+            }
+        }
 
-			foreach ($allExtensionsSettings as $extensionName => $configuration) {
-				if (isset($configuration["backend"])) {
-					if (isset($configuration["backend"]["mainMenu"])) {
-						$mainMenu = array_merge_recursive($mainMenu, $configuration["backend"]["mainMenu"]);
-					}
-					if (isset($configuration["backend"]["secondaryMenu"])) {
-						$secondaryMenu = array_merge_recursive($secondaryMenu, $configuration["backend"]["secondaryMenu"]);
-					}
-				}
-			}
-
-			$this->getView()->assign("mainMenu", $mainMenu);
-			$this->getView()->assign("secondaryMenu", $secondaryMenu);
-		}
-
-	}
+        $this->getView()->assign("mainMenu", $mainMenu);
+        $this->getView()->assign("secondaryMenu", $secondaryMenu);
+    }
 }
