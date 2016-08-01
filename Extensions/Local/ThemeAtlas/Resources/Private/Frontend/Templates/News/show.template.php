@@ -17,7 +17,7 @@
 				</div>
 			</div>
 			<div class="blog-carousel-header">
-				<h3><a title="" href="blog-single-sidebar.html"><?= $this->helper("String")->truncate($this->helper("String")->stripTags($newsItem->getTitle()), 100) ?></a></h3>
+				<h3><a title="" href="blog-single-sidebar.html"><?= $this->helper("Text")->truncate($this->helper("Text")->stripTags($newsItem->getTitle()), 100) ?></a></h3>
 				<div class="blog-carousel-meta">
 					<span><i class="fa fa-calendar"></i> April 01, 2014</span>
 					<span><i class="fa fa-comment"></i> <a href="#">03 Comments</a></span>

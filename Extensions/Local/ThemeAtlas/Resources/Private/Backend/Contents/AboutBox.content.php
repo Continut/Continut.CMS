@@ -6,6 +6,6 @@
 	<h3><?= $title ?></h3>
 	<?php endif ?>
 	<?php if ($subtitle): ?>
-		<p><?= $this->helper('String')->truncate($this->helper('String')->stripTags($subtitle), 200) ?></p>
+		<p><?= $this->helper('Text')->truncate($this->helper('Text')->stripTags($subtitle), 200) ?></p>
 	<?php endif ?>
 </div>

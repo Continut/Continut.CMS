@@ -1,1 +1,1 @@
-<p><?= $this->helper('String')->truncate($this->helper('String')->stripTags($content), 200) ?></p>
+<p><?= $this->helper('Text')->truncate($this->helper('Text')->stripTags($content), 200) ?></p>

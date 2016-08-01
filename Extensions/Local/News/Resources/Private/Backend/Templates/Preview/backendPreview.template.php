@@ -11,8 +11,8 @@
 		</a>
 	</div>
 	<div class="media-body">
-		<p><strong><?= $this->helper("String")->truncate($this->helper("String")->stripTags($newsItem->getTitle()), 100) ?></strong></p>
-		<p><?= $this->helper("String")->truncate($this->helper("String")->stripTags($newsItem->getDescription()), 100) ?></p>
+		<p><strong><?= $this->helper("Text")->truncate($this->helper("Text")->stripTags($newsItem->getTitle()), 100) ?></strong></p>
+		<p><?= $this->helper("Text")->truncate($this->helper("Text")->stripTags($newsItem->getDescription()), 100) ?></p>
 	</div>
 </div>
 <?php endforeach ?>

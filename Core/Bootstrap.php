@@ -89,6 +89,7 @@ namespace Continut\Core {
 						break;
 				}
 			}
+			var_dump($exception);
 
 			// In production mode, we log any errors/exceptions and we do not show them in the frontend
 			// For all the other environments, "Test", "Development" or your custom ones, we show the errors
@@ -107,12 +108,12 @@ namespace Continut\Core {
 		 * @param int    $code
 		 * @param string $message
 		 * @param string $file
-		 * @param string $line
+		 * @param int    $line
 		 *
 		 * @throws Exception
 		 */
 		public function handleError($code, $message, $file, $line) {
-			echo $code.$message.$file;
+			echo $code.$message.$file.' on line '.$line;
 			//throw new ErrorException($message, $code);
 		}
 

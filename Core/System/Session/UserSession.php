@@ -141,8 +141,12 @@ namespace Continut\Core\System\Session {
 			return ($sth->rowCount() > 0);
 		}
 
+		/**
+		 * @return bool
+		 */
 		public function close() {
 			$this->gc(ini_get('session.gc_maxlifetime'));
+			return true;
 		}
 
 		/**
