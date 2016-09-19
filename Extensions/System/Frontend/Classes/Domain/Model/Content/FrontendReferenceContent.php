@@ -15,13 +15,14 @@ use Continut\Extensions\System\Frontend\Classes\Domain\Model\FrontendContent;
 class FrontendReferenceContent extends FrontendContent
 {
     /**
-     * Render the reference element
+     * Render a Reference element
      *
      * @param mixed $elements
      *
      * @return string
      */
-    public function render($elements) {
+    public function render($elements)
+    {
         $reference = (int)$this->getReferenceId();
         $value = "";
         if ($reference > 0) {

@@ -3,7 +3,6 @@
  * This file is part of the Conţinut CMS project.
  * Distributed under the GNU General Public License.
  * For more details, consult the LICENSE.txt file supplied with the project
-
  * Author: Radu Mogoş <radu.mogos@pixelplant.ch>
  * Date: 03.01.2016 @ 13:40
  * Project: Conţinut CMS
@@ -25,7 +24,8 @@ class SelectFilter extends BaseFilter
     /**
      * @return string
      */
-    public function getQueryText() {
+    public function getQueryText()
+    {
         $fieldName = $this->getField()->getName();
         if ($this->getField()->getValue() != null) {
             return "$fieldName = :$fieldName";
@@ -35,7 +35,8 @@ class SelectFilter extends BaseFilter
     /**
      * @return array
      */
-    public function getQueryValue() {
+    public function getQueryValue()
+    {
         $filterValue = $this->getField()->getValue();
         if ($filterValue != null) {
             return [$this->getField()->getName() => $filterValue];

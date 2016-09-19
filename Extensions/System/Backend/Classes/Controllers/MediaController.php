@@ -3,7 +3,6 @@
  * This file is part of the Conţinut CMS project.
  * Distributed under the GNU General Public License.
  * For more details, consult the LICENSE.txt file supplied with the project
- 
  * Author: Radu Mogoş <radu.mogos@pixelplant.ch>
  * Date: 20.04.2015 @ 21:27
  * Project: Conţinut CMS
@@ -20,7 +19,8 @@ class MediaController extends BackendController
      */
     protected $storage;
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->setLayoutTemplate(Utility::getResource("Default", "Backend", "Backend", "Layout"));
 
@@ -30,7 +30,8 @@ class MediaController extends BackendController
     /**
      * Index page
      */
-    public function indexAction() {
+    public function indexAction()
+    {
 
         $path = urldecode($this->getRequest()->getArgument("path", ""));
 
@@ -42,7 +43,8 @@ class MediaController extends BackendController
     /**
      * Create a folder
      */
-    public function createFolderAction() {
+    public function createFolderAction()
+    {
         $folder = $this->getRequest()->getArgument("folder");
         $path = urldecode($this->getRequest()->getArgument("path", ""));
 

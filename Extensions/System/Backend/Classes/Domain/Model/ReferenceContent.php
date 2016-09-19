@@ -3,7 +3,6 @@
  * This file is part of the Conţinut CMS project.
  * Distributed under the GNU General Public License.
  * For more details, consult the LICENSE.txt file supplied with the project
- 
  * Author: Radu Mogoş <radu.mogos@pixelplant.ch>
  * Date: 11.04.2015 @ 17:50
  * Project: Conţinut CMS
@@ -17,14 +16,15 @@ class ReferenceContent extends BackendContent
     /**
      * Renders the backend editable part of a content element. Overwritten for references, since the menus are different
      *
-     * @param string $type    The type of content element we're formating
-     * @param string $title   The title of the content element, if any
+     * @param string $type The type of content element we're formating
+     * @param string $title The title of the content element, if any
      * @param string $content The content of the element
      *
      * @return string
      */
-    protected function formatBlock($type, $title, $content) {
-        $linkToEdit   = sprintf('<a title="%s" class="btn btn-default content-operation-link" href="%s"><i class="fa fa-pencil fa-fw"></i></a>',
+    protected function formatBlock($type, $title, $content)
+    {
+        $linkToEdit = sprintf('<a title="%s" class="btn btn-default content-operation-link" href="%s"><i class="fa fa-pencil fa-fw"></i></a>',
             Utility::helper("Localization")->translate("backend.content.operation.edit"),
             Utility::helper("Url")->linkToAction("Backend", "Content", "edit", ["id" => $this->getId()])
         );
@@ -35,19 +35,19 @@ class ReferenceContent extends BackendContent
             Utility::helper("Localization")->translate("backend.content.operation.delete")
         );
 
-        $linkToCopy   = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-copy fa-fw"></i> %s</a>',
+        $linkToCopy = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-copy fa-fw"></i> %s</a>',
             Utility::helper("Localization")->translate("backend.content.operation.copy"),
             Utility::helper("Url")->linkToAction("Backend", "Content", "copy", ["id" => $this->getId()]),
             Utility::helper("Localization")->translate("backend.content.operation.copy")
         );
 
-        $linkToHide   = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-eye fa-fw"></i> %s</a>',
+        $linkToHide = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-eye fa-fw"></i> %s</a>',
             Utility::helper("Localization")->translate("backend.content.operation.hide"),
             Utility::helper("Url")->linkToAction("Backend", "Content", "toggleVisibility", ["id" => $this->getId(), "show" => 0]),
             Utility::helper("Localization")->translate("backend.content.operation.hide")
         );
 
-        $linkToShow   = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-eye-slash text-danger fa-fw"></i> %s</a>',
+        $linkToShow = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-eye-slash text-danger fa-fw"></i> %s</a>',
             Utility::helper("Localization")->translate("backend.content.operation.show"),
             Utility::helper("Url")->linkToAction("Backend", "Content", "toggleVisibility", ["id" => $this->getId(), "show" => 1]),
             Utility::helper("Localization")->translate("backend.content.operation.show")

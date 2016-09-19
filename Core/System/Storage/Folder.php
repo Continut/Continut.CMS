@@ -9,112 +9,112 @@
  */
 namespace Continut\Core\System\Storage {
 
-	class Folder
-	{
-		/**
-		 * @var string
-		 */
-		protected $name;
+    class Folder
+    {
+        /**
+         * @var string
+         */
+        protected $name;
 
-		/**
-		 * @var string
-		 */
-		protected $relativePath;
+        /**
+         * @var string
+         */
+        protected $relativePath;
 
-		/**
-		 * @var string
-		 */
-		protected $absolutePath;
+        /**
+         * @var string
+         */
+        protected $absolutePath;
 
-		/**
-		 * @var int
-		 */
-		protected $countFiles = 0;
+        /**
+         * @var int
+         */
+        protected $countFiles = 0;
 
-		/**
-		 * @var int
-		 */
-		protected $countFolders = 0;
+        /**
+         * @var int
+         */
+        protected $countFolders = 0;
 
-		/**
-		 * @return string
-		 */
-		public function getName()
-		{
-			return $this->name;
-		}
+        /**
+         * @return string
+         */
+        public function getName()
+        {
+            return $this->name;
+        }
 
-		/**
-		 * @param string $name
-		 */
-		public function setName($name)
-		{
-			$this->name = $name;
-		}
+        /**
+         * @param string $name
+         */
+        public function setName($name)
+        {
+            $this->name = $name;
+        }
 
-		/**
-		 * @return string
-		 */
-		public function getRelativePath()
-		{
-			return $this->relativePath;
-		}
+        /**
+         * @return string
+         */
+        public function getRelativePath()
+        {
+            return $this->relativePath;
+        }
 
-		/**
-		 * @param string $relativePath
-		 */
-		public function setRelativePath($relativePath)
-		{
-			$this->relativePath = $relativePath;
-		}
+        /**
+         * @param string $relativePath
+         */
+        public function setRelativePath($relativePath)
+        {
+            $this->relativePath = $relativePath;
+        }
 
-		/**
-		 * @return string
-		 */
-		public function getAbsolutePath()
-		{
-			return $this->absolutePath;
-		}
+        /**
+         * @return string
+         */
+        public function getAbsolutePath()
+        {
+            return $this->absolutePath;
+        }
 
-		/**
-		 * @param string $absolutePath
-		 */
-		public function setAbsolutePath($absolutePath)
-		{
-			$this->absolutePath = $absolutePath;
-		}
+        /**
+         * @param string $absolutePath
+         */
+        public function setAbsolutePath($absolutePath)
+        {
+            $this->absolutePath = $absolutePath;
+        }
 
-		/**
-		 * @return int
-		 */
-		public function getCountFiles()
-		{
-			return $this->countFiles;
-		}
+        /**
+         * @return int
+         */
+        public function getCountFiles()
+        {
+            return $this->countFiles;
+        }
 
-		/**
-		 * @param int $countFiles
-		 */
-		public function setCountFiles($countFiles)
-		{
-			$this->countFiles = $countFiles;
-		}
+        /**
+         * @param int $countFiles
+         */
+        public function setCountFiles($countFiles)
+        {
+            $this->countFiles = $countFiles;
+        }
 
-		/**
-		 * @return int
-		 */
-		public function getCountFolders()
-		{
-			return $this->countFolders;
-		}
+        /**
+         * @return int
+         */
+        public function getCountFolders()
+        {
+            return $this->countFolders;
+        }
 
-		/**
-		 * @param int $countFolders
-		 */
-		public function setCountFolders($countFolders)
-		{
-			$this->countFolders = $countFolders;
-		}
-	}
+        /**
+         * @param int $countFolders
+         */
+        public function setCountFolders($countFolders)
+        {
+            $this->countFolders = $countFolders;
+        }
+    }
 
 }

@@ -3,7 +3,6 @@
  * This file is part of the Conţinut CMS project.
  * Distributed under the GNU General Public License.
  * For more details, consult the LICENSE.txt file supplied with the project
-
  * Author: Radu Mogoş <radu.mogos@pixelplant.ch>
  * Date: 02.01.2016 @ 16:33
  * Project: Conţinut CMS
@@ -53,8 +52,9 @@ class GridView extends BaseView
         return $this->collection;
     }
 
-    public function initialize() {
-        $limit  = (int)$this->getLimit();
+    public function initialize()
+    {
+        $limit = (int)$this->getLimit();
         $offset = ($this->getPage() - 1) * $limit;
 
         $filterQueries = [];
@@ -97,7 +97,8 @@ class GridView extends BaseView
      *
      * @return $this
      */
-    public function setFields($fields) {
+    public function setFields($fields)
+    {
         foreach ($fields as $name => $fieldValues) {
             $field = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Model\Grid\Field');
             $field
@@ -124,7 +125,8 @@ class GridView extends BaseView
      *
      * @return $this
      */
-    public function setPager($limit, $page) {
+    public function setPager($limit, $page)
+    {
         $this->limit = $limit;
         $this->page = $page;
 

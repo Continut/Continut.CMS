@@ -3,7 +3,6 @@
  * This file is part of the Conţinut CMS project.
  * Distributed under the GNU General Public License.
  * For more details, consult the LICENSE.txt file supplied with the project
- 
  * Author: Radu Mogoş <radu.mogos@pixelplant.ch>
  * Date: 19.04.2015 @ 21:25
  * Project: Conţinut CMS
@@ -18,8 +17,9 @@ class ContentController extends BackendController
     /**
      * Shows the "add content element" wizard
      */
-    public function wizardAction() {
-        $pageId   = (int)$this->getRequest()->getArgument("page_id");
+    public function wizardAction()
+    {
+        $pageId = (int)$this->getRequest()->getArgument("page_id");
         $columnId = (int)$this->getRequest()->getArgument("column_id");
         $configuration = Utility::getExtensionSettings();
 
@@ -36,10 +36,10 @@ class ContentController extends BackendController
 
         $this->getView()->assignMultiple(
             [
-                "types"      => $types,
+                "types" => $types,
                 "extensions" => $extensions,
-                "pageId"     => $pageId,
-                "columnId"   => $columnId
+                "pageId" => $pageId,
+                "columnId" => $columnId
             ]
         );
     }
@@ -50,7 +50,8 @@ class ContentController extends BackendController
      * @return string
      * @throws \Continut\Core\Tools\Exception
      */
-    public function deleteAction() {
+    public function deleteAction()
+    {
         $id = (int)$this->getRequest()->getArgument("id");
 
         $contentCollection = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Collection\BackendContentCollection');
@@ -72,7 +73,8 @@ class ContentController extends BackendController
     /**
      * Toggles an element's visibility
      */
-    public function toggleVisibilityAction() {
+    public function toggleVisibilityAction()
+    {
         $id = (int)$this->getRequest()->getArgument("id");
 
         $contentCollection = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Collection\BackendContentCollection');
@@ -86,7 +88,7 @@ class ContentController extends BackendController
             ->save();
 
         return json_encode([
-            "id"       => $content->getId(),
+            "id" => $content->getId(),
             "operation" => "toggleVisibility"
         ]);
     }
@@ -94,42 +96,44 @@ class ContentController extends BackendController
     /**
      * Adds a content element to the page
      */
-    public function addAction() {
-        $pageId   = $this->getRequest()->getArgument("page_id", 0);
+    public function addAction()
+    {
+        $pageId = $this->getRequest()->getArgument("page_id", 0);
         $columnId = $this->getRequest()->getArgument("column_id", 0);
         $settings = $this->getRequest()->getArgument("settings");
 
         $wizard = Utility::createInstance('Continut\Core\Mvc\View\BaseView');
-        $wizardTemplate = ucfirst($settings["type"] ."s" . DS . $settings["template"]);
+        $wizardTemplate = ucfirst($settings["type"] . "s" . DS . $settings["template"]);
         $wizard->setTemplate(Utility::getResource($wizardTemplate, $settings["extension"], "Frontend", "Wizard"));
 
         $contentCollection = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Collection\BackendContentCollection');
 
         $this->getView()->assignMultiple(
             [
-                "element"   => $contentCollection->createEmptyFromType($settings["type"]),
-                "content"   => $wizard->render(),
-                "settings"  => $settings,
-                "pageId"    => $pageId,
-                "columnId"  => $columnId
+                "element" => $contentCollection->createEmptyFromType($settings["type"]),
+                "content" => $wizard->render(),
+                "settings" => $settings,
+                "pageId" => $pageId,
+                "columnId" => $columnId
             ]
         );
 
         return json_encode([
-            "id"        => null,
-            "html"      => $this->getView()->render(),
+            "id" => null,
+            "html" => $this->getView()->render(),
             "operation" => "add"
         ]);
     }
 
-        /**
-         * Allows you to edit a content element
-         *
-         * @return string
-         * @throws \Continut\Core\Tools\ErrorException
-         */
-        public function editAction() {
-            $id = (int)$this->getRequest()->getArgument("id");
+    /**
+     * Allows you to edit a content element
+     *
+     * @return string
+     * @throws \Continut\Core\Tools\ErrorException
+     */
+    public function editAction()
+    {
+        $id = (int)$this->getRequest()->getArgument("id");
 
         $contentCollection = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Collection\BackendContentCollection');
         $content = $contentCollection->where("id = :id AND is_deleted = 0", ["id" => $id])->getFirst();
@@ -150,20 +154,21 @@ class ContentController extends BackendController
         $this->getView()->assign("content", $wizard->render());
 
         return json_encode([
-            "id"        => $content->getId(),
-            "html"      => $this->getView()->render(),
+            "id" => $content->getId(),
+            "html" => $this->getView()->render(),
             "operation" => "edit"
         ]);
     }
 
     /**
-         * Saves the changes made to a content element in the backend
+     * Saves the changes made to a content element in the backend
      *
      * @return string
      * @throws \Continut\Core\Tools\Exception
      */
-    public function updateAction() {
-        $id  = (int)$this->getRequest()->getArgument("id");
+    public function updateAction()
+    {
+        $id = (int)$this->getRequest()->getArgument("id");
         $data = $this->getRequest()->getArgument("data", null);
         $success = 0;
         if ($data && $id > 0) {
@@ -187,35 +192,36 @@ class ContentController extends BackendController
         ]);
     }
 
-        /**
-         * Adds a content element to the backend page
-         *
-         * @return string
-         */
-        public function createAction() {
-            $pageId   = (int)$this->getRequest()->getArgument("page_id");
-            $columnId = (int)$this->getRequest()->getArgument("column_id");
-            $data     = $this->getRequest()->getArgument("data");
-            $settings = $this->getRequest()->getArgument("settings");
-            $settings["data"] = $data;
+    /**
+     * Adds a content element to the backend page
+     *
+     * @return string
+     */
+    public function createAction()
+    {
+        $pageId = (int)$this->getRequest()->getArgument("page_id");
+        $columnId = (int)$this->getRequest()->getArgument("column_id");
+        $data = $this->getRequest()->getArgument("data");
+        $settings = $this->getRequest()->getArgument("settings");
+        $settings["data"] = $data;
 
         $contentCollection = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Collection\BackendContentCollection');
 
         $type = $settings["type"];
         $value = [$type => $settings];
 
-            $content = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Model\BackendContent');
-            $content->setType($type);
-            $content->setPageId($pageId);
-            $content->setIsVisible(1);
-            $content->setIsDeleted(0);
-            $content->setParentId(0);
-            $content->setSorting(0);
-            $content->setColumnId($columnId);
-            if (isset($data["title"])) {
-                $content->setTitle($data["title"]);
-            }
-            $content->setValue(json_encode($value));
+        $content = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Model\BackendContent');
+        $content->setType($type);
+        $content->setPageId($pageId);
+        $content->setIsVisible(1);
+        $content->setIsDeleted(0);
+        $content->setParentId(0);
+        $content->setSorting(0);
+        $content->setColumnId($columnId);
+        if (isset($data["title"])) {
+            $content->setTitle($data["title"]);
+        }
+        $content->setValue(json_encode($value));
 
         $contentCollection->add($content)->save();
 
@@ -230,10 +236,11 @@ class ContentController extends BackendController
      * @return string
      * @throws \Continut\Core\Tools\Exception
      */
-    public function updateContainerAction() {
+    public function updateContainerAction()
+    {
         $newParent = (int)$this->getRequest()->getArgument("parent_id");
         $newColumn = (int)$this->getRequest()->getArgument("column_id");
-        $id       = (int)$this->getRequest()->getArgument("id");
+        $id = (int)$this->getRequest()->getArgument("id");
         $beforeId = (int)$this->getRequest()->getArgument("before_id");
 
         $contentCollection = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Collection\BackendContentCollection');

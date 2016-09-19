@@ -9,7 +9,8 @@
  */
 namespace Continut\Core\Tools {
 
-	class DatabaseException extends ErrorException {
-	}
+    class DatabaseException extends ErrorException
+    {
+    }
 
 }

@@ -6,13 +6,13 @@
     <base href="http://<?= $url ?>">
     <title><?= $pageTitle ?></title>
 
-<?= $pageHeader ?>
+    <?= $pageHeader ?>
 
-    <meta name="description" value=<?= json_encode($this->getPageModel()->getMetaDescription()) ?> />
-    <meta name="keywords" value=<?= json_encode($this->getPageModel()->getMetaKeywords()) ?> />
+    <meta name="description" value=<?= json_encode($this->getPageModel()->getMetaDescription()) ?>/>
+    <meta name="keywords" value=<?= json_encode($this->getPageModel()->getMetaKeywords()) ?>/>
 
 </head>
 <body>
-    <?= $pageContent ?>
+<?= $pageContent ?>
 </body>
 </html>

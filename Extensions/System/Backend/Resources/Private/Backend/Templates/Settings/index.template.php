@@ -15,10 +15,10 @@
                         <script type="text/javascript">
                             $('#select_website').on('change', function (event) {
                                 $.ajax({
-                                        url: '<?= $this->helper("Url")->linkToAction("Backend", "Settings", "languages") ?>',
-                                        data: { domain_id: this.value }
-                                    })
-                                    .done(function( data ) {
+                                    url: '<?= $this->helper("Url")->linkToAction("Backend", "Settings", "languages") ?>',
+                                    data: {domain_id: this.value}
+                                })
+                                    .done(function (data) {
                                         var $languages = $('#select_language');
                                         $languages.empty();
                                         $.each($.parseJSON(data).languages, function (value, key) {
@@ -33,7 +33,8 @@
                         <select id="select_language" class="selectpicker" data-width="100%">
                             <option value="0">- All languages -</option>
                             <?php foreach ($languages->getAll() as $language): ?>
-                                <option data-icon="flag-icon flag-icon-<?= $language->getFlag() ?>" value="<?= $language->getId() ?>"><?= $language->getTitle() ?></option>
+                                <option data-icon="flag-icon flag-icon-<?= $language->getFlag() ?>"
+                                        value="<?= $language->getId() ?>"><?= $language->getTitle() ?></option>
                             <?php endforeach ?>
                         </select>
                     </div>
@@ -49,19 +50,26 @@
                         <div class="col-md-3">
                             <ul id="settings_general" class="nav nav-pills nav-stacked" role="tablist">
                                 <li><h3>System</h3></li>
-                                <li role="presentation" class="active"><a href="#option1" aria-controls="option1" role="tab" data-toggle="tab">Domains and domain urls</a></li>
-                                <li role="presentation"><a href="#option2" aria-controls="option2" role="tab" data-toggle="tab">Sessions</a></li>
-                                <li role="presentation"><a href="#option3" aria-controls="option3" role="tab" data-toggle="tab">Media storages</a></li>
+                                <li role="presentation" class="active"><a href="#option1" aria-controls="option1"
+                                                                          role="tab" data-toggle="tab">Domains and
+                                        domain urls</a></li>
+                                <li role="presentation"><a href="#option2" aria-controls="option2" role="tab"
+                                                           data-toggle="tab">Sessions</a></li>
+                                <li role="presentation"><a href="#option3" aria-controls="option3" role="tab"
+                                                           data-toggle="tab">Media storages</a></li>
                                 <li><h3>Extensions</h3></li>
-                                <li role="presentation"><a href="#option4" aria-controls="option4" role="tab" data-toggle="tab">News</a></li>
+                                <li role="presentation"><a href="#option4" aria-controls="option4" role="tab"
+                                                           data-toggle="tab">News</a></li>
                             </ul>
                         </div>
                         <div class="col-md-9">
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane active" id="option1">
                                     <div class="pull-right">
-                                        <a href="" class="btn btn-success"><i class="fa fa-icon fa-home"></i> Add new domain</a>
-                                        <a href="" class="btn btn-success"><i class="fa fa-icon fa-globe"></i> Add new language</a>
+                                        <a href="" class="btn btn-success"><i class="fa fa-icon fa-home"></i> Add new
+                                            domain</a>
+                                        <a href="" class="btn btn-success"><i class="fa fa-icon fa-globe"></i> Add new
+                                            language</a>
                                     </div>
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
@@ -71,11 +79,16 @@
                                             <ul class="list-readable list-enclosed">
                                                 <?php foreach ($domains->getAll() as $domain): ?>
                                                     <li>
-                                                        <label><strong><input type="checkbox" name="domains[]" value="<?= $domain->getId() ?>"> <?= $domain->getTitle() ?></strong></label>
+                                                        <label><strong><input type="checkbox" name="domains[]"
+                                                                              value="<?= $domain->getId() ?>"> <?= $domain->getTitle() ?>
+                                                            </strong></label>
                                                         <ul class="list-readable">
                                                             <?php foreach ($domain->getDomainUrls() as $language): ?>
                                                                 <li>
-                                                                    <label><input type="checkbox" name="domain_urls[]" value="<?= $language->getId() ?>"> <i class="flag-icon flag-icon-<?= $language->getFlag() ?>"></i> <?= $language->getTitle() ?></label>
+                                                                    <label><input type="checkbox" name="domain_urls[]"
+                                                                                  value="<?= $language->getId() ?>"> <i
+                                                                            class="flag-icon flag-icon-<?= $language->getFlag() ?>"></i> <?= $language->getTitle() ?>
+                                                                    </label>
                                                                     <i class="fa fa-icon fa-globe"></i> <?= $language->getUrl() ?>
                                                                 </li>
                                                             <?php endforeach; ?>
@@ -97,25 +110,36 @@
                                                     <div class="form-group form-group-lg">
                                                         <label>Frontend session expires in</label>
                                                         <div class="input-group col-sm-4">
-                                                            <div class="input-group-addon"><span class="fa fa-icon fa-hourglass-half"></span></div>
-                                                            <input type="text" class="form-control" name="settings[session][feuser_expire]" value="360" />
+                                                            <div class="input-group-addon"><span
+                                                                    class="fa fa-icon fa-hourglass-half"></span></div>
+                                                            <input type="text" class="form-control"
+                                                                   name="settings[session][feuser_expire]" value="360"/>
                                                             <div class="input-group-addon">minutes</div>
                                                         </div>
                                                     </div>
-                                                    <a class="btn btn-default" href=""><span class="fa fa-icon fa-users"></span> Administer Frontend Users</a>
-                                                    <a class="btn btn-default" href=""><span class="fa fa-icon fa-users"></span> Administer Frontend Groups</a>
+                                                    <a class="btn btn-default" href=""><span
+                                                            class="fa fa-icon fa-users"></span> Administer Frontend
+                                                        Users</a>
+                                                    <a class="btn btn-default" href=""><span
+                                                            class="fa fa-icon fa-users"></span> Administer Frontend
+                                                        Groups</a>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group form-group-lg">
                                                         <label>Backend session expires in</label>
                                                         <div class="input-group col-sm-4">
-                                                            <div class="input-group-addon"><span class="fa fa-icon fa-hourglass-half"></span></div>
-                                                            <input type="text" class="form-control" name="settings[session][beuser_expire]" value="360" />
+                                                            <div class="input-group-addon"><span
+                                                                    class="fa fa-icon fa-hourglass-half"></span></div>
+                                                            <input type="text" class="form-control"
+                                                                   name="settings[session][beuser_expire]" value="360"/>
                                                             <div class="input-group-addon">minutes</div>
                                                         </div>
                                                     </div>
-                                                    <a class="btn btn-default" href=""><span class="fa fa-icon fa-users"></span> Administer Backend Users</a>
-                                                    <a class="btn btn-default" href=""><span class="fa fa-icon fa-users"></span> Administer Backend Groups</a>
+                                                    <a class="btn btn-default" href=""><span
+                                                            class="fa fa-icon fa-users"></span> Administer Backend Users</a>
+                                                    <a class="btn btn-default" href=""><span
+                                                            class="fa fa-icon fa-users"></span> Administer Backend
+                                                        Groups</a>
                                                 </div>
                                             </div>
                                         </div>

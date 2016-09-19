@@ -9,19 +9,22 @@
  */
 namespace Continut\Core\System\Storage {
 
-	/**
-	 * Interface StorageInterface
-	 *
-	 * Used to manipulate files either in a local or cloud storage
-	 *
-	 * @package Continut\Core\System\Storage
-	 */
-	interface StorageInterface
-	{
-		public function getRoot();
-		public function getFiles($path);
-		public function getFolders($path);
-		public function createFolder($folder, $path);
-	}
+    /**
+     * Interface StorageInterface
+     *
+     * Used to manipulate files either in a local or cloud storage
+     *
+     * @package Continut\Core\System\Storage
+     */
+    interface StorageInterface
+    {
+        public function getRoot();
+
+        public function getFiles($path);
+
+        public function getFolders($path);
+
+        public function createFolder($folder, $path);
+    }
 
 }

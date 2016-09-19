@@ -3,7 +3,6 @@
  * This file is part of the Conţinut CMS project.
  * Distributed under the GNU General Public License.
  * For more details, consult the LICENSE.txt file supplied with the project
- 
  * Author: Radu Mogoş <radu.mogos@pixelplant.ch>
  * Date: 25.04.2015 @ 21:18
  * Project: Conţinut CMS
@@ -15,7 +14,8 @@ use Continut\Core\Utility;
 
 class PageController extends BackendController
 {
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->setLayoutTemplate(Utility::getResource("Default", "Backend", "Backend", "Layout"));
     }
@@ -25,7 +25,8 @@ class PageController extends BackendController
      *
      * @throws \Continut\Core\Tools\Exception
      */
-    public function indexAction() {
+    public function indexAction()
+    {
         $domainsCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection');
         $domainsCollection->sql("SELECT sys_domains.* FROM sys_domains LEFT JOIN sys_domain_urls ON sys_domains.id=sys_domain_urls.domain_id WHERE sys_domain_urls.domain_id IS NOT NULL AND sys_domains.is_visible =:is_visible GROUP BY (sys_domains.id) ORDER BY sys_domains.sorting ASC", ["is_visible" => 1]);
 
@@ -40,10 +41,13 @@ class PageController extends BackendController
      * Called when the pagetree changes or needs to be shown for the first time. Responds with a JSON string of the pagetree
      *
      * @param string $term Search term to use
+     *
      * @return string
      * @throws \Continut\Core\Tools\Exception
      */
-    public function treeAction($term = "") {
+    public function treeAction($term = '')
+    {
+        /** @var \Continut\Core\System\Domain\Collection\PageCollection $pagesCollection */
         $pagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection');
 
         // get the domains collection
@@ -55,7 +59,7 @@ class PageController extends BackendController
             $domain = $domainsCollection->where("is_visible = 1 ORDER BY sorting ASC")
                 ->getFirst();
         } else {
-            $domain = $domainsCollection->where("id = :id ORDER BY sorting ASC", [ "id" => $domainId ])
+            $domain = $domainsCollection->where("id = :id ORDER BY sorting ASC", ["id" => $domainId])
                 ->getFirst();
         }
 
@@ -66,13 +70,13 @@ class PageController extends BackendController
         if ($domainUrlId == 0) {
             $domainUrl = $domainsUrlCollection->where(
                 "domain_id = :domain_id ORDER BY sorting ASC",
-                [ "domain_id" => $domain->getId() ]
+                ["domain_id" => $domain->getId()]
             )
                 ->getFirst();
         } else {
             $domainUrl = $domainsUrlCollection->where(
                 "domain_id = :domain_id AND id = :id ORDER BY sorting ASC",
-                [ "domain_id" => $domain->getId(), "id" => $domainUrlId ]
+                ["domain_id" => $domain->getId(), "id" => $domainUrlId]
             )
                 ->getFirst();
         }
@@ -87,15 +91,16 @@ class PageController extends BackendController
         if (mb_strlen($term) > 0) {
             $pagesCollection->where(
                 "domain_url_id = :domain_url_id AND title LIKE :title ORDER BY parent_id ASC, sorting ASC",
-                [ "domain_url_id" => $domainUrl->getId(), "title" => "%$term%" ]
+                ["domain_url_id" => $domainUrl->getId(), "title" => "%$term%"]
             );
         } else {
             $pagesCollection->where(
                 "domain_url_id = :domain_url_id ORDER BY parent_id ASC, sorting ASC",
-                [ "domain_url_id" => $domainUrl->getId() ]
+                ["domain_url_id" => $domainUrl->getId()]
             );
         }
 
+        /** @var \Continut\Core\System\Domain\Collection\DomainUrlCollection $languagesCollection */
         $languagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection');
         $languagesCollection->where("domain_id = :domain_id", ["domain_id" => $domain->getId()]);
 
@@ -113,14 +118,15 @@ class PageController extends BackendController
      *
      * @throws \Continut\Core\Tools\Exception
      */
-    public function editAction() {
+    public function editAction()
+    {
         $pageId = (int)$this->getRequest()->getArgument("page_id");
         $pageModel = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection')
             ->where("id = :id", ["id" => $pageId])
             ->getFirst();
         $pageModel->mergeOriginal();
 
-        $layouts  = Utility::getLayouts();
+        $layouts = Utility::getLayouts();
 
         $this->getView()->assign('page', $pageModel);
         $this->getView()->assign('layouts', $layouts);
@@ -129,7 +135,8 @@ class PageController extends BackendController
     /**
      * Called when the page properties are modified and need to be saved
      */
-    public function savePropertiesAction() {
+    public function savePropertiesAction()
+    {
         $data = $this->getRequest()->getArgument("data");
         $id = (int)$data["id"];
 
@@ -139,8 +146,8 @@ class PageController extends BackendController
 
         // We store a cached version for the FE and BE versions, this way we avoid looking for layouts all the time
         $extensionName = substr($pageModel->getLayout(), 0, strpos($pageModel->getLayout(), "."));
-        $layoutId      = substr($pageModel->getLayout(), strlen($extensionName) + 1);
-        $settings      = Utility::getExtensionSettings($extensionName);
+        $layoutId = substr($pageModel->getLayout(), strlen($extensionName) + 1);
+        $settings = Utility::getExtensionSettings($extensionName);
         if (isset($settings["ui"]["layout"][$layoutId])) {
             $pageModel->setBackendLayout($settings["ui"]["layout"][$layoutId]["backendFile"]);
             $pageModel->setFrontendLayout($settings["ui"]["layout"][$layoutId]["frontendFile"]);
@@ -162,7 +169,8 @@ class PageController extends BackendController
      *
      * @throws \Continut\Core\Tools\Exception
      */
-    public function showAction() {
+    public function showAction()
+    {
         Utility::debugData("page_rendering", "start", "Page rendering");
         // Load the pages collection model
         $pagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection');
@@ -211,7 +219,8 @@ class PageController extends BackendController
      *
      * @throws \Continut\Core\Tools\Exception
      */
-    public function toggleVisibilityAction() {
+    public function toggleVisibilityAction()
+    {
         $pageId = (int)$this->getRequest()->getArgument("page_id", 0);
 
         // Load the pages collection model
@@ -236,7 +245,8 @@ class PageController extends BackendController
      *
      * @throws \Continut\Core\Tools\Exception
      */
-    public function toggleMenuAction() {
+    public function toggleMenuAction()
+    {
         $pageId = (int)$this->getRequest()->getArgument("page_id", 0);
 
         // Load the pages collection model
@@ -262,7 +272,8 @@ class PageController extends BackendController
      *
      * @return mixed
      */
-    public function searchTreeAction() {
+    public function searchTreeAction()
+    {
         $term = $this->getRequest()->getArgument("query", "");
 
         return $this->treeAction($term);
@@ -274,7 +285,8 @@ class PageController extends BackendController
      * @return string
      * @throws \Continut\Core\Tools\Exception
      */
-    public function treeMoveAction() {
+    public function treeMoveAction()
+    {
         // We get the id of the page that has been drag & dropped
         $pageId = (int)$this->getRequest()->getArgument("movedId");
         // move type can be "after", "before" or "inside"
@@ -305,10 +317,8 @@ class PageController extends BackendController
                             $page->setSorting($page->getSorting() + 1);
                         }
                         $pagesToModify->save();
-                    }
-                    // if it does not have any children, we can get the last sorting value and increment it by one
-                    else
-                    {
+                    } // if it does not have any children, we can get the last sorting value and increment it by one
+                    else {
                         $highestSorting = $pagesCollection->where("is_deleted = 0 ORDER BY sorting DESC")->getFirst();
                         $pageModel->setSorting($highestSorting->getSorting() + 1);
                     }
@@ -366,7 +376,8 @@ class PageController extends BackendController
     /**
      * Called when a page is deleted
      */
-    public function deleteAction() {
+    public function deleteAction()
+    {
         $pageId = (int)$this->getRequest()->getArgument("pid");
 
         $pagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection');
@@ -378,7 +389,8 @@ class PageController extends BackendController
     /**
      * Called when the page creation wizard should be displayed
      */
-    public function wizardAction() {
+    public function wizardAction()
+    {
         $pageId = (int)$this->getRequest()->getArgument("id");
         $pageModel = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection')
             ->findById($pageId);
@@ -389,7 +401,8 @@ class PageController extends BackendController
     /**
      * Add one or multiple pages to the tree
      */
-    public function addAction() {
+    public function addAction()
+    {
         $pageId = (int)$this->getRequest()->getArgument("id");
         $pagePlacement = $this->getRequest()->getArgument("page_placement");
         $pages = $this->getRequest()->getArgument("page");

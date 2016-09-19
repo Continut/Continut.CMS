@@ -1,10 +1,10 @@
 <?php
-	$title    = (!isset($title)) ? "" : $title;
-	$subtitle = (!isset($subtitle)) ? "" : $subtitle;
+$title = (!isset($title)) ? "" : $title;
+$subtitle = (!isset($subtitle)) ? "" : $subtitle;
 ?>
 <div class="form-group">
-	<?= $this->helper("Wizard")->textField("title", $this->__("backend.content.wizard.title"), $title) ?>
+    <?= $this->helper("Wizard")->textField("title", $this->__("backend.content.wizard.title"), $title) ?>
 </div>
 <div class="form-group">
-	<?= $this->helper("Wizard")->textField("subtitle", $this->__("backend.content.wizard.subtitle"), $subtitle) ?>
+    <?= $this->helper("Wizard")->textField("subtitle", $this->__("backend.content.wizard.subtitle"), $subtitle) ?>
 </div>

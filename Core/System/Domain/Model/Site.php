@@ -9,45 +9,48 @@
  */
 namespace Continut\Core\System\Domain\Model {
 
-	class Site {
+    class Site
+    {
 
-		/**
-		 * @var \Continut\Core\System\Domain\Model\DomainUrl
-		 */
-		protected $domainUrl;
+        /**
+         * @var \Continut\Core\System\Domain\Model\DomainUrl
+         */
+        protected $domainUrl;
 
-		/**
-		 * @return string
-		 */
-		public function getUrl() {
-			return $this->domainUrl->getUrl();
-		}
+        /**
+         * @return string
+         */
+        public function getUrl()
+        {
+            return $this->domainUrl->getUrl();
+        }
 
-		/**
-		 * @return \Continut\Core\System\Domain\Model\DomainUrl
-		 */
-		public function getDomainUrl()
-		{
-			return $this->domainUrl;
-		}
+        /**
+         * @return \Continut\Core\System\Domain\Model\DomainUrl
+         */
+        public function getDomainUrl()
+        {
+            return $this->domainUrl;
+        }
 
-		/**
-		 * @param \Continut\Core\System\Domain\Model\DomainUrl $domainUrl
-		 *
-		 * @return $this
-		 */
-		public function setDomainUrl($domainUrl)
-		{
-			$this->domainUrl = $domainUrl;
-			return $this;
-		}
+        /**
+         * @param \Continut\Core\System\Domain\Model\DomainUrl $domainUrl
+         *
+         * @return $this
+         */
+        public function setDomainUrl($domainUrl)
+        {
+            $this->domainUrl = $domainUrl;
+            return $this;
+        }
 
-		/**
-		 * @return \Continut\Core\System\Domain\Model\Domain
-		 */
-		public function getDomain() {
-			return $this->domainUrl->getDomain();
-		}
-	}
+        /**
+         * @return \Continut\Core\System\Domain\Model\Domain
+         */
+        public function getDomain()
+        {
+            return $this->domainUrl->getDomain();
+        }
+    }
 
 }

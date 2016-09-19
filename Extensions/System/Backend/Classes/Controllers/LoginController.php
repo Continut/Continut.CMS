@@ -3,7 +3,6 @@
  * This file is part of the Conţinut CMS project.
  * Distributed under the GNU General Public License.
  * For more details, consult the LICENSE.txt file supplied with the project
- 
  * Author: Radu Mogoş <radu.mogos@pixelplant.ch>
  * Date: 27.04.2015 @ 23:42
  * Project: Conţinut CMS
@@ -19,7 +18,8 @@ class LoginController extends FrontendController
     /**
      * The login controller uses a different layout
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->setLayoutTemplate(Utility::getResource("Default", "Backend", "Frontend", "Layout"));
     }
@@ -27,7 +27,8 @@ class LoginController extends FrontendController
     /**
      * Shows the login form
      */
-    public function indexAction() {
+    public function indexAction()
+    {
         if ($this->isConnected()) {
             $this->redirect(Utility::helper("Url")->linkToAction("Backend", "Index", "dashboard"));
         }
@@ -38,7 +39,8 @@ class LoginController extends FrontendController
      *
      * @throws \Continut\Core\Tools\Exception
      */
-    public function checkLoginAction() {
+    public function checkLoginAction()
+    {
         $username = $this->getRequest()->getArgument("cms_username");
         $password = $this->getRequest()->getArgument("cms_password");
 
@@ -66,7 +68,8 @@ class LoginController extends FrontendController
     /**
      * Clicking the Logout link destroys the session and reshows the login form
      */
-    public function logoutAction() {
+    public function logoutAction()
+    {
         session_destroy();
         $this->redirect(Utility::helper("Url")->linkToAction("Backend", "Login", "index"));
     }

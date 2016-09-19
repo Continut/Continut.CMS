@@ -3,7 +3,6 @@
  * This file is part of the Conţinut CMS project.
  * Distributed under the GNU General Public License.
  * For more details, consult the LICENSE.txt file supplied with the project
-
  * Author: Radu Mogoş <radu.mogos@pixelplant.ch>
  * Date: 29.03.2015 @ 18:43
  * Project: Conţinut CMS
@@ -16,11 +15,13 @@ use Continut\Core\Utility;
 
 /**
  * Backend main controller
+ *
  * @package System\Backend\Classes\Controllers
  */
 class IndexController extends BackendController
 {
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->setLayoutTemplate(Utility::getResource("Default", "Backend", "Backend", "Layout"));
     }
@@ -30,14 +31,16 @@ class IndexController extends BackendController
      *
      * @return string
      */
-    public function dashboardAction() {
+    public function dashboardAction()
+    {
     }
 
     /**
      * Render the Backend mainmenu based on configuration done in the configuration.json file of every extension
      * The backend menu items and submenu items are configured inside the "backend" key
      */
-    public function mainmenuAction() {
+    public function mainmenuAction()
+    {
         $allExtensionsSettings = Utility::getExtensionSettings();
 
         $mainMenu = [];

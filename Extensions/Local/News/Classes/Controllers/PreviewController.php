@@ -3,30 +3,32 @@
  * This file is part of the Conţinut CMS project.
  * Distributed under the GNU General Public License.
  * For more details, consult the LICENSE.txt file supplied with the project
- 
  * Author: Radu Mogoş <radu.mogos@pixelplant.ch>
  * Date: 11.04.2015 @ 18:48
  * Project: Conţinut CMS
  */
 namespace Continut\Extensions\Local\News\Classes\Controllers {
 
-	use Continut\Core\Mvc\Controller\BackendController;
-	use Continut\Core\Utility;
+    use Continut\Core\Mvc\Controller\BackendController;
+    use Continut\Core\Utility;
 
-	class PreviewController extends BackendController {
+    class PreviewController extends BackendController
+    {
 
-		public function backendConfigureAction() {
-		}
+        public function backendConfigureAction()
+        {
+        }
 
-		public function backendPreviewAction() {
-			$newsCollection = Utility::createInstance('Continut\Extensions\Local\News\Classes\Domain\Collection\NewsCollection');
+        public function backendPreviewAction()
+        {
+            $newsCollection = Utility::createInstance('Continut\Extensions\Local\News\Classes\Domain\Collection\NewsCollection');
 
-			$limit = (isset($this->data["limit"])) ? $this->data["limit"] : 1;
-			$newsCollection->where("1=1 LIMIT $limit");
+            $limit = (isset($this->data["limit"])) ? $this->data["limit"] : 1;
+            $newsCollection->where("1=1 LIMIT $limit");
 
-			$this->getView()->assign('news', $newsCollection);
-			$this->getView()->assign('data', $this->data);
-		}
-	}
+            $this->getView()->assign('news', $newsCollection);
+            $this->getView()->assign('data', $this->data);
+        }
+    }
 
 }

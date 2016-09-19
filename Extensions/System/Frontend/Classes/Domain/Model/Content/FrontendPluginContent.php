@@ -15,16 +15,17 @@ use Continut\Extensions\System\Frontend\Classes\Domain\Model\FrontendContent;
 class FrontendPluginContent extends FrontendContent
 {
     /**
-     * Outputs "plugin" content
+     * Render a "Plugin" element
      *
      * @param mixed $elements
      *
      * @return string
      */
-    public function render($elements) {
+    public function render($elements)
+    {
         $value = "";
 
-        $configuration     = json_decode($this->getValue(), TRUE);
+        $configuration = json_decode($this->getValue(), TRUE);
         $extensionSettings = Utility::getExtensionSettings($configuration["plugin"]["extension"]);
 
         if (isset($extensionSettings["elements"]["plugin"][$configuration["plugin"]["identifier"]])) {

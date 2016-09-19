@@ -3,7 +3,6 @@
  * This file is part of the Conţinut CMS project.
  * Distributed under the GNU General Public License.
  * For more details, consult the LICENSE.txt file supplied with the project
-
  * Author: Radu Mogoş <radu.mogos@pixelplant.ch>
  * Date: 04.04.2015 @ 13:02
  * Project: Conţinut CMS
@@ -18,7 +17,8 @@ class BackendContentCollection extends ContentCollection
     /**
      * Set tablename and element class
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->_tablename = "sys_content";
         $this->_elementClass = 'Continut\Extensions\System\Backend\Classes\Domain\Model\BackendContent';
     }
@@ -31,7 +31,8 @@ class BackendContentCollection extends ContentCollection
      *
      * @return $this
      */
-    public function where($conditions, $values = []) {
+    public function where($conditions, $values = [])
+    {
         $this->_elements = [];
         $sth = Utility::getDatabase()->prepare("SELECT * FROM $this->_tablename WHERE " . $conditions);
         $sth->execute($values);
@@ -50,12 +51,20 @@ class BackendContentCollection extends ContentCollection
      *
      * @return mixed
      */
-    public function createEmptyFromType($type) {
+    public function createEmptyFromType($type)
+    {
         switch ($type) {
-            case "plugin":    $element = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Model\Content\BackendPluginContent'); break;
-            case "container": $element = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Model\Content\BackendContainerContent'); break;
-            case "reference": $element = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Model\Content\BackendReferenceContent'); break;
-            default:          $element = Utility::createInstance($this->_elementClass);
+            case "plugin":
+                $element = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Model\Content\BackendPluginContent');
+                break;
+            case "container":
+                $element = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Model\Content\BackendContainerContent');
+                break;
+            case "reference":
+                $element = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Model\Content\BackendReferenceContent');
+                break;
+            default:
+                $element = Utility::createInstance($this->_elementClass);
         }
 
         return $element;

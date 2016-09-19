@@ -4,7 +4,8 @@
         <div id="sidebar_toolbar" class="row">
             <form class="form">
                 <div class="col-sm-7 col-md-12 col-lg-7">
-                    <label for="select_website"><a class="btn btn-sm btn-default" href=""><i class="fa fa-cog"></i></a> <span class="hidden-md"><?= $this->__("backend.pageTree.domain.label") ?></span></label>
+                    <label for="select_website"><a class="btn btn-sm btn-default" href=""><i class="fa fa-cog"></i></a>
+                        <span class="hidden-md"><?= $this->__("backend.pageTree.domain.label") ?></span></label>
                     <?php if ($domains->count() > 0): ?>
                         <select id="select_website" class="selectpicker" data-width="100%">
                             <?php foreach ($domains->getAll() as $domain): ?>
@@ -15,9 +16,9 @@
                             $('#select_website').on('change', function (event) {
                                 $.ajax({
                                     url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "tree") ?>',
-                                    data: { domain_id: this.value }
+                                    data: {domain_id: this.value}
                                 })
-                                    .done(function( data ) {
+                                    .done(function (data) {
                                         var json = $.parseJSON(data);
                                         var $languages = $('#select_language');
                                         if (json.success == 1) {
@@ -36,23 +37,26 @@
                             });
                         </script>
                     <?php else: ?>
-                        <p>Using global domain <a href="" class="btn btn-sm btn-success"><i class="fa fa-fw fa-plus"></i> 	</a></p>
+                        <p>Using global domain <a href="" class="btn btn-sm btn-success"><i
+                                    class="fa fa-fw fa-plus"></i> </a></p>
                     <?php endif ?>
                 </div>
                 <div class="col-sm-5 col-md-12 col-lg-5">
-                    <label for="select_language"><a class="btn btn-sm btn-default" href=""><i class="fa fa-cog"></i></a> <span class="hidden-md"><?= $this->__("backend.pageTree.language.label") ?></span></label>
+                    <label for="select_language"><a class="btn btn-sm btn-default" href=""><i class="fa fa-cog"></i></a>
+                        <span class="hidden-md"><?= $this->__("backend.pageTree.language.label") ?></span></label>
                     <select id="select_language" class="selectpicker" data-width="100%">
                         <?php foreach ($languages->getAll() as $language): ?>
-                            <option data-icon="flag-icon flag-icon-<?= $language->getFlag() ?>" value="<?= $language->getId() ?>"><?= $language->getTitle() ?></option>
+                            <option data-icon="flag-icon flag-icon-<?= $language->getFlag() ?>"
+                                    value="<?= $language->getId() ?>"><?= $language->getTitle() ?></option>
                         <?php endforeach ?>
                     </select>
                     <script type="text/javascript">
                         $('#select_language').on('change', function (event) {
                             $.ajax({
                                 url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "tree") ?>',
-                                data: { domain_id: $('#select_website').val(), domain_url_id: this.value }
+                                data: {domain_id: $('#select_website').val(), domain_url_id: this.value}
                             })
-                                .done(function( data ) {
+                                .done(function (data) {
                                     $('#cms_tree').tree('loadData', $.parseJSON(data).pages);
                                     $('#content').empty();
                                 });
@@ -63,17 +67,22 @@
         </div>
         <div class="row tree-filter">
             <div class="col-xs-7">
-                <form action="<?= $this->helper("Url")->linkToAction("Backend", "Index", "searchPageTree") ?>" class="form-inline" method="post">
+                <form action="<?= $this->helper("Url")->linkToAction("Backend", "Index", "searchPageTree") ?>"
+                      class="form-inline" method="post">
                     <div class="form-group entire-area">
                         <div class="input-group entire-area">
-                            <div class="input-group-addon"><i id="search_page_progress" class="fa fa-fw fa-file"></i></div>
-                            <input type="text" class="form-control" name="search_page" id="search_page" placeholder="<?= $this->__("backend.pageTree.findPage") ?>" />
+                            <div class="input-group-addon"><i id="search_page_progress" class="fa fa-fw fa-file"></i>
+                            </div>
+                            <input type="text" class="form-control" name="search_page" id="search_page"
+                                   placeholder="<?= $this->__("backend.pageTree.findPage") ?>"/>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="col-xs-5">
-                <a href="#" class="btn btn-success col-xs-12 page-add" title="<?= $this->__("backend.pageTree.createPage") ?>"><i class="fa fa-fw fa-plus"></i> <?= $this->__("backend.pageTree.createPage") ?></a>
+                <a href="#" class="btn btn-success col-xs-12 page-add"
+                   title="<?= $this->__("backend.pageTree.createPage") ?>"><i
+                        class="fa fa-fw fa-plus"></i> <?= $this->__("backend.pageTree.createPage") ?></a>
             </div>
         </div>
         <div id="cms_tree"></div>
@@ -88,7 +97,7 @@
                 searchPageSpinner.removeClass("fa-file").addClass("fa-spinner fa-pulse");
                 $.ajax({
                         url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "searchTree") ?>',
-                        data: {query: term, domain_id: $('#select_website').val() }
+                        data: {query: term, domain_id: $('#select_website').val()}
                     }
                 ).done(function (data) {
                     searchPageSpinner.removeClass("fa-spinner fa-pulse").addClass("fa-file");
@@ -96,7 +105,7 @@
                 });
             }
 
-            $('#search_page').keydown(function(e) {
+            $('#search_page').keydown(function (e) {
                 var $this = $(this);
                 if ($this.val() == oldSearch) {
                     return;
@@ -104,7 +113,7 @@
                 // ignore Enter or Tab
                 if (e.which != 9 && e.which != 13) {
                     clearTimeout(searchPageTreeThread);
-                    searchPageTreeThread = setTimeout(function() {
+                    searchPageTreeThread = setTimeout(function () {
                         findPageByName($this.val())
                     }, 500);
                 }
@@ -112,7 +121,7 @@
 
             $.getJSON(
                 '<?= $this->helper("Url")->linkToAction("Backend", "Page", "tree") ?>',
-                function(data) {
+                function (data) {
                     $('#cms_tree').tree({
                         data: data.pages,
                         dragAndDrop: true,
@@ -121,18 +130,25 @@
                         openedIcon: $('<i class="fa fa-fw fa-chevron-down"></i>'),
                         useContextMenu: false,
                         slide: false,
-                        onCreateLi: function(node, $li) {
+                        onCreateLi: function (node, $li) {
                             // Add 'icon' span before title
                             var iconClass = 'fa-file';
                             /*if (node.type == "folder") {
-                                iconClass = 'fa-folder';
-                            }*/
+                             iconClass = 'fa-folder';
+                             }*/
                             var pageIcon = '';
                             switch (node.state) {
-                                case "hidden-frontend": pageIcon = '<span class="fa-stack"><i class="fa fa-lg tree-icon fa-fw ' + iconClass + ' fa-disabled"></i><i class="fa fa-stack-1x"></i></span> '; break;
-                                case "hidden-both":     pageIcon = '<span class="fa-stack"><i class="fa fa-lg tree-icon fa-fw ' + iconClass + ' fa-disabled"></i><i class="fa fa-eye-slash fa-stack-1x text-danger"></i></span> '; break;
-                                case "hidden-menu":     pageIcon = '<span class="fa-stack"><i class="fa fa-lg tree-icon fa-fw ' + iconClass + '"></i><i class="fa fa-eye-slash fa-stack-1x text-danger"></i></span> '; break;
-                                default:                pageIcon = '<span class="fa-stack"><i class="fa fa-lg tree-icon fa-fw ' + iconClass + '"></i><i class="fa fa-stack-1x"></i></span> ';
+                                case "hidden-frontend":
+                                    pageIcon = '<span class="fa-stack"><i class="fa fa-lg tree-icon fa-fw ' + iconClass + ' fa-disabled"></i><i class="fa fa-stack-1x"></i></span> ';
+                                    break;
+                                case "hidden-both":
+                                    pageIcon = '<span class="fa-stack"><i class="fa fa-lg tree-icon fa-fw ' + iconClass + ' fa-disabled"></i><i class="fa fa-eye-slash fa-stack-1x text-danger"></i></span> ';
+                                    break;
+                                case "hidden-menu":
+                                    pageIcon = '<span class="fa-stack"><i class="fa fa-lg tree-icon fa-fw ' + iconClass + '"></i><i class="fa fa-eye-slash fa-stack-1x text-danger"></i></span> ';
+                                    break;
+                                default:
+                                    pageIcon = '<span class="fa-stack"><i class="fa fa-lg tree-icon fa-fw ' + iconClass + '"></i><i class="fa fa-stack-1x"></i></span> ';
                             }
                             $li.find('.jqtree-title').before(pageIcon).after('<a class="btn btn-success pull-right btn-sm page-add" style="display:none" data-page-id="' + node.id + '" title="<?= $this->__("backend.pageTree.createPage") ?>"><i class="fa fa-plus"></i></a>');
                         }
@@ -167,21 +183,21 @@
 
                     $('#cms_tree').bind(
                         'tree.move',
-                        function(event) {
+                        function (event) {
                             event.preventDefault();
                             event.move_info.do_move();
                             $.post(
                                 '<?= $this->helper("Url")->linkToAction("Backend", "Page", "treeMove") ?>',
                                 {
-                                    movedId:     event.move_info.moved_node.id,
+                                    movedId: event.move_info.moved_node.id,
                                     newParentId: event.move_info.target_node.id,
-                                    position:    event.move_info.position
+                                    position: event.move_info.position
                                 }
                             );
                         }
                     );
 
-                    $('.page-add').on('click', function(e) {
+                    $('.page-add').on('click', function (e) {
                         e.preventDefault();
                         var pid = $('#cms_tree').tree('getSelectedNode').id;
                         BootstrapDialog.show({
@@ -190,7 +206,6 @@
                         });
                     });
                 }
-
             );
 
         </script>

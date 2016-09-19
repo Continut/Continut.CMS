@@ -15,13 +15,14 @@ use Continut\Core\Utility;
 class FrontendContent extends Content
 {
     /**
-     * Outputs "regular" content, of type "content" in the database
+     * Render a regular "Content" element
      *
      * @param mixed $elements
      *
      * @return string
      */
-    public function render($elements) {
+    public function render($elements)
+    {
         $configuration = json_decode($this->getValue(), TRUE);
 
         $variables = $configuration["content"]["data"];
@@ -35,6 +36,7 @@ class FrontendContent extends Content
             "Frontend",
             "Content"
         ));
+        $view->setAdditionalData($this->frontendEditor());
         $view->assignMultiple($variables);
 
         return $view->render();

@@ -3,7 +3,6 @@
  * This file is part of the Conţinut CMS project.
  * Distributed under the GNU General Public License.
  * For more details, consult the LICENSE.txt file supplied with the project
-
  * Author: Radu Mogoş <radu.mogos@pixelplant.ch>
  * Date: 29.03.2015 @ 18:43
  * Project: Conţinut CMS
@@ -11,331 +10,374 @@
 
 namespace Continut\Core\Mvc\Controller {
 
-	use Continut\Core\Utility;
+    use Continut\Core\Utility;
 
-	/**
-	 * Base Controller Class, used by Frontend and Backend Controllers
-	 * @package Continut\Core\Mvc\Controller
-	 */
-	class ActionController {
+    /**
+     * Base Controller Class, used by Frontend and Backend Controllers
+     *
+     * @package Continut\Core\Mvc\Controller
+     */
+    class ActionController
+    {
+        /**
+         * @var array Data, in case the controller belongs to a plugin
+         */
+        public $data;
 
-		/**
-		 * Request class
-		 *
-		 * @var \Continut\Core\Mvc\Request
-		 */
-		protected $_request;
+        /**
+         * Request class
+         *
+         * @var \Continut\Core\Mvc\Request
+         */
+        protected $request;
 
-		/**
-		 * @var string Controller name
-		 */
-		protected $_name;
+        /**
+         * @var string Controller name
+         */
+        protected $name;
 
-		/**
-		 * @var \Continut\Core\System\Session\User Current session user
-		 */
-		protected $_user;
+        /**
+         * @var \Continut\Core\System\Session\User Current session user
+         */
+        protected $user;
 
-		/**
-		 * @var string The extension this controller belongs to
-		 */
-		protected $_extension;
+        /**
+         * @var string The extension this controller belongs to
+         */
+        protected $extension;
 
-		/**
-		 * @var string Type of the extension. Can be either 'Local', 'Community' or 'System'
-		 */
-		protected $_extensionType = 'Local';
+        /**
+         * @var string Type of the extension. Can be either 'Local', 'Community' or 'System'
+         */
+        protected $extensionType = 'Local';
 
-		/**
-		 * @var string Application scope, either 'Frontend' or 'Backend'
-		 */
-		protected $_scope = 'Frontend';
+        /**
+         * @var string Application scope, either 'Frontend' or 'Backend'
+         */
+        protected $scope = 'Frontend';
 
-		protected $_response;
+        /**
+         * @var \Continut\Core\Mvc\View\BaseView
+         */
+        protected $view;
 
-		/**
-		 * @var \Continut\Core\Mvc\View\BaseView
-		 */
-		protected $_view;
+        /**
+         * @var string The folder name where templates for this controller are stored
+         */
+        protected $templateStorage;
 
-		/**
-		 * @var string The folder name where templates for this controller are stored
-		 */
-		protected $templateStorage;
+        /**
+         * @var \Continut\Core\System\Session\UserSession Reference to the current user session
+         */
+        protected $session;
 
-		/**
-		 * @var array Data, in case the controller belongs to a plugin
-		 */
-		public $data;
+        /**
+         * @var string Layout template file, if not using the one by default
+         */
+        protected $layoutTemplate = NULL;
 
-		/**
-		 * @var \Continut\Core\System\Session\UserSession Reference to the current user session
-		 */
-		protected $_session;
+        /**
+         * @var string Action to call on the controller, by default it is "index"
+         */
+        protected $action = "index";
 
-		/**
-		 * @var string Layout template file, if not using the one by default
-		 */
-		protected $_layoutTemplate = NULL;
+        /**
+         * @var bool Whether a layout should be used or not. No layout means the output of the controller's action is returned directly
+         */
+        protected $useLayout = true;
 
-		/**
-		 * @var string Action to call on the controller, by default it is "index"
-		 */
-		protected $_action = "index";
+        /**
+         * ActionController constructor
+         */
+        public function __construct()
+        {
+            $this->view = Utility::createInstance('Continut\Core\Mvc\View\BaseView');
+            $this->request = Utility::getRequest();
+            //$this->user    = Utility::getUser();
+        }
 
-		public function __construct() {
-			$this->_view    = Utility::createInstance('Continut\Core\Mvc\View\BaseView');
-			$this->_request = Utility::getRequest();
-			//$this->_user    = Utility::getUser();
-		}
+        /**
+         * @return \Continut\Core\System\Session\User
+         */
+        public function getUser()
+        {
+            return $this->user;
+        }
 
-		/**
-		 * @return \Continut\Core\System\Session\User
-		 */
-		public function getUser() {
-			return $this->_user;
-		}
+        /**
+         * @return string
+         */
+        public function getLayoutTemplate()
+        {
+            return $this->layoutTemplate;
+        }
 
-		/**
-		 * @return string
-		 */
-		public function getLayoutTemplate()
-		{
-			return $this->_layoutTemplate;
-		}
+        /**
+         * @param string $layoutTemplate
+         */
+        public function setLayoutTemplate($layoutTemplate)
+        {
+            $this->layoutTemplate = $layoutTemplate;
+        }
 
-		/**
-		 * @param string $layoutTemplate
-		 */
-		public function setLayoutTemplate($layoutTemplate)
-		{
-			$this->_layoutTemplate = $layoutTemplate;
-		}
+        /**
+         * Returns the final render from the action called, or it's rendered template
+         *
+         * @return string
+         * @throws \Continut\Core\Tools\Exception
+         */
+        public function getRenderOutput()
+        {
+            $action = $this->action . "Action";
+            $viewContent = $this->$action();
 
-		/**
-		 * @return string
-		 */
-		public function getAction()
-		{
-			return $this->_action;
-		}
+            if (empty($viewContent)) {
+                $viewContent = $this->view->render();
+            }
 
-		/**
-		 * @param string $action
-		 *
-		 * @return $this
-		 */
-		public function setAction($action)
-		{
-			$this->_action = $action;
+            return $viewContent;
+        }
 
-			return $this;
-		}
+        /**
+         * If an user_id is stored in our session it means that our user is connected
+         *
+         * @return bool
+         */
+        public function isConnected()
+        {
+            return $this->getSession()->get("user_id");
+        }
 
-		/**
-		 * Get view instance
-		 *
-		 * @return \Continut\Core\Mvc\View\BaseView
-		 */
-		public function getView() {
-			return $this->_view;
-		}
+        /**
+         * Get user session
+         *
+         * @return \Continut\Core\System\Session\UserSession
+         */
+        public function getSession()
+        {
+            return Utility::getSession();
+        }
 
-		/**
-		 * Returns the final render from the action called, or it's rendered template
-		 *
-		 * @return string
-		 * @throws \Continut\Core\Tools\Exception
-		 */
-		public function getRenderOutput() {
-			$action = $this->_action . "Action";
-			$viewContent = $this->$action();
+        /**
+         * Get request object
+         *
+         * @return \Continut\Core\Mvc\Request
+         */
+        public function getRequest()
+        {
+            return $this->request;
+        }
 
-			if (empty($viewContent)) {
-				$viewContent = $this->_view->render();
-			}
+        /**
+         * Set request object. Should only by called by system or bootstrap scripts
+         *
+         * @param $request
+         *
+         * @return $this
+         */
+        public function setRequest($request)
+        {
+            $this->request = $request;
 
-			return $viewContent;
-		}
+            return $this;
+        }
 
-		/**
-		 * Get user session
-		 *
-		 * @return \Continut\Core\System\Session\UserSession
-		 */
-		public function getSession() {
-			return Utility::getSession();
-		}
+        /**
+         * @return string Extension type, be it Local or System
+         */
+        public function getExtensionType()
+        {
+            return $this->extensionType;
+        }
 
-		/**
-		 * If an user_id is stored in our session it means that our user is connected
-		 *
-		 * @return bool
-		 */
-		public function isConnected() {
-			return $this->getSession()->get("user_id");
-		}
+        /**
+         * @param string Set extension type
+         *
+         * @return $this
+         */
+        public function setExtensionType($extensionType)
+        {
+            $this->extensionType = $extensionType;
 
-		/**
-		 * Set request object. Should only by called by system or bootstrap scripts
-		 *
-		 * @param $request
-		 *
-		 * @return $this
-		 */
-		public function setRequest($request) {
-			$this->_request = $request;
+            return $this;
+        }
 
-			return $this;
-		}
+        /**
+         * Deals with final rendering, once the template is fetched and parsed
+         *
+         * @return string
+         */
+        public function renderView()
+        {
+            return $this->view->render();
+        }
 
-		/**
-		 * Get request object
-		 *
-		 * @return \Continut\Core\Mvc\Request
-		 */
-		public function getRequest() {
-			return $this->_request;
-		}
+        /**
+         * Redirect call to another controller/action
+         *
+         * @param string $to
+         * @param int    $status
+         */
+        public function redirect($to, $status = 301)
+        {
+            header("Location: $to", true, $status);
+        }
 
-		/**
-		 * Set the controller's extension and scope
-		 *
-		 * @param        $extension
-		 * @param string $extensionType
-		 *
-		 * @return $this
-		 */
-		public function setExtension($extension, $extensionType = 'Local') {
-			$this->_extension = $extension;
-			$this->_extensionType = $extensionType;
+        /**
+         * Forward current action to another one
+         *
+         * @param $to Action name to forward to
+         *
+         * @throws ErrorException
+         */
+        public function forward($to)
+        {
+            $this->setAction($to);
 
-			return $this;
-		}
+            $templateController = $this->getName();
+            $templateAction = $this->getAction();
+            $contextExtension = $this->getExtension();
+            $contextScope = $this->getScope();
+            $contextAction = $this->getAction() . "Action";
 
-		/**
-		 * @return string Extension name where this controller resides
-		 */
-		public function getExtension() {
-			return $this->_extension;
-		}
+            $this
+                ->getView()
+                ->setTemplate(
+                    Utility::getResource("$templateController/$templateAction", $contextExtension, $contextScope, "Template")
+                );
 
-		/**
-		 * @param string Set extension type
-		 *
-		 * @return $this
-		 */
-		public function setExtensionType($extensionType) {
-			$this->_extensionType = $extensionType;
+            if (!method_exists($this, $contextAction)) {
+                throw new ErrorException("The action you are trying to call does not exist for this controller", 30000002);
+            }
 
-			return $this;
-		}
+            $this->$contextAction();
+        }
 
-		/**
-		 * @return string Extension type, be it Local or System
-		 */
-		public function getExtensionType() {
-			return $this->_extensionType;
-		}
+        /**
+         * @return string
+         */
+        public function getName()
+        {
+            return $this->name;
+        }
 
-		/**
-		 * Set Controller scope
-		 *
-		 * @param string $scope
-		 *
-		 * @return $this
-		 */
-		public function setScope($scope = 'Frontend') {
-			$this->_scope = $scope;
+        /**
+         * @param string $name
+         *
+         * @return $this
+         */
+        public function setName($name)
+        {
+            $this->name = $name;
 
-			return $this;
-		}
+            return $this;
+        }
 
-		/**
-		 * Controller scope
-		 *
-		 * @return string
-		 */
-		public function getScope() {
-			return $this->_scope;
-		}
+        /**
+         * @return string
+         */
+        public function getAction()
+        {
+            return $this->action;
+        }
 
-		/**
-		 * Deals with final rendering, once the template is fetched and parsed
-		 *
-		 * @return string
-		 */
-		public function renderView() {
-			return $this->_view->render();
-		}
+        /**
+         * @param string $action
+         *
+         * @return $this
+         */
+        public function setAction($action)
+        {
+            $this->action = $action;
 
-		/**
-		 * Redirect call to another controller/action
-		 * @param string $to
-		 * @param int    $status
-		 */
-		public function redirect($to, $status = 301) {
-			header("Location: $to", true, $status);
-		}
+            return $this;
+        }
 
-		/**
-		 * Forward current action to another one
-		 *
-		 * @param $to Action name to forward to
-		 *
-		 * @throws ErrorException
-		 */
-		public function forward($to) {
-			$this->setAction($to);
+        /**
+         * @return string Extension name where this controller resides
+         */
+        public function getExtension()
+        {
+            return $this->extension;
+        }
 
-			$templateController = $this->getName();
-			$templateAction     = $this->getAction();
-			$contextExtension   = $this->getExtension();
-			$contextScope       = $this->getScope();
-			$contextAction      = $this->getAction() . "Action";
+        /**
+         * Set the controller's extension and scope
+         *
+         * @param        $extension
+         * @param string $extensionType
+         *
+         * @return $this
+         */
+        public function setExtension($extension, $extensionType = 'Local')
+        {
+            $this->extension = $extension;
+            $this->extensionType = $extensionType;
 
-			$this
-				->getView()
-				->setTemplate(
-					Utility::getResource("$templateController/$templateAction", $contextExtension, $contextScope, "Template")
-				);
+            return $this;
+        }
 
-			if (!method_exists($this, $contextAction)) {
-				throw new ErrorException("The action you are trying to call does not exist for this controller", 30000002);
-			}
+        /**
+         * Controller scope
+         *
+         * @return string
+         */
+        public function getScope()
+        {
+            return $this->scope;
+        }
 
-			$this->$contextAction();
-		}
+        /**
+         * Set Controller scope
+         *
+         * @param string $scope
+         *
+         * @return $this
+         */
+        public function setScope($scope = 'Frontend')
+        {
+            $this->scope = $scope;
 
-		/**
-		 * Returns a translated label
-		 * @param string $label
-		 * @param array  $arguments
-		 *
-		 * @return string
-		 */
-		public function __($label, $arguments = NULL) {
-			return Utility::helper("Localization")->translate($label, $arguments);
-		}
+            return $this;
+        }
 
-		/**
-		 * @return string
-		 */
-		public function getName()
-		{
-			return $this->_name;
-		}
+        /**
+         * Get view instance
+         *
+         * @return \Continut\Core\Mvc\View\BaseView
+         */
+        public function getView()
+        {
+            return $this->view;
+        }
 
-		/**
-		 * @param string $name
-		 *
-		 * @return $this
-		 */
-		public function setName($name)
-		{
-			$this->_name = $name;
+        /**
+         * @return boolean
+         */
+        public function getUseLayout()
+        {
+            return $this->useLayout;
+        }
 
-			return $this;
-		}
-	}
+        /**
+         * @param boolean $useLayout
+         */
+        public function setUseLayout($useLayout)
+        {
+            $this->useLayout = $useLayout;
+        }
+
+        /**
+         * Returns a translated label
+         *
+         * @param string $label
+         * @param array  $arguments
+         *
+         * @return string
+         */
+        public function __($label, $arguments = NULL)
+        {
+            return Utility::helper("Localization")->translate($label, $arguments);
+        }
+    }
 }

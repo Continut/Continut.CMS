@@ -1,14 +1,18 @@
 <div role="tabpanel">
     <div class="form-group">
-    <?php if (sizeof($extensions) > 0): ?>
-        <?= $this->helper('Wizard')->selectField('theme', $this->__('backend.content.wizard.select.theme'), array_merge(["" => $this->__("backend.content.wizard.select.theme.all")], $extensions)); ?>
-    <?php endif ?>
+        <?php if (sizeof($extensions) > 0): ?>
+            <?= $this->helper('Wizard')->selectField('theme', $this->__('backend.content.wizard.select.theme'), array_merge(["" => $this->__("backend.content.wizard.select.theme.all")], $extensions)); ?>
+        <?php endif ?>
     </div>
 
     <ul class="nav nav-tabs" role="tablist">
         <?php $counter = 0; ?>
         <?php foreach ($types as $type => $elements): ?>
-            <li role="presentation" <?= ($counter == 0) ? 'class="active"' : ''; ?>><a href="#wizard_tab_<?= $type ?>" aria-controls="<?= $type ?>" role="tab" data-toggle="tab"><?= $this->__("backend.content.wizard.type.$type") ?></a></li>
+            <li role="presentation" <?= ($counter == 0) ? 'class="active"' : ''; ?>><a href="#wizard_tab_<?= $type ?>"
+                                                                                       aria-controls="<?= $type ?>"
+                                                                                       role="tab"
+                                                                                       data-toggle="tab"><?= $this->__("backend.content.wizard.type.$type") ?></a>
+            </li>
             <?php $counter++; ?>
         <?php endforeach ?>
     </ul>
@@ -21,9 +25,11 @@
                     <?php foreach ($elements as $element): ?>
                         <?php foreach ($element["configuration"] as $identifier => $value): ?>
                             <li class="theme-<?= $element["extension"] ?>">
-                                <a href="<?= $this->helper("Url")->linkToAction("Backend", "Content", "add", ["column_id" => $columnId, "page_id" => $pageId, "settings" => ["extension" => $element["extension"], "identifier" => $identifier, "type" => $type, "template" => $value["template"]]]) ?>" class="content-wizard-element">
+                                <a href="<?= $this->helper("Url")->linkToAction("Backend", "Content", "add", ["column_id" => $columnId, "page_id" => $pageId, "settings" => ["extension" => $element["extension"], "identifier" => $identifier, "type" => $type, "template" => $value["template"]]]) ?>"
+                                   class="content-wizard-element">
                                     <?php if (isset($value["icon"])): ?>
-                                        <img src="<?= $this->publicAsset($value["icon"], $element["extension"]); ?>" width="64" height="64" class="media-object" alt="" />
+                                        <img src="<?= $this->publicAsset($value["icon"], $element["extension"]); ?>"
+                                             width="64" height="64" class="media-object" alt=""/>
                                     <?php endif ?>
                                     <p class="title"><?= $this->__($value["label"]) ?></p>
                                     <p><?= $this->__($value["description"]) ?></p>
@@ -40,10 +46,10 @@
 </div>
 
 <script>
-    $('.content-wizard-element').on('click', function(event) {
+    $('.content-wizard-element').on('click', function (event) {
         $.getJSON($(this).attr('href'), function (data) {
             $('#content').html(data.html);
-            $.each(BootstrapDialog.dialogs, function(id, dialog){
+            $.each(BootstrapDialog.dialogs, function (id, dialog) {
                 dialog.close();
             });
         });

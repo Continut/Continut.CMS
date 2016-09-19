@@ -7,55 +7,55 @@ $direction = (!isset($direction)) ? "desc" : $direction;
 $templates = \Continut\Core\Utility::getExtensionSettings("News")["elements"]["plugin"]["news"]["templates"];
 ?>
 <blockquote>
-	<p><i class="fa fa-fw fa-newspaper-o"></i> <?= $this->__("backend.news.pluginInfo") ?></p>
-	<footer><a href=""><?= $this->__("backend.news.pluginManual") ?></a></footer>
+    <p><i class="fa fa-fw fa-newspaper-o"></i> <?= $this->__("backend.news.pluginInfo") ?></p>
+    <footer><a href=""><?= $this->__("backend.news.pluginManual") ?></a></footer>
 </blockquote>
 <div class="form-group">
-	<?= $this->helper("Wizard")->textField("title", $this->__("backend.wizard.title"), $title) ?>
+    <?= $this->helper("Wizard")->textField("title", $this->__("backend.wizard.title"), $title) ?>
 </div>
 <div class="row">
-	<div class="col-md-2">
-		<div class="form-group">
-			<?= $this->helper("Wizard")->textField("limit", "How many news to show", $limit) ?>
-		</div>
-	</div>
-	<div class="col-md-2">
-		<div class="form-group">
-			<?= $this->helper("Wizard")->selectField(
-				"order",
-				"Order by",
-				[
-					"title" => "Title",
-					"created_at" => "Creation date",
-				],
-				$order
-			)
-			?>
-		</div>
-	</div>
-	<div class="col-md-2">
-		<div class="form-group">
-			<?= $this->helper("Wizard")->selectField(
-				"direction",
-				"Order direction",
-				[
-					"asc" => "Ascending",
-					"desc" => "Descending",
-				],
-				$direction
-			)
-			?>
-		</div>
-	</div>
-	<div class="col-md-6">
-		<div class="form-group">
-			<?= $this->helper("Wizard")->selectField(
-				"template",
-				"Template",
-				$templates,
-				$template
-			)
-			?>
-		</div>
-	</div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <?= $this->helper("Wizard")->textField("limit", "How many news to show", $limit) ?>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <?= $this->helper("Wizard")->selectField(
+                "order",
+                "Order by",
+                [
+                    "title" => "Title",
+                    "created_at" => "Creation date",
+                ],
+                $order
+            )
+            ?>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <?= $this->helper("Wizard")->selectField(
+                "direction",
+                "Order direction",
+                [
+                    "asc" => "Ascending",
+                    "desc" => "Descending",
+                ],
+                $direction
+            )
+            ?>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <?= $this->helper("Wizard")->selectField(
+                "template",
+                "Template",
+                $templates,
+                $template
+            )
+            ?>
+        </div>
+    </div>
 </div>

@@ -1,4 +1,5 @@
-<form method="POST" id="page_edit_template" action="<?= $this->helper("Url")->linkToAction("Backend", "Page", "saveProperties") ?>">
+<form method="POST" id="page_edit_template"
+      action="<?= $this->helper("Url")->linkToAction("Backend", "Page", "saveProperties") ?>">
     <?= $this->helper("Wizard")->hiddenField("id", $page->getId()); ?>
     <div class="col-sm-12">
         <div class="panel panel-warning">
@@ -45,7 +46,8 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <input type="submit" name="submit" class="btn btn-primary" value="<?= $this->__("backend.page.properties.saveChanges") ?>" />
+                <input type="submit" name="submit" class="btn btn-primary"
+                       value="<?= $this->__("backend.page.properties.saveChanges") ?>"/>
                 <a class="close-button btn btn-danger pull-right"><?= $this->__("general.cancel") ?></a>
             </div>
         </div>
@@ -53,11 +55,11 @@
 </form>
 
 <script>
-    $('#page_edit_template .close-button').on('click', function() {
+    $('#page_edit_template .close-button').on('click', function () {
         $('#page_edit_block').empty();
     });
     // Post form using FormData, if supported
-    $('#page_edit_template').on('submit', function() {
+    $('#page_edit_template').on('submit', function () {
         var form = $(this);
         var formdata = false;
         if (window.FormData) {
@@ -71,15 +73,15 @@
             contentType: false,
             processData: false,
             type: 'POST',
-            beforeSend: function(xhr) {
+            beforeSend: function (xhr) {
                 $('.loader-page-save-properties').show();
             }
         })
-        .done(function (data) {
-            $('#page_edit_block').empty();
-            $('.loader-page-save-properties').hide();
-            $('#content').html(data);
-        });
+            .done(function (data) {
+                $('#page_edit_block').empty();
+                $('.loader-page-save-properties').hide();
+                $('#content').html(data);
+            });
 
         return false;
     });

@@ -9,15 +9,17 @@
  */
 namespace Continut\Core\Tools {
 
-	class HttpException extends Exception {
+    class HttpException extends Exception
+    {
 
-		/**
-		 * @param int    $code
-		 * @param string $message
-		 */
-		public function __construct($code, $message = "") {
-			parent::__construct($message, $code);
-		}
-	}
+        /**
+         * @param int    $code
+         * @param string $message
+         */
+        public function __construct($code, $message = "")
+        {
+            parent::__construct($message, $code);
+        }
+    }
 
 }

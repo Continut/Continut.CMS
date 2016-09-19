@@ -9,15 +9,17 @@
  */
 namespace Continut\Core\Tools {
 
-	class ErrorException extends Exception {
-		/**
-		 * @param string $message
-		 * @param int    $code
-		 */
-		public function __construct($message, $code = 0) {
-			$message = $message . " | Error occured in the file " . $this->getFile() . " on line " . $this->getLine();
-			parent::__construct($message, $code);
-		}
-	}
+    class ErrorException extends Exception
+    {
+        /**
+         * @param string $message
+         * @param int    $code
+         */
+        public function __construct($message, $code = 0)
+        {
+            $message = $message . " | Error occured in the file " . $this->getFile() . " on line " . $this->getLine();
+            parent::__construct($message, $code);
+        }
+    }
 
 }

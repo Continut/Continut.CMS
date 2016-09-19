@@ -6,10 +6,10 @@
     <base href="http://<?= $url ?>">
     <title><?= $pageTitle ?></title>
 
-<?= $pageHeader ?>
+    <?= $pageHeader ?>
 
-    <meta name="description" value="Conținut CMS" />
-    <meta name="keywords" value="" />
+    <meta name="description" value="Conținut CMS"/>
+    <meta name="keywords" value=""/>
 
 </head>
 <?php if ($bodyClass) : ?>
@@ -17,6 +17,6 @@
 <?php else: ?>
 <body>
 <?php endif ?>
-    <?= $pageContent ?>
+<?= $pageContent ?>
 </body>
 </html>
