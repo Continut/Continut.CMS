@@ -19,8 +19,8 @@ namespace Continut\Core\System\Domain\Collection {
          */
         public function __construct()
         {
-            $this->_tablename = "sys_backend_users";
-            $this->_elementClass = 'Continut\Core\System\Domain\Model\BackendUser';
+            $this->tablename = "sys_backend_users";
+            $this->elementClass = 'Continut\Core\System\Domain\Model\BackendUser';
         }
     }
 

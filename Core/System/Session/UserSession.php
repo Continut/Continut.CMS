@@ -18,12 +18,12 @@ namespace Continut\Core\System\Session {
         /**
          * @var int Session lifetime, in seconds. Default set to 1 hour
          */
-        protected $_lifetime = 3600;
+        protected $lifetime = 3600;
 
         /**
          * @var array List of flashmessages to show
          */
-        protected $_flashMessages = [];
+        protected $flashMessages = [];
 
         const FLASH_ERROR   = "error";
         const FLASH_WARNING = "warning";
@@ -82,7 +82,7 @@ namespace Continut\Core\System\Session {
          */
         public function write($sessionId, $sessionData)
         {
-            $newExpiryDate = time() + $this->_lifetime;
+            $newExpiryDate = time() + $this->lifetime;
 
             $sth = Utility::getDatabase()->prepare("SELECT * FROM $this->_tablename WHERE session_id = :session_id");
             $sth->execute([":session_id" => $sessionId]);
@@ -208,9 +208,9 @@ namespace Continut\Core\System\Session {
 
         public function addFlashMessage($value, $type = self::FLASH_SUCCESS)
         {
-            $this->_flashMessages = $this->get(self::FLASH_KEY);
-            $this->_flashMessages[$type][] = $value;
-            $this->set(self::FLASH_KEY, $this->_flashMessages);
+            $this->flashMessages = $this->get(self::FLASH_KEY);
+            $this->flashMessages[$type][] = $value;
+            $this->set(self::FLASH_KEY, $this->flashMessages);
         }
 
         public function getFlashMessages($type = self::FLASH_SUCCESS)
@@ -228,12 +228,12 @@ namespace Continut\Core\System\Session {
 
         public function clearFlashMessages($type = self::FLASH_SUCCESS)
         {
-            $this->_flashMessages = $this->get(self::FLASH_KEY);
-            if (isset($this->_flashMessages[$type])) {
-                unset($this->_flashMessages[$type]);
-                $this->set(self::FLASH_KEY, $this->_flashMessages);
+            $this->flashMessages = $this->get(self::FLASH_KEY);
+            if (isset($this->flashMessages[$type])) {
+                unset($this->flashMessages[$type]);
+                $this->set(self::FLASH_KEY, $this->flashMessages);
             }
-            if (empty($this->_flashMessages)) {
+            if (empty($this->flashMessages)) {
                 $this->remove(self::FLASH_KEY);
             }
         }

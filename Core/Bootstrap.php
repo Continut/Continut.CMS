@@ -26,7 +26,12 @@ namespace Continut\Core {
          *
          * @var \Continut\Core\Boostrap
          */
-        static protected $_instance;
+        static protected $instance;
+
+        /**
+         * @var string Final content that gets rendered after all controllers/plugins/layouts/views are executed
+         */
+        static protected $renderContent = '';
 
         /**
          * Returns or creates a Bootstrap instance
@@ -35,10 +40,10 @@ namespace Continut\Core {
          */
         public static function getInstance()
         {
-            if (empty(static::$_instance)) {
-                static::$_instance = new static();
+            if (empty(static::$instance)) {
+                static::$instance = new static();
             }
-            return static::$_instance;
+            return static::$instance;
         }
 
         /**
@@ -92,7 +97,6 @@ namespace Continut\Core {
                         break;
                 }
             }
-            var_dump($exception);
 
             // In production mode, we log any errors/exceptions and we do not show them in the frontend
             // For all the other environments, "Test", "Development" or your custom ones, we show the errors
@@ -156,7 +160,7 @@ namespace Continut\Core {
         }
 
         /**
-         * Call the current parsed controller and action using the extension"s context
+         * Call the current parsed controller and action using the extension's context
          *
          * @return $this
          *
@@ -170,13 +174,11 @@ namespace Continut\Core {
             $request->mapRouting();
 
             // Get request argument values or switch to default values if not defined
-            $contextExtension = $request->getArgument("_extension", "Frontend");
+            $contextExtension  = $request->getArgument("_extension", "Frontend");
             $contextController = $request->getArgument("_controller", "Index");
-            $contextAction = $request->getArgument("_action", "index");
+            $contextAction     = $request->getArgument("_action", "index");
 
-            $content = Utility::callPlugin($contextExtension, $contextController, $contextAction);
-            // @TODO Replace it with a variable that is displayed at the very end of the execution chain
-            echo $content;
+            self::$renderContent = Utility::callPlugin($contextExtension, $contextController, $contextAction);
 
             return $this;
         }
@@ -184,8 +186,6 @@ namespace Continut\Core {
         public function connectBackendController()
         {
             Utility::debugData("Main backend controller called", "start");
-
-            $content = "";
 
             try {
                 $request = Utility::getRequest();
@@ -198,7 +198,8 @@ namespace Continut\Core {
                 $controller = Utility::getController($contextExtension, $contextController, $contextAction);
 
                 if (!$controller->getUseLayout() || Utility::getRequest()->isAjax()) {
-                    $content = $controller->getRenderOutput();
+                    self::$renderContent = $controller->getRenderOutput();
+                    // for ajax requests use the Ajax debugger, if it is enabled
                     if (Utility::getRequest()->isAjax()) {
                         Utility::debugAjax();
                     }
@@ -214,19 +215,19 @@ namespace Continut\Core {
                         ->setWrapperTemplate('Extensions/System/Backend/Resources/Private/Backend/Wrappers/Html5')
                         ->setLayout($layout);
 
+                    $controller->setPageView($pageView);
+
                     // if the layout template is overwritten at the controller level, update it
                     if ($controller->getLayoutTemplate()) {
                         $pageView->getLayout()->setTemplate($controller->getLayoutTemplate());
                     }
                     $pageView->getLayout()->setContent($controller->getRenderOutput());
 
-                    $content = $pageView->render();
+                    self::$renderContent = $pageView->render();
                 }
             } catch (Exception $e) {
-                $content = $e->getMessage();
+                self::$renderContent = $e->getMessage();
             }
-
-            echo $content;
 
             return $this;
         }
@@ -273,6 +274,13 @@ namespace Continut\Core {
 
             return $this;
 
+        }
+
+        /**
+         * Dumps the rendered content to screen
+         */
+        public function render() {
+            echo self::$renderContent;
         }
     }
 }

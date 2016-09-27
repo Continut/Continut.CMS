@@ -16,17 +16,17 @@ namespace Continut\Core\Mvc\Model {
         /**
          * @var string Tablename to use for collection
          */
-        protected $_tablename;
+        protected $tablename;
 
         /**
          * @var string Class of each element
          */
-        protected $_elementClass = "";
+        protected $elementClass = "";
 
         /**
          * @var array List of elements held by this collection
          */
-        protected $_elements = [];
+        protected $elements = [];
 
         /**
          * Get all elements from the collection
@@ -35,7 +35,7 @@ namespace Continut\Core\Mvc\Model {
          */
         public function getAll()
         {
-            return $this->_elements;
+            return $this->elements;
         }
 
         /**
@@ -45,8 +45,8 @@ namespace Continut\Core\Mvc\Model {
          */
         public function getFirst()
         {
-            if (!empty($this->_elements)) {
-                return $this->_elements[0];
+            if (!empty($this->elements)) {
+                return $this->elements[0];
             }
             return NULL;
         }
@@ -60,7 +60,7 @@ namespace Continut\Core\Mvc\Model {
          */
         public function add($element)
         {
-            $this->_elements[] = $element;
+            $this->elements[] = $element;
             return $this;
         }
 
@@ -73,9 +73,9 @@ namespace Continut\Core\Mvc\Model {
          */
         public function remove($elementToRemove)
         {
-            foreach ($this->_elements as $element) {
+            foreach ($this->elements as $element) {
                 if ($element === $elementToRemove) {
-                    unset($this->_elements[$element]);
+                    unset($this->elements[$element]);
                 }
             }
 
@@ -89,7 +89,7 @@ namespace Continut\Core\Mvc\Model {
          */
         public function reset()
         {
-            $this->_elements = [];
+            $this->elements = [];
 
             return $this;
         }
@@ -104,11 +104,11 @@ namespace Continut\Core\Mvc\Model {
          */
         public function where($conditions, $values = [])
         {
-            $this->_elements = [];
-            $sth = Utility::getDatabase()->prepare("SELECT * FROM $this->_tablename WHERE " . $conditions);
+            $this->elements = [];
+            $sth = Utility::getDatabase()->prepare("SELECT * FROM $this->tablename WHERE " . $conditions);
 
             $sth->execute($values);
-            $sth->setFetchMode(\PDO::FETCH_CLASS, $this->_elementClass);
+            $sth->setFetchMode(\PDO::FETCH_CLASS, $this->elementClass);
             while ($element = $sth->fetch()) {
                 $this->add($element);
             }
@@ -119,19 +119,18 @@ namespace Continut\Core\Mvc\Model {
         /**
          * Execute a custom sql query while returning elements of the same class the repository represents
          *
-         * @param       $classToReturn
-         * @param       $sql
-         * @param array $values
+         * @param string $sql
+         * @param array  $values
          *
          * @return $this
          */
         public function sql($sql, $values = [])
         {
-            $this->_elements = [];
+            $this->elements = [];
             $sth = Utility::getDatabase()->prepare($sql);
 
             $sth->execute($values);
-            $sth->setFetchMode(\PDO::FETCH_CLASS, $this->_elementClass);
+            $sth->setFetchMode(\PDO::FETCH_CLASS, $this->elementClass);
             while ($element = $sth->fetch()) {
                 $this->add($element);
             }
@@ -147,7 +146,7 @@ namespace Continut\Core\Mvc\Model {
          */
         public function whereCount($conditions, $values = [])
         {
-            $sth = Utility::getDatabase()->prepare("SELECT COUNT(*) FROM $this->_tablename WHERE " . $conditions);
+            $sth = Utility::getDatabase()->prepare("SELECT COUNT(*) FROM $this->tablename WHERE " . $conditions);
             $sth->execute($values);
             return $sth->fetchColumn();
         }
@@ -161,9 +160,9 @@ namespace Continut\Core\Mvc\Model {
          */
         public function findByid($id)
         {
-            $sth = Utility::getDatabase()->prepare("SELECT * FROM $this->_tablename WHERE id = :id");
+            $sth = Utility::getDatabase()->prepare("SELECT * FROM $this->tablename WHERE id = :id");
             $sth->execute(["id" => $id]);
-            $sth->setFetchMode(\PDO::FETCH_CLASS, $this->_elementClass);
+            $sth->setFetchMode(\PDO::FETCH_CLASS, $this->elementClass);
 
             $element = $sth->fetch();
 
@@ -188,7 +187,7 @@ namespace Continut\Core\Mvc\Model {
          */
         public function save()
         {
-            foreach ($this->_elements as $element) {
+            foreach ($this->elements as $element) {
                 $dataMapper = $element->dataMapper();
                 $listOfFields = implode(",", array_keys($dataMapper));
                 $listOfValues = [];
@@ -198,14 +197,14 @@ namespace Continut\Core\Mvc\Model {
                         $listOfValues[] = ":" . $key;
                     }
                     $listOfValues = implode(",", $listOfValues);
-                    $sth = Utility::getDatabase()->prepare("INSERT INTO $this->_tablename ($listOfFields) VALUES ($listOfValues)");
+                    $sth = Utility::getDatabase()->prepare("INSERT INTO $this->tablename ($listOfFields) VALUES ($listOfValues)");
                     // element exists, update it
                 } else {
                     foreach ($dataMapper as $key => $value) {
                         $listOfValues[] = $key . "= :" . $key;
                     }
                     $listOfValues = implode(",", $listOfValues);
-                    $sth = Utility::getDatabase()->prepare("UPDATE $this->_tablename SET $listOfValues WHERE id = :id");
+                    $sth = Utility::getDatabase()->prepare("UPDATE $this->tablename SET $listOfValues WHERE id = :id");
                     $dataMapper["id"] = $element->getId();
                 }
                 $sth->execute($dataMapper);
@@ -216,9 +215,9 @@ namespace Continut\Core\Mvc\Model {
 
         public function delete()
         {
-            foreach ($this->_elements as $element) {
+            foreach ($this->elements as $element) {
                 if (!is_null($element->getId)) {
-                    $sth = Utility::getDatabase()->prepare("DELETE FROM $this->_tablename WHERE id = :id");
+                    $sth = Utility::getDatabase()->prepare("DELETE FROM $this->tablename WHERE id = :id");
                     $sth->execute(["id" => $element->getId()]);
                 }
             }
@@ -231,7 +230,7 @@ namespace Continut\Core\Mvc\Model {
          */
         public function count()
         {
-            return sizeof($this->_elements);
+            return sizeof($this->elements);
         }
 
         /**
@@ -239,7 +238,7 @@ namespace Continut\Core\Mvc\Model {
          */
         public function isEmpty()
         {
-            return (sizeof($this->_elements) == 0);
+            return (sizeof($this->elements) == 0);
         }
     }
 

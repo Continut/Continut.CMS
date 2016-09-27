@@ -19,8 +19,8 @@ namespace Continut\Extensions\Local\News\Classes\Domain\Collection {
          */
         public function __construct()
         {
-            $this->_tablename = "ext_news";
-            $this->_elementClass = 'Continut\Extensions\Local\News\Classes\Domain\Model\News';
+            $this->tablename = "ext_news";
+            $this->elementClass = 'Continut\Extensions\Local\News\Classes\Domain\Model\News';
         }
     }
 }

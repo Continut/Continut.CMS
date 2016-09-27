@@ -20,7 +20,7 @@ namespace Continut\Core\System\Helper {
          *
          * @var array
          */
-        protected $_translationLabels = [];
+        protected $translationLabels = [];
 
         /**
          * Return a translated label, if found, otherwise return the label key
@@ -32,11 +32,11 @@ namespace Continut\Core\System\Helper {
          */
         public function translate($label, $parameters = [])
         {
-            if (isset($this->_translationLabels[$label])) {
+            if (isset($this->translationLabels[$label])) {
                 if (empty($parameters)) {
-                    return $this->_translationLabels[$label];
+                    return $this->translationLabels[$label];
                 }
-                return $this->sprintfWithParameters($this->_translationLabels[$label], $parameters);
+                return $this->sprintfWithParameters($this->translationLabels[$label], $parameters);
             }
             return $label;
         }
@@ -46,7 +46,7 @@ namespace Continut\Core\System\Helper {
          */
         public function getTranslationLabels()
         {
-            return $this->_translationLabels;
+            return $this->translationLabels;
         }
 
         /**
@@ -54,7 +54,7 @@ namespace Continut\Core\System\Helper {
          */
         public function setTranslationLabels($translationLabels)
         {
-            $this->_translationLabels = $translationLabels;
+            $this->translationLabels = $translationLabels;
         }
 
         /**
@@ -65,7 +65,7 @@ namespace Continut\Core\System\Helper {
          */
         public function addLabel($key, $value)
         {
-            $this->_translationLabels[$key] = $value;
+            $this->translationLabels[$key] = $value;
         }
 
         /**
@@ -81,7 +81,7 @@ namespace Continut\Core\System\Helper {
                     foreach ($labels as $extensionName => $languages) {
                         foreach ($languages as $languageCode => $language) {
                             if ($languageCode == Utility::getConfiguration("System/Locale")) {
-                                $this->_translationLabels = array_merge_recursive($this->_translationLabels, $language);
+                                $this->translationLabels = array_merge_recursive($this->translationLabels, $language);
                             }
                         }
                     }

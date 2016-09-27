@@ -20,8 +20,8 @@ namespace Continut\Core\System\Domain\Collection {
          */
         public function __construct()
         {
-            $this->_tablename = "sys_pages";
-            $this->_elementClass = 'Continut\Core\System\Domain\Model\Page';
+            $this->tablename = "sys_pages";
+            $this->elementClass = 'Continut\Core\System\Domain\Model\Page';
         }
 
         /**

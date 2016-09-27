@@ -19,8 +19,8 @@ namespace Continut\Core\System\Domain\Collection {
          */
         public function __construct()
         {
-            $this->_tablename = "sys_files";
-            $this->_elementClass = 'Continut\Core\System\Domain\Model\File';
+            $this->tablename = "sys_files";
+            $this->elementClass = 'Continut\Core\System\Domain\Model\File';
         }
     }
 

@@ -62,7 +62,7 @@ namespace Continut\Core\System\Domain\Model {
         /**
          * @var \Continut\Core\Mvc\View\PageView Link to the parent PageView
          */
-        protected $_pageView;
+        protected $pageView;
 
         /**
          * @var string
@@ -242,7 +242,7 @@ namespace Continut\Core\System\Domain\Model {
          */
         public function setPageView($pageView)
         {
-            $this->_pageView = $pageView;
+            $this->pageView = $pageView;
         }
 
         /**
@@ -250,7 +250,7 @@ namespace Continut\Core\System\Domain\Model {
          */
         public function getPage()
         {
-            return $this->_pageView;
+            return $this->pageView;
         }
 
         /**

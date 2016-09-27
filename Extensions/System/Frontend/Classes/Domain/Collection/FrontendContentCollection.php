@@ -19,8 +19,8 @@ class FrontendContentCollection extends ContentCollection
      */
     public function __construct()
     {
-        $this->_tablename = "sys_content";
-        $this->_elementClass = 'Continut\Extensions\System\Frontend\Classes\Domain\Model\FrontendContent';
+        $this->tablename = "sys_content";
+        $this->elementClass = 'Continut\Extensions\System\Frontend\Classes\Domain\Model\FrontendContent';
     }
 
     /**
@@ -33,8 +33,8 @@ class FrontendContentCollection extends ContentCollection
      */
     public function where($conditions, $values = [])
     {
-        $this->_elements = [];
-        $sth = Utility::getDatabase()->prepare("SELECT * FROM $this->_tablename WHERE " . $conditions);
+        $this->elements = [];
+        $sth = Utility::getDatabase()->prepare("SELECT * FROM $this->tablename WHERE " . $conditions);
         $sth->execute($values);
         $sth->setFetchMode(\PDO::FETCH_ASSOC);
         while ($row = $sth->fetch()) {
@@ -49,7 +49,7 @@ class FrontendContentCollection extends ContentCollection
                     $element = Utility::createInstance('Continut\Extensions\System\Frontend\Classes\Domain\Model\Content\FrontendReferenceContent');
                     break;
                 default:
-                    $element = Utility::createInstance($this->_elementClass);
+                    $element = Utility::createInstance($this->elementClass);
             }
             $element->update($row);
             $this->add($element);

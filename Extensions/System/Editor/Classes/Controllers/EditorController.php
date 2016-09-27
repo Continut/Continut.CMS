@@ -28,5 +28,7 @@ class EditorController extends BackendController
     }
 
     public function indexAction() {
+        // add the cms-editor js file that allows
+        $this->getPageView()->addJsAsset(["identifier" => "cms-editor", "extension" => "Editor", "file" => "cms-editor.js"]);
     }
 }

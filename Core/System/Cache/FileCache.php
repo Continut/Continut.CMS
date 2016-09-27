@@ -17,7 +17,7 @@ namespace Continut\Core\System\Cache {
         /**
          * @var int Default lifetime for cache, in seconds
          */
-        protected $_lifetime = 3600;
+        protected $lifetime = 3600;
 
         public function getByUid($uid, $type)
         {

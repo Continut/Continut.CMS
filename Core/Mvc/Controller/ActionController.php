@@ -77,6 +77,11 @@ namespace Continut\Core\Mvc\Controller {
         protected $layoutTemplate = NULL;
 
         /**
+         * @var \Continut\Core\Mvc\View\PageView Pageview used by controller
+         */
+        protected $pageView = NULL;
+
+        /**
          * @var string Action to call on the controller, by default it is "index"
          */
         protected $action = "index";
@@ -94,6 +99,22 @@ namespace Continut\Core\Mvc\Controller {
             $this->view = Utility::createInstance('Continut\Core\Mvc\View\BaseView');
             $this->request = Utility::getRequest();
             //$this->user    = Utility::getUser();
+        }
+
+        /**
+         * @return \Continut\Core\Mvc\View\PageView
+         */
+        public function getPageView()
+        {
+            return $this->pageView;
+        }
+
+        /**
+         * @param \Continut\Core\Mvc\View\PageView $pageView
+         */
+        public function setPageView($pageView)
+        {
+            $this->pageView = $pageView;
         }
 
         /**

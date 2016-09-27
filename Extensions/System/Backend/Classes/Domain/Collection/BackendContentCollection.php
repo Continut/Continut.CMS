@@ -19,8 +19,8 @@ class BackendContentCollection extends ContentCollection
      */
     public function __construct()
     {
-        $this->_tablename = "sys_content";
-        $this->_elementClass = 'Continut\Extensions\System\Backend\Classes\Domain\Model\BackendContent';
+        $this->tablename = "sys_content";
+        $this->elementClass = 'Continut\Extensions\System\Backend\Classes\Domain\Model\BackendContent';
     }
 
     /**
@@ -33,8 +33,8 @@ class BackendContentCollection extends ContentCollection
      */
     public function where($conditions, $values = [])
     {
-        $this->_elements = [];
-        $sth = Utility::getDatabase()->prepare("SELECT * FROM $this->_tablename WHERE " . $conditions);
+        $this->elements = [];
+        $sth = Utility::getDatabase()->prepare("SELECT * FROM $this->tablename WHERE " . $conditions);
         $sth->execute($values);
         $sth->setFetchMode(\PDO::FETCH_ASSOC);
         while ($row = $sth->fetch()) {
@@ -64,7 +64,7 @@ class BackendContentCollection extends ContentCollection
                 $element = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Model\Content\BackendReferenceContent');
                 break;
             default:
-                $element = Utility::createInstance($this->_elementClass);
+                $element = Utility::createInstance($this->elementClass);
         }
 
         return $element;

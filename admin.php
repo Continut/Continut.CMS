@@ -22,4 +22,5 @@ require __ROOTCMS__ . DS . "Core" . DS . "Bootstrap.php";
     ->initializeWebsite()
     ->loadExtensionsConfiguration()
     ->startSession()
-    ->connectBackendController();
+    ->connectBackendController()
+    ->render();
