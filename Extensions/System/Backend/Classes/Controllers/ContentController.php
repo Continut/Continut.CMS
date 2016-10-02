@@ -98,8 +98,8 @@ class ContentController extends BackendController
      */
     public function addAction()
     {
-        $pageId = $this->getRequest()->getArgument("page_id", 0);
-        $columnId = $this->getRequest()->getArgument("column_id", 0);
+        $pageId   = (int)$this->getRequest()->getArgument("page_id", 0);
+        $columnId = (int)$this->getRequest()->getArgument("column_id", 0);
         $settings = $this->getRequest()->getArgument("settings");
 
         $wizard = Utility::createInstance('Continut\Core\Mvc\View\BaseView');
@@ -168,9 +168,10 @@ class ContentController extends BackendController
      */
     public function updateAction()
     {
-        $id = (int)$this->getRequest()->getArgument("id");
-        $data = $this->getRequest()->getArgument("data", null);
+        $id      = (int)$this->getRequest()->getArgument("id");
+        $data    = $this->getRequest()->getArgument("data", null);
         $success = 0;
+
         if ($data && $id > 0) {
             $contentCollection = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Collection\BackendContentCollection');
             $content = $contentCollection->findById($id);
@@ -199,31 +200,33 @@ class ContentController extends BackendController
      */
     public function createAction()
     {
-        $pageId = (int)$this->getRequest()->getArgument("page_id");
-        $columnId = (int)$this->getRequest()->getArgument("column_id");
-        $data = $this->getRequest()->getArgument("data");
-        $settings = $this->getRequest()->getArgument("settings");
+        $pageId           = (int)$this->getRequest()->getArgument("page_id");
+        $columnId         = (int)$this->getRequest()->getArgument("column_id");
+        $data             = $this->getRequest()->getArgument("data");
+        $settings         = $this->getRequest()->getArgument("settings");
         $settings["data"] = $data;
+        $type             = $settings["type"];
+        $value            = [$type => $settings];
 
         $contentCollection = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Collection\BackendContentCollection');
 
-        $type = $settings["type"];
-        $value = [$type => $settings];
-
         $content = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Model\BackendContent');
-        $content->setType($type);
-        $content->setPageId($pageId);
-        $content->setIsVisible(1);
-        $content->setIsDeleted(0);
-        $content->setParentId(0);
-        $content->setSorting(0);
-        $content->setColumnId($columnId);
+        $content
+            ->setType($type)
+            ->setPageId($pageId)
+            ->setIsVisible(1)
+            ->setIsDeleted(0)
+            ->setParentId(0)
+            ->setSorting(0)
+            ->setColumnId($columnId)
+            ->setValue(json_encode($value));
         if (isset($data["title"])) {
             $content->setTitle($data["title"]);
         }
-        $content->setValue(json_encode($value));
 
-        $contentCollection->add($content)->save();
+        $contentCollection
+            ->add($content)
+            ->save();
 
         return json_encode([
             "success" => 1
@@ -231,7 +234,7 @@ class ContentController extends BackendController
     }
 
     /**
-     * Update content element's container once it is dragged & dropped
+     * Update content element's container once it is dropped
      *
      * @return string
      * @throws \Continut\Core\Tools\Exception
@@ -240,17 +243,19 @@ class ContentController extends BackendController
     {
         $newParent = (int)$this->getRequest()->getArgument("parent_id");
         $newColumn = (int)$this->getRequest()->getArgument("column_id");
-        $id = (int)$this->getRequest()->getArgument("id");
-        $beforeId = (int)$this->getRequest()->getArgument("before_id");
+        $id        = (int)$this->getRequest()->getArgument("id");
+        $beforeId  = (int)$this->getRequest()->getArgument("before_id");
 
         $contentCollection = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Collection\BackendContentCollection');
         $contentElement = $contentCollection->where("id = :id AND is_deleted = 0", ["id" => $id])->getFirst();
 
-        // the element was either added before one, ar at the very end of a container, in which case the $beforeId is not present
+        // the element was either added before a container or at the very end of a container, in which case the $beforeId is not present
         if ($beforeId) {
+            // if it is added before an element then get it's "sorting" value and set it to our element
             $otherElement = $contentCollection->where("id = :id", ["id" => $beforeId])
                 ->getFirst();
             $contentElement->setSorting($otherElement->getSorting());
+            // all the other elements AFTER our new element get a "sorting" value + 1
             $elementsToModify = $contentCollection->where(
                 "column_id = :column_id AND parent_id = :parent_id AND sorting >= :sorting_value",
                 ["column_id" => $newColumn, "parent_id" => $newParent, "sorting_value" => $otherElement->getSorting()]
@@ -260,6 +265,8 @@ class ContentController extends BackendController
             }
             $elementsToModify->save();
         } else {
+            // if it is added at the beginning of a container, then it has the "sorting" value 1
+            // if it is added at the end then it has the "sorting" value of the last element + 1
             $otherElement = $contentCollection->where(
                 "column_id = :column_id AND parent_id = :parent_id ORDER BY sorting DESC",
                 ["column_id" => $newColumn, "parent_id" => $newParent]
@@ -271,10 +278,15 @@ class ContentController extends BackendController
             }
         }
 
+        // Update our element setting it's container parent, column id and the last modified date
         $contentElement
             ->setParentId($newParent)
+            // @TODO Change all time manipulations to GMT+0
+            ->setModifiedAt(time())
             ->setColumnId($newColumn);
 
+        // The element gets saved by the collection. If the collection was already used to do a select, then we reset it
+        // this way it only impacts our element
         $contentCollection
             ->reset()
             ->add($contentElement)

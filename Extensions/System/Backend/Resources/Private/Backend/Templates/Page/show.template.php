@@ -152,21 +152,26 @@
     });
 
     $('.content-drag-sender').pep({
-        useCSSTranslation: true,
+        useCSSTranslation: false,
         droppable: '.content-drag-receiver',
         elementsWithInteraction: '.no-pep',
         place: false,
         revert: true,
+        allowDragEventPropagation: false,
+        prevParent: null,
+        prevBrother: null,
         revertIf: function (ev, obj) {
             return !this.activeDropRegions.length;
         },
         cssEaseDuration: 200,
-        rest: function (ev, obj) {
+        stop: function (ev, obj) {
             if (this.activeDropRegions.length > 0) {
                 // get first drop region and set the element as it's child
-                var target = $(this.activeDropRegions[0]).closest('.container-receiver');
+                var dropInto = $(this.activeDropRegions[0]);
+                var target = dropInto.closest('.container-receiver');
                 var beforeId = target.prevObject.next(".panel-backend-content").data('id');
                 if (target) {
+                    dropInto.addClass('loader');
                     $.getJSON('<?= $this->helper("Url")->linkToAction("Backend", "Content", "updateContainer") ?>',
                         {
                             parent_id: target.data('parent'),
@@ -174,28 +179,43 @@
                             id: this.$el.data('id'),
                             before_id: beforeId
                         })
-                        .done(function (data) {
-                            if (data.success == 1) {
-
+                        .always(function (data) {
+                            if (data.success) {
+                                dropInto.after(obj.$el);
+                                obj.$el.removeAttr('style');
+                            } else {
+                                obj.revert();
+                                obj.$el.removeAttr('style');
+                                // @TODO : show an error message
                             }
+                            $('.content-drag-receiver').remove();
                         });
-                    $(this.activeDropRegions[0]).after(this.$el);
-                    obj.cssX = 0;
-                    obj.cssY = 0;
-                    this.$el.removeAttr('style');
+                } else {
+                    $('.content-drag-receiver').remove();
+                    obj.reAttach();
                 }
+            } else {
+                $('.content-drag-receiver').remove();
+                obj.reAttach();
             }
-            $('.content-drag-receiver').remove();
         },
         start: function (ev, obj) {
+            //obj.$el.css({left: 0, top: 0})
+        },
+        initiate: function (ev, obj) {
+            this.options.prevParent  = obj.$el.parent();
+            this.options.prevBrother = obj.$el.prev();
+            obj.$el.css({left: obj.$el.offset().left, top: obj.$el.offset().top});
+            obj.$el.detach().appendTo('body');
             $('.container-receiver').prepend($('<div class="content-drag-receiver receiver-on"></div>'));
             $('.panel-backend-content').each(function (index, item) {
                 if (!$(item).is(obj.$el)) {
                     $(item).after($('<div class="content-drag-receiver receiver-on"></div>'));
                 }
             });
-        },
-        stop: function (ev, obj) {
+            /*$('html, body').animate({
+                scrollTop: obj.$el.offset().top
+            }, 2000);*/
         }
     });
 </script>

@@ -70,6 +70,16 @@ namespace Continut\Core\System\Domain\Model {
         protected $title;
 
         /**
+         * @var int Creation date+time (unix timestamp)
+         */
+        protected $created_at;
+
+        /**
+         * @var int Last modified date+time (unix timestamp)
+         */
+        protected $modified_at;
+
+        /**
          * Datamapper for this model
          *
          * @return array
@@ -85,7 +95,9 @@ namespace Continut\Core\System\Domain\Model {
                 "value" => $this->value,
                 "is_deleted" => $this->is_deleted,
                 "is_visible" => $this->is_visible,
-                "sorting" => $this->sorting
+                "sorting" => $this->sorting,
+                "modified_at" => $this->modified_at,
+                "created_at" => $this->created_at
             ];
         }
 
@@ -121,10 +133,14 @@ namespace Continut\Core\System\Domain\Model {
 
         /**
          * @param int $sorting
+         *
+         * @return $this
          */
         public function setSorting($sorting)
         {
             $this->sorting = $sorting;
+
+            return $this;
         }
 
         /**
@@ -137,10 +153,14 @@ namespace Continut\Core\System\Domain\Model {
 
         /**
          * @param int $page_id
+         *
+         * @return $this
          */
         public function setPageId($page_id)
         {
             $this->page_id = $page_id;
+
+            return $this;
         }
 
         /**
@@ -153,10 +173,14 @@ namespace Continut\Core\System\Domain\Model {
 
         /**
          * @param int $reference_id
+         *
+         * @return $this
          */
         public function setReferenceid($reference_id)
         {
             $this->reference_id = $reference_id;
+
+            return $this;
         }
 
         /**
@@ -211,10 +235,14 @@ namespace Continut\Core\System\Domain\Model {
 
         /**
          * @param string $type
+         *
+         * @return $this
          */
         public function setType($type)
         {
             $this->type = $type;
+
+            return $this;
         }
 
         /**
@@ -231,18 +259,26 @@ namespace Continut\Core\System\Domain\Model {
          * Sets the element's serialized values
          *
          * @param string $value
+         *
+         * @return $this
          */
         public function setValue($value)
         {
             $this->value = $value;
+
+            return $this;
         }
 
         /**
          * @param $pageView
+         *
+         * @return $this
          */
         public function setPageView($pageView)
         {
             $this->pageView = $pageView;
+
+            return $this;
         }
 
         /**
@@ -263,10 +299,14 @@ namespace Continut\Core\System\Domain\Model {
 
         /**
          * @param mixed $is_visible
+         *
+         * @return $this
          */
         public function setIsVisible($is_visible)
         {
             $this->is_visible = $is_visible;
+
+            return $this;
         }
 
         /**
@@ -279,10 +319,14 @@ namespace Continut\Core\System\Domain\Model {
 
         /**
          * @param boolean $is_deleted
+         *
+         * @return $this
          */
         public function setIsDeleted($is_deleted)
         {
             $this->is_deleted = $is_deleted;
+
+            return $this;
         }
 
         /**
@@ -305,6 +349,46 @@ namespace Continut\Core\System\Domain\Model {
                 $this->getType(),
                 $this->getPageId()
             );
+        }
+
+        /**
+         * @return int
+         */
+        public function getCreatedAt()
+        {
+            return $this->created_at;
+        }
+
+        /**
+         * @param int $created_at
+         *
+         * @return $this
+         */
+        public function setCreatedAt($created_at)
+        {
+            $this->created_at = $created_at;
+
+            return $this;
+        }
+
+        /**
+         * @return int
+         */
+        public function getModifiedAt()
+        {
+            return $this->modified_at;
+        }
+
+        /**
+         * @param int $modified_at
+         *
+         * @return $this
+         */
+        public function setModifiedAt($modified_at)
+        {
+            $this->modified_at = $modified_at;
+
+            return $this;
         }
     }
 
