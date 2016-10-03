@@ -119,7 +119,76 @@
                 }
             });
 
-            $.getJSON(
+            $('#cms_tree')
+                .on('changed.jstree', function (e, data) {
+                    if (data.selected.length == 0) {
+                        return;
+                    }
+                    var nodeId = data.selected[0];
+                    // once a node is clicked, load the corresponding page in the right side
+                    $.ajax({
+                        url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "show") ?>',
+                        data: {page_id: nodeId},
+                        beforeSend: function (xhr) {
+                            $('#' + nodeId).prepend('<span class="pull-right fa fa-spinner fa-pulse"></span>');
+                        }
+                    })
+                    .done(function (data) {
+                        $('#content').html(data);
+                        $('#' + nodeId).find('.fa-spinner').remove();
+                        if (previousSelectedNode) {
+                            $('#' + previousSelectedNode).find('.page-add').eq(0).hide();
+                        }
+                        $('#' + nodeId).find('.page-add').eq(0).show();
+                        previousSelectedNode = nodeId;
+                    });
+                })
+                .on('move_node.jstree', function(e, data) {
+                    console.log(data);
+                    $.post(
+                        '<?= $this->helper("Url")->linkToAction("Backend", "Page", "treeMove") ?>',
+                        {
+                            movedId: data.node.id,
+                            newParentId: data.parent,
+                            position: data.position
+                        }
+                    );
+                })
+                .jstree({
+                'core' : {
+                    'multiple' : false,
+                    'animation' : 0,
+                    'check_callback': true,
+                    'themes' : {
+                        'variant' : 'large',
+                        'dots' : true
+                    },
+                    'data' : {
+                        'url' : '<?= $this->helper("Url")->linkToAction("Editor", "Page", "tree") ?>',
+                        'data' : function (node) {
+                            return { 'id' : node.id };
+                        }
+                    }
+                },
+                'dnd': {
+                    'check_while_dragging': false,
+                    'large_drag_target': true,
+                    'large_drop_target': true
+                },
+                'plugins' : ['dnd', 'search', 'wholerow']
+                //'plugins' : ['dnd', 'search', 'wholerow', 'checkbox']
+            });
+
+            $('.page-add').on('click', function (e) {
+                e.preventDefault();
+                var pid = $('#cms_tree').tree('getSelectedNode').id;
+                BootstrapDialog.show({
+                    title: <?= json_encode($this->__("backend.page.wizard.create.title")) ?>,
+                    message: $('<div></div>').load('<?= $this->helper("Url")->linkToAction("Backend", "Page", "wizard") ?>&id=' + pid)
+                });
+            });
+
+            /*$.getJSON(
                 '<?= $this->helper("Url")->linkToAction("Backend", "Page", "tree") ?>',
                 function (data) {
                     $('#cms_tree').tree({
@@ -133,9 +202,6 @@
                         onCreateLi: function (node, $li) {
                             // Add 'icon' span before title
                             var iconClass = 'fa-file';
-                            /*if (node.type == "folder") {
-                             iconClass = 'fa-folder';
-                             }*/
                             var pageIcon = '';
                             switch (node.state) {
                                 case "hidden-frontend":
@@ -196,17 +262,8 @@
                             );
                         }
                     );
-
-                    $('.page-add').on('click', function (e) {
-                        e.preventDefault();
-                        var pid = $('#cms_tree').tree('getSelectedNode').id;
-                        BootstrapDialog.show({
-                            title: <?= json_encode($this->__("backend.page.wizard.create.title")) ?>,
-                            message: $('<div></div>').load('<?= $this->helper("Url")->linkToAction("Backend", "Page", "wizard") ?>&id=' + pid)
-                        });
-                    });
                 }
-            );
+            );*/
 
         </script>
     </div>

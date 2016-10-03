@@ -301,28 +301,6 @@ class PageController extends BackendController
         // If the page is valid, we change it's parentId field and then save the value
         if ($pageModel) {
             switch ($moveType) {
-                // if it's moved inside a page then it's easy, we just get it's parent
-                case "inside":
-                    $pageModel->setParentId($newParentId);
-                    // for jqTree INSIDE is actually when it will be the first child of this parent
-                    // so we need to get the current sorting of it's child, if any, and update the sorting
-                    $firstChild = $pagesCollection->where("parent_id = :parent_id ORDER BY sorting ASC", ["parent_id" => $newParentId])
-                        ->getFirst();
-                    // if we found the first child, get it's sorting and increment the rest
-                    if ($firstChild) {
-                        $pageModel->setSorting($firstChild->getSorting());
-                        // then we increment by 1 the sorting of all the other pages AFTER this one
-                        $pagesToModify = $pagesCollection->where("sorting >= :sorting_value", ["sorting_value" => $pageModel->getSorting()]);
-                        foreach ($pagesToModify->getAll() as $page) {
-                            $page->setSorting($page->getSorting() + 1);
-                        }
-                        $pagesToModify->save();
-                    } // if it does not have any children, we can get the last sorting value and increment it by one
-                    else {
-                        $highestSorting = $pagesCollection->where("is_deleted = 0 ORDER BY sorting DESC")->getFirst();
-                        $pageModel->setSorting($highestSorting->getSorting() + 1);
-                    }
-                    break;
                 // if it's after we need to check if it's on the same level or another one
                 case "after":
                     $otherPage = $pagesCollection->where("id = :id", ["id" => $newParentId])
@@ -357,6 +335,27 @@ class PageController extends BackendController
                         $pagesToModify->save();
                     }
                     break;
+                // if it's moved inside a page then it's easy, we just get it's parent
+                default:
+                    $pageModel->setParentId($newParentId);
+                    // for jqTree INSIDE is actually when it will be the first child of this parent
+                    // so we need to get the current sorting of it's child, if any, and update the sorting
+                    $firstChild = $pagesCollection->where("parent_id = :parent_id ORDER BY sorting ASC", ["parent_id" => $newParentId])
+                        ->getFirst();
+                    // if we found the first child, get it's sorting and increment the rest
+                    if ($firstChild) {
+                        $pageModel->setSorting($firstChild->getSorting());
+                        // then we increment by 1 the sorting of all the other pages AFTER this one
+                        $pagesToModify = $pagesCollection->where("sorting >= :sorting_value", ["sorting_value" => $pageModel->getSorting()]);
+                        foreach ($pagesToModify->getAll() as $page) {
+                            $page->setSorting($page->getSorting() + 1);
+                        }
+                        $pagesToModify->save();
+                    } // if it does not have any children, we can get the last sorting value and increment it by one
+                    else {
+                        $highestSorting = $pagesCollection->where("is_deleted = 0 ORDER BY sorting DESC")->getFirst();
+                        $pageModel->setSorting($highestSorting->getSorting() + 1);
+                    }
             }
             $pagesCollection
                 ->reset()
