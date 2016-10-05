@@ -268,6 +268,7 @@ namespace Continut\Core {
             $userSession = Utility::createInstance('Continut\Core\System\Session\UserSession');
             session_name("ContinutCMS");
             session_set_save_handler($userSession, true);
+            session_save_path(__ROOTCMS__ . DS . 'Tmp' . DS . 'Session');
             session_start();
 
             Utility::$session = $userSession;

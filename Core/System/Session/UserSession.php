@@ -42,14 +42,14 @@ namespace Continut\Core\System\Session {
          * Open session calls
          *
          * @param string $savePath
-         * @param string $name
+         * @param string $sessionNamel
          *
          * @return bool
          */
-        public function open($savePath, $name)
+        public function open($savePath, $sessionName)
         {
             // As the database connection is already open, we do not need to do anything special yet
-            return TRUE;
+            return true;
         }
 
         /**
@@ -61,13 +61,17 @@ namespace Continut\Core\System\Session {
          */
         public function read($sessionId)
         {
-            $sth = Utility::getDatabase()->prepare("SELECT session_data FROM $this->_tablename WHERE session_id = :session_id AND session_expires >= :expire_time");
-            $sth->execute([
-                ":session_id" => $sessionId,
-                ":expire_time" => time()
-            ]);
-            $sth->setFetchMode(\PDO::FETCH_ASSOC);
-            $session = $sth->fetch();
+            try {
+                $sth = Utility::getDatabase()->prepare("SELECT session_data FROM $this->_tablename WHERE session_id = :session_id AND session_expires >= :expire_time");
+                $sth->execute([
+                    ":session_id" => $sessionId,
+                    ":expire_time" => time()
+                ]);
+                $sth->setFetchMode(\PDO::FETCH_ASSOC);
+                $session = $sth->fetch();
+            } catch (PDOException $e) {
+                return false;
+            }
 
             return $session["session_data"];
         }
@@ -97,7 +101,7 @@ namespace Continut\Core\System\Session {
                         ":session_data" => $sessionData
                     ]);
                 if ($sth->rowCount() > 0) {
-                    return TRUE;
+                    return true;
                 }
             } else {
                 $sth = Utility::getDatabase()->prepare("INSERT INTO $this->_tablename (session_id, session_expires, session_data) VALUES (:session_id, :session_expires, :session_data)");
@@ -109,12 +113,12 @@ namespace Continut\Core\System\Session {
                     ]
                 );
                 if ($sth->rowCount() > 0) {
-                    return TRUE;
+                    return true;
                 }
             }
 
             // if an error occured, return false
-            return FALSE;
+            return false;
         }
 
         /**

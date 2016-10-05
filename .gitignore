@@ -3,3 +3,4 @@ Extensions/configuration.php
 Cache/Temp/*
 Cache/Content/*
 Media/*
+node_modules
