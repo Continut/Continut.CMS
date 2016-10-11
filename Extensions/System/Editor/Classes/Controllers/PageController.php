@@ -128,4 +128,39 @@ class PageController extends BackendPageController
         header('Content-Type: application/json');
         return json_encode($pagesCollection->buildJsonTree());
     }
+
+    /**
+     * Return page details as JSON
+     * @TODO : Move it into the model
+     *
+     * @return string
+     */
+    public function pageDetailsAction() {
+        $pageId = (int)$this->getRequest()->getArgument("id");
+
+        $returnData = [];
+
+        if ($pageId) {
+            $pagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection');
+
+            $page = $pagesCollection->findById($pageId);
+
+            if ($page) {
+                $returnData = [
+                    'data' => [
+                        'id' => $pageId,
+                        'title' => $page->getTitle(),
+                        'isVisible' => $page->getIsVisible(),
+                        'slug' => $page->getSlug()
+                    ],
+                    'canDelete' => !$page->getIsDeleted(),
+                    'canEdit' => true,
+                    'canCreate' => true
+                ];
+            }
+        }
+
+        header('Content-Type: application/json');
+        return json_encode($returnData);
+    }
 }
