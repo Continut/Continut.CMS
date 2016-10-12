@@ -130,8 +130,7 @@ class PageController extends BackendPageController
     }
 
     /**
-     * Return page details as JSON
-     * @TODO : Move it into the model
+     * Return page details as JSON object
      *
      * @return string
      */
@@ -141,22 +140,12 @@ class PageController extends BackendPageController
         $returnData = [];
 
         if ($pageId) {
-            $pagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection');
+            $pagesCollection = Utility::createInstance('Continut\Extensions\System\Editor\Classes\Domain\Collection\PageCollection');
 
             $page = $pagesCollection->findById($pageId);
 
             if ($page) {
-                $returnData = [
-                    'data' => [
-                        'id' => $pageId,
-                        'title' => $page->getTitle(),
-                        'isVisible' => $page->getIsVisible(),
-                        'slug' => $page->getSlug()
-                    ],
-                    'canDelete' => !$page->getIsDeleted(),
-                    'canEdit' => true,
-                    'canCreate' => true
-                ];
+                $returnData = $page->arrayForEditor();
             }
         }
 

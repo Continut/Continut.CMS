@@ -326,26 +326,6 @@ namespace Continut\Core\System\Domain\Model {
         }
 
         /**
-         * @param $parentId
-         *
-         * @return $this
-         */
-        public function setParentId($parentId)
-        {
-            $this->parent_id = $parentId;
-
-            return $this;
-        }
-
-        /**
-         * @return int
-         */
-        public function getParentId()
-        {
-            return $this->parent_id;
-        }
-
-        /**
          * Get parent PageModel
          *
          * @return mixed
@@ -361,6 +341,40 @@ namespace Continut\Core\System\Domain\Model {
             }
 
             return $this->parent;
+        }
+
+        /**
+         * Set this page's parent
+         *
+         * @param \Continut\Core\System\Domain\Model\Page $parent
+         *
+         * @return $this
+         */
+        public function setParent($parent)
+        {
+            $this->parent = $parent;
+
+            return $this;
+        }
+
+        /**
+         * @return int
+         */
+        public function getParentId()
+        {
+            return $this->parent_id;
+        }
+
+        /**
+         * @param $parentId
+         *
+         * @return $this
+         */
+        public function setParentId($parentId)
+        {
+            $this->parent_id = $parentId;
+
+            return $this;
         }
 
         /**
@@ -418,15 +432,23 @@ namespace Continut\Core\System\Domain\Model {
         }
 
         /**
-         * Set this page's parent
+         * Layout to be used in the Backend preview
          *
-         * @param \Continut\Core\System\Domain\Model\Page $parent
+         * @return string
+         */
+        public function getBackendLayout()
+        {
+            return $this->backend_layout;
+        }
+
+        /**
+         * @param string $backend_layout
          *
          * @return $this
          */
-        public function setParent($parent)
+        public function setBackendLayout($backend_layout)
         {
-            $this->parent = $parent;
+            $this->backend_layout = $backend_layout;
 
             return $this;
         }
@@ -451,28 +473,6 @@ namespace Continut\Core\System\Domain\Model {
         public function setFrontendLayout($frontend_layout)
         {
             $this->frontend_layout = $frontend_layout;
-
-            return $this;
-        }
-
-        /**
-         * Layout to be used in the Backend preview
-         *
-         * @return string
-         */
-        public function getBackendLayout()
-        {
-            return $this->backend_layout;
-        }
-
-        /**
-         * @param string $backend_layout
-         *
-         * @return $this
-         */
-        public function setBackendLayout($backend_layout)
-        {
-            $this->backend_layout = $backend_layout;
 
             return $this;
         }
