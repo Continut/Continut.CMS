@@ -7,21 +7,19 @@
  * Date: 04.04.2015 @ 12:39
  * Project: Conţinut CMS
  */
-namespace Continut\Core\System\Domain\Collection {
+namespace Continut\Core\System\Domain\Collection;
 
-    use Continut\Core\Mvc\Model\BaseCollection;
+use Continut\Core\Mvc\Model\BaseCollection;
 
-    class DomainCollection extends BaseCollection
+class DomainCollection extends BaseCollection
+{
+
+    /**
+     * Set tablename and element class for this collection
+     */
+    public function __construct()
     {
-
-        /**
-         * Set tablename and element class for this collection
-         */
-        public function __construct()
-        {
-            $this->tablename = "sys_domains";
-            $this->elementClass = 'Continut\Core\System\Domain\Model\Domain';
-        }
+        $this->tablename = "sys_domains";
+        $this->elementClass = 'Continut\Core\System\Domain\Model\Domain';
     }
-
 }

@@ -42,7 +42,7 @@ namespace Continut\Core\System\Session {
          * Open session calls
          *
          * @param string $savePath
-         * @param string $sessionNamel
+         * @param string $sessionName
          *
          * @return bool
          */
@@ -69,7 +69,7 @@ namespace Continut\Core\System\Session {
                 ]);
                 $sth->setFetchMode(\PDO::FETCH_ASSOC);
                 $session = $sth->fetch();
-            } catch (PDOException $e) {
+            } catch (\PDOException $e) {
                 return false;
             }
 
@@ -100,9 +100,6 @@ namespace Continut\Core\System\Session {
                         ":session_id" => $sessionId,
                         ":session_data" => $sessionData
                     ]);
-                if ($sth->rowCount() > 0) {
-                    return true;
-                }
             } else {
                 $sth = Utility::getDatabase()->prepare("INSERT INTO $this->_tablename (session_id, session_expires, session_data) VALUES (:session_id, :session_expires, :session_data)");
                 $sth->execute(
@@ -112,13 +109,9 @@ namespace Continut\Core\System\Session {
                         ":session_data" => $sessionData
                     ]
                 );
-                if ($sth->rowCount() > 0) {
-                    return true;
-                }
             }
 
-            // if an error occured, return false
-            return false;
+            return true;
         }
 
         /**
@@ -157,6 +150,7 @@ namespace Continut\Core\System\Session {
         public function close()
         {
             $this->gc(ini_get('session.gc_maxlifetime'));
+
             return true;
         }
 

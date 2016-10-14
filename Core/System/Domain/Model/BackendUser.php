@@ -7,32 +7,42 @@
  * Date: 27.04.2015 @ 22:27
  * Project: Conţinut CMS
  */
-namespace Continut\Core\System\Domain\Model {
+namespace Continut\Core\System\Domain\Model;
 
-    class BackendUser extends User
+class BackendUser extends User
+{
+    /**
+     * @var string Fullname of backend user
+     */
+    protected $name;
+
+    /**
+     * @return string
+     */
+    public function getName()
     {
-
-        /**
-         * @var string Fullname of backend user
-         */
-        protected $name;
-
-        /**
-         * @return string
-         */
-        public function getName()
-        {
-            return $this->name;
-        }
-
-        /**
-         * @param string $name
-         */
-        public function setName($name)
-        {
-            $this->name = $name;
-        }
-
+        return $this->name;
     }
 
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * Simple datamapper used for the database
+     *
+     * @return array
+     */
+    public function dataMapper()
+    {
+        $fields = [
+            "name"     => $this->name
+        ];
+
+        return array_merge($fields, parent::dataMapper());
+    }
 }

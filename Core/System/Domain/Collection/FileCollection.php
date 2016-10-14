@@ -7,21 +7,19 @@
  * Date: 27.04.2015 @ 22:30
  * Project: Conţinut CMS
  */
-namespace Continut\Core\System\Domain\Collection {
+namespace Continut\Core\System\Domain\Collection;
 
-    use Continut\Core\Mvc\Model\BaseCollection;
+use Continut\Core\Mvc\Model\BaseCollection;
 
-    class FileCollection extends BaseCollection
+class FileCollection extends BaseCollection
+{
+
+    /**
+     * Set tablename and element class
+     */
+    public function __construct()
     {
-
-        /**
-         * Set tablename and element class
-         */
-        public function __construct()
-        {
-            $this->tablename = "sys_files";
-            $this->elementClass = 'Continut\Core\System\Domain\Model\File';
-        }
+        $this->tablename = "sys_files";
+        $this->elementClass = 'Continut\Core\System\Domain\Model\File';
     }
-
 }

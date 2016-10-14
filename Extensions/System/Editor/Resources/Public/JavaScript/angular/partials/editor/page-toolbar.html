@@ -1,27 +1,27 @@
 <div class="page-properties" id="page_properties">
   <div class="panel" id="panel_page_properties">
-    <div ng-class="{'button': page.canReload, 'button disabled': !page.canReload}">
+    <div class="button">
       <a href="#" ng-click="reloadPageTree($event)"><i class="fa fa-refresh cfe" aria-hidden="true"></i></a>
     </div>
-    <div ng-class="{'button': page.canDelete, 'button disabled': !page.canDelete}">
+    <div ng-class="{'button': page.actions.canDelete, 'button disabled': !page.actions.canDelete}">
       <a href=""><i class="fa fa-trash cfe" aria-hidden="true"></i></a>
     </div>
-    <div ng-class="{'button': page.canPaste, 'button disabled': !page.canPaste}">
+    <div ng-class="{'button': page.actions.canPaste, 'button disabled': !page.actions.canPaste}">
       <a href=""><i class="fa fa-clipboard cfe" aria-hidden="true"></i></a>
     </div>
-    <div ng-class="{'button': page.canCut, 'button disabled': !page.canCut}">
+    <div ng-class="{'button': page.actions.canCut, 'button disabled': !page.actions.canCut}">
       <a href=""><i class="fa fa-scissors cfe" aria-hidden="true"></i></a>
     </div>
-    <div ng-class="{'button': page.canCopy, 'button disabled': !page.canCopy}">
+    <div ng-class="{'button': page.actions.canCopy, 'button disabled': !page.actions.canCopy}">
       <a href=""><i class="fa fa-files-o cfe" aria-hidden="true"></i></a>
     </div>
-    <div ng-class="{'button': page.isVisible, 'button disabled': !page.isVisible}">
+    <div ng-class="{'button': page.actions.isVisible, 'button disabled': !page.actions.isVisible}">
       <a href=""><i class="fa fa-eye cfe" aria-hidden="true"></i></a>
     </div>
-    <div ng-class="{'button': page.canEdit, 'button disabled': !page.canEdit}">
+    <div ng-class="{'button': page.actions.canEdit, 'button disabled': !page.actions.canEdit}">
       <a href=""><i class="fa fa-pencil cfe" aria-hidden="true"></i></a>
     </div>
-    <div ng-class="{'button': page.canCreate, 'button disabled': !page.canCreate}">
+    <div ng-class="{'button': page.actions.canCreate, 'button disabled': !page.actions.canCreate}">
       <a href=""><i class="fa fa-plus cfe" aria-hidden="true"></i></a>
     </div>
   </div>

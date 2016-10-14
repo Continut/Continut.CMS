@@ -8,188 +8,188 @@
  * Project: Conţinut CMS
  */
 
-namespace Continut\Core\System\Domain\Model {
+namespace Continut\Core\System\Domain\Model;
 
-    use Continut\Core\Mvc\Model\BaseModel;
+use Continut\Core\Mvc\Model\BaseModel;
 
-    class File extends BaseModel
+class File extends BaseModel
+{
+    /**
+     * @var string
+     */
+    protected $filename;
+
+    /**
+     * @var integer
+     */
+    protected $filesize;
+
+    /**
+     * @var string
+     */
+    protected $location;
+
+    /**
+     * @var string
+     */
+    protected $mime;
+
+    /**
+     * @var \DateTime
+     */
+    protected $created_at;
+
+    /**
+     * @var \DateTime
+     */
+    protected $modified_at;
+
+    /**
+     * Simple datamapper used for the database
+     *
+     * @return array
+     */
+    public function dataMapper()
     {
-        /**
-         * @var string
-         */
-        protected $filename;
+        $fields = [
+            "filename" => $this->filename,
+            "filesize" => $this->filesize,
+            "location" => $this->location,
+            "mime" => $this->mine,
+            "created_at" => $this->created_at,
+            "modified_at" => $this->modified_at,
+            "mount_id" => $this->mount_id
+        ];
+        return array_merge($fields, parent::dataMapper());
+    }
 
-        /**
-         * @var integer
-         */
-        protected $filesize;
+    /**
+     * @return string
+     */
+    public function getFilename()
+    {
+        return $this->filename;
+    }
 
-        /**
-         * @var string
-         */
-        protected $location;
+    /**
+     * @param string $filename
+     *
+     * @return File
+     */
+    public function setFilename($filename)
+    {
+        $this->filename = $filename;
 
-        /**
-         * @var string
-         */
-        protected $mime;
+        return $this;
+    }
 
-        /**
-         * @var \DateTime
-         */
-        protected $created_at;
+    /**
+     * @return int
+     */
+    public function getFilesize()
+    {
+        return $this->filesize;
+    }
 
-        /**
-         * @var \DateTime
-         */
-        protected $modified_at;
+    /**
+     * @param int $filesize
+     *
+     * @return File
+     */
+    public function setFilesize($filesize)
+    {
+        $this->filesize = $filesize;
 
-        /**
-         * Simple datamapper used for the database
-         *
-         * @return array
-         */
-        public function dataMapper()
-        {
-            return [
-                "filename" => $this->filename,
-                "filesize" => $this->filesize,
-                "location" => $this->location,
-                "mime" => $this->mine,
-                "created_at" => $this->created_at,
-                "modified_at" => $this->modified_at,
-                "mount_id" => $this->mount_id
-            ];
-        }
+        return $this;
+    }
 
-        /**
-         * @return string
-         */
-        public function getFilename()
-        {
-            return $this->filename;
-        }
+    /**
+     * @return string
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
 
-        /**
-         * @param string $filename
-         *
-         * @return File
-         */
-        public function setFilename($filename)
-        {
-            $this->filename = $filename;
+    /**
+     * @param string $location
+     *
+     * @return File
+     */
+    public function setLocation($location)
+    {
+        $this->location = $location;
 
-            return $this;
-        }
+        return $this;
+    }
 
-        /**
-         * @return int
-         */
-        public function getFilesize()
-        {
-            return $this->filesize;
-        }
+    /**
+     * Return the file's relative path
+     *
+     * @return string
+     */
+    public function getRelativePath()
+    {
+        return DS . $this->location . $this->filename;
+    }
 
-        /**
-         * @param int $filesize
-         *
-         * @return File
-         */
-        public function setFilesize($filesize)
-        {
-            $this->filesize = $filesize;
+    /**
+     * @return string
+     */
+    public function getMime()
+    {
+        return $this->mime;
+    }
 
-            return $this;
-        }
+    /**
+     * @param string $mime
+     *
+     * @return File
+     */
+    public function setMime($mime)
+    {
+        $this->mime = $mime;
 
-        /**
-         * @return string
-         */
-        public function getLocation()
-        {
-            return $this->location;
-        }
+        return $this;
+    }
 
-        /**
-         * @param string $location
-         *
-         * @return File
-         */
-        public function setLocation($location)
-        {
-            $this->location = $location;
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at;
+    }
 
-            return $this;
-        }
+    /**
+     * @param \DateTime $created_at
+     *
+     * @return File
+     */
+    public function setCreatedAt($created_at)
+    {
+        $this->created_at = $created_at;
 
-        /**
-         * Return the file's relative path
-         *
-         * @return string
-         */
-        public function getRelativePath()
-        {
-            return DS . $this->location . $this->filename;
-        }
+        return $this;
+    }
 
-        /**
-         * @return string
-         */
-        public function getMime()
-        {
-            return $this->mime;
-        }
+    /**
+     * @return \DateTime
+     */
+    public function getModifiedAt()
+    {
+        return $this->modified_at;
+    }
 
-        /**
-         * @param string $mime
-         *
-         * @return File
-         */
-        public function setMime($mime)
-        {
-            $this->mime = $mime;
+    /**
+     * @param \DateTime $modified_at
+     *
+     * @return File
+     */
+    public function setModifiedAt($modified_at)
+    {
+        $this->modified_at = $modified_at;
 
-            return $this;
-        }
-
-        /**
-         * @return \DateTime
-         */
-        public function getCreatedAt()
-        {
-            return $this->created_at;
-        }
-
-        /**
-         * @param \DateTime $created_at
-         *
-         * @return File
-         */
-        public function setCreatedAt($created_at)
-        {
-            $this->created_at = $created_at;
-
-            return $this;
-        }
-
-        /**
-         * @return \DateTime
-         */
-        public function getModifiedAt()
-        {
-            return $this->modified_at;
-        }
-
-        /**
-         * @param \DateTime $modified_at
-         *
-         * @return File
-         */
-        public function setModifiedAt($modified_at)
-        {
-            $this->modified_at = $modified_at;
-
-            return $this;
-        }
+        return $this;
     }
 }

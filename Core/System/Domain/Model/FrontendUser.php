@@ -7,10 +7,8 @@
  * Date: 27.04.2015 @ 22:27
  * Project: Conţinut CMS
  */
-namespace Continut\Core\System\Domain\Model {
+namespace Continut\Core\System\Domain\Model;
 
-    class FrontendUser extends User
-    {
-    }
-
+class FrontendUser extends User
+{
 }

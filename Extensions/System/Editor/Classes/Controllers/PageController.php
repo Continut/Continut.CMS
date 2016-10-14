@@ -50,6 +50,7 @@ class PageController extends BackendPageController
         $pageView = Utility::createInstance('Continut\Core\Mvc\View\PageView');
 
         // get all elements from the database (including hidden, as they might be toggled, but not deleted ones, as deleted ones need to be restored)
+        /** @var \Continut\Extensions\System\Frontend\Classes\Domain\Collection\FrontendContentCollection $contentCollection */
         $contentCollection = Utility::createInstance('Continut\Extensions\System\Frontend\Classes\Domain\Collection\FrontendContentCollection');
         $contentCollection->where("page_id = :page_id AND is_deleted = 0 ORDER BY sorting ASC", [":page_id" => $pageModel->getId()]);
 

@@ -8,201 +8,207 @@
  * Project: Conţinut CMS
  */
 
-namespace Continut\Core\System\Domain\Model {
+namespace Continut\Core\System\Domain\Model;
 
-    use Continut\Core\Mvc\Model\BaseModel;
+use Continut\Core\Mvc\Model\BaseModel;
 
-    class FileReference extends BaseModel
+class FileReference extends BaseModel
+{
+    /**
+     * @var integer
+     */
+    protected $fileId;
+
+    /**
+     * @var boolean
+     */
+    protected $isVisible;
+
+    /**
+     * @var boolean
+     */
+    protected $isDeleted;
+
+    /**
+     * @var string
+     */
+    protected $tablename;
+
+    /**
+     * @var string
+     */
+    protected $title;
+
+    /**
+     * @var string
+     */
+    protected $alt;
+
+    /**
+     * @var string
+     */
+    protected $description;
+
+    /**
+     * @var int
+     */
+    protected $foreignId;
+
+    /**
+     * Simple datamapper used for the database
+     *
+     * @return array
+     */
+    public function dataMapper()
     {
-        /**
-         * @var integer
-         */
-        protected $file_id;
+        $fields = [
+            "file_id"     => $this->fileId,
+            "foreign_id"  => $this->foreignId,
+            "is_visible"  => $this->isVisible,
+            "is_deleted"  => $this->isDeleted,
+            "tablename"   => $this->tablename,
+            "title"       => $this->title,
+            "alt"         => $this->alt,
+            "description" => $this->description
+        ];
 
-        /**
-         * @var boolean
-         */
-        protected $is_visible;
-
-        /**
-         * @var boolean
-         */
-        protected $is_deleted;
-
-        /**
-         * @var string
-         */
-        protected $tablename;
-
-        /**
-         * @var string
-         */
-        protected $title;
-
-        /**
-         * @var string
-         */
-        protected $alt;
-
-        /**
-         * @var string
-         */
-        protected $description;
-
-        /**
-         * Simple datamapper used for the database
-         *
-         * @return array
-         */
-        public function dataMapper()
-        {
-            return [
-                "file_id" => $this->file_id,
-                "foreign_id" => $this->foreign_id,
-                "is_visible" => $this->is_visible,
-                "is_deleted" => $this->is_deleted,
-                "tablename" => $this->tablename,
-                "title" => $this->title,
-                "alt" => $this->alt,
-                "description" => $this->description
-            ];
-        }
-
-        /**
-         * @return int
-         */
-        public function getFileId()
-        {
-            return $this->file_id;
-        }
-
-        /**
-         * @param int $file_id
-         */
-        public function setFileId($file_id)
-        {
-            $this->file_id = $file_id;
-        }
-
-        /**
-         * @return boolean
-         */
-        public function getIsVisible()
-        {
-            return $this->is_visible;
-        }
-
-        /**
-         * @param boolean $is_visible
-         *
-         * @return FileReference
-         */
-        public function setIsVisible($is_visible)
-        {
-            $this->is_visible = $is_visible;
-
-            return $this;
-        }
-
-        /**
-         * @return boolean
-         */
-        public function getIsDeleted()
-        {
-            return $this->is_deleted;
-        }
-
-        /**
-         * @param boolean $is_deleted
-         *
-         * @return FileReference
-         */
-        public function setIsDeleted($is_deleted)
-        {
-            $this->is_deleted = $is_deleted;
-
-            return $this;
-        }
-
-        /**
-         * @return string
-         */
-        public function getTablename()
-        {
-            return $this->tablename;
-        }
-
-        /**
-         * @param string $tablename
-         *
-         * @return FileReference
-         */
-        public function setTablename($tablename)
-        {
-            $this->tablename = $tablename;
-
-            return $this;
-        }
-
-        /**
-         * @return string
-         */
-        public function getTitle()
-        {
-            return $this->title;
-        }
-
-        /**
-         * @param string $title
-         *
-         * @return FileReference
-         */
-        public function setTitle($title)
-        {
-            $this->title = $title;
-
-            return $this;
-        }
-
-        /**
-         * @return string
-         */
-        public function getAlt()
-        {
-            return $this->alt;
-        }
-
-        /**
-         * @param string $alt
-         *
-         * @return FileReference
-         */
-        public function setAlt($alt)
-        {
-            $this->alt = $alt;
-
-            return $this;
-        }
-
-        /**
-         * @return string
-         */
-        public function getDescription()
-        {
-            return $this->description;
-        }
-
-        /**
-         * @param string $description
-         *
-         * @return FileReference
-         */
-        public function setDescription($description)
-        {
-            $this->description = $description;
-
-            return $this;
-        }
-
+        return array_merge($fields, parent::dataMapper());
     }
+
+    /**
+     * @return int
+     */
+    public function getFileId()
+    {
+        return $this->fileId;
+    }
+
+    /**
+     * @param int $fileId
+     */
+    public function setFileId($fileId)
+    {
+        $this->fileId = $fileId;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getIsVisible()
+    {
+        return $this->isVisible;
+    }
+
+    /**
+     * @param boolean $isVisible
+     *
+     * @return FileReference
+     */
+    public function setIsVisible($isVisible)
+    {
+        $this->isVisible = $isVisible;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getIsDeleted()
+    {
+        return $this->isDeleted;
+    }
+
+    /**
+     * @param boolean $isDeleted
+     *
+     * @return FileReference
+     */
+    public function setIsDeleted($isDeleted)
+    {
+        $this->isDeleted = $isDeleted;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTablename()
+    {
+        return $this->tablename;
+    }
+
+    /**
+     * @param string $tablename
+     *
+     * @return FileReference
+     */
+    public function setTablename($tablename)
+    {
+        $this->tablename = $tablename;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $title
+     *
+     * @return FileReference
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAlt()
+    {
+        return $this->alt;
+    }
+
+    /**
+     * @param string $alt
+     *
+     * @return FileReference
+     */
+    public function setAlt($alt)
+    {
+        $this->alt = $alt;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     *
+     * @return FileReference
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
 }

@@ -25,9 +25,11 @@ class Page extends \Continut\Core\System\Domain\Model\Page
                 'isVisible' => $this->getIsVisible(),
                 'slug' => $this->getSlug()
             ],
-            'canDelete' => !$this->getIsDeleted(),
-            'canEdit' => true,
-            'canCreate' => true
+            'actions' => [
+                'canDelete' => !$this->getIsDeleted(),
+                'canEdit' => true,
+                'canCreate' => true
+            ]
         ];
 
         return $data;

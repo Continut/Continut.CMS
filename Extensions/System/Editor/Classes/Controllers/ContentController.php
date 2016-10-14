@@ -27,17 +27,14 @@ class ContentController extends BackendController
         parent::__construct();
     }
 
-    public function jsonAction()
-    {
+    public function treeAction() {
+        $pageId = (int)$this->getRequest()->getArgument("id");
+
         $contentCollection = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Collection\BackendContentCollection');
+        $contentCollection->where("page_id = :page_id", [":page_id" => $pageId]);
 
-        $elements = $contentElement = $contentCollection->where("is_deleted = 0")->getAll();
-
-        foreach ($elements as $element) {
-
-        }
-
+        $tree = $contentCollection->buildJsonTree();
         header('Content-Type: application/json');
-        return json_encode(['id' => 1, 'title' => 'Test']);
+        return json_encode($tree);
     }
 }
