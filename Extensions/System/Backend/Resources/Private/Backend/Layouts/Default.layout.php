@@ -37,7 +37,7 @@ $this->getPageView()
         </li>
         <li role="presentation" class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false"><i
-                    class="fa fa-fw fa-user"></i> Gringo Deluxe <span class="caret"></span></a>
+                    class="fa fa-fw fa-user"></i> <?php echo \Continut\Core\Utility::getSession()->getUser()->getName(); ?> <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
                 <li><a href="<?= $this->helper("Url")->linkToAction("Backend", "User", "profile") ?>">User profile</a>
                 </li>

@@ -34,12 +34,12 @@ class ContentCollection extends BaseCollection
 
         // add a root child node, that selects the page
         $rootChild = new \stdClass();
-        $rootChild->id = 9999;
-        $rootChild->text = 'Root';
+        $rootChild->id = '9999';
+        $rootChild->parentId = '0';
         $rootChild->label = 'Root node';
-        $rootChild->parentId = 0;
-        $rootChild->status = 'normal';
+        $rootChild->text = 'Root';
         $rootChild->icon = 'fa fa-sitemap';
+        $rootChild->status = 'normal';
 
         $children[0][] = $rootChild;
 

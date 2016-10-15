@@ -265,11 +265,20 @@ namespace Continut\Core {
         public function startSession()
         {
             // Create our session handler
-            $userSession = Utility::createInstance('Continut\Core\System\Session\UserSession');
+            $userSession = Utility::createInstance('Continut\Core\System\Domain\Model\UserSession');
             session_name("ContinutCMS");
             session_set_save_handler($userSession, true);
             session_save_path(__ROOTCMS__ . DS . 'Tmp' . DS . 'Session');
             session_start();
+
+            if ($userSession->get('user_id')) {
+                $userId = (int)$userSession->get('user_id');
+                $user = Utility::createInstance('Continut\Core\System\Domain\Collection\BackendUserCollection')->findById($userId);
+                if (!$user) {
+                    $user = Utility::createInstance('Continut\Core\System\Domain\Model\BackendUser');
+                }
+                $userSession->setUser($user);
+            }
 
             Utility::$session = $userSession;
 

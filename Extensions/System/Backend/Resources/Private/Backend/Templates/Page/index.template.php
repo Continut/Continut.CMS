@@ -27,12 +27,13 @@
                                                 $languages.append($("<option data-icon='flag-icon flag-icon-" + key.flag + "'></option>").attr("value", value).text(key.title));
                                             });
                                             $languages.selectpicker('refresh');
-                                            $('#cms_tree').tree('loadData', json.pages);
+                                            $('#cms_tree').jstree(true).settings.core.data = json.pages;
                                             $('#content').empty();
                                         } else {
-                                            $('#cms_tree').tree('loadData', []);
+                                            $('#cms_tree').jstree(true).settings.core.data = [];
                                             $languages.empty().selectpicker('refresh');
                                         }
+                                        $('#cms_tree').jstree(true).refresh();
                                     });
                             });
                         </script>
@@ -57,7 +58,9 @@
                                 data: {domain_id: $('#select_website').val(), domain_url_id: this.value}
                             })
                                 .done(function (data) {
-                                    $('#cms_tree').tree('loadData', $.parseJSON(data).pages);
+                                    var json = $.parseJSON(data);
+                                    $('#cms_tree').jstree(true).settings.core.data = json.pages;
+                                    $('#cms_tree').jstree(true).refresh();
                                     $('#content').empty();
                                 });
                         });
@@ -188,66 +191,7 @@
                 });
             });
 
-            /*$.getJSON(
-                '<?= $this->helper("Url")->linkToAction("Backend", "Page", "tree") ?>',
-                function (data) {
-                    $('#cms_tree').tree({
-                        data: data.pages,
-                        dragAndDrop: true,
-                        allowDragEventPropagation: false,
-                        closedIcon: $('<i class="fa fa-fw fa-chevron-right"></i>'),
-                        openedIcon: $('<i class="fa fa-fw fa-chevron-down"></i>'),
-                        useContextMenu: false,
-                        slide: false,
-                        onCreateLi: function (node, $li) {
-                            // Add 'icon' span before title
-                            var iconClass = 'fa-file';
-                            var pageIcon = '';
-                            switch (node.state) {
-                                case "hidden-frontend":
-                                    pageIcon = '<span class="fa-stack"><i class="fa fa-lg tree-icon fa-fw ' + iconClass + ' fa-disabled"></i><i class="fa fa-stack-1x"></i></span> ';
-                                    break;
-                                case "hidden-both":
-                                    pageIcon = '<span class="fa-stack"><i class="fa fa-lg tree-icon fa-fw ' + iconClass + ' fa-disabled"></i><i class="fa fa-eye-slash fa-stack-1x text-danger"></i></span> ';
-                                    break;
-                                case "hidden-menu":
-                                    pageIcon = '<span class="fa-stack"><i class="fa fa-lg tree-icon fa-fw ' + iconClass + '"></i><i class="fa fa-eye-slash fa-stack-1x text-danger"></i></span> ';
-                                    break;
-                                default:
-                                    pageIcon = '<span class="fa-stack"><i class="fa fa-lg tree-icon fa-fw ' + iconClass + '"></i><i class="fa fa-stack-1x"></i></span> ';
-                            }
-                            $li.find('.jqtree-title').before(pageIcon).after('<a class="btn btn-success pull-right btn-sm page-add" style="display:none" data-page-id="' + node.id + '" title="<?= $this->__("backend.pageTree.createPage") ?>"><i class="fa fa-plus"></i></a>');
-                        }
-
-                    });
-                    $('#cms_tree').bind(
-                        'tree.select',
-                        function (event) {
-                            // once a node is clicked, load the corresponding page in the right side
-                            if (event.node) {
-                                $.ajax({
-                                    url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "show") ?>',
-                                    data: {page_id: event.node.id},
-                                    beforeSend: function (xhr) {
-                                        $(event.node.element).find('.jqtree-element').eq(0).append('<span class="pull-right fa fa-spinner fa-pulse"></span>');
-                                    }
-                                })
-                                    .done(function (data) {
-                                        $('#content').html(data);
-                                        $(event.node.element).find('.fa-spinner').remove();
-                                        if (previousSelectedNode) {
-                                            $(previousSelectedNode.element).find('.page-add').eq(0).hide();
-                                        }
-                                        $(event.node.element).find('.page-add').eq(0).show();
-                                        previousSelectedNode = event.node;
-                                    });
-                            } else {
-                                $(event.previous_node.element).find('.page-add').eq(0).hide();
-                            }
-                        }
-                    );
-
-                    $('#cms_tree').bind(
+            /*$('#cms_tree').bind(
                         'tree.move',
                         function (event) {
                             event.preventDefault();
@@ -261,9 +205,7 @@
                                 }
                             );
                         }
-                    );
-                }
-            );*/
+                    );*/
 
         </script>
     </div>

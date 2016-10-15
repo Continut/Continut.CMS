@@ -39,6 +39,11 @@ class User extends BaseModel
     protected $usergroupId;
 
     /**
+     * @var bool is user connected
+     */
+    protected $isConnected = false;
+
+    /**
      * Simple datamapper used for the database
      *
      * @return array
@@ -50,8 +55,7 @@ class User extends BaseModel
             "password"     => $this->password,
             "usergroup_id" => $this->usergroupId,
             "is_active"    => $this->isActive,
-            "is_deleted"   => $this->isDeleted,
-            "name"         => $this->name
+            "is_deleted"   => $this->isDeleted
         ];
 
         return array_merge($fields, parent::dataMapper());
@@ -135,5 +139,21 @@ class User extends BaseModel
     public function setUsergroupId($usergroupId)
     {
         $this->usergroupId = $usergroupId;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getIsConnected()
+    {
+        return $this->isConnected;
+    }
+
+    /**
+     * @param boolean $isConnected
+     */
+    public function setIsConnected($isConnected)
+    {
+        $this->isConnected = $isConnected;
     }
 }

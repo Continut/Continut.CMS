@@ -46,7 +46,7 @@ namespace Continut\Core {
         static $cacheHandler = NULL;
 
         /**
-         * @var \Continut\Core\System\Session\UserSession Current user session data
+         * @var \Continut\Core\System\Domain\Model\UserSession Current user session data
          */
         static $session = NULL;
 
@@ -272,7 +272,7 @@ namespace Continut\Core {
         /**
          * Return currentu user session
          *
-         * @return System\Session\UserSession
+         * @return System\Domain\Model\UserSession
          */
         public static function getSession()
         {

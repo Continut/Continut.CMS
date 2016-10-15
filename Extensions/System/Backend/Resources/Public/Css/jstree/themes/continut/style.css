@@ -340,13 +340,13 @@
   box-shadow: none;
 }
 .jstree-default.jstree-checkbox-no-clicked .jstree-clicked.jstree-hovered {
-  background: rgba(34, 34, 34, 0.5);
+  background: rgba(34, 34, 134, 0.5);
 }
 .jstree-default.jstree-checkbox-no-clicked > .jstree-wholerow-ul .jstree-wholerow-clicked {
   background: transparent;
 }
 .jstree-default.jstree-checkbox-no-clicked > .jstree-wholerow-ul .jstree-wholerow-clicked.jstree-wholerow-hovered {
-  background-color: rgba(34, 34, 34, 0.5);
+  background-color: rgba(34, 34, 134, 0.5);
 }
 .jstree-default > .jstree-striped {
   min-width: 100%;
@@ -365,10 +365,13 @@
   box-sizing: border-box;
 }
 .jstree-default .jstree-wholerow-hovered {
-  background: rgba(34, 34, 34, 0.5);
+  background: rgba(34, 34, 134, 0.5);
+}
+.jstree-default .jstree-wholerow-hovered .jstree-anchor {
+  color: white;
 }
 .jstree-default .jstree-wholerow-clicked {
-  background: rgba(34, 34, 34, 0.75);
+  background: rgba(34, 34, 134, 0.75);
   color: #ffeb3b;
 }
 .jstree-default .jstree-node {

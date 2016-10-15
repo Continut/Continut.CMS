@@ -37,7 +37,7 @@ namespace Continut\Core\Mvc\Controller {
         protected $name;
 
         /**
-         * @var \Continut\Core\System\Session\User Current session user
+         * @var \Continut\Core\System\Domain\Model\User Current session user
          */
         protected $user;
 
@@ -67,7 +67,7 @@ namespace Continut\Core\Mvc\Controller {
         protected $templateStorage;
 
         /**
-         * @var \Continut\Core\System\Session\UserSession Reference to the current user session
+         * @var \Continut\Core\System\Domain\Model\UserSession Reference to the current user session
          */
         protected $session;
 
@@ -96,9 +96,9 @@ namespace Continut\Core\Mvc\Controller {
          */
         public function __construct()
         {
-            $this->view = Utility::createInstance('Continut\Core\Mvc\View\BaseView');
+            $this->view    = Utility::createInstance('Continut\Core\Mvc\View\BaseView');
             $this->request = Utility::getRequest();
-            //$this->user    = Utility::getUser();
+            $this->user    = Utility::getSession()->getUser();
         }
 
         /**
@@ -118,7 +118,7 @@ namespace Continut\Core\Mvc\Controller {
         }
 
         /**
-         * @return \Continut\Core\System\Session\User
+         * @return \Continut\Core\System\Domain\Model\User
          */
         public function getUser()
         {
@@ -172,7 +172,7 @@ namespace Continut\Core\Mvc\Controller {
         /**
          * Get user session
          *
-         * @return \Continut\Core\System\Session\UserSession
+         * @return \Continut\Core\System\Domain\Model\UserSession
          */
         public function getSession()
         {

@@ -37,12 +37,17 @@ class File extends BaseModel
     /**
      * @var \DateTime
      */
-    protected $created_at;
+    protected $createdAt;
 
     /**
      * @var \DateTime
      */
-    protected $modified_at;
+    protected $modifiedAt;
+
+    /**
+     * @var int mount id
+     */
+    protected $mountId;
 
     /**
      * Simple datamapper used for the database
@@ -52,13 +57,13 @@ class File extends BaseModel
     public function dataMapper()
     {
         $fields = [
-            "filename" => $this->filename,
-            "filesize" => $this->filesize,
-            "location" => $this->location,
-            "mime" => $this->mine,
-            "created_at" => $this->created_at,
-            "modified_at" => $this->modified_at,
-            "mount_id" => $this->mount_id
+            "filename"    => $this->filename,
+            "filesize"    => $this->filesize,
+            "location"    => $this->location,
+            "mime"        => $this->mime,
+            "created_at"  => $this->createdAt,
+            "modified_at" => $this->modifiedAt,
+            "mount_id"    => $this->mountId
         ];
         return array_merge($fields, parent::dataMapper());
     }
@@ -158,17 +163,17 @@ class File extends BaseModel
      */
     public function getCreatedAt()
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     /**
-     * @param \DateTime $created_at
+     * @param \DateTime $createdAt
      *
      * @return File
      */
-    public function setCreatedAt($created_at)
+    public function setCreatedAt($createdAt)
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
@@ -178,17 +183,17 @@ class File extends BaseModel
      */
     public function getModifiedAt()
     {
-        return $this->modified_at;
+        return $this->modifiedAt;
     }
 
     /**
-     * @param \DateTime $modified_at
+     * @param \DateTime $modifiedAt
      *
      * @return File
      */
-    public function setModifiedAt($modified_at)
+    public function setModifiedAt($modifiedAt)
     {
-        $this->modified_at = $modified_at;
+        $this->modifiedAt = $modifiedAt;
 
         return $this;
     }

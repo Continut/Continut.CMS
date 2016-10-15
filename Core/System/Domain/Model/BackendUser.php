@@ -40,7 +40,7 @@ class BackendUser extends User
     public function dataMapper()
     {
         $fields = [
-            "name"     => $this->name
+            "name" => $this->name
         ];
 
         return array_merge($fields, parent::dataMapper());

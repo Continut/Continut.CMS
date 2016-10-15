@@ -10,7 +10,7 @@
 namespace Continut\Extensions\System\Backend\Classes\Controllers;
 
 use Continut\Core\Mvc\Controller\FrontendController;
-use Continut\Core\System\Session\UserSession;
+use Continut\Core\System\Domain\Model\UserSession;
 use Continut\Core\Utility;
 
 class LoginController extends FrontendController
@@ -59,7 +59,6 @@ class LoginController extends FrontendController
 
         // We set user as "connected", meaning we store their id
         $this->getSession()->set("user_id", $backendUser->getId());
-        $this->getSession()->set("fullname", $backendUser->getName());
 
         // and we redirect them to the dashboard
         $this->redirect(Utility::helper("Url")->linkToAction("Backend", "Index", "dashboard"));

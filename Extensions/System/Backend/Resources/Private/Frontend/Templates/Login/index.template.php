@@ -1,7 +1,7 @@
 <form method="post" class="form login"
       action="<?= $this->helper("Url")->linkToAction("Backend", "Login", "checkLogin") ?>">
     <p><?= $this->__("login.header") ?></p>
-    <?= $this->helper("Session")->showFlashMessages(\Continut\Core\System\Session\UserSession::FLASH_ERROR); ?>
+    <?= $this->helper("Session")->showFlashMessages(\Continut\Core\System\Domain\Model\UserSession::FLASH_ERROR); ?>
     <fieldset>
         <div class="field">
             <input name="cms_username" id="cms_username" type="text" class="text"
