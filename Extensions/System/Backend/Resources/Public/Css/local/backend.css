@@ -236,14 +236,17 @@ li a.helper-icon {
   box-shadow: none;
 }
 .panel-dashboard .panel-heading {
-  background: #3a4450;
-  color: white;
+  overflow: hidden;
+  border-bottom: 1px solid #3a4450;
 }
 .list-element {
   padding: 5px;
-  overflow: hidden;
   margin-bottom: 1px;
-  background: rgba(0, 0, 0, 0.2);
+}
+.list-element:after {
+  content: '';
+  clear: both;
+  display: block;
 }
 /* drag and drop */
 .content-drag-receiver {

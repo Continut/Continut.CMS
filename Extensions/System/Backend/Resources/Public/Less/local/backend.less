@@ -291,16 +291,19 @@ li a.helper-icon {
   box-shadow: none;
 
   .panel-heading {
-    background: @main-toolbar-background;
-    color: white;
+    overflow: hidden;
+    border-bottom: 1px solid @main-toolbar-background;
   }
 }
 
 .list-element {
   padding: 5px;
-  overflow: hidden;
   margin-bottom: 1px;
-  background: rgba(0, 0, 0, 0.2);
+  &:after {
+    content: '';
+    clear: both;
+    display: block;
+  }
 }
 
 /* drag and drop */

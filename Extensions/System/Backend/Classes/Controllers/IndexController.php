@@ -23,7 +23,7 @@ class IndexController extends BackendController
     public function __construct()
     {
         parent::__construct();
-        $this->setLayoutTemplate(Utility::getResource("Default", "Backend", "Backend", "Layout"));
+        $this->setLayoutTemplate(Utility::getResource('Default', 'Backend', 'Backend', 'Layout'));
     }
 
     /**
@@ -33,6 +33,10 @@ class IndexController extends BackendController
      */
     public function dashboardAction()
     {
+        // load the chart.js file for the dashboard
+        $this->getPageView()->addJsAsset(['identifier' => 'chart-js', 'extension' => 'Backend', 'file' => 'chart-js/Chart.js', 'after' => 'jquery']);
+
+        $this->getView()->assign('user', $this->getUser());
     }
 
     /**
@@ -47,17 +51,17 @@ class IndexController extends BackendController
         $secondaryMenu = [];
 
         foreach ($allExtensionsSettings as $extensionName => $configuration) {
-            if (isset($configuration["backend"])) {
-                if (isset($configuration["backend"]["mainMenu"])) {
-                    $mainMenu = array_merge_recursive($mainMenu, $configuration["backend"]["mainMenu"]);
+            if (isset($configuration['backend'])) {
+                if (isset($configuration['backend']['mainMenu'])) {
+                    $mainMenu = array_merge_recursive($mainMenu, $configuration['backend']['mainMenu']);
                 }
-                if (isset($configuration["backend"]["secondaryMenu"])) {
-                    $secondaryMenu = array_merge_recursive($secondaryMenu, $configuration["backend"]["secondaryMenu"]);
+                if (isset($configuration['backend']['secondaryMenu'])) {
+                    $secondaryMenu = array_merge_recursive($secondaryMenu, $configuration['backend']['secondaryMenu']);
                 }
             }
         }
 
-        $this->getView()->assign("mainMenu", $mainMenu);
-        $this->getView()->assign("secondaryMenu", $secondaryMenu);
+        $this->getView()->assign('mainMenu', $mainMenu);
+        $this->getView()->assign('secondaryMenu', $secondaryMenu);
     }
 }

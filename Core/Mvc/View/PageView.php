@@ -181,9 +181,43 @@ namespace Continut\Core\Mvc\View {
             $header = "";
 
             if ($this->assets) {
-                foreach ($this->assets as $assetType => $assetValues) {
-                    foreach ($assetValues as $asset) {
-                        $header .= "\t" . $asset . "\n";
+                foreach ($this->assets as $assetType => $assets) {
+                    foreach ($assets as $identifier => $configuration) {
+
+                        if (isset($configuration['before'])) {
+                            $this->assets[$assetType] = Utility::arrayInsertBefore(
+                                $this->assets[$assetType],
+                                $configuration['before'],
+                                $identifier,
+                                $this->assets[$assetType][$identifier]
+                            );
+                        }
+
+                        if (isset($configuration['after'])) {
+                            $this->assets[$assetType] = Utility::arrayMoveAfter(
+                                $this->assets[$assetType],
+                                $configuration['after'],
+                                $identifier,
+                                $this->assets[$assetType][$identifier]
+                            );
+                        }
+                    }
+                }
+                foreach ($this->assets as $assetType => $assets) {
+                    foreach ($assets as $identifier => $configuration) {
+                        // if it's an external css/js, just link it directly
+                        if (isset($configuration['external']) && $configuration['external'] == TRUE) {
+                            $filePath = $configuration['file'];
+                        } else {
+                            $filePath = Utility::getAssetPath($assetType . '/' . $configuration['file'], $configuration['extension']);
+                        }
+
+                        if ($assetType == 'Css') {
+                            $header .= "\t" . '<link rel="stylesheet" type="text/css" href="' . $filePath . '" />' . "\n";
+                        }
+                        if ($assetType == 'JavaScript') {
+                            $header .= "\t" . '<script type="text/javascript" src="' . $filePath . '"></script>' . "\n";
+                        }
                     }
                 }
             }
@@ -236,29 +270,7 @@ namespace Continut\Core\Mvc\View {
          */
         protected function addAsset($configuration, $type)
         {
-            if (isset($configuration["external"]) && $configuration["external"] == TRUE) {
-                $filePath = $configuration["file"];
-            } else {
-                $filePath = Utility::getAssetPath($type . "/" . $configuration["file"], $configuration["extension"]);
-            }
-
-            $id = $configuration["identifier"];
-
-            if ($type == "Css") {
-                $this->assets[$type][$id] = '<link rel="stylesheet" type="text/css" href="' . $filePath . '" />';
-            }
-            if ($type == "JavaScript") {
-                $this->assets[$type][$id] = '<script type="text/javascript" src="' . $filePath . '"></script>';
-            }
-
-            if (isset($configuration["before"])) {
-                $this->assets[$type] = Utility::arrayInsertBefore(
-                    $this->assets[$type],
-                    $configuration["before"],
-                    $id,
-                    $this->assets[$type][$id]
-                );
-            }
+            $this->assets[$type][$configuration['identifier']] = $configuration;
         }
 
         /**

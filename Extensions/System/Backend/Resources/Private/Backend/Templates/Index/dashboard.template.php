@@ -1,22 +1,23 @@
-<h2>Welcome home: Gringo Deluxe</h2>
+<h2>Welcome, <?php echo $user->getName() ?></h2>
 <div class="row">
     <div class="col-lg-4 col-md-6">
         <div class="panel panel-dashboard">
             <div class="panel-heading">
                 <i class="fa fa-fw fa-pie-chart"></i> Content statistics
+                <a href="" class="pull-right btn btn-default">View complete list</a>
             </div>
             <div class="panel-body">
                 <p><strong>2</strong> domains in total:</p>
                 <h4>www.domain1.ch</h4>
                 <div class="list-element"><span class="badge">15</span> pages and <span class="badge">100</span> content
-                    elements <span class="pull-right"><i class="flag-icon flag-icon-ro"></i> Română</span></div>
+                    elements <span class="pull-right">Română <i class="flag-icon flag-icon-ro"></i></span></div>
                 <div class="list-element"><span class="badge">10</span> pages and <span class="badge">92</span> content
-                    elements <span class="pull-right"><i class="flag-icon flag-icon-fr"></i> Français</span></div>
+                    elements <span class="pull-right">Français <i class="flag-icon flag-icon-fr"></i></span></div>
                 <h4>www.domain2.ch</h4>
                 <div class="list-element"><span class="badge">15</span> pages and <span class="badge">100</span> content
-                    elements <span class="pull-right"><i class="flag-icon flag-icon-ro"></i> Română</span></div>
+                    elements <span class="pull-right">Română <i class="flag-icon flag-icon-ro"></i></span></div>
                 <div class="list-element"><span class="badge">10</span> pages and <span class="badge">92</span> content
-                    elements <span class="pull-right"><i class="flag-icon flag-icon-us"></i> English</span></div>
+                    elements <span class="pull-right">English <i class="flag-icon flag-icon-us"></i></span></div>
             </div>
         </div>
     </div>
@@ -24,26 +25,36 @@
         <div class="panel panel-dashboard">
             <div class="panel-heading">
                 <i class="fa fa-fw fa-thumbs-up"></i> Review elements
-                <a href="" class="pull-right btn btn-default btn-xs">View complete list</a>
+                <a href="" class="pull-right btn btn-default">View complete list</a>
             </div>
             <div class="panel-body">
                 <p>Elements to review and validate before they are shown on the website:</p>
-                <div class="list-element"><i class="fa fa-fw fa-file-o"></i> Page: <strong>Our solutions [id:
-                        100]</strong> created by <strong><a href="">Gringo Deluxe</a></strong> today at 10:32
-                    <div class="btn-group btn-group-justified">
-                        <a class="btn btn-sm btn-default" href=""><i class="fa fa-fw fa-eye"></i> View</a>
-                        <a class="btn btn-sm btn-success" href=""><i class="fa fa-fw fa-thumbs-up"></i> Validate</a>
-                        <a class="btn btn-sm btn-danger" href=""><i class="fa fa-fw fa-thumbs-down"></i> Refuse</a>
+                <div class="list-element">
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href=""><i class="fa fa-fw fa-eye"></i> View</a></li>
+                            <li><a href=""><i class="fa fa-fw fa-thumbs-up text-success"></i> Validate</a></li>
+                            <li><a href=""><i class="fa fa-fw fa-thumbs-down text-danger"></i> Refuse</a></li>
+                        </ul>
                     </div>
+                    <i class="fa fa-fw fa-file-o"></i> Page: <strong>Our solutions [id: 100]</strong> created by <strong><a href="">Gringo Deluxe</a></strong> today at 10:32
                 </div>
-                <div class="list-element"><i class="fa fa-fw fa-file-text-o"></i> Content: <strong>Winners of the
-                        Odissey competition [id: 422]</strong> created by <strong><a href="">Gringo Deluxe</a></strong>
-                    on the 24th june at 09:22
-                    <div class="btn-group btn-group-justified">
-                        <a class="btn btn-sm btn-default" href=""><i class="fa fa-fw fa-eye"></i> View</a>
-                        <a class="btn btn-sm btn-success" href=""><i class="fa fa-fw fa-thumbs-up"></i> Validate</a>
-                        <a class="btn btn-sm btn-danger" href=""><i class="fa fa-fw fa-thumbs-down"></i> Refuse</a>
+                <div class="list-element">
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href=""><i class="fa fa-fw fa-eye"></i> View</a></li>
+                            <li><a href=""><i class="fa fa-fw fa-thumbs-up text-success"></i> Validate</a></li>
+                            <li><a href=""><i class="fa fa-fw fa-thumbs-down text-danger"></i> Refuse</a></li>
+                        </ul>
                     </div>
+                    <i class="fa fa-fw fa-file-text-o"></i> Content: <strong>Winners of the Odissey competition [id: 422]</strong> created by <strong><a href="">Gringo Deluxe</a></strong>
+                    on the 24th june at 09:22
                 </div>
             </div>
         </div>
@@ -52,7 +63,7 @@
         <div class="panel panel-dashboard">
             <div class="panel-heading">
                 <i class="fa fa-fw fa-history"></i> History \ Recovery
-                <a href="" class="pull-right btn btn-default btn-xs">View complete list</a>
+                <a href="" class="pull-right btn btn-default">View complete list</a>
             </div>
             <div class="panel-body">
                 <p>List of recently removed pages or content elements:</p>
@@ -69,6 +80,53 @@
                 <div class="list-element"><i class="fa fa-fw fa-file-o"></i> Page: <strong>About us [id: 123]</strong>
                     20th june at 13:50 <a class="pull-right btn btn-sm btn-danger" href=""><i
                             class="fa fa-fw fa-recycle"></i> Restore</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-4 col-md-6">
+        <div class="panel panel-dashboard">
+            <div class="panel-heading">
+                <i class="fa fa-fw fa-pie-chart"></i> Chart demos
+                <a href="" class="pull-right btn btn-default">View complete list</a>
+            </div>
+            <div class="panel-body">
+                <canvas id="myChart" width="400" height="200"></canvas>
+                <script type="text/javascript">
+                    var ctx = $("#myChart");
+                    var myChart = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ["New visitors", "Returning visitors", "Mobile visitors"],
+                            datasets: [{
+                                label: '# of Votes',
+                                data: [12, 19, 3],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255,99,132,1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            legend: {
+                                display: false
+                            },
+                            scales: {
+                                yAxes: [{
+                                    display: false
+                                }]
+                            }
+                        }
+                    });
+                </script>
             </div>
         </div>
     </div>

@@ -465,24 +465,51 @@ namespace Continut\Core {
         }
 
         /**
-         * Inserts a key + value before a certain key in an associative array
+         * Moves a key before another key
          *
-         * @param $array
-         * @param $beforeKey
-         * @param $newKey
-         * @param $newValue
+         * @param array $array
+         * @param string $beforeKey
+         * @param string $newKey
+         * @param array $newValue
          *
          * @return array
          */
-        public static function arrayInsertBefore($array, $beforeKey, $newKey, $newValue)
+        public static function arrayMoveBefore($array, $beforeKey, $newKey, $newValue)
         {
             if (array_key_exists($beforeKey, $array)) {
+                unset($array[$newKey]);
                 $temp = [];
                 foreach ($array as $key => $value) {
                     if ($key === $beforeKey) {
                         $temp[$newKey] = $newValue;
                     }
                     $temp[$key] = $value;
+                }
+                return $temp;
+            }
+            return $array;
+        }
+
+        /**
+         * Moves a key after another key
+         *
+         * @param array $array
+         * @param string $afterKey
+         * @param string $newKey
+         * @param mixed $newValue
+         *
+         * @return array
+         */
+        public static function arrayMoveAfter($array, $afterKey, $newKey, $newValue)
+        {
+            if (array_key_exists($afterKey, $array)) {
+                unset($array[$newKey]);
+                $temp = [];
+                foreach ($array as $key => $value) {
+                    $temp[$key] = $value;
+                    if ($key === $afterKey) {
+                        $temp[$newKey] = $newValue;
+                    }
                 }
                 return $temp;
             }
@@ -507,6 +534,8 @@ namespace Continut\Core {
          * Return a helper by name
          *
          * @param $helperName
+         *
+         * @return mixed Helper class instance
          */
         public static function helper($helperName)
         {
