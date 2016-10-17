@@ -1,20 +1,15 @@
-<?php
-$width = (!isset($width)) ? 800 : $width;
-$height = (!isset($height)) ? null : $height;
-$image = (!isset($image)) ? null : $image;
-?>
 <div class="form-group">
-    <?= $this->helper("Wizard")->textField("image", $this->__("backend.wizard.image"), $image) ?>
+    <?= $this->helper('Wizard')->textField('image', $this->__('backend.wizard.image'), $this->valueOrDefault('image', null)) ?>
 </div>
 <div class="row">
     <div class="col-md-3">
         <div class="form-group">
-            <?= $this->helper("Wizard")->textField("width", $this->__("backend.wizard.width"), $width) ?>
+            <?= $this->helper('Wizard')->textField('width', $this->__('backend.wizard.width'), $this->valueOrDefault('width', 800)) ?>
         </div>
     </div>
     <div class="col-md-3">
         <div class="form-group">
-            <?= $this->helper("Wizard")->textField("height", $this->__("backend.wizard.height"), $height) ?>
+            <?= $this->helper('Wizard')->textField('height', $this->__('backend.wizard.height'), $this->valueOrDefault('height', '')) ?>
         </div>
     </div>
 </div>

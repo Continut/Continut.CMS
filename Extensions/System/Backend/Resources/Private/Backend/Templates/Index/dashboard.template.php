@@ -10,12 +10,12 @@
                 <p><strong>2</strong> domains in total:</p>
                 <h4>www.domain1.ch</h4>
                 <div class="list-element"><span class="badge">15</span> pages and <span class="badge">100</span> content
-                    elements <span class="pull-right">Română <i class="flag-icon flag-icon-ro"></i></span></div>
+                    elements <span class="pull-right">Allemand <i class="flag-icon flag-icon-de"></i></span></div>
                 <div class="list-element"><span class="badge">10</span> pages and <span class="badge">92</span> content
                     elements <span class="pull-right">Français <i class="flag-icon flag-icon-fr"></i></span></div>
                 <h4>www.domain2.ch</h4>
                 <div class="list-element"><span class="badge">15</span> pages and <span class="badge">100</span> content
-                    elements <span class="pull-right">Română <i class="flag-icon flag-icon-ro"></i></span></div>
+                    elements <span class="pull-right">Italiano <i class="flag-icon flag-icon-it"></i></span></div>
                 <div class="list-element"><span class="badge">10</span> pages and <span class="badge">92</span> content
                     elements <span class="pull-right">English <i class="flag-icon flag-icon-us"></i></span></div>
             </div>
@@ -92,41 +92,82 @@
                 <a href="" class="pull-right btn btn-default">View complete list</a>
             </div>
             <div class="panel-body">
-                <canvas id="myChart" width="400" height="200"></canvas>
-                <script type="text/javascript">
-                    var ctx = $("#myChart");
-                    var myChart = new Chart(ctx, {
-                        type: 'doughnut',
-                        data: {
-                            labels: ["New visitors", "Returning visitors", "Mobile visitors"],
-                            datasets: [{
-                                label: '# of Votes',
-                                data: [12, 19, 3],
-                                backgroundColor: [
-                                    'rgba(255, 99, 132, 0.2)',
-                                    'rgba(54, 162, 235, 0.2)',
-                                    'rgba(255, 206, 86, 0.2)'
-                                ],
-                                borderColor: [
-                                    'rgba(255,99,132,1)',
-                                    'rgba(54, 162, 235, 1)',
-                                    'rgba(255, 206, 86, 1)'
-                                ],
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            legend: {
-                                display: false
-                            },
-                            scales: {
-                                yAxes: [{
-                                    display: false
-                                }]
-                            }
-                        }
-                    });
-                </script>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <canvas id="myChart" width="400" height="400"></canvas>
+                        <script type="text/javascript">
+                            var ctx = $("#myChart");
+                            var myChart = new Chart(ctx, {
+                                type: 'doughnut',
+                                data: {
+                                    labels: ["New visitors", "Returning visitors", "Mobile visitors"],
+                                    datasets: [{
+                                        label: '# of Votes',
+                                        data: [12, 19, 3],
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(255, 206, 86, 0.2)'
+                                        ],
+                                        borderColor: [
+                                            'rgba(255,99,132,1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(255, 206, 86, 1)'
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    legend: {
+                                        display: false
+                                    },
+                                    scales: {
+                                        yAxes: [{
+                                            display: false
+                                        }]
+                                    }
+                                }
+                            });
+                        </script>
+                    </div>
+                    <div class="col-sm-6">
+                        <canvas id="myChart2" width="400" height="400"></canvas>
+                        <script type="text/javascript">
+                            var ctx = $("#myChart2");
+                            var myChart = new Chart(ctx, {
+                                type: 'doughnut',
+                                data: {
+                                    labels: ["New visitors", "Returning visitors", "Mobile visitors"],
+                                    datasets: [{
+                                        label: '# of Votes',
+                                        data: [12, 19, 3],
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(255, 206, 86, 0.2)'
+                                        ],
+                                        borderColor: [
+                                            'rgba(255,99,132,1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(255, 206, 86, 1)'
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    legend: {
+                                        display: false
+                                    },
+                                    scales: {
+                                        yAxes: [{
+                                            display: false
+                                        }]
+                                    }
+                                }
+                            });
+                        </script>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

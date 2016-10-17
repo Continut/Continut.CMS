@@ -1,10 +1,6 @@
-<?php
-$image = (!isset($image)) ? null : $image;
-$title = (!isset($title)) ? null : $title;
-?>
 <div class="form-group">
-    <?= $this->helper("Wizard")->textField("title", $this->__("backend.wizard.title"), $title) ?>
+    <?= $this->helper('Wizard')->textField('title', $this->__('backend.wizard.title'), $this->valueOrDefault('title', '')) ?>
 </div>
 <div class="form-group">
-    <?= $this->helper("Wizard")->textField("image", $this->__("backend.wizard.image"), $image) ?>
+    <?= $this->helper('Wizard')->textField('image', $this->__('backend.wizard.image'), $this->valueOrDefault('image', null)) ?>
 </div>

@@ -1,25 +1,37 @@
-<?php
-$title = (!isset($title)) ? "" : $title;
-$subtitle = (!isset($subtitle)) ? "" : $subtitle;
-$icon = (!isset($icon)) ? "fa-tablet" : $icon;
-$align = (!isset($align)) ? "text-center" : $align;
-?>
-
 <div class="form-group">
-    <?= $this->helper("Wizard")->textField("title", $this->__("backend.wizard.title"), $title) ?>
+    <?= $this->helper('Wizard')->textField('title', $this->__('backend.wizard.title'), $this->valueOrDefault('title', '')) ?>
 </div>
 <div class="row">
     <div class="col-md-6">
         <div class="form-group">
-            <?= $this->helper("Wizard")->selectField("icon", "Icon", ["fa-tablet" => "Tablet", "fa-bars" => "Bars", "fa-folder" => "Folder", "fa-gear" => "Gear", "fa-lightbulb-o" => "Lightbulb"], $icon) ?>
+            <?= $this->helper('Wizard')->selectField(
+                'icon',
+                'Icon',
+                [
+                    'fa-tablet'      => 'Tablet',
+                    'fa-bars'        => 'Bars',
+                    'fa-folder'      => 'Folder',
+                    'fa-gear'        => 'Gear',
+                    'fa-lightbulb-o' => 'Lightbulb'
+                ], $this->valueOrDefault('icon', 'fa-tablet')
+            ) ?>
         </div>
     </div>
     <div class="col-md-6">
         <div class="form-group">
-            <?= $this->helper("Wizard")->selectField("align", "Text alignment", ["text-left" => "Left", "text-center" => "Center", "text-right" => "Right"], $align) ?>
+            <?= $this->helper('Wizard')->selectField(
+                'align',
+                'Text alignment',
+                [
+                    'text-left'   => 'Left',
+                    'text-center' => 'Center',
+                    'text-right'  => 'Right'
+                ],
+                $this->valueOrDefault('align', 'text-left')
+            ) ?>
         </div>
     </div>
 </div>
 <div class="form-group">
-    <?= $this->helper("Wizard")->textareaField("subtitle", "Content", $subtitle) ?>
+    <?= $this->helper('Wizard')->textareaField('subtitle', 'Content', $this->valueOrDefault('subtitle', '')) ?>
 </div>

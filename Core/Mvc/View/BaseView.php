@@ -82,7 +82,7 @@ namespace Continut\Core\Mvc\View {
             if (isset($this->variables[$key])) {
                 return $this->variables[$key];
             } else {
-                return NULL;
+                return null;
             }
         }
 
@@ -219,6 +219,22 @@ namespace Continut\Core\Mvc\View {
         public function getAdditionalData()
         {
             return $this->additionalData;
+        }
+
+        /**
+         * Returns the value of a variable or it's default value, if the variable is not yet defined
+         *
+         * @param mixed $variableName
+         * @param mixed $defaultValue
+         *
+         * @return mixed
+         */
+        public function valueOrDefault($variableName, $defaultValue) {
+            $currentValue = $this->getVariable($variableName);
+            if ($currentValue != null) {
+                return $currentValue;
+            }
+            return $defaultValue;
         }
     }
 }
