@@ -61,6 +61,18 @@ class IndexController extends BackendController
             }
         }
 
+        foreach ($mainMenu as $menuId => $menu) {
+            // if no position is set, set 900 by default, so that it is one of the last to render in the menu
+            if (!isset($menu['position'])) {
+                $mainMenu[$menuId]['position'] = 900;
+            }
+        }
+
+        usort($mainMenu, function ($item1, $item2) {
+            if ($item1['position'] == $item2['position']) return 0;
+            return $item1['position'] < $item2['position'] ? -1 : 1;
+        });
+
         $this->getView()->assign('mainMenu', $mainMenu);
         $this->getView()->assign('secondaryMenu', $secondaryMenu);
     }

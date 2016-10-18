@@ -316,7 +316,12 @@ namespace Continut\Core {
                 }
                 // also load localizations for the extension, if available
                 static::helper("Localization")->loadLabelsFromFile($folderPath . DS . "labels_" . strtolower(static::$applicationScope) . ".json");
-                static::$extensionsConfiguration = array_merge(static::$extensionsConfiguration, json_decode(file_get_contents($folderPath . DS . "configuration.json"), true));
+                $jsonData = json_decode(file_get_contents($folderPath . DS . "configuration.json"), true);
+                if ($jsonData === null) {
+                    throw new ErrorException("configuration.json file is empty or contains invalid json data. Please check syntax or remove the file if it is empty. Extension: " . $folderName);
+                } else {
+                    static::$extensionsConfiguration = array_merge(static::$extensionsConfiguration, $jsonData);
+                }
             }
 
             // Register autoloaders

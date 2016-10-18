@@ -73,15 +73,18 @@ class PageCollection extends BaseCollection
             $data->label = $item->getTitle() . " [id: $data->id]";
             $data->text = $item->getTitle();
             //$data->type = "file";
-            $data->icon = "fa fa-file";
-            $data->status = "normal";
+            $data->icon = 'fa fa-file';
+            $data->status = 'normal';
             if (!$item->getIsVisible()) {
-                $data->status = "hidden-frontend";
+                $data->status = 'hidden-frontend';
+                $data->icon .= ' fa-disabled';
                 if (!$item->getIsInMenu()) {
-                    $data->status = "hidden-both";
+                    $data->status = 'hidden-both';
+                    $data->icon = 'fa fa-eye-slash text-danger';
                 }
             } elseif (!$item->getIsInMenu()) {
-                $data->status = "hidden-menu";
+                $data->status = 'hidden-menu';
+                $data->icon = 'fa fa-eye-slash text-danger';
             }
             $children[$data->parentId][] = $data;
         }
@@ -89,8 +92,8 @@ class PageCollection extends BaseCollection
         foreach ($children as $child) {
             foreach ($child as $data) {
                 if (isset($children[$data->id])) {
-                    //$data->type = "folder";
-                    //$data->icon = "fa fa-folder";
+                    //$data->type = 'folder';
+                    //$data->icon = 'fa fa-folder';
                     $data->children = $children[$data->id];
                 } else {
                     $data->children = [];

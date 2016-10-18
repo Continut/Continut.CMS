@@ -67,15 +67,16 @@
             dataType: 'json'
         })
             .done(function (data) {
-                var node = $('#cms_tree').tree('getNodeById', data.pid);
+                var node = $('#cms_tree').jstree(true).get_node(data.pid);
+                var nodeId = '#' + node.a_attr.id;
                 if (data.visible) {
                     $('#page-visibility-frontend .element-visible').removeClass("hide");
                     $('#page-visibility-frontend .element-hide').addClass("hide");
-                    $(node.element).find(".fa-lg").first().removeClass("fa-disabled");
+                    $(nodeId).find(".jstree-icon").first().removeClass("fa-disabled");
                 } else {
                     $('#page-visibility-frontend .element-visible').addClass("hide");
                     $('#page-visibility-frontend .element-hide').removeClass("hide");
-                    $(node.element).find(".fa-lg").first().addClass("fa-disabled");
+                    $(nodeId).find(".jstree-icon").first().addClass("fa-disabled");
                 }
             });
     });
@@ -86,15 +87,16 @@
             dataType: 'json'
         })
             .done(function (data) {
-                var node = $('#cms_tree').tree('getNodeById', data.pid);
+                var node = $('#cms_tree').jstree(true).get_node(data.pid);
+                var nodeId = '#' + node.a_attr.id;
                 if (data.isInMenu) {
                     $('#page-visibility-menu .element-visible').removeClass("hide");
                     $('#page-visibility-menu .element-hide').addClass("hide");
-                    $(node.element).find(".fa-stack-1x").first().removeClass("fa-eye-slash text-danger");
+                    $(nodeId).find(".jstree-icon").first().addClass("fa-file").removeClass("fa-eye-slash text-danger");
                 } else {
                     $('#page-visibility-menu .element-visible').addClass("hide");
                     $('#page-visibility-menu .element-hide').removeClass("hide");
-                    $(node.element).find(".fa-stack-1x").first().addClass("fa-eye-slash text-danger");
+                    $(nodeId).find(".jstree-icon").first().removeClass("fa-file").addClass("fa-eye-slash text-danger");
                 }
             });
     });

@@ -13,6 +13,9 @@
                     <div class="form-group">
                         <?= $this->helper("Wizard")->textField("title", $this->__("backend.page.properties.pageTitle"), $page->getTitle()) ?>
                     </div>
+                    <div class="form-group">
+                        <?= $this->helper("Wizard")->textField("slug", $this->__("backend.page.properties.pageSlug"), $page->getSlug()) ?>
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">

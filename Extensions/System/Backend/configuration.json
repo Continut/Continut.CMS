@@ -15,6 +15,7 @@
         "moduleWeb": {
           "label": "backend.menu.web",
           "icon": "fa fa-fw fa-globe",
+          "position": 0,
           "items": {
             "page": {
               "label": "backend.menu.web.page",
@@ -38,6 +39,7 @@
         "moduleUsers": {
           "label": "backend.menu.users",
           "icon": "fa fa-fw fa-users",
+          "position": 20,
           "items": {
             "headerBackend": {
               "label": "backend.menu.users.backend.header",
@@ -116,13 +118,15 @@
           "icon": "fa fa-fw fa-picture-o",
           "extension": "Backend",
           "controller": "Media",
-          "action": "index"
+          "action": "index",
+          "position": 40
         }
       },
       "secondaryMenu": {
         "moduleCache": {
           "label": "backend.menu.cache",
           "icon": "fa fa-fw fa-hdd-o",
+          "position": 0,
           "items": {
             "cacheContent": {
               "label": "backend.menu.cache.clearContent",

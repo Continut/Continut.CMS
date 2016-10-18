@@ -10,7 +10,6 @@ $this->getPageView()
     ->addCssAsset(['identifier' => 'flagicons',          'extension' => 'Backend', 'file' => 'flagicons/flag-icon.css'])
     ->addCssAsset(['identifier' => 'jstree',             'extension' => 'Backend', 'file' => 'jstree/themes/continut/style.css'])
     ->addCssAsset(['identifier' => 'local',              'extension' => 'Backend', 'file' => 'local/backend.css'])
-    ->addCssAsset(['identifier' => 'google-roboto-font', 'external' => true,       'file' => '//fonts.googleapis.com/css?family=Roboto+Condensed&subset=latin,latin-ext,cyrillic-ext,greek-ext,greek,vietnamese,cyrillic'])
     // js files
     ->addJsAsset(['identifier' => 'jquery',              'extension' => 'Backend', 'file' => 'jquery/jquery-3.1.1.min.js'])
     ->addJsAsset(['identifier' => 'bootstrap',           'extension' => 'Backend', 'file' => 'bootstrap/bootstrap.min.js'])

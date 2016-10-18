@@ -1,4 +1,175 @@
-<h2>Welcome, <?php echo $user->getName() ?></h2>
+<h2>Dashboard</h2>
+<div class="row">
+    <div class="col-lg-4 col-md-6">
+        <div class="panel panel-dashboard">
+            <div class="panel-heading">
+                <i class="fa fa-fw fa-pie-chart"></i> Chart demos
+                <a href="" class="pull-right btn btn-default">View complete list</a>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <canvas id="myChart" width="400" height="400"></canvas>
+                        <script type="text/javascript">
+                            var ctx = $("#myChart");
+                            var myChart = new Chart(ctx, {
+                                type: 'doughnut',
+                                data: {
+                                    labels: ["New visitors", "Returning visitors"],
+                                    datasets: [{
+                                        label: '# of Votes',
+                                        data: [12, 19],
+                                        backgroundColor: [
+                                            'rgba(54, 162, 235, 0.5)',
+                                            'rgba(255, 206, 86, 0.5)'
+                                        ],
+                                        borderColor: [
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(255, 206, 86, 1)'
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    legend: {
+                                        display: true
+                                    },
+                                    scales: {
+                                        yAxes: [{
+                                            display: false
+                                        }]
+                                    }
+                                }
+                            });
+                        </script>
+                    </div>
+                    <div class="col-sm-6">
+                        <canvas id="myChart2" width="400" height="400"></canvas>
+                        <script type="text/javascript">
+                            var ctx = $("#myChart2");
+                            var myChart = new Chart(ctx, {
+                                type: 'doughnut',
+                                data: {
+                                    labels: ["New visitors", "Returning visitors", "Mobile visitors"],
+                                    datasets: [{
+                                        label: '# of Votes',
+                                        data: [12, 19, 3],
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(255, 206, 86, 0.2)'
+                                        ],
+                                        borderColor: [
+                                            'rgba(255,99,132,1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(255, 206, 86, 1)'
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    legend: {
+                                        display: true
+                                    },
+                                    scales: {
+                                        yAxes: [{
+                                            display: false
+                                        }]
+                                    }
+                                }
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <div class="panel panel-dashboard">
+            <div class="panel-heading">
+                <i class="fa fa-fw fa-pie-chart"></i> Chart demos
+                <a href="" class="pull-right btn btn-default">View complete list</a>
+            </div>
+            <div class="panel-body">
+                <canvas id="myChart3" width="400" height="200"></canvas>
+                <script type="text/javascript">
+                    var ctx = $("#myChart3");
+                    var myChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: ["New visitors", "Returning visitors", "Mobile visitors"],
+                            datasets: [{
+                                label: '# of Votes',
+                                data: [12, 19, 3],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255,99,132,1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            legend: {
+                                display: true
+                            },
+                            scales: {
+                                yAxes: [{
+                                    display: false
+                                }]
+                            }
+                        }
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <div class="panel panel-dashboard">
+            <div class="panel-heading">
+                <i class="fa fa-fw fa-pie-chart"></i> Number of pages per domain
+                <a href="" class="pull-right btn btn-default">View complete list</a>
+            </div>
+            <div class="panel-body">
+                <canvas id="myChart4" width="400" height="200"></canvas>
+                <script type="text/javascript">
+                    var ctx = $("#myChart4");
+                    var myChart = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ["www.domain1.ch", "www.hautehorlogerie.org", "www.another-domain.com"],
+                            datasets: [{
+                                label: '# of pages',
+                                data: [120, 19, 3],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.5)',
+                                    'rgba(54, 162, 235, 0.5)',
+                                    'rgba(255, 206, 86, 0.5)'
+                                ],
+                                borderWidth: 0
+                            }]
+                        },
+                        options: {
+                            legend: {
+                                display: true
+                            },
+                            scales: {
+                                yAxes: [{
+                                    display: false
+                                }]
+                            }
+                        }
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-lg-4 col-md-6">
         <div class="panel panel-dashboard">
@@ -80,94 +251,6 @@
                 <div class="list-element"><i class="fa fa-fw fa-file-o"></i> Page: <strong>About us [id: 123]</strong>
                     20th june at 13:50 <a class="pull-right btn btn-sm btn-danger" href=""><i
                             class="fa fa-fw fa-recycle"></i> Restore</a></div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-lg-4 col-md-6">
-        <div class="panel panel-dashboard">
-            <div class="panel-heading">
-                <i class="fa fa-fw fa-pie-chart"></i> Chart demos
-                <a href="" class="pull-right btn btn-default">View complete list</a>
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <canvas id="myChart" width="400" height="400"></canvas>
-                        <script type="text/javascript">
-                            var ctx = $("#myChart");
-                            var myChart = new Chart(ctx, {
-                                type: 'doughnut',
-                                data: {
-                                    labels: ["New visitors", "Returning visitors", "Mobile visitors"],
-                                    datasets: [{
-                                        label: '# of Votes',
-                                        data: [12, 19, 3],
-                                        backgroundColor: [
-                                            'rgba(255, 99, 132, 0.2)',
-                                            'rgba(54, 162, 235, 0.2)',
-                                            'rgba(255, 206, 86, 0.2)'
-                                        ],
-                                        borderColor: [
-                                            'rgba(255,99,132,1)',
-                                            'rgba(54, 162, 235, 1)',
-                                            'rgba(255, 206, 86, 1)'
-                                        ],
-                                        borderWidth: 1
-                                    }]
-                                },
-                                options: {
-                                    legend: {
-                                        display: false
-                                    },
-                                    scales: {
-                                        yAxes: [{
-                                            display: false
-                                        }]
-                                    }
-                                }
-                            });
-                        </script>
-                    </div>
-                    <div class="col-sm-6">
-                        <canvas id="myChart2" width="400" height="400"></canvas>
-                        <script type="text/javascript">
-                            var ctx = $("#myChart2");
-                            var myChart = new Chart(ctx, {
-                                type: 'doughnut',
-                                data: {
-                                    labels: ["New visitors", "Returning visitors", "Mobile visitors"],
-                                    datasets: [{
-                                        label: '# of Votes',
-                                        data: [12, 19, 3],
-                                        backgroundColor: [
-                                            'rgba(255, 99, 132, 0.2)',
-                                            'rgba(54, 162, 235, 0.2)',
-                                            'rgba(255, 206, 86, 0.2)'
-                                        ],
-                                        borderColor: [
-                                            'rgba(255,99,132,1)',
-                                            'rgba(54, 162, 235, 1)',
-                                            'rgba(255, 206, 86, 1)'
-                                        ],
-                                        borderWidth: 1
-                                    }]
-                                },
-                                options: {
-                                    legend: {
-                                        display: false
-                                    },
-                                    scales: {
-                                        yAxes: [{
-                                            display: false
-                                        }]
-                                    }
-                                }
-                            });
-                        </script>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
