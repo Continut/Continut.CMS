@@ -1,5 +1,6 @@
 <form method="post" class="form login"
       action="<?= $this->helper("Url")->linkToAction("Backend", "Login", "checkLogin") ?>">
+    <img src="<?= $this->helper('Image')->getPath('Images/logo_negru.svg', 'Backend'); ?>" height="60" alt="Continut CMS" />
     <p><?= $this->__("login.header") ?></p>
     <?= $this->helper("Session")->showFlashMessages(\Continut\Core\System\Domain\Model\UserSession::FLASH_ERROR); ?>
     <fieldset>

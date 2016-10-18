@@ -25,7 +25,7 @@ $this->getPageView()
 ?>
 <div id="main_toolbar" class="collapse navbar-collapse">
     <div class="pull-left">
-        <h1><i class="fa fa-cc"></i> Conţinut CMS
+        <h1><img src="<?= $this->helper('Image')->getPath('Images/logo_alb.svg', 'Backend'); ?>" height="32" alt="Continut CMS" /> Conţinut CMS
             <small>v 0.0.1</small>
         </h1>
     </div>
