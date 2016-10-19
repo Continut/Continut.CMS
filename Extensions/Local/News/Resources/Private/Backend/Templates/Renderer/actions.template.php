@@ -1,0 +1,2 @@
+<a class="btn btn-warning"><i class="fa fa-icon fa-pencil"></i> <?= $this->__('general.edit') ?></a>
+<a class="btn btn-danger"><i class="fa fa-icon fa-pencil"></i> <?= $this->__('general.delete') ?></a>

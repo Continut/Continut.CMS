@@ -29,7 +29,7 @@ namespace Continut\Extensions\Local\News\Classes\Domain\Model {
         /**
          * @var bool
          */
-        protected $is_visible;
+        protected $isVisible;
 
         /**
          * @var int
@@ -55,13 +55,14 @@ namespace Continut\Extensions\Local\News\Classes\Domain\Model {
          */
         public function dataMapper()
         {
-            return [
-                "id" => $this->id,
-                "title" => $this->title,
+            $fields = [
+                "title"       => $this->title,
                 "description" => $this->description,
-                "is_visible" => $this->is_visible,
-                "author" => $this->author
+                "is_visible"  => $this->isVisible,
+                "author"      => $this->author
             ];
+
+            return array_merge($fields, parent::dataMapper());
         }
 
         /**
@@ -89,17 +90,17 @@ namespace Continut\Extensions\Local\News\Classes\Domain\Model {
          */
         public function getIsVisible()
         {
-            return $this->is_visible;
+            return $this->isVisible;
         }
 
         /**
-         * @param boolean $is_visible
+         * @param boolean $isVisible
          *
          * @return News
          */
-        public function setIsVisible($is_visible)
+        public function setIsVisible($isVisible)
         {
-            $this->is_visible = $is_visible;
+            $this->isVisible = $isVisible;
 
             return $this;
         }

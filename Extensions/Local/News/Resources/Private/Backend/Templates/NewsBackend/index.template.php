@@ -1,5 +1,5 @@
 <div class="quick-panel">
-    <a href="" class="btn btn-success"><span class="fa fa-icon fa-plus"></span> Add news</a>
+    <a href="" class="btn btn-success"><span class="fa fa-icon fa-plus"></span> <?= $this->__('backend.news.grid.addNews') ?></a>
 </div>
 
 <div class="panel panel-default">
@@ -12,5 +12,5 @@
 </div>
 
 <div class="quick-panel">
-    <a href="" class="btn btn-success"><span class="fa fa-icon fa-plus"></span> Add news</a>
+    <a href="" class="btn btn-success"><span class="fa fa-icon fa-plus"></span> <?= $this->__('backend.news.grid.addNews') ?></a>
 </div>

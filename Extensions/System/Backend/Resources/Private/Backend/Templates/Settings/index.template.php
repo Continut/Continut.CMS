@@ -1,9 +1,9 @@
 <div class="row">
     <div class="col-sm-12">
-        <h2>Settings</h2>
+        <h2><?= $this->__('backend.menu.settings') ?></h2>
         <div class="row">
             <div class="col-md-3">
-                <p>Change settings for domain or language:</p>
+                <p><?= $this->__('backend.settings.description')?></p>
                 <div class="row">
                     <div class="col-md-6">
                         <select id="select_website" class="selectpicker" data-width="100%">
@@ -31,7 +31,7 @@
                     </div>
                     <div class="col-md-6">
                         <select id="select_language" class="selectpicker" data-width="100%">
-                            <option value="0">- All languages -</option>
+                            <option value="0"><?= $this->__('backend.select.allLanguages') ?></option>
                             <?php foreach ($languages->getAll() as $language): ?>
                                 <option data-icon="flag-icon flag-icon-<?= $language->getFlag() ?>"
                                         value="<?= $language->getId() ?>"><?= $language->getTitle() ?></option>

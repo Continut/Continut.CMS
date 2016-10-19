@@ -40,7 +40,7 @@ class Field extends BaseModel
     protected $filter;
 
     /**
-     * @var \Extensions\System\Backend\Classes\View\Filter\BaseFilter
+     * @var \Continut\Extensions\System\Backend\Classes\View\Filter\BaseFilter
      */
     protected $filterObject;
 
@@ -50,7 +50,7 @@ class Field extends BaseModel
     protected $renderer;
 
     /**
-     * @var \Extensions\System\Backend\Classes\View\Renderer\BaseRenderer
+     * @var \Continut\Extensions\System\Backend\Classes\View\Renderer\BaseRenderer
      */
     protected $rendererObject;
 
@@ -136,12 +136,12 @@ class Field extends BaseModel
     public function setRenderer($renderer)
     {
         $this->renderer = $renderer;
-        if (!isset($renderer["class"])) {
-            $renderer["class"] = 'Continut\Extensions\System\Backend\Classes\View\Renderer\TextRenderer';
+        if (!isset($renderer['class'])) {
+            $renderer['class'] = 'Continut\Extensions\System\Backend\Classes\View\Renderer\TextRenderer';
         }
-        $this->rendererObject = Utility::createInstance($renderer["class"]);
-        if (isset($renderer["parameters"])) {
-            $this->rendererObject->setParameters($renderer["parameters"]);
+        $this->rendererObject = Utility::createInstance($renderer['class']);
+        if (isset($renderer['parameters'])) {
+            $this->rendererObject->setParameters($renderer['parameters']);
         }
         $this->rendererObject->setField($this);
 

@@ -52,6 +52,9 @@ class GridView extends BaseView
         return $this->collection;
     }
 
+    /**
+     * Grid initialization
+     */
     public function initialize()
     {
         $limit = (int)$this->getLimit();

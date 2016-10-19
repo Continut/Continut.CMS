@@ -15,12 +15,18 @@ namespace Continut\Extensions\Local\News\Classes\Controllers {
     class NewsBackendController extends BackendController
     {
 
+        /**
+         * NewsBackendController constructor - set default layout
+         */
         public function __construct()
         {
             parent::__construct();
             $this->setLayoutTemplate(Utility::getResource("Default", "Backend", "Backend", "Layout"));
         }
 
+        /**
+         * Backend News Grid View
+         */
         public function indexAction()
         {
             $grid = Utility::createInstance('Continut\Extensions\System\Backend\Classes\View\GridView');
@@ -58,7 +64,7 @@ namespace Continut\Extensions\Local\News\Classes\Controllers {
                                 "class" => "Continut\\Extensions\\System\\Backend\\Classes\\View\\Filter\\TextFilter"
                             ]
                         ],
-                        "is_visible" => [
+                        "isVisible" => [
                             "label" => "backend.news.grid.field.isVisible",
                             "css" => "col-sm-1",
                             "renderer" => [
@@ -67,6 +73,24 @@ namespace Continut\Extensions\Local\News\Classes\Controllers {
                             "filter" => [
                                 "class" => "Continut\\Extensions\\System\\Backend\\Classes\\View\\Filter\\SelectFilter",
                                 "values" => ["" => "", "0" => "Hidden", "1" => "Is visible"]
+                            ]
+                        ],
+                        "categories" => [
+                            "label" => "backend.news.grid.field.categories",
+                            "css" => "col-sm-2",
+                            "renderer" => [
+                                "class" => "Continut\\Extensions\\Local\\News\\Classes\\View\\Renderer\\CategoriesRenderer"
+                            ],
+                            "filter" => [
+                                "class" => "Continut\\Extensions\\System\\Backend\\Classes\\View\\Filter\\SelectFilter",
+                                "values" => ["" => "", "0" => "Category 1", "1" => "Category 2"]
+                            ]
+                        ],
+                        "actions" => [
+                            "label" => "backend.news.grid.field.actions",
+                            "css" => "col-sm-2",
+                            "renderer" => [
+                                "class" => "Continut\\Extensions\\Local\\News\\Classes\\View\\Renderer\\ActionsRenderer"
                             ]
                         ]
                     ]

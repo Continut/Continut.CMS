@@ -12,13 +12,13 @@ namespace Continut\Extensions\Local\News\Classes\View\Renderer;
 use Continut\Core\Utility;
 use Continut\Extensions\System\Backend\Classes\View\Renderer\BaseRenderer;
 
-class PhotoRenderer extends BaseRenderer
+class CategoriesRenderer extends BaseRenderer
 {
     /**
-     * TextFilter constructor
+     * ActionsRenderer constructor
      */
     public function __construct()
     {
-        $this->setTemplate(Utility::getResource("Renderer/photo", "News", "Backend", "Template"));
+        $this->setTemplate(Utility::getResource("Renderer/categories", "News", "Backend", "Template"));
     }
 }
