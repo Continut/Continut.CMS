@@ -365,7 +365,7 @@
   box-sizing: border-box;
 }
 .jstree-default .jstree-wholerow-hovered {
-  background: rgba(34, 34, 134, 0.5);
+  background: #D0E9C6;
 }
 .jstree-default .jstree-wholerow-hovered .jstree-anchor {
   color: white;
