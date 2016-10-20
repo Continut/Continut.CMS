@@ -123,8 +123,8 @@ class GridView extends BaseView
     }
 
     /**
-     * @param $limit  How many items to show per page
-     * @param $offest What page number to show
+     * @param int $limit  How many items to show per page
+     * @param int $offset What page number to show
      *
      * @return $this
      */

@@ -71,7 +71,20 @@ class BaseRenderer extends BaseView
     }
 
     /**
-     * @return \Continut\Core\Mvc\Model\BaseModel\BaseModel
+     * @param string $parameter
+     *
+     * @return mixed|null
+     */
+    public function getParameter($parameter) {
+        if (isset($this->parameters[$parameter])) {
+            return $this->parameters[$parameter];
+        }
+
+        return null;
+    }
+
+    /**
+     * @return \Continut\Core\Mvc\Model\BaseModel
      */
     public function getRecord()
     {

@@ -121,7 +121,7 @@ class Field extends BaseModel
     }
 
     /**
-     * @return \Extensions\System\Backend\Classes\View\Renderer\BaseRenderer
+     * @return \Continut\Extensions\System\Backend\Classes\View\Renderer\BaseRenderer
      */
     public function getRenderer()
     {

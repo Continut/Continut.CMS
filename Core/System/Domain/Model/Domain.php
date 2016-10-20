@@ -22,7 +22,7 @@ class Domain extends BaseModel
     /**
      * @var boolean
      */
-    protected $is_visible;
+    protected $isVisible;
 
     /**
      * @var int
@@ -32,7 +32,7 @@ class Domain extends BaseModel
     /**
      * @var array
      */
-    protected $domain_urls;
+    protected $domainUrls;
 
     /**
      * Simple datamapper used for the database
@@ -42,9 +42,9 @@ class Domain extends BaseModel
     public function dataMapper()
     {
         $fields = [
-            "title" => $this->title,
-            "is_visible" => $this->is_visible,
-            "sorting" => $this->sorting
+            "title"      => $this->title,
+            "is_visible" => $this->isVisible,
+            "sorting"    => $this->sorting
         ];
         return array_merge($fields, parent::dataMapper());
     }
@@ -70,15 +70,15 @@ class Domain extends BaseModel
      */
     public function isIsVisible()
     {
-        return $this->is_visible;
+        return $this->isVisible;
     }
 
     /**
-     * @param boolean $is_visible
+     * @param boolean $isVisible
      */
-    public function setIsVisible($is_visible)
+    public function setIsVisible($isVisible)
     {
-        $this->is_visible = $is_visible;
+        $this->isVisible = $isVisible;
     }
 
     /**
@@ -103,9 +103,9 @@ class Domain extends BaseModel
      */
     public function getDomainUrls()
     {
-        if ($this->domain_urls == null) {
-            $this->domain_urls = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection')->findByDomain_id($this->id)->getAll();
+        if ($this->domainUrls == null) {
+            $this->domainUrls = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection')->findByDomain_id($this->id)->getAll();
         }
-        return $this->domain_urls;
+        return $this->domainUrls;
     }
 }
