@@ -23,30 +23,58 @@ $this->getPageView()
     ->addJsAsset(['identifier' => 'wysihtml-parser',     'extension' => 'Backend', 'file' => 'wysihtml/parser_rules/advanced_and_extended.js'])
     ->addJsAsset(['identifier' => 'local',               'extension' => 'Backend', 'file' => 'local/backend.js']);
 ?>
-<div id="main_toolbar" class="collapse navbar-collapse">
-    <div class="pull-left">
-        <h1><img src="<?= $this->helper('Image')->getPath('Images/logo_alb.svg', 'Backend'); ?>" height="32" alt="Continut CMS" /> Conţinut CMS
-            <small>v 0.0.1</small>
-        </h1>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            <a href="<?= $this->helper('Url')->linkToAction('Backend', 'Settings', 'index') ?>"><i
-                    class="fa fa-fw fa-cogs"></i> <?= $this->__('backend.menu.settings') ?></a>
-        </li>
-        <li role="presentation" class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false"><i
-                    class="fa fa-fw fa-user"></i> <?= \Continut\Core\Utility::getSession()->getUser()->getName(); ?> <span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
-                <li><a href="<?= $this->helper('Url')->linkToAction('Backend', 'User', 'profile') ?>">User profile</a>
+<nav class="navbar navbar-default" id="main_toolbar">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main_toolbar_collapse" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">
+                <h1><img src="<?= $this->helper('Image')->getPath('Images/logo_negru.svg', 'Backend'); ?>" height="32" alt="Continut CMS" class="pull-left"/> Conţinut CMS <br/><small>versiunea 0.0.1</small></h1>
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="main_toolbar_collapse">
+            <form class="navbar-form navbar-left" id="search_form">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="search">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+                    </span>
+                </div>
+            </form>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="<?= $this->helper('Url')->linkToAction('Backend', 'Settings', 'index') ?>">
+                        <i class="fa fa-fw fa-2x fa-star-o"></i>
+                    </a>
                 </li>
-                <li class="divider"></li>
-                <li><a href="<?= $this->helper('Url')->linkToAction('Backend', 'Login', 'logout') ?>">Logout</a></li>
+                <li>
+                    <a href="<?= $this->helper('Url')->linkToAction('Backend', 'Settings', 'index') ?>" title="<?= $this->__('backend.menu.settings') ?>">
+                        <i class="fa fa-fw fa-2x fa-cogs"></i>
+                    </a>
+                </li>
+                <li role="presentation" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                        <img src="<?= $this->helper('Image')->getPath('Images/profile_pic.jpg', 'Backend'); ?>" height="24" alt="" class="img-circle"> <?= \Continut\Core\Utility::getSession()->getUser()->getName(); ?> <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="<?= $this->helper('Url')->linkToAction('Backend', 'User', 'profile') ?>">User profile</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="<?= $this->helper('Url')->linkToAction('Backend', 'Login', 'logout') ?>">Logout</a></li>
+                    </ul>
+                </li>
             </ul>
-        </li>
-    </ul>
-</div>
-<nav class="navbar navbar-default" id="mainmenu">
+        </div>
+    </div>
+</nav>
+
+<nav class="navbar navbar-default" id="main_menu">
     <div class="container-fluid">
         <?= \Continut\Core\Utility::callPlugin('Backend', 'Index', 'mainmenu'); ?>
     </div>

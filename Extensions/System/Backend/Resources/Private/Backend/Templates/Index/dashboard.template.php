@@ -3,8 +3,8 @@
     <div class="col-lg-4 col-md-6">
         <div class="panel panel-dashboard">
             <div class="panel-heading">
-                <i class="fa fa-fw fa-pie-chart"></i> Chart demos
-                <a href="" class="pull-right btn btn-default">View complete list</a>
+                <i class="fa fa-fw fa-android"></i> Chart demos
+                <a href="" class="pull-right btn btn-sm btn-default">View complete list</a>
             </div>
             <div class="panel-body">
                 <div class="row">
@@ -20,14 +20,10 @@
                                         label: '# of Votes',
                                         data: [12, 19],
                                         backgroundColor: [
-                                            'rgba(54, 162, 235, 0.5)',
-                                            'rgba(255, 206, 86, 0.5)'
+                                            'rgba(243, 255, 189, 1)',
+                                            'rgba(112, 193, 179, 1)'
                                         ],
-                                        borderColor: [
-                                            'rgba(54, 162, 235, 1)',
-                                            'rgba(255, 206, 86, 1)'
-                                        ],
-                                        borderWidth: 1
+                                        borderWidth: 0
                                     }]
                                 },
                                 options: {
@@ -55,16 +51,11 @@
                                         label: '# of Votes',
                                         data: [12, 19, 3],
                                         backgroundColor: [
-                                            'rgba(255, 99, 132, 0.2)',
-                                            'rgba(54, 162, 235, 0.2)',
-                                            'rgba(255, 206, 86, 0.2)'
+                                            'rgba(36, 123, 160, 1)',
+                                            'rgba(112, 193, 179, 1)',
+                                            'rgba(243, 255, 189, 1)'
                                         ],
-                                        borderColor: [
-                                            'rgba(255,99,132,1)',
-                                            'rgba(54, 162, 235, 1)',
-                                            'rgba(255, 206, 86, 1)'
-                                        ],
-                                        borderWidth: 1
+                                        borderWidth: 0
                                     }]
                                 },
                                 options: {
@@ -87,8 +78,8 @@
     <div class="col-lg-4 col-md-6">
         <div class="panel panel-dashboard">
             <div class="panel-heading">
-                <i class="fa fa-fw fa-pie-chart"></i> Chart demos
-                <a href="" class="pull-right btn btn-default">View complete list</a>
+                <i class="fa fa-fw fa-bank"></i> Chart demos
+                <a href="" class="pull-right btn btn-sm btn-default">View complete list</a>
             </div>
             <div class="panel-body">
                 <canvas id="myChart3" width="400" height="200"></canvas>
@@ -102,16 +93,16 @@
                                 label: '# of Votes',
                                 data: [12, 19, 3],
                                 backgroundColor: [
-                                    'rgba(255, 99, 132, 0.2)',
-                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(36, 123, 160, 0.2)',
+                                    'rgba(112, 193, 179, 0.2)',
                                     'rgba(255, 206, 86, 0.2)'
                                 ],
                                 borderColor: [
-                                    'rgba(255,99,132,1)',
-                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(36, 123, 160, 1)',
+                                    'rgba(112, 193, 179, 1)',
                                     'rgba(255, 206, 86, 1)'
                                 ],
-                                borderWidth: 1
+                                borderWidth: 3
                             }]
                         },
                         options: {
@@ -133,7 +124,7 @@
         <div class="panel panel-dashboard">
             <div class="panel-heading">
                 <i class="fa fa-fw fa-pie-chart"></i> Number of pages per domain
-                <a href="" class="pull-right btn btn-default">View complete list</a>
+                <a href="" class="pull-right btn btn-sm btn-default">View complete list</a>
             </div>
             <div class="panel-body">
                 <canvas id="myChart4" width="400" height="200"></canvas>
@@ -147,9 +138,9 @@
                                 label: '# of pages',
                                 data: [120, 19, 3],
                                 backgroundColor: [
-                                    'rgba(255, 99, 132, 0.5)',
-                                    'rgba(54, 162, 235, 0.5)',
-                                    'rgba(255, 206, 86, 0.5)'
+                                    'rgba(36, 123, 160, 1)',
+                                    'rgba(112, 193, 179, 1)',
+                                    'rgba(243, 255, 189, 1)'
                                 ],
                                 borderWidth: 0
                             }]
@@ -175,7 +166,7 @@
         <div class="panel panel-dashboard">
             <div class="panel-heading">
                 <i class="fa fa-fw fa-pie-chart"></i> Content statistics
-                <a href="" class="pull-right btn btn-default">View complete list</a>
+                <a href="" class="pull-right btn btn-sm btn-default">View complete list</a>
             </div>
             <div class="panel-body">
                 <p><strong>2</strong> domains in total:</p>
@@ -196,7 +187,7 @@
         <div class="panel panel-dashboard">
             <div class="panel-heading">
                 <i class="fa fa-fw fa-thumbs-up"></i> Review elements
-                <a href="" class="pull-right btn btn-default">View complete list</a>
+                <a href="" class="pull-right btn btn-sm btn-default">View complete list</a>
             </div>
             <div class="panel-body">
                 <p>Elements to review and validate before they are shown on the website:</p>
@@ -234,7 +225,7 @@
         <div class="panel panel-dashboard">
             <div class="panel-heading">
                 <i class="fa fa-fw fa-history"></i> History \ Recovery
-                <a href="" class="pull-right btn btn-default">View complete list</a>
+                <a href="" class="pull-right btn btn-sm btn-default">View complete list</a>
             </div>
             <div class="panel-body">
                 <p>List of recently removed pages or content elements:</p>
