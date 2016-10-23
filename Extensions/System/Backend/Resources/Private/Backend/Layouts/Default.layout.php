@@ -50,12 +50,91 @@ $this->getPageView()
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <a href="<?= $this->helper('Url')->linkToAction('Backend', 'Settings', 'index') ?>">
-                        <i class="fa fa-fw fa-2x fa-star-o"></i>
+                        <i class="fa fa-fw fa-2x fa-star-o"></i> <?= $this->__('backend.menu.favorites') ?>
                     </a>
+                </li>
+                <li class="dropdown">
+                    <a href="<?= $this->helper('Url')->linkToAction('Backend', 'Settings', 'index') ?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-fw fa-2x fa-envelope-o fa-alerted"></i> <?= $this->__('backend.menu.notifications') ?>
+                    </a>
+                    <ul class="dropdown-menu media-list">
+                        <li class="dropdown-header"><strong>10</strong> new notifications</li>
+                        <li role="separator" class="divider"></li>
+                        <li class="media">
+                            <a href="#">
+                            <div class="media-left">
+                                <img src="<?= $this->helper('Image')->getPath('Images/profile_pic.jpg', 'Backend'); ?>" height="40" alt="" class="img-circle">
+                            </div>
+                            <div class="media-body">
+                                <small class="pull-right time"><i class="fa fa-clock-o"></i> 10:30</small>
+                                <h4 class="media-heading">Gringo Deluxe</h4>
+                                <small>has published an article <strong>Lorem ipsum dolor sit amec</strong></small>
+                            </div>
+                            </a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li class="media">
+                            <a href="#">
+                                <div class="media-left">
+                                    <img src="<?= $this->helper('Image')->getPath('Images/profile_pic2.jpg', 'Backend'); ?>" height="40" alt="" class="img-circle">
+                                </div>
+                                <div class="media-body">
+                                    <small class="pull-right time"><i class="fa fa-clock-o"></i> 08:21</small>
+                                    <h4 class="media-heading">Dickbutt</h4>
+                                    <small>has added the content element <strong>Contact us</strong> to the <span class="label label-success">LIVE workspace</span></small>
+                                </div>
+                            </a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li class="media">
+                            <a href="#">
+                                <div class="media-left">
+                                    <img src="<?= $this->helper('Image')->getPath('Images/profile_pic.jpg', 'Backend'); ?>" height="40" alt="" class="img-circle">
+                                </div>
+                                <div class="media-body">
+                                    <small class="pull-right time"><i class="fa fa-clock-o"></i> 22 oct.</small>
+                                    <h4 class="media-heading">Gringo Deluxe</h4>
+                                    <small>has restored the deleted content element <strong>Untitled [id: 301]</strong></small>
+                                </div>
+                            </a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li class="media">
+                            <a href="#">
+                                <div class="media-left">
+                                    <img src="<?= $this->helper('Image')->getPath('Images/logo_negru.svg', 'Backend'); ?>" height="40" alt="" class="img-circle">
+                                </div>
+                                <div class="media-body">
+                                    <small class="pull-right time"><i class="fa fa-clock-o"></i> 20 oct.</small>
+                                    <h4 class="media-heading">System notification</h4>
+                                    <p><small>Your logs have not been purged for the past 30 days.<br/>Please configure your cron jobs for automatic purge!</small></p>
+                                </div>
+                            </a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li class="media">
+                            <a href="#">
+                                <div class="media-left">
+                                    <img src="<?= $this->helper('Image')->getPath('Images/logo_negru.svg', 'Backend'); ?>" height="40" alt="" class="img-circle">
+                                </div>
+                                <div class="media-body">
+                                    <small class="pull-right time"><i class="fa fa-clock-o"></i> 20 oct.</small>
+                                    <h4 class="media-heading">System notification</h4>
+                                    <p><small>3 new <span class="label label-danger">failed</span> connection attempts.<br/>Check the logs for more information!</small></p>
+                                </div>
+                            </a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="#">
+                                Show all notifications
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
                     <a href="<?= $this->helper('Url')->linkToAction('Backend', 'Settings', 'index') ?>" title="<?= $this->__('backend.menu.settings') ?>">
-                        <i class="fa fa-fw fa-2x fa-cogs"></i>
+                        <i class="fa fa-fw fa-2x fa-cogs"></i> <?= $this->__('backend.menu.settings') ?>
                     </a>
                 </li>
                 <li role="presentation" class="dropdown">

@@ -16,6 +16,12 @@
 @dashboard-panel-border: 1px solid #E0E0E0;
 @dashboard-panel-header-background: #F9F9F9;
 
+@theme-primary: #045e85;
+@theme-success: #70c1b3;
+@theme-info: #b2dbbf;
+@theme-danger: #eb547c;
+@theme-warning: #f3ffbd;
+
 /* fonts */
 @font-face {
   font-family: 'Libre Franklin';
@@ -45,6 +51,7 @@
 body, html {
   font-size: 14px;
   color: @main-color;
+  font-family: "Libre Franklin", "Helvetica", "Arial", sans-serif;
   background: @main-background;
 }
 
@@ -82,24 +89,44 @@ body, html {
     &> li > a {
       color: @main-toolbar-color;
       padding: 8px;
+      border: 1px solid transparent;
     }
     &> li > .dropdown-menu {
       border-radius: 0;
     }
+
+    &> .open > a,
+    &> .active > a {
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      z-index: 980;
+      border: 1px solid rgba(0, 0, 0, .15);
+      background: none;
+    }
   }
 
-  .dropdown-menu .divider {
-    margin: 5px 0;
+  .dropdown-menu {
+    margin-top: -2px;
+
+    .divider {
+      margin: 5px 0;
+    }
+
+    &> li > a {
+      padding: 10px 20px;
+    }
   }
 
   .nav > li > a:focus,
   .nav > li > a:hover {
-    background: @menu-hover-background;
-    color: @menu-hover-color;
+    color: @menu-hover-background;
   }
 
   .navbar-collapse {
     padding-top: 1rem;
+  }
+
+  .media {
+    margin: 0;
   }
 }
 
@@ -313,6 +340,10 @@ li a.helper-icon {
 }
 
 /* overwrite general styles */
+.media {
+  overflow: inherit;
+}
+
 .form-control,
 .input-group-addon {
   border-radius: 0;
@@ -324,7 +355,7 @@ li a.helper-icon {
 
 .panel {
   border: @dashboard-panel-border;
-  .box-shadow(0 0 4px 0 rgba(0, 0, 0, 0.05));
+  .box-shadow(2px 2px 2px 0 rgba(0, 0, 0, 0.05));
   .border-radius(0);
 
   .panel-heading {
@@ -406,6 +437,12 @@ li a.helper-icon {
     line-height: 2rem;
     vertical-align: middle;
   }
+
+  .media {
+    padding: 10px 0;
+    margin: 0;
+    border-top: 1px solid #E0E0E0;
+  }
 }
 
 .list-element {
@@ -468,6 +505,21 @@ li a.helper-icon {
 /* fontawesome */
 .fa-disabled {
   color: #dcdcdc;
+}
+
+.fa-alerted {
+  position: relative;
+  &:after {
+    position: absolute;
+    .border-radius(6px);
+    border: 2px solid @main-background;
+    top: 0;
+    right: 0;
+    content: '';
+    width: 12px;
+    height: 12px;
+    background: @theme-danger;
+  }
 }
 
 /* flash messages */

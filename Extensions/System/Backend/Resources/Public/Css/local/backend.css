@@ -18,6 +18,7 @@ body,
 html {
   font-size: 14px;
   color: #333333;
+  font-family: "Libre Franklin", "Helvetica", "Arial", sans-serif;
   background: #f9f9f9;
 }
 #main_toolbar {
@@ -56,20 +57,36 @@ html {
 #main_toolbar .navbar-nav > li > a {
   color: #333333;
   padding: 8px;
+  border: 1px solid transparent;
 }
 #main_toolbar .navbar-nav > li > .dropdown-menu {
   border-radius: 0;
 }
+#main_toolbar .navbar-nav > .open > a,
+#main_toolbar .navbar-nav > .active > a {
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 980;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: none;
+}
+#main_toolbar .dropdown-menu {
+  margin-top: -2px;
+}
 #main_toolbar .dropdown-menu .divider {
   margin: 5px 0;
 }
+#main_toolbar .dropdown-menu > li > a {
+  padding: 10px 20px;
+}
 #main_toolbar .nav > li > a:focus,
 #main_toolbar .nav > li > a:hover {
-  background: #247ba0;
-  color: #ffffff;
+  color: #247ba0;
 }
 #main_toolbar .navbar-collapse {
   padding-top: 1rem;
+}
+#main_toolbar .media {
+  margin: 0;
 }
 #main_menu {
   margin-bottom: 0;
@@ -252,6 +269,9 @@ li a.helper-icon {
   font-size: 14px;
 }
 /* overwrite general styles */
+.media {
+  overflow: inherit;
+}
 .form-control,
 .input-group-addon {
   border-radius: 0;
@@ -261,9 +281,9 @@ li a.helper-icon {
 }
 .panel {
   border: 1px solid #e0e0e0;
-  -webkit-box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.05);
-  -moz-box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.05);
-  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.05);
+  -webkit-box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.05);
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0;
@@ -347,6 +367,11 @@ li a.helper-icon {
   line-height: 2rem;
   vertical-align: middle;
 }
+.panel-dashboard .media {
+  padding: 10px 0;
+  margin: 0;
+  border-top: 1px solid #E0E0E0;
+}
 .list-element {
   padding: 5px;
   margin-bottom: 1px;
@@ -397,6 +422,25 @@ li a.helper-icon {
 /* fontawesome */
 .fa-disabled {
   color: #dcdcdc;
+}
+.fa-alerted {
+  position: relative;
+}
+.fa-alerted:after {
+  position: absolute;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border: 2px solid #f9f9f9;
+  top: 0;
+  right: 0;
+  content: '';
+  width: 12px;
+  height: 12px;
+  background: #eb547c;
 }
 /* flash messages */
 .alert {

@@ -26,78 +26,135 @@
 body {
   margin: 0;
   padding: 0;
-  background: #333333;
-}
-html {
-  margin: 0;
-  padding: 0;
-  font-size: 14px;
-  font-family: 'Libre Franklin', sans-serif;
-  height: 100%;
-  width: 100%;
-}
-.form.login {
-  margin: 30px auto;
-  padding: 20px;
-  width: auto;
-  overflow: hidden;
+  background: #F9F9F9;
   color: #333333;
-  text-align: center;
-  background: white;
+  font-family: 'Libre Franklin', sans-serif;
+  font-size: 14px;
 }
 
-.form.login h2 {
+.clear:after {
+  content: '';
+  clear: both;
+  display: block;
+}
+
+.lines .line {
+  width: 20%;
+  background: #70c1b3;
+  height: 10px;
+  float: left;
+}
+
+.line.theme1 {
+  background: #247ba0;
+}
+
+.line.theme3 {
+  background: #b2dbbf;
+}
+
+.line.theme4 {
+  background: #f3ffbd;
+}
+
+.line.theme5 {
+  background: #eb547c;
+}
+
+.panel-wrapper {
+  margin: 10px;
+  width: auto;
+}
+
+.panel-login {
+  overflow: hidden;
+  background: white;
+  border: 1px solid #E0E0E0;
+  box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.panel-login h2 {
   font-weight: normal;
   font-size: 2rem;
   margin: 1em 0;
   padding: 0;
 }
+
+.panel-heading {
+  background: #F9F9F9;
+  padding: 20px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.panel-body {
+  padding: 20px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.title {
+  align-items: center;
+  margin: 10px 0;
+  font-size: 1.6rem;
+}
+
 .form .field {
   margin: 15px 0;
   width: 100%;
 }
+
 .form .text,
 .form .password,
 .form .button {
   width: 100%;
-  border: 1px solid #2f405c;
+  border: 1px solid #EAEAEA;
   color: #333333;
   font: inherit;
   padding: 15px;
   box-sizing: border-box;
   background: white;
 }
+
 .form .button.submit {
-  background: #2f405c;
+  background: #247ba0;
   color: #ffffff;
+  text-transform: uppercase;
 }
+
 .form fieldset {
   border: none;
   margin: 0;
   padding: 0;
 }
+
 footer {
   width: 100%;
   text-align: center;
-  color: white;
-  text-shadow: 1px 1px 0 #333333;
   position: absolute;
   left: 0;
   bottom: 0;
   font-size: 0.8em;
 }
+
 footer a {
-  color: white;
+  color: #333333;
 }
+
 footer p {
   margin: 0 0 5px 0;
 }
+
 .alert.flash-error {
-  color: red;
+  color: #eb547c;
 }
+
 @media (min-width: 640px) {
-  .form.login {
-    width: 320px;
+  .panel-wrapper {
+    width: 22%;
+    min-width: 300px;
+    margin: 30px auto;
   }
   footer {
     width: 640px;
