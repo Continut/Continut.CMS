@@ -88,7 +88,7 @@ namespace Continut\Extensions\Local\News\Classes\Controllers {
                         ],
                         "actions" => [
                             "label" => "backend.news.grid.field.actions",
-                            "css" => "col-sm-2",
+                            "css" => "col-sm-2 text-right",
                             "renderer" => [
                                 "class" => "Continut\\Extensions\\Local\\News\\Classes\\View\\Renderer\\ActionsRenderer",
                                 "parameters" => ["showEdit" => true, "showDelete" => true]

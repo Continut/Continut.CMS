@@ -340,6 +340,28 @@ li a.helper-icon {
 }
 
 /* overwrite general styles */
+.btn-danger {
+  background: @theme-danger;
+  border-color: #cf4368;
+}
+
+.btn-success {
+  background: @theme-success;
+  border-color: #5eab9e;
+}
+
+.btn-primary {
+  background: @theme-primary;
+  border-color: #055a7f;
+}
+
+.btn-warning {
+  background: @theme-warning;
+  border-color: #deeaa8;
+  color: #555c35;
+  text-shadow: none;
+}
+
 .media {
   overflow: inherit;
 }
@@ -589,7 +611,14 @@ ul.list-readable {
 
 /** widget grid **/
 .quick-panel {
-  margin: 10px 0;
+  margin: 15px 0;
+}
+
+.panel-grid {
+  .panel-body {
+    margin: 0;
+    padding: 0;
+  }
 }
 
 .grid {
@@ -598,18 +627,24 @@ ul.list-readable {
   }
 
   .grid-panel {
-    background: rgba(200, 200, 200, 0.3);
+    background: @main-background;
     padding: 10px 0;
     margin: 10px 0;
   }
 
   .grid-row {
     padding: 10px;
-    margin: 0;
+    margin: -1px 0 0 0;
+    border-top: 1px solid #E0E0E0;
+    border-bottom: 1px solid #E0E0E0;
   }
 
   .grid-even {
-    background: rgba(200, 200, 200, 0.3);
+    background: @main-background;
+  }
+
+  .grid-paginator {
+    margin: 10px 0;
   }
 }
 

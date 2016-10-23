@@ -269,6 +269,24 @@ li a.helper-icon {
   font-size: 14px;
 }
 /* overwrite general styles */
+.btn-danger {
+  background: #eb547c;
+  border-color: #cf4368;
+}
+.btn-success {
+  background: #70c1b3;
+  border-color: #5eab9e;
+}
+.btn-primary {
+  background: #045e85;
+  border-color: #055a7f;
+}
+.btn-warning {
+  background: #f3ffbd;
+  border-color: #deeaa8;
+  color: #555c35;
+  text-shadow: none;
+}
 .media {
   overflow: inherit;
 }
@@ -496,22 +514,31 @@ ul.list-readable li {
 }
 /** widget grid **/
 .quick-panel {
-  margin: 10px 0;
+  margin: 15px 0;
+}
+.panel-grid .panel-body {
+  margin: 0;
+  padding: 0;
 }
 .grid .pagination {
   margin: 0;
 }
 .grid .grid-panel {
-  background: rgba(200, 200, 200, 0.3);
+  background: #f9f9f9;
   padding: 10px 0;
   margin: 10px 0;
 }
 .grid .grid-row {
   padding: 10px;
-  margin: 0;
+  margin: -1px 0 0 0;
+  border-top: 1px solid #E0E0E0;
+  border-bottom: 1px solid #E0E0E0;
 }
 .grid .grid-even {
-  background: rgba(200, 200, 200, 0.3);
+  background: #f9f9f9;
+}
+.grid .grid-paginator {
+  margin: 10px 0;
 }
 /** jstree overwrites **/
 .jstree-default a.jstree-clicked:link,

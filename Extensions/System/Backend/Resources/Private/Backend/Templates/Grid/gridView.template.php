@@ -1,6 +1,6 @@
 <div class="grid">
     <form method="post" action="<?= $this->getFormAction() ?>" class="form">
-        <div class="row grid-panel">
+        <div class="row grid-paginator">
             <div class="col-sm-6">
                 <?= $this->partial("Grid/paginator", "Backend", "Backend", ["grid" => $this]) ?>
             </div>
@@ -34,7 +34,7 @@
             </div>
         <?php endforeach ?>
 
-        <div class="row grid-panel">
+        <div class="row grid-paginator">
             <div class="col-sm-6">
                 <?= $this->partial("Grid/paginator", "Backend", "Backend", ["grid" => $this]) ?>
             </div>

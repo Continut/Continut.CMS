@@ -1,10 +1,9 @@
 <?php
 $links = 2;
-$last = ceil($grid->getTotalRecords() / $grid->getLimit());
+$last  = ceil($grid->getTotalRecords() / $grid->getLimit());
 $start = (($grid->getPage() - $links) > 0) ? $grid->getPage() - $links : 1;
-$end = (($grid->getPage() + $links) < $last) ? $grid->getPage() + $links : $last;
+$end   = (($grid->getPage() + $links) < $last) ? $grid->getPage() + $links : $last;
 ?>
-    <p><?= $this->__("backend.grid.form.resultsCount", ["count" => $grid->getTotalRecords()]) ?></p>
 <?php if ($last > 1): ?>
     <nav>
         <ul class="pagination">
@@ -36,3 +35,4 @@ $end = (($grid->getPage() + $links) < $last) ? $grid->getPage() + $links : $last
         </ul>
     </nav>
 <?php endif ?>
+<p><?= $this->__("backend.grid.form.resultsCount", ["count" => $grid->getTotalRecords()]) ?></p>
