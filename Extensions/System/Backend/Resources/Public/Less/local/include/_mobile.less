@@ -1,0 +1,15 @@
+@media (min-width: 768px) {
+  #main_toolbar {
+    .dropdown-menu {
+      & > li > a {
+        white-space: nowrap;
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .navbar-nav .open .dropdown-menu {
+    background: @main-toolbar-background;
+  }
+}

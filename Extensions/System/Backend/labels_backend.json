@@ -12,7 +12,7 @@
       "login.helpmenu.gettingStarted": "Just getting started?",
       "login.helpmenu.checkDocumentation": "Check out the documentation",
       "login.helpmenu.checkHowToEditors": "Check out our <strong>HowTo for Editors</strong> videos",
-      "login.header": "Connect",
+      "login.header": "Backend login",
       "login.username": "Username",
       "login.password": "Password",
       "login.connect": "Connect",

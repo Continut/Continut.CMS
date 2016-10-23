@@ -129,23 +129,49 @@
 </div>
 <div class="row">
     <div class="col-lg-4 col-md-6">
-        <div class="panel panel-dashboard">
+        <div class="panel panel-dashboard dashboard-domains">
             <div class="panel-heading">
                 <i class="fa fa-fw fa-globe"></i> Content statistics
                 <a href="" class="pull-right btn btn-sm btn-default">View complete list</a>
             </div>
             <div class="panel-body">
-                <p><strong>2</strong> domains in total:</p>
-                <h4>www.domain1.ch</h4>
-                <div class="list-element"><span class="badge">15</span> pages and <span class="badge">100</span> content
-                    elements <span class="pull-right">Allemand <i class="flag-icon flag-icon-de"></i></span></div>
-                <div class="list-element"><span class="badge">10</span> pages and <span class="badge">92</span> content
-                    elements <span class="pull-right">Français <i class="flag-icon flag-icon-fr"></i></span></div>
-                <h4>www.dummy-domain.org</h4>
-                <div class="list-element"><span class="badge">15</span> pages and <span class="badge">100</span> content
-                    elements <span class="pull-right">Italiano <i class="flag-icon flag-icon-it"></i></span></div>
-                <div class="list-element"><span class="badge">10</span> pages and <span class="badge">92</span> content
-                    elements <span class="pull-right">English <i class="flag-icon flag-icon-us"></i></span></div>
+                <p>Domains and languages summary:</p>
+                <div class="media">
+                    <div class="media-left">
+                        <i class="flag-icon flag-icon-de"></i>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">www.domain1.ch</h4>
+                        <span class="badge">15</span> pages and <span class="badge">100</span> content elements
+                    </div>
+                </div>
+                <div class="media">
+                    <div class="media-left">
+                        <i class="flag-icon flag-icon-fr"></i>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">www.domain1.ch</h4>
+                        <span class="badge">10</span> pages and <span class="badge">92</span> content elements
+                    </div>
+                </div>
+                <div class="media">
+                    <div class="media-left">
+                        <i class="flag-icon flag-icon-it"></i>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">www.another-domain.com</h4>
+                        <span class="badge">15</span> pages and <span class="badge">100</span> content elements
+                    </div>
+                </div>
+                <div class="media">
+                    <div class="media-left">
+                        <i class="flag-icon flag-icon-us"></i>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">www.us-domain.com</h4>
+                        <span class="badge">10</span> pages and <span class="badge">92</span> content elements
+                    </div>
+                </div>
             </div>
         </div>
     </div>
