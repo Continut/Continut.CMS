@@ -137,7 +137,7 @@ class BaseCollection
      *
      * @return mixed
      */
-    public function findByid($id)
+    public function findById($id)
     {
         $sth = Utility::getDatabase()->prepare("SELECT * FROM $this->tablename WHERE id = :id");
         $sth->execute(["id" => $id]);
