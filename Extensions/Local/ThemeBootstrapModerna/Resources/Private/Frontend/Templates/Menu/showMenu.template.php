@@ -14,20 +14,20 @@
                     <ul class="nav navbar-nav">
                         <?php foreach ($pageTree as $leaf): ?>
                             <?php if ($leaf->children): ?>
-                                <li class="dropdown">
+                                <li class="dropdown <?php echo ($leaf->getId() == $this->getRequest()->getArgument('id')) ? 'active': ''; ?>">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
                                        data-delay="0" data-close-others="false"><?= $leaf->getTitle() ?> <b
                                             class="icon-angle-down"></b></a>
                                     <ul class="dropdown-menu">
                                         <?php foreach ($leaf->children as $subleaf): ?>
-                                            <li>
+                                            <li <?php echo ($subleaf->getId() == $this->getRequest()->getArgument('id')) ? 'class="active"': ''; ?>>
                                                 <a href="<?= $this->helper("Url")->linkToSlug($subleaf->getSlug()) ?>"><?= $subleaf->getTitle() ?></a>
                                             </li>
                                         <?php endforeach ?>
                                     </ul>
                                 </li>
                             <?php else: ?>
-                                <li>
+                                <li <?php echo ($leaf->getId() == $this->getRequest()->getArgument('id')) ? 'class="active"': ''; ?>>
                                     <a href="<?= $this->helper("Url")->linkToSlug($leaf->getSlug()) ?>"><?= $leaf->getTitle() ?></a>
                                 </li>
                             <?php endif ?>

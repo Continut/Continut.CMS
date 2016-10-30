@@ -150,6 +150,12 @@ class BaseCollection
         return $element;
     }
 
+    /**
+     * General method used to find by a certain column, eg: findById, findByName, findByIsDeleted
+     * @param $method
+     * @param $args
+     * @return BaseCollection
+     */
     public function __call($method, $args)
     {
         if (substr($method, 0, 6) == "findBy" && strlen($method) > 6) {

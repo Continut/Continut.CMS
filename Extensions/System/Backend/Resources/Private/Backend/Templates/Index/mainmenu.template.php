@@ -17,7 +17,7 @@
                             <li class="dropdown-header" role="presentation"><?= $this->__($submenuItem["label"]) ?></li>
                         <?php else: ?>
                             <li>
-                                <a href="<?= $this->helper("Url")->linkToAction($submenuItem["extension"], $submenuItem["controller"], $submenuItem["action"]) ?>">
+                                <a href="<?= $this->helper("Url")->linkToMenu($submenuItem) ?>">
                                     <?php if (isset($submenuItem["icon"])): ?>
                                         <i class="<?= $submenuItem["icon"] ?>"></i>
                                     <?php endif ?>

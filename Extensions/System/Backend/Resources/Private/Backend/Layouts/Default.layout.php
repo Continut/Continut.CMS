@@ -49,7 +49,7 @@ $this->getPageView()
 
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="<?= $this->helper('Url')->linkToAction('Backend', 'Settings', 'index') ?>">
+                    <a href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'index']) ?>">
                         <i class="fa fa-fw fa-2x fa-star-o"></i> <?= $this->__('backend.menu.favorites') ?>
                     </a>
                 </li>
@@ -133,7 +133,7 @@ $this->getPageView()
                     </ul>
                 </li>
                 <li>
-                    <a href="<?= $this->helper('Url')->linkToAction('Backend', 'Settings', 'index') ?>" title="<?= $this->__('backend.menu.settings') ?>">
+                    <a href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'index']) ?>" title="<?= $this->__('backend.menu.settings') ?>">
                         <i class="fa fa-fw fa-2x fa-cogs"></i> <?= $this->__('backend.menu.settings') ?>
                     </a>
                 </li>

@@ -92,6 +92,26 @@ namespace Continut\Core\System\Helper {
         {
             return Utility::getRequest()->getUrlGenerator()->generate('page_slug', ['slug' => $slug]);
         }
+
+        /**
+         * Generates a link to a path
+         *
+         * @param string $path Path name
+         * @param array $params path params
+         * @return string
+         */
+        public function linkToPath($path, $params = []) {
+            return Utility::getRequest()->getUrlGenerator()->generate($path, $params);
+        }
+
+        public function linkToMenu($settings) {
+            if (isset($settings['path'])) {
+                $params = isset($settings['params']) ? $settings['params'] : [];
+                return $this->linkToPath($settings['path'], $params);
+            } else {
+                return $this->linkToAction($settings["extension"], $settings["controller"], $settings["action"]);
+            }
+        }
     }
 
 }

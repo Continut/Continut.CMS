@@ -195,6 +195,7 @@ namespace Continut\Core {
 
             try {
                 $request = Utility::getRequest();
+                $request->mapRouting();
 
                 // Get request argument values or switch to default values if not defined
                 $contextExtension = $request->getArgument("_extension", "Backend");

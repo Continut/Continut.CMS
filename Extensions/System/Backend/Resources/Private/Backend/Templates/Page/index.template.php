@@ -167,7 +167,7 @@
                         'dots' : true
                     },
                     'data' : {
-                        'url' : '<?= $this->helper("Url")->linkToAction("Editor", "Page", "tree") ?>',
+                        'url' : '<?= $this->helper("Url")->linkToPath('editor', ['_controller' => 'Editor', '_action' => 'tree']) ?>',
                         'data' : function (node) {
                             return { 'id' : node.id };
                         }

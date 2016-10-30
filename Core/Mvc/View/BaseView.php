@@ -236,5 +236,14 @@ namespace Continut\Core\Mvc\View {
             }
             return $defaultValue;
         }
+
+        /**
+         * Shorthand for the Request object
+         *
+         * @return \Continut\Core\Mvc\Request
+         */
+        public function getRequest() {
+            return Utility::getRequest();
+        }
     }
 }

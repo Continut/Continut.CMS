@@ -20,9 +20,8 @@
             "page": {
               "label": "backend.menu.web.page",
               "icon": "fa fa-fw fa-file-o",
-              "extension": "Backend",
-              "controller": "Page",
-              "action": "index"
+              "path": "admin_backend",
+              "params": {"_controller": "Page", "_action": "index"}
             },
             "divider": {
               "type": "divider"

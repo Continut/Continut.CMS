@@ -150,16 +150,30 @@ class PageCollection extends BaseCollection
     {
         $domainUrlId = Utility::getSite()->getDomainUrl()->getId();
 
-        if ($id == 0) {
+        if (!(empty($slug))) {
             $page = $this->where(
                 "slug LIKE :slug AND is_visible = 1 AND is_deleted = 0 AND domain_url_id = :domain_url_id",
                 ["slug" => $slug, "domain_url_id" => $domainUrlId]
             )->getFirst();
         } else {
-            $page = $this->where(
-                "id = :id AND is_visible = 1 AND is_deleted = 0 AND domain_url_id = :domain_url_id",
-                ["id" => $id, "domain_url_id" => $domainUrlId]
-            )->getFirst();
+            // if an id is specified, get the page by id
+            if ($id > 0) {
+                $page = $this->where(
+                    "id = :id AND is_visible = 1 AND is_deleted = 0 AND domain_url_id = :domain_url_id",
+                    ["id" => $id, "domain_url_id" => $domainUrlId]
+                )->getFirst();
+            }
+            // if the id is 0 (zero) it means we need to return the FIRST page defined for this domain (ordered by "sorting")
+            else {
+                $page = $this->where(
+                    "is_visible = 1 AND is_deleted = 0 AND domain_url_id = :domain_url_id ORDER BY sorting ASC",
+                    ["domain_url_id" => $domainUrlId]
+                )->getFirst();
+            }
+        }
+        // we just set the page id to the actual page that we find, in case it still has the value zero
+        if ($page) {
+            Utility::getRequest()->setArgument('id', (int)$page->getId());
         }
 
         return $page;

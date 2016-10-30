@@ -11,6 +11,7 @@
 namespace Continut\Core\Mvc;
 
 use Continut\Core\Tools\Exception;
+use Continut\Core\Utility;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
@@ -256,35 +257,20 @@ class Request
      */
     public function mapRouting()
     {
+        // Initialize the Symfony RouteCollection
         $this->routes = new RouteCollection();
 
-        $route = new Route(
-            '/{language}/{id}',
-            [
-                '_extension'  => 'Frontend',
-                '_controller' => 'Index',
-                '_action'     => 'index',
-                'language'    => 'ro'
-            ],
-            [
-                'id' => '\d+'
-            ]
-        );
+        // Grab all our routes defined in the database
+        $routeCollection = Utility::createInstance('\Continut\Core\System\Domain\Collection\RouteCollection');
+        foreach ($routeCollection->where('1=1')->getAll() as $route) {
+            $routeData    = unserialize($route->getData());
+            $defaults     = (isset($routeData['defaults'])) ? $routeData['defaults'] : [];
+            $requirements = (isset($routeData['requirements'])) ? $routeData['requirements'] : [];
+            $symfonyRoute = new Route($route->getPath(), $defaults, $requirements);
 
-        $this->routes->add('page_id', $route);
-
-        $route = new Route(
-            '/{language}/{slug}',
-            [
-                '_extension'  => 'Frontend',
-                '_controller' => 'Index',
-                '_action'     => 'index',
-                'language'    => 'ro'
-            ],
-            []
-        );
-
-        $this->routes->add('page_slug', $route);
+            // Add our route to the list
+            $this->routes->add($route->getName(), $symfonyRoute);
+        }
 
         $this->routeContext = new RequestContext('');
 
