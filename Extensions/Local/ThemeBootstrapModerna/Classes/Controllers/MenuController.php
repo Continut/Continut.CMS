@@ -37,7 +37,7 @@ namespace Continut\Extensions\Local\ThemeBootstrapModerna\Classes\Controllers {
         {
             $pagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection');
 
-            $pageId = (int)$this->getRequest()->getArgument("pid");
+            $pageId = (int)$this->getRequest()->getArgument("id");
             $pageSlug = $this->getRequest()->getArgument("slug");
             $pageModel = $pagesCollection->findWithIdOrSlug($pageId, $pageSlug);
 

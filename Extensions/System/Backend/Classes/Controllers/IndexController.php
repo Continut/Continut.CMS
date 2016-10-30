@@ -61,6 +61,8 @@ class IndexController extends BackendController
             }
         }
 
+        // the 'position' attribute defines the order in which the menus will be drawn
+        // from smaller to bigger (left to right, or top to bottom if on a vertical menu)
         foreach ($mainMenu as $menuId => $menu) {
             // if no position is set, set 900 by default, so that it is one of the last to render in the menu
             if (!isset($menu['position'])) {

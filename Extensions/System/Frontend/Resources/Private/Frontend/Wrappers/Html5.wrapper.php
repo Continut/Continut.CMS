@@ -12,7 +12,7 @@
     <meta name="keywords" value=<?= json_encode($this->getPageModel()->getMetaKeywords()) ?>/>
 
 </head>
-<body>
-<?= $pageContent ?>
-</body>
+    <body>
+        <?= $pageContent ?>
+    </body>
 </html>

@@ -1,0 +1,14 @@
+{
+  "Setup": {
+    "version": "0.0.1",
+    "name": "Conținut CMS Setup",
+    "author": {
+      "web": "www.pixelplant.ch",
+      "name": "Radu Mogoș",
+      "email": "radu.mogos@pixelplant.ch"
+    },
+    "folder": "Setup",
+    "type": "System",
+    "description": "Shows the initial setup procedure of the CMS"
+  }
+}

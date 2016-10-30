@@ -161,13 +161,7 @@ class PageCollection extends BaseCollection
                 ["id" => $id, "domain_url_id" => $domainUrlId]
             )->getFirst();
         }
-        // if no id or slug is provided we should show the homepage, if one exists
-        if (!$page) {
-            $page = $this->where(
-                "is_visible = 1 AND is_deleted = 0 AND parent_id = 0 AND domain_url_id = :domain_url_id ORDER BY sorting ASC",
-                ["domain_url_id" => $domainUrlId]
-            )->getFirst();
-        }
+
         return $page;
     }
 }

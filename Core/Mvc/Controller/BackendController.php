@@ -8,29 +8,35 @@
  * Project: Conținut CMS
  */
 
-namespace Continut\Core\Mvc\Controller {
+namespace Continut\Core\Mvc\Controller;
 
+use Continut\Core\Utility;
+
+/**
+ * Backend Controller base class. Always extends AuthenticatedController since anything in the Backend
+ * is only accessible if a user is connected
+ *
+ * @package Continut\Core\Mvc\Controller
+ */
+class BackendController extends AuthenticatedController
+{
     /**
-     * Backend Controller base class. Always extends AuthenticatedController since anything in the Backend
-     * is only accessible if a user is connected
-     *
-     * @package Continut\Core\Mvc\Controller
+     * Backend constructor
      */
-    class BackendController extends AuthenticatedController
+    public function __construct()
     {
-        /**
-         * Backend constructor
-         */
-        public function __construct()
-        {
-            parent::__construct();
-            $this->setScope('Backend');
+        $this->setScope('Backend');
+        // if no configuration file exists, run the setup
+        if (!file_exists(__ROOTCMS__ . DS . 'Extensions' . DS . 'configuration.php')) {
+            $url = Utility::helper("Url")->linkToAction("Setup", "Install", "index");
+            $this->redirect($url);die('ha');
         }
+        parent::__construct();
+    }
 
-        // @TODO: Cleanup required
-        public function loginAction()
-        {
-            return "Login dude";
-        }
+    // @TODO: Cleanup required
+    public function loginAction()
+    {
+        return "Login dude";
     }
 }

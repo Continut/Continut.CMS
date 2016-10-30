@@ -38,5 +38,5 @@
 
 <footer>
     <p><?= $this->__("copyright.text", ["file" => "LICENSE.TXT"]); ?></p>
-    <p><?= $this->__("copyright.footer", ["link" => '<a href="http://www.pixelplant.ch" target="_blank" title="www.pixelplant.ch">Radu Mogoș</a>']) ?></p>
+    <p><?= $this->__("copyright.footer", ["link" => '<a href="http://www.continut.org" target="_blank" title="www.continut.org">Radu Mogoș</a>']) ?></p>
 </footer>

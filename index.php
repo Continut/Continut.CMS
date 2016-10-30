@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file is part of the Conţinut CMS project.
  * Distributed under the GNU General Public License.
@@ -10,14 +9,15 @@
  * Project: Conţinut CMS
  */
 
-define("__ROOTCMS__", __DIR__);
-define("DS", DIRECTORY_SEPARATOR);
+define('__ROOTCMS__', __DIR__);
+define('DS', DIRECTORY_SEPARATOR);
 
-require __ROOTCMS__ . DS . "Core" . DS . "Bootstrap.php";
+require __ROOTCMS__ . DS . 'Core' . DS . 'Bootstrap.php';
 
-/** @var \Continut\Core\Bootstrap */
-\Continut\Core\Bootstrap::getInstance()
-    ->setEnvironment("Frontend", "Development") // Change this to "Production" before going LIVE
+/* @var $bootstrap \Continut\Core\Bootstrap */
+$bootstrap = \Continut\Core\Bootstrap::getInstance();
+$bootstrap
+    ->setEnvironment('Frontend', 'Development') // Change this to 'Production' before going LIVE
     ->connectToDatabase()
     ->initializeWebsite()
     ->loadExtensionsConfiguration()

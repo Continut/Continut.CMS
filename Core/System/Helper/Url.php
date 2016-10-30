@@ -90,7 +90,7 @@ namespace Continut\Core\System\Helper {
          */
         public function linkToSlug($slug)
         {
-            return $slug;
+            return Utility::getRequest()->getUrlGenerator()->generate('page_slug', ['slug' => $slug]);
         }
     }
 

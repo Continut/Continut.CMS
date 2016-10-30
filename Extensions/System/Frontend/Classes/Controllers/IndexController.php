@@ -19,7 +19,7 @@ class IndexController extends FrontendController
     {
         //Utility::debugData("page_rendering", "start", "Page rendering");
         // get page id request
-        $pageId = (int)$this->getRequest()->getArgument("pid");
+        $pageId = (int)$this->getRequest()->getArgument("id");
         // or slug, whichever is sent
         $pageSlug = $this->getRequest()->getArgument("slug");
 

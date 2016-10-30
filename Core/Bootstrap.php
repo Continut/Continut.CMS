@@ -106,7 +106,13 @@ namespace Continut\Core {
                 $view->setTemplate($errorTemplate);
                 echo $view->render();
             } else {
-                Utility::debugData($exception, "exception");
+                // in PHP 7 you can receive both an error or an exception
+                if ($exception instanceof \Error) {
+                    Utility::debugData($exception, "error");
+                } else {
+                    Utility::debugData($exception, "exception");
+                }
+
                 echo $exception->getMessage();
             }
         }
