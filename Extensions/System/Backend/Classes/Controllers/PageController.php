@@ -253,6 +253,8 @@ class PageController extends BackendController
         $pagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection');
         $pageModel = $pagesCollection->findById($pageId);
 
+        // @TODO: Cast the value to an int or check for boolean types in the BaseCollection when saving
+        //$pageModel->setIsInMenu(1 - $pageModel->getIsInMenu());
         $pageModel->setIsInMenu(!$pageModel->getIsInMenu());
 
         $pagesCollection

@@ -104,6 +104,12 @@ namespace Continut\Core\System\Helper {
             return Utility::getRequest()->getUrlGenerator()->generate($path, $params);
         }
 
+        /**
+         * Backend link to menu method
+         *
+         * @param array $settings Menu settings from configuration.json
+         * @return string
+         */
         public function linkToMenu($settings) {
             if (isset($settings['path'])) {
                 $params = isset($settings['params']) ? $settings['params'] : [];

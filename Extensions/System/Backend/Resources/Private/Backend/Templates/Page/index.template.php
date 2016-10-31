@@ -15,7 +15,7 @@
                         <script type="text/javascript">
                             $('#select_website').on('change', function (event) {
                                 $.ajax({
-                                    url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "tree") ?>',
+                                    url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'tree']) ?>',
                                     data: {domain_id: this.value}
                                 })
                                     .done(function (data) {
@@ -54,7 +54,7 @@
                     <script type="text/javascript">
                         $('#select_language').on('change', function (event) {
                             $.ajax({
-                                url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "tree") ?>',
+                                url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'tree']) ?>',
                                 data: {domain_id: $('#select_website').val(), domain_url_id: this.value}
                             })
                                 .done(function (data) {
@@ -130,7 +130,7 @@
                     var nodeId = data.selected[0];
                     // once a node is clicked, load the corresponding page in the right side
                     $.ajax({
-                        url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "show") ?>',
+                        url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'show']) ?>',
                         data: {page_id: nodeId},
                         beforeSend: function (xhr) {
                             $('#' + nodeId).prepend('<span class="pull-right fa fa-spinner fa-pulse"></span>');
@@ -167,7 +167,7 @@
                         'dots' : true
                     },
                     'data' : {
-                        'url' : '<?= $this->helper("Url")->linkToPath('editor', ['_controller' => 'Editor', '_action' => 'tree']) ?>',
+                        'url' : '<?= $this->helper("Url")->linkToPath('editor', ['_controller' => 'Page', '_action' => 'tree']) ?>',
                         'data' : function (node) {
                             return { 'id' : node.id };
                         }

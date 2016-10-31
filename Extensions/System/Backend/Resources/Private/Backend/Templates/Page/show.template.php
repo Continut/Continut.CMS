@@ -53,7 +53,7 @@
 <script type="text/javascript">
     $('.page-link').on('click', function () {
         $.ajax({
-            url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "show") ?>',
+            url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'show']) ?>',
             data: {page_id: $(this).data('page-id')}
         })
             .done(function (data) {
@@ -62,7 +62,7 @@
     });
     $('#page-visibility-frontend').on('click', function () {
         $.ajax({
-            url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "toggleVisibility") ?>',
+            url: '<?= $this->helper("Url")->LinkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'toggleVisibility']) ?>',
             data: {page_id: <?= $page->getId() ?> },
             dataType: 'json'
         })
@@ -82,7 +82,7 @@
     });
     $('#page-visibility-menu').on('click', function () {
         $.ajax({
-            url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "toggleMenu") ?>',
+            url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'toggleMenu']) ?>',
             data: {page_id: <?= $page->getId() ?> },
             dataType: 'json'
         })
@@ -103,7 +103,7 @@
     $('#page-edit').on('click', function () {
         if ($('#page_edit_block').is(':empty')) {
             $.ajax({
-                url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "edit") ?>',
+                url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'edit']) ?>',
                 data: {page_id: <?= $page->getId() ?> }
             }).done(function (data) {
                 $('#page_edit_block').html(data);
@@ -119,7 +119,7 @@
                 // if user confirms, send delete request
                 if (result) {
                     $.getJSON({
-                        url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "delete") ?>',
+                        url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'delete']) ?>',
                         data: {page_id: <?= $page->getId() ?> }
                     }).done(function (data) {
                         console.log(data);

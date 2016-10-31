@@ -142,10 +142,10 @@ $this->getPageView()
                         <img src="<?= $this->helper('Image')->getPath('Images/profile_pic.jpg', 'Backend'); ?>" height="24" alt="" class="img-circle"> <?= \Continut\Core\Utility::getSession()->getUser()->getName(); ?> <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="<?= $this->helper('Url')->linkToAction('Backend', 'User', 'profile') ?>">User profile</a>
+                        <li><a href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'User', '_action' => 'profile']) ?>">User profile</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="<?= $this->helper('Url')->linkToAction('Backend', 'Login', 'logout') ?>">Logout</a></li>
+                        <li><a href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Login', '_action' => 'logout']) ?>">Logout</a></li>
                     </ul>
                 </li>
             </ul>

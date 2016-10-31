@@ -275,7 +275,9 @@ class Request
         $this->routeContext = new RequestContext('');
 
         $matcher = new UrlMatcher($this->routes, $this->routeContext);
-        $parameters = $matcher->match($_SERVER['REQUEST_URI']);
+        // @TODO - fix query string data
+        $url = strtok($_SERVER['REQUEST_URI'], '?');
+        $parameters = $matcher->match($url);
 
         foreach ($parameters as $parameterName => $parameterValue) {
             $this->setArgument($parameterName, $parameterValue);

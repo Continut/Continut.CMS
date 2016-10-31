@@ -10,6 +10,7 @@
 
 namespace Continut\Core\Mvc\Controller {
 
+    use Continut\Core\Tools\ErrorException;
     use Continut\Core\Utility;
 
     /**
@@ -212,7 +213,7 @@ namespace Continut\Core\Mvc\Controller {
         }
 
         /**
-         * @param string Set extension type
+         * @param string $extensionType Set extension type
          *
          * @return $this
          */
@@ -247,7 +248,7 @@ namespace Continut\Core\Mvc\Controller {
         /**
          * Forward current action to another one
          *
-         * @param $to Action name to forward to
+         * @param string $to Action name to forward to
          *
          * @throws ErrorException
          */
