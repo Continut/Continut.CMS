@@ -25,7 +25,7 @@
                     <?php foreach ($elements as $element): ?>
                         <?php foreach ($element["configuration"] as $identifier => $value): ?>
                             <li class="theme-<?= $element["extension"] ?>">
-                                <a href="<?= $this->helper("Url")->linkToAction("Backend", "Content", "add", ["column_id" => $columnId, "page_id" => $pageId, "settings" => ["extension" => $element["extension"], "identifier" => $identifier, "type" => $type, "template" => $value["template"]]]) ?>"
+                                <a href="<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Content', '_action' => 'add', 'column_id' => $columnId, 'page_id' => $pageId, 'settings' => ['extension' => $element['extension'], 'identifier' => $identifier, 'type' => $type, 'template' => $value['template']]]) ?>"
                                    class="content-wizard-element">
                                     <?php if (isset($value["icon"])): ?>
                                         <img src="<?= $this->publicAsset($value["icon"], $element["extension"]); ?>"

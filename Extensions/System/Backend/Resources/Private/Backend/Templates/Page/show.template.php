@@ -174,7 +174,7 @@
                 var beforeId = target.prevObject.next(".panel-backend-content").data('id');
                 if (target) {
                     dropInto.addClass('loader');
-                    $.getJSON('<?= $this->helper("Url")->linkToAction("Backend", "Content", "updateContainer") ?>',
+                    $.getJSON('<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Content', '_action' => 'updateContainer']) ?>',
                         {
                             parent_id: target.data('parent'),
                             column_id: target.data('id'),

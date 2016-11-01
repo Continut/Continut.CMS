@@ -70,7 +70,7 @@
         </div>
         <div class="row tree-filter">
             <div class="col-xs-7">
-                <form action="<?= $this->helper("Url")->linkToAction("Backend", "Index", "searchPageTree") ?>"
+                <form action="<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Index', '_action' => 'searchPageTree']) ?>"
                       class="form-inline" method="post">
                     <div class="form-group entire-area">
                         <div class="input-group entire-area">
@@ -99,7 +99,7 @@
                 oldSearch = term;
                 searchPageSpinner.removeClass("fa-file").addClass("fa-spinner fa-pulse");
                 $.ajax({
-                        url: '<?= $this->helper("Url")->linkToAction("Backend", "Page", "searchTree") ?>',
+                        url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'searchTree']) ?>',
                         data: {query: term, domain_id: $('#select_website').val()}
                     }
                 ).done(function (data) {
@@ -149,7 +149,7 @@
                 .on('move_node.jstree', function(e, data) {
                     console.log(data);
                     $.post(
-                        '<?= $this->helper("Url")->linkToAction("Backend", "Page", "treeMove") ?>',
+                        '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'treeMove']) ?>',
                         {
                             movedId: data.node.id,
                             newParentId: data.parent,
@@ -187,7 +187,7 @@
                 var pid = $('#cms_tree').tree('getSelectedNode').id;
                 BootstrapDialog.show({
                     title: <?= json_encode($this->__("backend.page.wizard.create.title")) ?>,
-                    message: $('<div></div>').load('<?= $this->helper("Url")->linkToAction("Backend", "Page", "wizard") ?>&id=' + pid)
+                    message: $('<div></div>').load('<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'wizard']) ?>?id=' + pid)
                 });
             });
 
@@ -197,7 +197,7 @@
                             event.preventDefault();
                             event.move_info.do_move();
                             $.post(
-                                '<?= $this->helper("Url")->linkToAction("Backend", "Page", "treeMove") ?>',
+                                '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'treeMove']) ?>',
                                 {
                                     movedId: event.move_info.moved_node.id,
                                     newParentId: event.move_info.target_node.id,

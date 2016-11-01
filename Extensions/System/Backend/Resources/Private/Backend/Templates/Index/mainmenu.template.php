@@ -30,7 +30,7 @@
             </li>
         <?php else: ?>
             <li>
-                <a href="<?= $this->helper("Url")->linkToAction($menuItem["extension"], $menuItem["controller"], $menuItem["action"]) ?>">
+                <a href="<?= $this->helper("Url")->linkToMenu($menuItem) ?>">
                     <?php if (isset($menuItem["icon"])): ?>
                         <i class="<?= $menuItem["icon"] ?>"></i>
                     <?php endif ?>

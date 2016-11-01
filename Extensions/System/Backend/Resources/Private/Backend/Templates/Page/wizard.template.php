@@ -4,7 +4,7 @@
     <p class="lead"><?= $this->__('backend.page.wizard.title.root') ?></p>
 <?php endif ?>
 <form method="post" id="form_page_wizard" class="form"
-      action="<?= $this->helper("Url")->linkToAction("Backend", "Page", "add", ["id" => (($page) ? $page->getId() : 0)]) ?>">
+      action="<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'add', 'id' => (($page) ? $page->getId() : 0)]) ?>">
     <input type="hidden" name="domain_url_id" value=""/>
     <div class="row">
         <div class="col-sm-12 col-md-4">

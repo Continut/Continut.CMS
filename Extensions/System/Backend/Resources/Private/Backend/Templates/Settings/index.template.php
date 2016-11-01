@@ -13,7 +13,7 @@
                 <script type="text/javascript">
                     $('#select_website').on('change', function (event) {
                         $.ajax({
-                            url: '<?= $this->helper("Url")->linkToAction("Backend", "Settings", "languages") ?>',
+                            url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'languages']) ?>',
                             data: {domain_id: this.value}
                         })
                             .done(function (data) {

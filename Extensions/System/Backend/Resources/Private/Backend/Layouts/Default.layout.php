@@ -49,12 +49,12 @@ $this->getPageView()
 
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'index']) ?>">
+                    <a href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'favorites']) ?>">
                         <i class="fa fa-fw fa-2x fa-star-o"></i> <?= $this->__('backend.menu.favorites') ?>
                     </a>
                 </li>
                 <li class="dropdown">
-                    <a href="<?= $this->helper('Url')->linkToAction('Backend', 'Settings', 'index') ?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <a href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'notifications']) ?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-fw fa-2x fa-envelope-o fa-alerted"></i> <?= $this->__('backend.menu.notifications') ?>
                     </a>
                     <ul class="dropdown-menu media-list">

@@ -27,7 +27,7 @@
                 <div class="btn-group btn-group-justified" role="group" aria-label="...">
                     <div class="btn-group" role="group">
                         <a class="btn btn-success" id="create_folder"
-                           href="<?= $this->helper("Url")->linkToAction("Backend", "Media", "createFolder", ["path" => urlencode($path)]) ?>"><?= $this->__("backend.media.folders.create") ?>
+                           href="<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Media', '_action' => 'createFolder', 'path' => urlencode($path)]) ?>"><?= $this->__("backend.media.folders.create") ?>
                             <i class="fa fa-fw fa-plus"></i></a>
                     </div>
                     <div class="btn-group" role="group">
@@ -44,7 +44,7 @@
                     <?php endif ?>
                     <?php foreach ($folders as $folder): ?>
                         <a class="list-group-item"
-                           href="<?= $this->helper("Url")->linkToAction("Backend", "Media", "index", ["path" => urlencode($folder->getRelativePath())]) ?>"><span
+                           href="<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Media', '_action' => 'index', 'path' => urlencode($folder->getRelativePath())]) ?>"><span
                                 class="badge"><?= $folder->getCountFolders() ?> <i
                                     class="fa fa-fw fa-folder"></i> / <?= $folder->getCountFiles() ?> <i
                                     class="fa fa-fw fa-file"></i></span> <?= $folder->getName() ?></a>

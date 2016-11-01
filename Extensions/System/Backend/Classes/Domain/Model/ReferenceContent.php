@@ -26,30 +26,30 @@ class ReferenceContent extends BackendContent
     {
         $linkToEdit = sprintf('<a title="%s" class="btn btn-default content-operation-link" href="%s"><i class="fa fa-pencil fa-fw"></i></a>',
             Utility::helper("Localization")->translate("backend.content.operation.edit"),
-            Utility::helper("Url")->linkToAction("Backend", "Content", "edit", ["id" => $this->getId()])
+            Utility::helper("Url")->linkToPath('admin_backend', ['_controller' => 'Content', '_action' => 'edit', 'id' => $this->getId()])
         );
 
         $linkToDelete = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-trash-o fa-fw"></i> %s</a>',
             Utility::helper("Localization")->translate("backend.content.operation.delete"),
-            Utility::helper("Url")->linkToAction("Backend", "Content", "delete", ["id" => $this->getId()]),
+            Utility::helper("Url")->linkToPath('admin_backend', ['_controller' => 'Content', '_action' => 'delete', 'id' => $this->getId()]),
             Utility::helper("Localization")->translate("backend.content.operation.delete")
         );
 
         $linkToCopy = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-copy fa-fw"></i> %s</a>',
             Utility::helper("Localization")->translate("backend.content.operation.copy"),
-            Utility::helper("Url")->linkToAction("Backend", "Content", "copy", ["id" => $this->getId()]),
+            Utility::helper("Url")->linkToPath('admin_backend', ['_controller' => 'Content', '_action' => 'copy', 'id' => $this->getId()]),
             Utility::helper("Localization")->translate("backend.content.operation.copy")
         );
 
         $linkToHide = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-eye fa-fw"></i> %s</a>',
             Utility::helper("Localization")->translate("backend.content.operation.hide"),
-            Utility::helper("Url")->linkToAction("Backend", "Content", "toggleVisibility", ["id" => $this->getId(), "show" => 0]),
+            Utility::helper("Url")->linkToPath('admin_backend', ['_controller' => 'Content', '_action' => 'toggleVisibility', 'id' => $this->getId(), 'show' => 0]),
             Utility::helper("Localization")->translate("backend.content.operation.hide")
         );
 
         $linkToShow = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-eye-slash text-danger fa-fw"></i> %s</a>',
             Utility::helper("Localization")->translate("backend.content.operation.show"),
-            Utility::helper("Url")->linkToAction("Backend", "Content", "toggleVisibility", ["id" => $this->getId(), "show" => 1]),
+            Utility::helper("Url")->linkToPath('admin_backend', ['_controller' => 'Content', '_action' => 'toggleVisibility', 'id' => $this->getId(), 'show' => 1]),
             Utility::helper("Localization")->translate("backend.content.operation.show")
         );
 
