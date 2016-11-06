@@ -96,7 +96,7 @@ class User extends BaseModel
     /**
      * @return boolean
      */
-    public function isIsDeleted()
+    public function getIsDeleted()
     {
         return $this->isDeleted;
     }
@@ -112,7 +112,7 @@ class User extends BaseModel
     /**
      * @return boolean
      */
-    public function isIsActive()
+    public function getIsActive()
     {
         return $this->isActive;
     }

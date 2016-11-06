@@ -7,18 +7,17 @@
  * Date: 03.01.2016 @ 15:00
  * Project: Conţinut CMS
  */
-namespace Continut\Extensions\Local\News\Classes\View\Renderer;
+namespace Continut\Extensions\System\Backend\Classes\View\Renderer;
 
 use Continut\Core\Utility;
-use Continut\Extensions\System\Backend\Classes\View\Renderer\BaseRenderer;
 
-class CategoriesRenderer extends BaseRenderer
+class YesNoRenderer extends BaseRenderer
 {
     /**
-     * ActionsRenderer constructor
+     * TextFilter constructor
      */
     public function __construct()
     {
-        $this->setTemplate(Utility::getResource('Renderer/categories', 'News', 'Backend', 'Template'));
+        $this->setTemplate(Utility::getResource('Renderer/yesNo', 'Backend', 'Backend', 'Template'));
     }
 }

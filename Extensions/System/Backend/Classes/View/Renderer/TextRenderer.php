@@ -18,6 +18,6 @@ class TextRenderer extends BaseRenderer
      */
     public function __construct()
     {
-        $this->setTemplate(Utility::getResource("Renderer/text", "Backend", "Backend", "Template"));
+        $this->setTemplate(Utility::getResource('Renderer/text', 'Backend', 'Backend', 'Template'));
     }
 }

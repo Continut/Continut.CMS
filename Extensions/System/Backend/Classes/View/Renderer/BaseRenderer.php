@@ -10,6 +10,7 @@
 namespace Continut\Extensions\System\Backend\Classes\View\Renderer;
 
 use Continut\Core\Mvc\View\BaseView;
+use Continut\Core\Utility;
 
 class BaseRenderer extends BaseView
 {
@@ -26,9 +27,17 @@ class BaseRenderer extends BaseView
     /**
      * The record that this renderer will show
      *
-     * @var \Continut\Core\Mvc\Model\BaseModel\BaseModel
+     * @var \Continut\Core\Mvc\Model\BaseModel
      */
     protected $record;
+
+    /**
+     * BaseRenderer constructor.
+     */
+    public function __construct() {
+        // define a default template for the base renderer
+        $this->setTemplate(Utility::getResource('Renderer/base', 'Backend', 'Backend', 'Template'));
+    }
 
     /**
      * @return \Continut\Extensions\System\Backend\Classes\Domain\Model\Grid\Field

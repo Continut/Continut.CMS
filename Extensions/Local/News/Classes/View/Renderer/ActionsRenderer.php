@@ -19,6 +19,6 @@ class ActionsRenderer extends BaseRenderer
      */
     public function __construct()
     {
-        $this->setTemplate(Utility::getResource("Renderer/actions", "News", "Backend", "Template"));
+        $this->setTemplate(Utility::getResource('Renderer/actions', 'News', 'Backend', 'Template'));
     }
 }

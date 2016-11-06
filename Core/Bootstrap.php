@@ -113,7 +113,7 @@ namespace Continut\Core {
                     Utility::debugData($exception, "exception");
                 }
 
-                echo $exception->getMessage();
+                var_dump($exception);
             }
         }
 

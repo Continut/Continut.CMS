@@ -66,7 +66,7 @@ class GridView extends BaseView
             if ($field->getFilter()) {
                 $queryText = $field->getFilter()->getQueryText();
                 if ($queryText) {
-                    $filterQueries[] = $field->getFilter()->getQueryText();
+                    $filterQueries[] = $queryText;
                     $filterValues = array_merge($filterValues, $field->getFilter()->getQueryValue());
                 }
             }

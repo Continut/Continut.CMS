@@ -7,16 +7,14 @@
  * Date: 03.04.2015 @ 20:59
  * Project: Conţinut CMS
  */
-namespace Continut\Extensions\Local\News\Classes\Domain\Model {
+namespace Continut\Extensions\Local\News\Classes\Domain\Model;
 
-    use Continut\Core\Mvc\Model\Content;
+use Continut\Core\System\Domain\Model\Content;
 
-    class NewsContent extends Content
+class NewsContent extends Content
+{
+    public function render()
     {
-        public function render()
-        {
-            return "<hr/> " . $this->getValue();
-        }
+        return "<hr/> " . $this->getValue();
     }
-
 }

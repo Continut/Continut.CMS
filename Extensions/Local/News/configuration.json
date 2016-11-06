@@ -25,8 +25,8 @@
               "label": "backend.news.showAll",
               "icon": "fa fa-fw fa-bars",
               "extension": "News",
-              "controller": "NewsBackend",
-              "action": "index"
+              "path": "news_backend",
+              "params": {"_controller": "NewsBackend", "_action": "index"}
             },
             "addNew": {
               "label": "backend.news.createNew",

@@ -47,9 +47,8 @@
             "backendUsersAll": {
               "label": "backend.menu.users.backend.all",
               "icon": "fa fa-fw fa-users",
-              "extension": "Backend",
-              "controller": "Users",
-              "action": "test"
+              "path": "admin_backend",
+              "params": {"_controller": "Users", "_action": "backendUsers"}
             },
             "backendUserAdd": {
               "label": "backend.menu.users.backend.add",
@@ -61,9 +60,8 @@
             "backendUsergroupAll": {
               "label": "backend.menu.usergroups.backend.all",
               "icon": "fa fa-fw fa-users",
-              "extension": "Backend",
-              "controller": "Users",
-              "action": "test"
+              "path": "admin_backend",
+              "params": {"_controller": "Users", "_action": "backendGroups"}
             },
             "backendUsergroupAdd": {
               "label": "backend.menu.usergroups.backend.add",
@@ -82,9 +80,8 @@
             "frontendUsersAll": {
               "label": "backend.menu.users.frontend.all",
               "icon": "fa fa-fw fa-users",
-              "extension": "Backend",
-              "controller": "Users",
-              "action": "test"
+              "path": "admin_backend",
+              "params": {"_controller": "Users", "_action": "frontendUsers"}
             },
             "frontendUserAdd": {
               "label": "backend.menu.users.frontend.add",
@@ -96,9 +93,8 @@
             "frontendUsergroupAll": {
               "label": "backend.menu.usergroups.frontend.all",
               "icon": "fa fa-fw fa-users",
-              "extension": "Backend",
-              "controller": "Users",
-              "action": "test"
+              "path": "admin_backend",
+              "params": {"_controller": "Users", "_action": "frontendGroups"}
             },
             "frontendUsergroupAdd": {
               "label": "backend.menu.usergroups.frontend.add",

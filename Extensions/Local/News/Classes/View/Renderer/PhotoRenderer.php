@@ -19,6 +19,6 @@ class PhotoRenderer extends BaseRenderer
      */
     public function __construct()
     {
-        $this->setTemplate(Utility::getResource("Renderer/photo", "News", "Backend", "Template"));
+        $this->setTemplate(Utility::getResource('Renderer/photo', 'News', 'Backend', 'Template'));
     }
 }

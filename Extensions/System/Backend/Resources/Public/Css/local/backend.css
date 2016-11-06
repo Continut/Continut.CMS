@@ -517,6 +517,7 @@ li a.helper-icon {
 #settings_sidebar {
   background: #035e85;
   color: #ffffff;
+  padding-top: 20px;
 }
 #settings_sidebar .list-group {
   margin: 0;

@@ -1,0 +1,1 @@
+<?= $this->getRecord()->fetchFromField($this->getField()->getName()); ?>
