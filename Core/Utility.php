@@ -145,8 +145,11 @@ namespace Continut\Core {
             require_once(__ROOTCMS__ . "/Extensions/configuration.php");
 
             // convert the multiarray to a 2d array
+            // $config is defined inside configuration.php
+            // @TODO: add a check if $config is defined or if it is valid
             $recursiveArray = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($config[$applicationEnvironment]));
             $result = array();
+            // transform the multiarray as a flat "x/y/z" array
             foreach ($recursiveArray as $leaf) {
                 $keys = array();
                 foreach (range(0, $recursiveArray->getDepth()) as $depth) {
@@ -154,6 +157,8 @@ namespace Continut\Core {
                 }
                 $result[join('/', $keys)] = $leaf;
             }
+            // store the basic configuration from the file. It will be later on merged with the other configuration
+            // options defined in the database
             static::$configuration = $result;
             static::debugData($result, "config");
 
@@ -176,7 +181,7 @@ namespace Continut\Core {
             if (isset(static::$configuration[$path])) {
                 return static::$configuration[$path];
             }
-            // TODO: throw an exception
+            // @TODO: throw an exception
             return null;
         }
 

@@ -1,7 +1,10 @@
+<?php
+$elementType = (isset($settings['type'])) ? $settings['type'] : $element->getType();
+?>
 <div class="row">
     <div class="col-sm-12">
         <ol class="breadcrumb breadcrumb-page-tree">
-            <li class="active"><?= $this->__("backend.content.type." . $element->getType()) ?></li>
+            <li class="active"><?= $this->__("backend.content.type." . $elementType) ?></li>
             <li>
                 <?php if (!$element->getTitle()): ?>
                     <?= $this->__("backend.content.noTitle") ?>

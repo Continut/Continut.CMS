@@ -28,6 +28,7 @@
       "backend.themeBootstrapModerna.type.container.3columns.description": "Adds a container that can contain an indefinite number of content elements that will be displayed on 3 columns",
       "backend.themeBootstrapModerna.type.container.4columns.title": "4 columns container",
       "backend.themeBootstrapModerna.type.container.4columns.description": "Adds a container that can contain an indefinite number of content elements that will be displayed on 4 columns",
+      "backend.wizard.title": "Title",
       "backend.wizard.containers.spaceUsage": "Space usage per columns",
       "backend.wizard.containers.usage.4_1": "25% column 1, 25% column 2, 25% column 3, 25% column 4",
       "backend.wizard.containers.usage.2_1": "8% left, 92% right",

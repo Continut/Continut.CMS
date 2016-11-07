@@ -142,12 +142,19 @@ class PageController extends BackendController
 
         $pageCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection');
         $pageModel = $pageCollection->findById($id);
+        // format start date for MySql
+        $date = new \DateTime($data['start_date']);
+        $data['start_date'] = $date->format('Y-m-d H:i:s');
+        // format end date for MySql
+        $date = new \DateTime($data['end_date']);
+        $data['end_date'] = $date->format('Y-m-d H:i:s');
         $pageModel->update($data);
 
         // We store a cached version for the FE and BE versions, this way we avoid looking for layouts all the time
         $extensionName = substr($pageModel->getLayout(), 0, strpos($pageModel->getLayout(), "."));
         $layoutId = substr($pageModel->getLayout(), strlen($extensionName) + 1);
         $settings = Utility::getExtensionSettings($extensionName);
+        // get the BE and FE layout files based on the layout id
         if (isset($settings["ui"]["layout"][$layoutId])) {
             $pageModel->setBackendLayout($settings["ui"]["layout"][$layoutId]["backendFile"]);
             $pageModel->setFrontendLayout($settings["ui"]["layout"][$layoutId]["frontendFile"]);
@@ -291,8 +298,8 @@ class PageController extends BackendController
     {
         // We get the id of the page that has been drag & dropped
         $pageId = (int)$this->getRequest()->getArgument("movedId");
-        // move type can be "after", "before" or "inside"
-        $moveType = $this->getRequest()->getArgument("position");
+        // position of node inside the new node, after drop stops
+        $newPosition = $this->getRequest()->getArgument("position");
         // new parent to move into, or after
         $newParentId = (int)$this->getRequest()->getArgument("newParentId");
 
@@ -302,7 +309,10 @@ class PageController extends BackendController
 
         // If the page is valid, we change it's parentId field and then save the value
         if ($pageModel) {
-            switch ($moveType) {
+            $pageModel->setParentId($newParentId);
+            $pageModel->setSorting($newPosition);
+            // @TODO: old jqTree version, to remove
+            /*switch ($moveType) {
                 // if it's after we need to check if it's on the same level or another one
                 case "after":
                     $otherPage = $pagesCollection->where("id = :id", ["id" => $newParentId])
@@ -358,7 +368,7 @@ class PageController extends BackendController
                         $highestSorting = $pagesCollection->where("is_deleted = 0 ORDER BY sorting DESC")->getFirst();
                         $pageModel->setSorting($highestSorting->getSorting() + 1);
                     }
-            }
+            }*/
             $pagesCollection
                 ->reset()
                 ->add($pageModel)

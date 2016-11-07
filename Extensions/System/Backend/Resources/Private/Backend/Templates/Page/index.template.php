@@ -152,8 +152,8 @@
                         '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'treeMove']) ?>',
                         {
                             movedId: data.node.id,
-                            newParentId: data.parent,
-                            position: data.position
+                            position: data.position,
+                            newParentId: data.parent
                         }
                     );
                 })
