@@ -140,8 +140,8 @@ namespace Continut\Core {
         {
             // Load Local and System extensions configuration data
             Utility::debugData("Loading extensions configuration", "start");
-            Utility::loadExtensionsConfigurationFromFolder(__ROOTCMS__ . DS . "Extensions" . DS . "Local");
-            Utility::loadExtensionsConfigurationFromFolder(__ROOTCMS__ . DS . "Extensions" . DS . "System");
+            Utility::loadExtensionsConfigurationFromFolder(__ROOTCMS__ . DS . "Extensions", "Local");
+            Utility::loadExtensionsConfigurationFromFolder(__ROOTCMS__ . DS . "Extensions", "System");
             Utility::debugData("Loading extensions configuration", "stop");
 
             return $this;
@@ -198,9 +198,9 @@ namespace Continut\Core {
                 $request->mapRouting();
 
                 // Get request argument values or switch to default values if not defined
-                $contextExtension = $request->getArgument("_extension", "Backend");
+                $contextExtension  = $request->getArgument("_extension", "Backend");
                 $contextController = $request->getArgument("_controller", "Index");
-                $contextAction = $request->getArgument("_action", "dashboard");
+                $contextAction     = $request->getArgument("_action", "dashboard");
 
                 $controller = Utility::getController($contextExtension, $contextController, $contextAction);
 

@@ -326,7 +326,7 @@ CREATE TABLE `sys_pages` (
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT 'is the page deleted?',
   `domain_url_id` int(11) DEFAULT NULL COMMENT 'the domain url this page belongs to',
   `layout` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'the layout to use',
-  `layout_recursive` tinyint(1) DEFAULT '0' COMMENT 'will this layout be inherited by any subpage created inside it',
+  `is_layout_recursive` tinyint(1) DEFAULT '0' COMMENT 'will this layout be inherited by any subpage created inside it',
   `frontend_layout` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'layout template to be used by this page - cached',
   `backend_layout` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'layout used in the backend - cached',
   `cached_path` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'cached breadcrumb path',
@@ -339,7 +339,7 @@ CREATE TABLE `sys_pages` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `sys_pages` (`id`, `parent_id`, `title`, `language_iso3`, `original_id`, `is_in_menu`, `is_visible`, `is_deleted`, `domain_url_id`, `layout`, `layout_recursive`, `frontend_layout`, `backend_layout`, `cached_path`, `sorting`, `slug`, `meta_keywords`, `meta_description`, `start_date`, `end_date`) VALUES
+INSERT INTO `sys_pages` (`id`, `parent_id`, `title`, `language_iso3`, `original_id`, `is_in_menu`, `is_visible`, `is_deleted`, `domain_url_id`, `layout`, `is_layout_recursive`, `frontend_layout`, `backend_layout`, `cached_path`, `sorting`, `slug`, `meta_keywords`, `meta_description`, `start_date`, `end_date`) VALUES
 (1,	0,	'Comics HAC!BD remodif',	'rou',	0,	1,	1,	0,	1,	'ThemeBootstrapModerna.homepage',	1,	'/Extensions/Local/ThemeBootstrapModerna/Resources/Private/Frontend/Layouts/Homepage.layout.php',	'/Extensions/Local/ThemeBootstrapModerna/Resources/Private/Backend/Layouts/Homepage.layout.php',	'',	2,	'comics-hac-bd',	'comics,hac,benzi desenate,revista hac',	'Meta descrierea paginii vine aici.\r\nBlablabla',	'2015-12-30 18:00:00',	'0000-00-00 00:00:00'),
 (2,	0,	'Revista HAC!',	'rou',	0,	1,	1,	0,	1,	'ThemeAtlas.default',	0,	'/Extensions/Local/ThemeAtlas/Resources/Private/Frontend/Layouts/Default.layout.php',	'/Extensions/Local/ThemeAtlas/Resources/Private/Backend/Layouts/Default.layout.php',	'1',	1,	'revista-hac',	'meta keywords for this page',	'test meta description',	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
 (3,	1,	'Albume HAC!BD',	'rou',	0,	1,	1,	0,	1,	NULL,	0,	'/Extensions/Local/ThemeBootstrapModerna/Resources/Private/Frontend/Layouts/Default.layout.php',	'/Extensions/Local/ThemeBootstrapModerna/Resources/Private/Backend/Layouts/Default.layout.php',	'1',	0,	'albumele-hac',	NULL,	NULL,	NULL,	NULL),

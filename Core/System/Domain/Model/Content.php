@@ -243,7 +243,7 @@ class Content extends BaseModel
     }
 
     /**
-     * @return \Continut\Core\Mvc\View\PageViews
+     * @return \Continut\Core\Mvc\View\PageView
      */
     public function getPage()
     {
@@ -273,7 +273,7 @@ class Content extends BaseModel
     /**
      * @return boolean
      */
-    public function isIsDeleted()
+    public function getIsDeleted()
     {
         return $this->isDeleted;
     }

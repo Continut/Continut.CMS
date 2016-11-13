@@ -10,6 +10,7 @@
 namespace Continut\Core\System\View {
 
     use Continut\Core\Mvc\View\Container;
+    use Continut\Core\Utility;
 
     class BackendContainer extends Container
     {
@@ -30,7 +31,13 @@ namespace Continut\Core\System\View {
                 }
             }
 
-            return sprintf('<div data-parent="%s" data-id="%s" class="container-receiver">%s</div>', $this->getId(), $id, $htmlElements);
+            return sprintf('<div data-parent="%s" data-id="%s" class="container-receiver">%s</div><a class="btn btn-sm btn-success content-wizard" title="%s" href="%s"><i class="fa fa-plus fa-fw"></i></a>',
+                $this->getId(),
+                $id,
+                $htmlElements,
+                $this->__("backend.content.addNew"),
+                Utility::helper("Url")->linkToPath('admin_backend', ['_controller' => 'Content', '_action' => 'wizard', 'id' => $this->getId(), 'column_id' => $id, 'page_id' => Utility::getRequest()->getArgument('page_id')])
+            );
         }
     }
 }

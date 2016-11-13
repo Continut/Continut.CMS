@@ -309,12 +309,13 @@ namespace Continut\Core {
          * Loads all configuration files found in extensions residing in a certain folder
          *
          * @var string $path Absolute path in which to look for extensions configuration
+         * @var string $type Type of extensions to load configuration for (System or Local)
          *
          * @throws Tools\Exception
          */
-        public static function loadExtensionsConfigurationFromFolder($path)
+        public static function loadExtensionsConfigurationFromFolder($path, $type = "Local")
         {
-            $extensionFolders = static::getSubdirectories($path);
+            $extensionFolders = static::getSubdirectories($path . DS . $type);
             foreach ($extensionFolders as $folderPath => $folderName) {
                 if (!file_exists($folderPath . DS . "configuration.json")) {
                     throw new ErrorException("configuration.json file not found for extension " . $folderName);
@@ -630,6 +631,7 @@ namespace Continut\Core {
                     }
                 }
             }
+
             return $layouts;
         }
 
@@ -651,6 +653,25 @@ namespace Continut\Core {
             }
 
             return $str;
+        }
+
+        /**
+         * Recursive merge arrays while removing duplicate keys
+         *
+         * @param array $array1
+         * @param array $array2
+         * @return array Merged array
+         */
+        public static function arrayMergeRecursiveUnique($array1, $array2) {
+            if (empty($array1)) return $array2; //optimize the base case
+
+            foreach ($array2 as $key => $value) {
+                if (is_array($value) && is_array(@$array1[$key])) {
+                    $value = self::arrayMergeRecursiveUnique($array1[$key], $value);
+                }
+                $array1[$key] = $value;
+            }
+            return $array1;
         }
     }
 }

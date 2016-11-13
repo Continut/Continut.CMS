@@ -133,7 +133,7 @@
         e.preventDefault();
         BootstrapDialog.show({
             title: <?= json_encode($this->__("backend.content.wizard.create.title")) ?>,
-            message: $('<div></div>').load($(this).attr('href') + '&column_id=' + $(this).closest('.container-receiver').data('id'))
+            message: $('<div></div>').load($(this).attr('href'))
         })
     });
 

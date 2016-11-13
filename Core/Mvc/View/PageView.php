@@ -185,7 +185,7 @@ namespace Continut\Core\Mvc\View {
                     foreach ($assets as $identifier => $configuration) {
 
                         if (isset($configuration['before'])) {
-                            $this->assets[$assetType] = Utility::arrayInsertBefore(
+                            $this->assets[$assetType] = Utility::arrayMoveBefore(
                                 $this->assets[$assetType],
                                 $configuration['before'],
                                 $identifier,

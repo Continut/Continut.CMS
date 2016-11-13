@@ -1,0 +1,1 @@
+<p><?= $this->helper('Text')->truncate($this->helper('Text')->stripTags($content), 200) ?></p>

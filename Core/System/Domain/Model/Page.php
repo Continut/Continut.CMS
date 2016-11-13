@@ -14,7 +14,6 @@ use Continut\Core\Utility;
 
 class Page extends BaseModel
 {
-
     /**
      * @var string Page title
      */
@@ -63,7 +62,7 @@ class Page extends BaseModel
     /**
      * @var bool Are templates inherited recursively or not?
      */
-    protected $layoutRecursive;
+    protected $isLayoutRecursive;
 
     /**
      * @var string Frontend cached layout path for this page
@@ -138,7 +137,7 @@ class Page extends BaseModel
             "is_in_menu" => $this->isInMenu,
             "is_visible" => $this->isVisible,
             "layout" => $this->layout,
-            "layout_recursive" => $this->layoutRecursive,
+            "is_layout_recursive" => $this->isLayoutRecursive,
             "frontend_layout" => $this->frontendLayout,
             "backend_layout" => $this->backendLayout,
             "original_id" => $this->originalId,
@@ -182,10 +181,14 @@ class Page extends BaseModel
 
     /**
      * @param string $slug
+     *
+     * @return $this
      */
     public function setSlug($slug)
     {
         $this->slug = $slug;
+
+        return $this;
     }
 
     /**
@@ -198,10 +201,14 @@ class Page extends BaseModel
 
     /**
      * @param string $metaKeywords
+     *
+     * @return $this
      */
     public function setMetaKeywords($metaKeywords)
     {
         $this->metaKeywords = $metaKeywords;
+
+        return $this;
     }
 
     /**
@@ -214,10 +221,14 @@ class Page extends BaseModel
 
     /**
      * @param string $metaDescription
+     *
+     * @return $this
      */
     public function setMetaDescription($metaDescription)
     {
         $this->metaDescription = $metaDescription;
+
+        return $this;
     }
 
     /**
@@ -230,10 +241,14 @@ class Page extends BaseModel
 
     /**
      * @param int $sorting
+     *
+     * @return $this
      */
     public function setSorting($sorting)
     {
         $this->sorting = $sorting;
+
+        return $this;
     }
 
     /**
@@ -246,14 +261,18 @@ class Page extends BaseModel
 
     /**
      * @param boolean $isVisible
+     *
+     * @return $this
      */
     public function setIsVisible($isVisible)
     {
         $this->isVisible = $isVisible;
+
+        return $this;
     }
 
     /**
-     * @return boor
+     * @return bool
      */
     public function getIsDeleted()
     {
@@ -261,11 +280,15 @@ class Page extends BaseModel
     }
 
     /**
-     * @param boor $isDeleted
+     * @param bool $isDeleted
+     *
+     * @return $this
      */
     public function setIsDeleted($isDeleted)
     {
         $this->isDeleted = $isDeleted;
+
+        return $this;
     }
 
     /**
@@ -278,10 +301,14 @@ class Page extends BaseModel
 
     /**
      * @param int $domainUrlId
+     *
+     * @return $this
      */
     public function setDomainUrlId($domainUrlId)
     {
         $this->domainUrlId = $domainUrlId;
+
+        return $this;
     }
 
     /**
@@ -319,11 +346,13 @@ class Page extends BaseModel
     /**
      * @param string $languageIso3
      *
-     * @return mixed
+     * @return $this
      */
     public function setLanguageIso3($languageIso3)
     {
-        return $this->languageIso3 = $languageIso3;
+        $this->languageIso3 = $languageIso3;
+
+        return $this;
     }
 
     /**
@@ -488,10 +517,25 @@ class Page extends BaseModel
 
     /**
      * @param string $layout
+     *
+     * @return $this
      */
     public function setLayout($layout)
     {
+        // set the layout identifier
         $this->layout = $layout;
+
+        $extensionName = substr($layout, 0, strpos($layout, "."));
+        $settings = Utility::getExtensionSettings($extensionName);
+        $layoutId = substr($layout, strlen($extensionName) + 1);
+
+        // also set the BE and FE cached layout files
+        if (isset($settings["ui"]["layout"][$layoutId])) {
+            $this->setBackendLayout($settings["ui"]["layout"][$layoutId]["backendFile"]);
+            $this->setFrontendLayout($settings["ui"]["layout"][$layoutId]["frontendFile"]);
+        }
+
+        return $this;
     }
 
     /**
@@ -506,26 +550,34 @@ class Page extends BaseModel
 
     /**
      * @param string $cachedPath
+     *
+     * @return $this
      */
     public function setCachedPath($cachedPath)
     {
         $this->cachedPath = $cachedPath;
+
+        return $this;
     }
 
     /**
      * @return boolean
      */
-    public function getLayoutRecursive()
+    public function getIsLayoutRecursive()
     {
-        return $this->layoutRecursive;
+        return $this->isLayoutRecursive;
     }
 
     /**
-     * @param boolean $layoutRecursive
+     * @param boolean $isLayoutRecursive
+     *
+     * @return $this
      */
-    public function setLayoutRecursive($layoutRecursive)
+    public function setIsLayoutRecursive($isLayoutRecursive)
     {
-        $this->layoutRecursive = $layoutRecursive;
+        $this->isLayoutRecursive = $isLayoutRecursive;
+
+        return $this;
     }
 
     /**
@@ -538,10 +590,14 @@ class Page extends BaseModel
 
     /**
      * @param \DateTime $startDate
+     *
+     * @return $this
      */
     public function setStartDate($startDate)
     {
         $this->startDate = $startDate;
+
+        return $this;
     }
 
     /**
@@ -554,9 +610,13 @@ class Page extends BaseModel
 
     /**
      * @param \DateTime $endDate
+     *
+     * @return $this
      */
     public function setEndDate($endDate)
     {
         $this->endDate = $endDate;
+
+        return $this;
     }
 }

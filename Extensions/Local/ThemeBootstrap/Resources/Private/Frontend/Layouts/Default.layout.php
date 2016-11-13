@@ -44,6 +44,6 @@ $this->getPageView()
         </div>
     </div>
 
-<?php $this->getPage()
+<?php $this->getPageView()
     ->addCssAsset(["identifier" => "bootstrap-theme", "extension" => "ThemeBootstrap", "file" => "bootstrap-theme.css"])
     ->addJsAsset(["identifier" => "jquery", "extension" => "ThemeBootstrap", "file" => "jquery-1.11.2.js", "before" => "bootstrap"]); ?>

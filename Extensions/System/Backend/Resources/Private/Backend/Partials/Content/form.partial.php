@@ -21,6 +21,7 @@ $elementType = (isset($settings['type'])) ? $settings['type'] : $element->getTyp
     <div class="col-sm-12">
         <form method="post" id="form_content" class="form-content"
               action="<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Content', '_action' => $action, 'id' => $element->getId()]) ?>">
+            <input type="hidden" name="id" value="<?= $id ?>"/>
             <input type="hidden" name="page_id" value="<?= $pageId ?>"/>
             <input type="hidden" name="column_id" value="<?= $columnId ?>"/>
             <?php if (isset($settings)): ?>

@@ -143,11 +143,15 @@ class BaseCollection
         $sth->execute(["id" => $id]);
 
         $row = $sth->fetch(\PDO::FETCH_ASSOC);
-        $element = Utility::createInstance($this->elementClass);
-        $element->setDataFromDatabase($row);
-        $this->elements = [$element];
+        if ($row) {
+            $element = Utility::createInstance($this->elementClass);
+            $element->setDataFromDatabase($row);
+            $this->elements = [$element];
 
-        return $element;
+            return $element;
+        }
+
+        return null;
     }
 
     /**
@@ -201,12 +205,21 @@ class BaseCollection
             $dataMapper = $element->dataMapper();
             $listOfFields = implode(",", array_keys($dataMapper));
             $listOfValues = [];
+            // MySQL seems to treat Booleans as strings so it's better if we cast them to integers...
+            // @see https://evertpot.com/mysql-bool-behavior-and-php/
+            foreach ($dataMapper as $field => $value) {
+                // boolean column's name all start with "is_" so we can just recast them all to an int
+                if (substr($field, 0, 3) == 'is_') {
+                    $dataMapper[$field] = (int)$value;
+                }
+            }
             // element does not exist, insert it
             if (is_null($element->getId())) {
                 foreach ($dataMapper as $key => $value) {
                     $listOfValues[] = ":" . $key;
                 }
                 $listOfValues = implode(",", $listOfValues);
+                // $listOfValues = ':'.implode(",", array_keys($dataMapper)); // @TODO : replace instead of the lines above
                 $sth = Utility::getDatabase()->prepare("INSERT INTO $this->tablename ($listOfFields) VALUES ($listOfValues)");
                 // element exists, update it
             } else {

@@ -8,7 +8,7 @@ $this->getPageView()
         <div class="row">
             <div class="col-sm-12">
                 <?= $this->plugin("ThemeBootstrap", "Menu", "showMenu"); ?>
-                <h1><?= $this->getPage()->getTitle(); ?></h1>
+                <h1><?= $this->getPageView()->getTitle(); ?></h1>
             </div>
             <div class="col-sm-8">
                 <div class="panel panel-default">
@@ -34,7 +34,7 @@ $this->getPageView()
     </div>
 
 <?php
-$this->getPage()
+$this->getPageView()
     ->addCssAsset(["identifier" => "bootstrap-theme", "extension" => "ThemeBootstrap", "file" => "bootstrap-theme.css"])
     ->addJsAsset(["identifier" => "jquery", "extension" => "ThemeBootstrap", "file" => "jquery-1.11.2.js", "before" => "bootstrap"]);
 ?>

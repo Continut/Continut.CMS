@@ -148,17 +148,8 @@ class PageController extends BackendController
         // format end date for MySql
         $date = new \DateTime($data['end_date']);
         $data['end_date'] = $date->format('Y-m-d H:i:s');
+        // this calls all the "setXYZ" methods for the passed properties present in $data
         $pageModel->update($data);
-
-        // We store a cached version for the FE and BE versions, this way we avoid looking for layouts all the time
-        $extensionName = substr($pageModel->getLayout(), 0, strpos($pageModel->getLayout(), "."));
-        $layoutId = substr($pageModel->getLayout(), strlen($extensionName) + 1);
-        $settings = Utility::getExtensionSettings($extensionName);
-        // get the BE and FE layout files based on the layout id
-        if (isset($settings["ui"]["layout"][$layoutId])) {
-            $pageModel->setBackendLayout($settings["ui"]["layout"][$layoutId]["backendFile"]);
-            $pageModel->setFrontendLayout($settings["ui"]["layout"][$layoutId]["frontendFile"]);
-        }
 
         $pageCollection
             ->reset()
@@ -406,7 +397,10 @@ class PageController extends BackendController
         $pageModel = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection')
             ->findById($pageId);
 
+        $layouts = Utility::getLayouts();
+
         $this->getView()->assign('page', $pageModel);
+        $this->getView()->assign('layouts', $layouts);
     }
 
     /**
@@ -414,28 +408,64 @@ class PageController extends BackendController
      */
     public function addAction()
     {
-        $pageId = (int)$this->getRequest()->getArgument("id");
-        $pagePlacement = $this->getRequest()->getArgument("page_placement");
-        $pages = $this->getRequest()->getArgument("page");
+        $pageId        = (int)$this->getRequest()->getArgument('id');
+        $pagePlacement = $this->getRequest()->getArgument('page_placement');
+        $pages         = $this->getRequest()->getArgument('data');
+        $domainUrlId   = (int)$this->getRequest()->getArgument('domain_url_id');
 
-        $pageCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection');
+        // if no domainUrlId is set, it means something went wrong. The domainUrlId cannot be zero
+        if ($domainUrlId > 0) {
+            $languagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection');
+            $language = $languagesCollection->findById($domainUrlId);
 
-        foreach ($pages["names"] as $title) {
-            $pageModel = Utility::createInstance('Continut\Core\System\Domain\Model\Page');
-            if ($pagePlacement == "inside") {
-                $pageModel->setParentId($pageId);
+            // is there any language linked to this domain url id?
+            if ($language) {
+                $pageCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection');
+
+                $languagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection');
+                $language = $languagesCollection->findById($domainUrlId);
+
+                foreach ($pages["name"] as $index => $title) {
+                    $pageModel = Utility::createInstance('Continut\Core\System\Domain\Model\Page');
+                    // added inside a selected page
+                    if ($pagePlacement == "inside") {
+                        $pageModel->setParentId($pageId);
+                    }
+                    // added directly to the root
+                    if ($pageId == 0) {
+                        $pageModel->setParentId(0);
+                    }
+                    // @TODO: check why you need to set the iso3 per page. Forgot why I added this!!!
+                    //$pageModel->setLanguageIso3($language->getLanguageIso3());
+                    $pageModel
+                        ->setSlug($title)
+                        ->setIsDeleted(false)
+                        // @TODO : check if a translation or not
+                        ->setOriginalId(0)
+                        ->setTitle($title)
+                        ->setDomainUrlId($language->getId());
+
+                    // set page visibility
+                    if ($pages['visibility'][$index]) {
+                        switch ($pages['visibility'][$index]) {
+                            case 'visible':        $pageModel->setIsVisible(true)->setIsInMenu(true); break;
+                            case 'hidden_in_menu': $pageModel->setIsVisible(true)->setIsInMenu(false); break;
+                            default:               $pageModel->setIsVisible(false);
+                        }
+                    }
+
+                    // set page layout
+                    if ($pages['layout'][$index]) {
+                        $pageModel->setLayout($pages['layout'][$index]);
+                    }
+
+                    $pageCollection->add($pageModel);
+                }
+
+                $pageCollection->save();
             }
-            $pageModel->setLanguageIso3("rou");
-            $pageModel->setSlug($title);
-            $pageModel->setOriginalId(0);
-            $pageModel->setTitle($title);
-            //$pageModel->setDomainUrlId(Utility::getSite()->getDomainUrl()->getId());
-
-            $pageCollection->add($pageModel);
         }
 
-        $pageCollection->save();
-
-        return "";
+        return '';
     }
 }

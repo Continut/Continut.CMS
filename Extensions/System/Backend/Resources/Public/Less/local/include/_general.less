@@ -166,15 +166,11 @@ li a.helper-icon {
 
 .page-panel {
   margin-top: 10px;
-  background: #f3ffbd;
+  background: @theme-warning;
   border: 1px solid #deeaa8;
   &> .panel-heading {
     background: #deeaa8;
   }
-}
-
-.panel-hidden .panel-body {
-  opacity: 0.5;
 }
 
 .panel-media {
@@ -365,6 +361,15 @@ li a.helper-icon {
   background: rgba(220, 220, 220, 0.3);
   border-top: 1px solid #ddd;
   margin: 10px 0;
+
+  &.panel-hidden {
+    .panel-heading {
+      background: @theme-warning;
+    }
+    .panel-body {
+      opacity: 0.5;
+    }
+  }
 
   > .panel-heading {
     cursor: move;

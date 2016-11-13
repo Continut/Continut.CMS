@@ -19,8 +19,12 @@ class ContentController extends BackendController
      */
     public function wizardAction()
     {
-        $pageId = (int)$this->getRequest()->getArgument("page_id");
-        $columnId = (int)$this->getRequest()->getArgument("column_id");
+        // element id, if it will be added inside another container
+        $id            = (int)$this->getRequest()->getArgument("id");
+        // the pid of the new element
+        $pageId        = (int)$this->getRequest()->getArgument("page_id");
+        // column into which it will be added
+        $columnId      = (int)$this->getRequest()->getArgument("column_id");
         $configuration = Utility::getExtensionSettings();
 
         $types = [];
@@ -36,10 +40,11 @@ class ContentController extends BackendController
 
         $this->getView()->assignMultiple(
             [
-                "types" => $types,
+                "types"      => $types,
                 "extensions" => $extensions,
-                "pageId" => $pageId,
-                "columnId" => $columnId
+                "id"         => $id,
+                "pageId"     => $pageId,
+                "columnId"   => $columnId
             ]
         );
     }
@@ -98,6 +103,7 @@ class ContentController extends BackendController
      */
     public function addAction()
     {
+        $id       = (int)$this->getRequest()->getArgument("id", 0);
         $pageId   = (int)$this->getRequest()->getArgument("page_id", 0);
         $columnId = (int)$this->getRequest()->getArgument("column_id", 0);
         $settings = $this->getRequest()->getArgument("settings");
@@ -110,10 +116,11 @@ class ContentController extends BackendController
 
         $this->getView()->assignMultiple(
             [
-                "element" => $contentCollection->createEmptyFromType($settings["type"]),
-                "content" => $wizard->render(),
+                "element"  => $contentCollection->createEmptyFromType($settings["type"]),
+                "content"  => $wizard->render(),
                 "settings" => $settings,
-                "pageId" => $pageId,
+                "id"       => $id,
+                "pageId"   => $pageId,
                 "columnId" => $columnId
             ]
         );
@@ -151,11 +158,18 @@ class ContentController extends BackendController
         }
         $wizard->assignMultiple($wizardData["data"]);
 
-        $this->getView()->assign("content", $wizard->render());
+        $this->getView()->assignMultiple(
+            [
+                "id"       => $id,
+                "pageId"   => $content->getPageId(),
+                "columnId" => $content->getColumnId(),
+                "content"  => $wizard->render()
+            ]
+        );
 
         return json_encode([
-            "id" => $content->getId(),
-            "html" => $this->getView()->render(),
+            "id"        => $content->getId(),
+            "html"      => $this->getView()->render(),
             "operation" => "edit"
         ]);
     }
@@ -201,6 +215,7 @@ class ContentController extends BackendController
     public function createAction()
     {
         $pageId           = (int)$this->getRequest()->getArgument("page_id");
+        $parentId         = (int)$this->getRequest()->getArgument("id");
         $columnId         = (int)$this->getRequest()->getArgument("column_id");
         $data             = $this->getRequest()->getArgument("data");
         $settings         = $this->getRequest()->getArgument("settings");
@@ -214,9 +229,9 @@ class ContentController extends BackendController
         $content
             ->setType($type)
             ->setPageId($pageId)
+            ->setParentId($parentId)
             ->setIsVisible(1)
             ->setIsDeleted(0)
-            ->setParentId(0)
             ->setSorting(0)
             ->setColumnId($columnId)
             ->setValue(json_encode($value));

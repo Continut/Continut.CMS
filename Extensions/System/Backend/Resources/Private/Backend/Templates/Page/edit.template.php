@@ -29,7 +29,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <?= $this->helper("Wizard")->selectField("layout_recursive", $this->__("backend.page.properties.pageLayoutRecursive"), array(0 => "No", 1 => "Yes"), $page->getLayoutRecursive()) ?>
+                        <?= $this->helper("Wizard")->selectField("layout_recursive", $this->__("backend.page.properties.pageLayoutRecursive"), array(0 => "No", 1 => "Yes"), $page->getIsLayoutRecursive()) ?>
                     </div>
                 </div>
                 <div class="col-md-6">

@@ -8,7 +8,8 @@ $sizeRight = 12 - $formatColumns;
         <div class="panel panel-warning">
             <div class="panel-heading">
                 <div
-                    class="panel-title"><?= $this->__("backend.themeBootstrapModerna.layout.container.column1") ?></div>
+                    class="panel-title"><?= $this->__("backend.themeBootstrapModerna.layout.container.column1") ?>
+                </div>
             </div>
             <div class="panel-body">
                 <?= $this->showContainerColumn(4); ?>
@@ -19,7 +20,8 @@ $sizeRight = 12 - $formatColumns;
         <div class="panel panel-warning">
             <div class="panel-heading">
                 <div
-                    class="panel-title"><?= $this->__("backend.themeBootstrapModerna.layout.container.column2") ?></div>
+                    class="panel-title"><?= $this->__("backend.themeBootstrapModerna.layout.container.column2") ?>
+                </div>
             </div>
             <div class="panel-body">
                 <?= $this->showContainerColumn(5); ?>

@@ -27,7 +27,7 @@ class IndexController extends FrontendController
             return $cache;
         } else {*/
 
-        // Load the page model from the database, by id or slug
+        // Load the page model from the database, by id or slugfr
         $pageModel = Utility::createInstance('Continut\Extensions\System\Frontend\Classes\Domain\Collection\FrontendPageCollection')
             ->findWithIdOrSlug($pageId, $pageSlug);
 

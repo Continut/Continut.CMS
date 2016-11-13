@@ -3,7 +3,7 @@
         <?php foreach ($pageTree as $leaf): ?>
             <?php if ($leaf->children): ?>
                 <div class="btn-group">
-                <a class="btn btn-default" href="<?= $this->helper("Url")->linkToPage($leaf->getId()) ?>"
+                <a class="btn btn-default" href="<?= $this->helper("Url")->linkToSlug($leaf->getSlug()) ?>"
                    role="button"><?= $leaf->getTitle() ?></a>
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
                         aria-expanded="false">
@@ -12,13 +12,13 @@
                 </button>
             <?php else: ?>
                 <a class="btn btn-default"
-                   href="<?= $this->helper("Url")->linkToPage($leaf->getId()) ?>"><?= $leaf->getTitle() ?></a>
+                   href="<?= $this->helper("Url")->linkToSlug($leaf->getSlug()) ?>"><?= $leaf->getTitle() ?></a>
             <?php endif ?>
             <?php if ($leaf->children): ?>
                 <ul class="dropdown-menu" role="menu">
                     <?php foreach ($leaf->children as $subleaf): ?>
                         <li>
-                            <a href="<?= $this->helper("Url")->linkToPage($subleaf->getId()) ?>"><?= $subleaf->getTitle() ?></a>
+                            <a href="<?= $this->helper("Url")->linkToSlug($subleaf->getSlug()) ?>"><?= $subleaf->getTitle() ?></a>
                         </li>
                     <?php endforeach ?>
                 </ul>

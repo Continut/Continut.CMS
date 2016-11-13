@@ -126,13 +126,15 @@ class PageCollection extends BaseCollection
     /**
      * @param $path
      * @param $id
+     *
+     * @return mixed
      */
     protected function fetchParent(&$path, $id)
     {
         $page = $this->findById($id);
         $path[] = $id;
         if ($page->getParentId() == 0) {
-            return;
+            return null;
         } else {
             return $this->fetchParent($path, $page->getParentId());
         }
@@ -166,7 +168,7 @@ class PageCollection extends BaseCollection
             // if the id is 0 (zero) it means we need to return the FIRST page defined for this domain (ordered by "sorting")
             else {
                 $page = $this->where(
-                    "is_visible = 1 AND is_deleted = 0 AND domain_url_id = :domain_url_id ORDER BY sorting ASC",
+                    "is_visible = 1 AND is_deleted = 0 AND domain_url_id = :domain_url_id ORDER BY parent_id ASC, sorting ASC",
                     ["domain_url_id" => $domainUrlId]
                 )->getFirst();
             }
@@ -177,5 +179,31 @@ class PageCollection extends BaseCollection
         }
 
         return $page;
+    }
+
+    /**
+     * Return all children pages for this page id
+     *
+     * @param int  $parentId
+     * @param bool $includeDeleted
+     * @param bool $includeHidden
+     *
+     * @return $this
+     */
+    public function findByParentId($parentId, $includeDeleted = false, $includeHidden = false) {
+        $deletedString = "";
+        if (!$includeDeleted) {
+            $deletedString = "AND is_deleted = 0";
+        }
+        $visibleString = "";
+        if (!$includeHidden) {
+            $visibleString = "AND is_visible = 1";
+        }
+        return $this->where("is_in_menu = 1 $visibleString $deletedString AND domain_url_id = :domain_url_id AND parent_id = :parent_id ORDER BY parent_id ASC, sorting ASC",
+            [
+                "domain_url_id" => Utility::getSite()->getDomainUrl()->getId(),
+                "parent_id"     => $parentId
+            ]
+            );
     }
 }

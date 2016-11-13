@@ -172,9 +172,6 @@ li a.helper-icon {
 .page-panel > .panel-heading {
   background: #deeaa8;
 }
-.panel-hidden .panel-body {
-  opacity: 0.5;
-}
 .panel-media {
   margin-top: 20px;
 }
@@ -347,6 +344,12 @@ li a.helper-icon {
   background: rgba(220, 220, 220, 0.3);
   border-top: 1px solid #ddd;
   margin: 10px 0;
+}
+.panel-backend-content.panel-hidden .panel-heading {
+  background: #f3ffbd;
+}
+.panel-backend-content.panel-hidden .panel-body {
+  opacity: 0.5;
 }
 .panel-backend-content > .panel-heading {
   cursor: move;
@@ -608,6 +611,11 @@ ul.list-readable li {
 .jstree-default a.jstree-clicked:hover,
 .jstree-default a.jstree-clicked:active {
   color: white !important;
+}
+@media (min-width: 768px) {
+  .large-dialog .modal-dialog {
+    width: 750px;
+  }
 }
 @media (min-width: 768px) {
   #main_toolbar .dropdown-menu > li > a {

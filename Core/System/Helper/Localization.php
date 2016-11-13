@@ -80,8 +80,9 @@ namespace Continut\Core\System\Helper {
                 if (is_array($labels)) {
                     foreach ($labels as $extensionName => $languages) {
                         foreach ($languages as $languageCode => $language) {
+                            // load only the labels for the current language
                             if ($languageCode == Utility::getConfiguration("System/Locale")) {
-                                $this->translationLabels = array_merge_recursive($this->translationLabels, $language);
+                                $this->translationLabels = Utility::arrayMergeRecursiveUnique($this->translationLabels, $language);
                             }
                         }
                     }

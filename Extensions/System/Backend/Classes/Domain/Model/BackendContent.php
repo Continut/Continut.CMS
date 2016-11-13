@@ -90,13 +90,13 @@ class BackendContent extends Content
             Utility::helper("Localization")->translate("backend.content.operation.copy")
         );
 
-        $linkToHide = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-eye fa-fw"></i> %s</a>',
+        $linkToHide = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-eye-slash fa-fw"></i> %s</a>',
             Utility::helper("Localization")->translate("backend.content.operation.hide"),
             Utility::helper("Url")->linkToPath('admin_backend', ['_controller' => 'Content', '_action' => 'toggleVisibility', 'id' => $this->getId(), 'show' => 0]),
             Utility::helper("Localization")->translate("backend.content.operation.hide")
         );
 
-        $linkToShow = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-eye-slash fa-fw"></i> %s</a>',
+        $linkToShow = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-eye fa-fw"></i> %s</a>',
             Utility::helper("Localization")->translate("backend.content.operation.show"),
             Utility::helper("Url")->linkToPath('admin_backend', ['_controller' => 'Content', '_action' => 'toggleVisibility', 'id' => $this->getId(), 'show' => 1]),
             Utility::helper("Localization")->translate("backend.content.operation.show")

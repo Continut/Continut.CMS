@@ -28,7 +28,9 @@ namespace Continut\Extensions\Local\News\Classes\Controllers {
             $newsCollection = Utility::createInstance('Continut\Extensions\Local\News\Classes\Domain\Collection\NewsCollection');
 
             $limit = (isset($this->data["limit"])) ? $this->data["limit"] : 1;
-            $ordering = "";
+            $ordering = '';
+            $order = '';
+            $direction = 'ASC';
             if (isset($this->data["order"])) {
                 $order = $this->data["order"];
             }

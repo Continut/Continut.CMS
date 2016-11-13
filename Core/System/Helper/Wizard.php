@@ -18,6 +18,42 @@ namespace Continut\Core\System\Helper {
         protected $prefix = "data";
 
         /**
+         * Sets up the input's name accordingly
+         *
+         * @param string $name Name of the input
+         * @return string Formatted name of the input, with prefix and optional square brackets
+         */
+        protected function setFieldName($name) {
+            $fieldName = $this->prefix . "[$name]";
+            // if the field name contains a square bracket, it means it's an array
+            // so we need to set it up accordingly
+            if (strpos($name, "[")) {
+                // extract only the field name
+                $name = substr($name, 0, strpos($name, "["));
+                $fieldName = $this->prefix . "[$name][]";
+            }
+            return $fieldName;
+        }
+
+        /**
+         * Set the <label> tag
+         * @param string $name
+         * @param string $label
+         * @return string
+         */
+        protected function setFieldLabel($name, $label) {
+            if ($label) {
+                // we do not set the id if the fieldname is an array
+                if (strpos($name, "[")) {
+                    return "<label>$label</label>";
+                } else {
+                    return "<label for='field_$name'>$label</label>";
+                }
+            }
+            return '';
+        }
+
+        /**
          * @param string $name
          * @param string $value
          *
@@ -25,7 +61,7 @@ namespace Continut\Core\System\Helper {
          */
         public function hiddenField($name, $value)
         {
-            $fieldName = $this->prefix . "[$name]";
+            $fieldName = $this->setFieldName($name);
             $html = <<<HER
 			<input id="field_$name" type="hidden" class="form-control" value="$value" name="$fieldName"/>
 HER;
@@ -33,16 +69,17 @@ HER;
         }
 
         /**
-         * @param      $name
-         * @param      $label
-         * @param      $values         One value or array if checkbox group
-         * @param null $selectedValue
+         * @param string $name
+         * @param string $label
+         * @param mixed  $values        One value or array if checkbox group
+         * @param mixed  $selectedValue
          *
          * @return string
          */
         public function checkboxField($name, $label, $values, $selectedValue = null)
         {
-            $fieldName = $this->prefix . "[$name]";
+            $fieldName = $this->setFieldName($name);
+            $fieldLabel = $this->setFieldLabel($name, $label);
 
             $html = "";
             if (is_array($values)) {
@@ -55,7 +92,7 @@ HER;
             } else {
                 $html = <<<HER
 				<div class="checkbox">
-				<label for="field_$name">$label</label>
+				$fieldLabel
 				<input id="field_$name" class="form-control" type="checkbox" value="$selectedValue" name="$fieldName"/>
 				</div>
 HER;
@@ -74,9 +111,11 @@ HER;
          */
         public function dateTimeField($name, $label, $value = "")
         {
-            $fieldName = $this->prefix . "[$name]";
+            $fieldName = $this->setFieldName($name);
+            $fieldLabel = $this->setFieldLabel($name, $label);
+
             $html = <<<HER
-			<label for="field_$name">$label</label>
+			$fieldLabel
 			<input id="field_$name" type="text" data-field="datetime" class="form-control" value="$value" name="$fieldName"/>
 HER;
             return $html;
@@ -91,11 +130,13 @@ HER;
          *
          * @return string
          */
-        public function textField($name, $label, $value = "")
+        public function textField($name, $label = "", $value = "")
         {
-            $fieldName = $this->prefix . "[$name]";
+            $fieldName = $this->setFieldName($name);
+            $fieldLabel = $this->setFieldLabel($name, $label);
+
             $html = <<<HER
-			<label for="field_$name">$label</label>
+			$fieldLabel
 			<input id="field_$name" type="text" class="form-control" value="$value" name="$fieldName"/>
 HER;
             return $html;
@@ -112,9 +153,11 @@ HER;
          */
         public function textareaField($name, $label, $value)
         {
-            $fieldName = $this->prefix . "[$name]";
+            $fieldName = $this->setFieldName($name);
+            $fieldLabel = $this->setFieldLabel($name, $label);
+
             $html = <<<HER
-			<label for="field_$name">$label</label>
+			$fieldLabel
 			<textarea id="field_$name" name="$fieldName" class="form-control" rows="5">$value</textarea>
 HER;
             return $html;
@@ -131,9 +174,11 @@ HER;
          */
         public function rteField($name, $label, $value)
         {
-            $fieldName = $this->prefix . "[$name]";
+            $fieldName = $this->setFieldName($name);
+            $fieldLabel = $this->setFieldLabel($name, $label);
+
             $html = <<<HER
-			<label for="field_$name">$label</label>
+			$fieldLabel
 			<div class="rte-toolbar" id="rte_toolbar_$name">
 				<div class="btn-group">
 			  		<a class="btn btn-default" data-wysihtml5-command="bold"><i class="fa fa-fw fa-bold"></i></a>
@@ -177,18 +222,18 @@ HER;
          *
          * @param string $name
          * @param string $label
-         * @param array  $values
-         * @param mixed  $selectedValue
+         * @param array $values
+         * @param mixed $selectedValue
          *
          * @return string
          */
         public function selectField($name, $label, $values, $selectedValue = null)
         {
-            $fieldName = $this->prefix . "[$name]";
+            $fieldName = $this->setFieldName($name);
+            $fieldLabel = $this->setFieldLabel($name, $label);
             $options = array();
 
-            /* if data is an array it means we have optgroup definitions
-             * and thus $values is a multiarray
+            /* if $values is an multiarray then it means we have optgroup definitions
              *
              * Example for simple list of options
              * $values = ["value1" => "label 1", "value2" => "label 2"];
@@ -224,7 +269,7 @@ HER;
             $optionsSelect = implode("\n", $options);
 
             $html = <<<HER
-				<label for="field_$name">$label</label>
+				$fieldLabel
 				<select name="$fieldName" id="field_$name" class="form-control selectpicker">
 				$optionsSelect
 				</select>

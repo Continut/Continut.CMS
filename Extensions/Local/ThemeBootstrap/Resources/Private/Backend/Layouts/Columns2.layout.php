@@ -6,7 +6,6 @@
             </div>
             <div class="panel-body">
                 <?= $this->showContainerColumn(1); ?>
-                <a class="btn btn-sm btn-success" href=""><i class="fa fa-plus fa-fw"></i></a>
             </div>
         </div>
     </div>
@@ -17,7 +16,6 @@
             </div>
             <div class="panel-body">
                 <?= $this->showContainerColumn(2); ?>
-                <a class="btn btn-sm btn-success" href=""><i class="fa fa-plus fa-fw"></i></a>
             </div>
         </div>
     </div>

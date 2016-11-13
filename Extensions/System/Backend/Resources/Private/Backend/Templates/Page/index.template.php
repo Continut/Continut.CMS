@@ -184,10 +184,11 @@
 
             $('.page-add').on('click', function (e) {
                 e.preventDefault();
-                var pid = $('#cms_tree').tree('getSelectedNode').id;
+                var pid = $('#cms_tree').jstree('get_selected');
                 BootstrapDialog.show({
                     title: <?= json_encode($this->__("backend.page.wizard.create.title")) ?>,
-                    message: $('<div></div>').load('<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'wizard']) ?>?id=' + pid)
+                    message: $('<div></div>').load('<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'wizard']) ?>?id=' + pid),
+                    cssClass: 'large-dialog'
                 });
             });
 
