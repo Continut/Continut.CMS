@@ -430,10 +430,20 @@ class PageController extends BackendController
                     // added inside a selected page
                     if ($pagePlacement == "inside") {
                         $pageModel->setParentId($pageId);
-                    }
-                    // added directly to the root
-                    if ($pageId == 0) {
-                        $pageModel->setParentId(0);
+                    } else {
+                        // added directly to the root
+                        if ($pageId == 0) {
+                            $pageModel->setParentId(0);
+                        // added "before" or "after" the selected page
+                        } else {
+                            $parentPage = $pageCollection->findById($pageId);
+                            $pageModel->setParentId($parentPage->getParentId());
+                            if ($pagePlacement == "before") {
+                                $pageModel->setSorting($parentPage->getSorting() - 1);
+                            } else {
+                                $pageModel->setSorting($parentPage->getSorting() + 1);
+                            }
+                        }
                     }
                     // @TODO: check why you need to set the iso3 per page. Forgot why I added this!!!
                     //$pageModel->setLanguageIso3($language->getLanguageIso3());

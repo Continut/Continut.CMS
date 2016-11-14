@@ -673,5 +673,17 @@ namespace Continut\Core {
             }
             return $array1;
         }
+
+        /**
+         * Generate a slug from a string
+         *
+         * @param string $string Original string
+         * @return string Slug generated from original string
+         */
+        public static function generateSlug($string) {
+            // needs the "intl" extension
+            $string = transliterator_transliterate("Any-Latin; NFD; [:Nonspacing Mark:] Remove; NFC; [:Punctuation:] Remove; Lower();", $string);
+            return str_replace(' ', '-', $string);
+        }
     }
 }

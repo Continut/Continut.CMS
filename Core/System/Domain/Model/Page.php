@@ -186,6 +186,7 @@ class Page extends BaseModel
      */
     public function setSlug($slug)
     {
+        $slug = Utility::generateSlug($slug);
         $this->slug = $slug;
 
         return $this;
@@ -246,6 +247,9 @@ class Page extends BaseModel
      */
     public function setSorting($sorting)
     {
+        if ($sorting < 0) {
+            $sorting = 0;
+        }
         $this->sorting = $sorting;
 
         return $this;
