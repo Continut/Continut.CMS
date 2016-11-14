@@ -116,12 +116,12 @@ class PageController extends BackendPageController
         // if the search filter is not empty, filter on page titles
         if (mb_strlen($term) > 0) {
             $pagesCollection->where(
-                "domain_url_id = :domain_url_id AND title LIKE :title ORDER BY parent_id ASC, sorting ASC",
+                "domain_url_id = :domain_url_id AND is_deleted = 0 AND title LIKE :title ORDER BY parent_id ASC, sorting ASC",
                 ["domain_url_id" => $domainUrl->getId(), "title" => "%$term%"]
             );
         } else {
             $pagesCollection->where(
-                "domain_url_id = :domain_url_id ORDER BY parent_id ASC, sorting ASC",
+                "domain_url_id = :domain_url_id AND is_deleted = 0 ORDER BY parent_id ASC, sorting ASC",
                 ["domain_url_id" => $domainUrl->getId()]
             );
         }

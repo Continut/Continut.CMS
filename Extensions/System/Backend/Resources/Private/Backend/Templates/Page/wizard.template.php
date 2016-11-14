@@ -9,17 +9,15 @@
     <div class="row">
         <div class="col-sm-12 col-md-3">
             <p><strong><?= $this->__('backend.page.wizard.placement.title') ?></strong></p>
+            <?php if ($page): ?>
                 <div class="radio">
                     <label>
                         <input type="radio" value="before" name="page_placement"
-                               checked id="before_page">
-                        <?php if ($page): ?>
+                               id="before_page">
                             <?= $this->__('backend.page.wizard.placement.before') ?>
-                        <?php else: ?>
-                            <?= $this->__('backend.page.wizard.root.placement.before') ?>
-                        <?php endif; ?>
                     </label>
                 </div>
+            <?php endif; ?>
             <?php if ($page): ?>
             <div class="radio">
                 <label>
@@ -31,7 +29,7 @@
                 <div class="radio">
                     <label>
                         <input type="radio" value="after" name="page_placement"
-                               id="after_page">
+                               checked id="after_page">
                         <?php if ($page): ?>
                             <?= $this->__('backend.page.wizard.placement.after') ?>
                         <?php else: ?>

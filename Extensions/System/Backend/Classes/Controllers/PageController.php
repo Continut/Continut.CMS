@@ -90,13 +90,18 @@ class PageController extends BackendController
         // if the search filter is not empty, filter on page titles
         if (mb_strlen($term) > 0) {
             $pagesCollection->where(
-                "domain_url_id = :domain_url_id AND title LIKE :title ORDER BY parent_id ASC, sorting ASC",
-                ["domain_url_id" => $domainUrl->getId(), "title" => "%$term%"]
+                "domain_url_id = :domain_url_id AND is_deleted = 0 AND title LIKE :title ORDER BY parent_id ASC, sorting ASC",
+                [
+                    "domain_url_id" => $domainUrl->getId(),
+                    "title" => "%$term%"
+                ]
             );
         } else {
             $pagesCollection->where(
-                "domain_url_id = :domain_url_id ORDER BY parent_id ASC, sorting ASC",
-                ["domain_url_id" => $domainUrl->getId()]
+                "domain_url_id = :domain_url_id AND is_deleted=0 ORDER BY parent_id ASC, sorting ASC",
+                [
+                    "domain_url_id" => $domainUrl->getId()
+                ]
             );
         }
 
@@ -380,12 +385,17 @@ class PageController extends BackendController
      */
     public function deleteAction()
     {
-        $pageId = (int)$this->getRequest()->getArgument("pid");
+        $pageId = (int)$this->getRequest()->getArgument("page_id");
 
         $pagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection');
-        // A page can have multiple children so we get it's tree and we delete all subpages
-        $pageTree = $pagesCollection->where("is_deleted = 0")->buildTree($pageId);
+        $pageModel = $pagesCollection->findById($pageId);
 
+        $pageModel->setIsDeleted(true);
+
+        $pagesCollection->reset()->add($pageModel)->save();
+        // @TODO : show maybe a warning if subpages are present and then delete all tree
+        // A page can have multiple children so we get it's tree and we delete all subpages
+        //$pageTree = $pagesCollection->where("is_deleted = 0")->buildTree($pageId);
     }
 
     /**
@@ -427,21 +437,64 @@ class PageController extends BackendController
 
                 foreach ($pages["name"] as $index => $title) {
                     $pageModel = Utility::createInstance('Continut\Core\System\Domain\Model\Page');
-                    // added inside a selected page
+                    // added inside a selected page, at the very end of already existing pages
                     if ($pagePlacement == "inside") {
                         $pageModel->setParentId($pageId);
+                        $lastPage = $pageCollection->where('parent_id = :parent_id ORDER BY sorting DESC', [':parent_id' => $pageId])->getFirst();
+                        // if we don't have any page so far, just set the new one's sorting order to 1
+                        if ($lastPage) {
+                            // and add this new page at the very end of the page tree
+                            $pageModel->setSorting($lastPage->getSorting() + 1);
+                        } else {
+                            $pageModel->setSorting(1);
+                        }
                     } else {
-                        // added directly to the root
+                        // added directly to the root, at the very end of all existing pages
                         if ($pageId == 0) {
                             $pageModel->setParentId(0);
+                            // get the biggest sorting value for all pages already existing on the root level
+                            $lastPage = $pageCollection->where('parent_id = 0 ORDER BY sorting DESC')->getFirst();
+                            // if we don't have any page so far, just set the new one's sorting order to 1
+                            if ($lastPage) {
+                                // and add this new page at the very end of the page tree
+                                $pageModel->setSorting($lastPage->getSorting() + 1);
+                            } else {
+                                $pageModel->setSorting(1);
+                            }
                         // added "before" or "after" the selected page
                         } else {
                             $parentPage = $pageCollection->findById($pageId);
                             $pageModel->setParentId($parentPage->getParentId());
                             if ($pagePlacement == "before") {
-                                $pageModel->setSorting($parentPage->getSorting() - 1);
+                                // BEFORE
+                                $pageModel->setSorting($parentPage->getSorting());
+                                // update all other pages AFTER this new one and set their sorting order + 1
+                                $otherPages = $pageCollection->where('parent_id = :parent_id AND sorting >= :sorting ORDER BY sorting ASC',
+                                    [
+                                        ':parent_id' => $parentPage->getParentId(),
+                                        ':sorting' => $parentPage->getSorting()
+                                    ]);
+                                $pageCollection->reset();
+                                foreach ($otherPages as $sortedPage) {
+                                    $sortedPage->setSorting($sortedPage->getSorting() + 1);
+                                    $pageCollection->add($sortedPage);
+                                }
+                                $pageCollection->save();
                             } else {
+                                // AFTER
                                 $pageModel->setSorting($parentPage->getSorting() + 1);
+                                // update all other pages AFTER this new one and set their sorting order + 1
+                                $otherPages = $pageCollection->where('parent_id = :parent_id AND sorting > :sorting ORDER BY sorting ASC',
+                                    [
+                                        ':parent_id' => $parentPage->getParentId(),
+                                        ':sorting' => $parentPage->getSorting()
+                                    ]);
+                                $pageCollection->reset();
+                                foreach ($otherPages as $sortedPage) {
+                                    $sortedPage->setSorting($sortedPage->getSorting() + 1);
+                                    $pageCollection->add($sortedPage);
+                                }
+                                $pageCollection->save();
                             }
                         }
                     }
@@ -469,7 +522,9 @@ class PageController extends BackendController
                         $pageModel->setLayout($pages['layout'][$index]);
                     }
 
-                    $pageCollection->add($pageModel);
+                    $pageCollection
+                        ->reset()
+                        ->add($pageModel);
                 }
 
                 $pageCollection->save();
