@@ -70,7 +70,7 @@
         <div class="col-sm-12">
             <a class="btn btn-default" data-dismiss="modal"><?= $this->__('backend.page.wizard.button.close') ?></a>
             <a class="btn btn-info" href="">Need help <i class="fa fa-icon fa-question-circle"></i></a>
-            <input type="submit" class="pull-right btn btn-primary"
+            <input type="submit" id="btn-save" class="pull-right btn btn-primary btn-save"
                    value="<?= $this->__('backend.page.wizard.button.save') ?>"/>
         </div>
     </div>
@@ -100,14 +100,17 @@
             contentType: false,
             processData: false,
             type: 'POST',
-            dataType: 'html',
+            dataType: 'json',
             success: function (data, textStatus, jqXHR) {
-                /*$('.ajax-loader').hide();
-                 if (data.status) {
-                 $('.ajax-saved').show();
+                 if (data.success) {
+                     var index ;
+                     for (index = 0; index < data.pages.length; index++) {
+                         var page = data.pages[index];
+                         $('#cms_tree').jstree('create_node', page.parent, page.title, page.position)
+                     }
                  } else {
-                 $('.ajax-not-saved').show();
-                 }*/
+                     // @TODO add error message
+                 }
             }
         });
 

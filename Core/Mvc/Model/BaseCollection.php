@@ -231,9 +231,22 @@ class BaseCollection
                 $dataMapper["id"] = $element->getId();
             }
             $sth->execute($dataMapper);
+            // for new records just update their ids to the new one, after the save
+            if (is_null($element->getId())) {
+                $element->setId($this->getLastInsertId());
+            }
         }
 
         return $this;
+    }
+
+    /**
+     * Get last insert id
+     *
+     * @return string
+     */
+    public function getLastInsertId() {
+        return Utility::getDatabase()->lastInsertId();
     }
 
     public function delete()

@@ -187,7 +187,16 @@
                 var pid = $('#cms_tree').jstree('get_selected');
                 BootstrapDialog.show({
                     title: <?= json_encode($this->__("backend.page.wizard.create.title")) ?>,
-                    message: $('<div></div>').load('<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'wizard']) ?>?id=' + pid),
+                    message: function(dialog) {
+                        var $content = $('<div></div>').load('<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'wizard']) ?>?id=' + pid)
+
+                        var $saveButton = dialog.getButton('btn-save');
+                        $content.find('input[type=submit]').click({$saveButton: $saveButton}, function(event) {
+                            dialog.setClosable(true);
+                        });
+
+                        return $content;
+                    },
                     cssClass: 'large-dialog'
                 });
             });

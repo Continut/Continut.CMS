@@ -396,6 +396,7 @@ class PageController extends BackendController
         // @TODO : show maybe a warning if subpages are present and then delete all tree
         // A page can have multiple children so we get it's tree and we delete all subpages
         //$pageTree = $pagesCollection->where("is_deleted = 0")->buildTree($pageId);
+        return json_encode(["success" => 1]);
     }
 
     /**
@@ -431,6 +432,7 @@ class PageController extends BackendController
             // is there any language linked to this domain url id?
             if ($language) {
                 $pageCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection');
+                $savePageCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection');
 
                 $languagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection');
                 $language = $languagesCollection->findById($domainUrlId);
@@ -522,15 +524,35 @@ class PageController extends BackendController
                         $pageModel->setLayout($pages['layout'][$index]);
                     }
 
-                    $pageCollection
-                        ->reset()
+                    $savePageCollection
                         ->add($pageModel);
                 }
 
-                $pageCollection->save();
+                $savePageCollection->save();
+
+                // return all the new inserted pages as json objects so that we can update the jsTree data
+                $jsonPages = [];
+                foreach ($savePageCollection->getAll() as $page) {
+                    $jsonPageData = [
+                        'id'       => $page->getId(),
+                        'title'    => $page->getTitle(),
+                        // jsTree needs '#' for root nodes so parentId == 0 is ignored
+                        'parent'   => ((int)$page->getParentId() > 0) ? $page->getParentId() : '#',
+                        'position' => $page->getSorting()
+                    ];
+                    $jsonPages[] = $jsonPageData;
+                }
+
+                return json_encode(
+                    [
+                        'success' => 1,
+                        'pages'   => $jsonPages
+                    ]
+                );
             }
         }
 
-        return '';
+        // @TODO: check for errors and return them
+        return json_encode(['success' => 0, 'error' => '@TODO']);
     }
 }

@@ -112,8 +112,8 @@
     });
     $('#page-delete').on('click', function () {
         BootstrapDialog.confirm({
-            message: <?= json_encode($this->__("backend.page.deletePage.confirm")) ?>,
-            title: <?= json_encode($this->__("backend.page.deletePage")) ?>,
+            message: <?= json_encode($this->__('backend.page.deletePage.confirm', ['page' => $page->getTitle()])) ?>,
+            title: <?= json_encode($this->__('backend.page.deletePage')) ?>,
             type: BootstrapDialog.TYPE_DANGER,
             callback: function (result) {
                 // if user confirms, send delete request
@@ -122,7 +122,11 @@
                         url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'delete']) ?>',
                         data: {page_id: <?= $page->getId() ?> }
                     }).done(function (data) {
-                        console.log(data);
+                        if (data.success) {
+                            $("#cms_tree").jstree('delete_node', '#<?= $page->getId() ?>');
+                        } else {
+                            // @TODO : add error message with details
+                        }
                     });
                 }
             }
