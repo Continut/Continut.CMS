@@ -106,8 +106,9 @@
                      var index ;
                      for (index = 0; index < data.pages.length; index++) {
                          var page = data.pages[index];
-                         $('#cms_tree').jstree('create_node', page.parent, page.title, page.position)
+                         $('#cms_tree').jstree('create_node', page.parent, page.node, page.position)
                      }
+                     addModal.close();
                  } else {
                      // @TODO add error message
                  }

@@ -446,7 +446,7 @@ class PageController extends BackendController
                         // if we don't have any page so far, just set the new one's sorting order to 1
                         if ($lastPage) {
                             // and add this new page at the very end of the page tree
-                            $pageModel->setSorting($lastPage->getSorting() + 1);
+                            $pageModel->setSorting((int)$lastPage->getSorting() + 1);
                         } else {
                             $pageModel->setSorting(1);
                         }
@@ -459,7 +459,7 @@ class PageController extends BackendController
                             // if we don't have any page so far, just set the new one's sorting order to 1
                             if ($lastPage) {
                                 // and add this new page at the very end of the page tree
-                                $pageModel->setSorting($lastPage->getSorting() + 1);
+                                $pageModel->setSorting((int)$lastPage->getSorting() + 1);
                             } else {
                                 $pageModel->setSorting(1);
                             }
@@ -469,7 +469,7 @@ class PageController extends BackendController
                             $pageModel->setParentId($parentPage->getParentId());
                             if ($pagePlacement == "before") {
                                 // BEFORE
-                                $pageModel->setSorting($parentPage->getSorting());
+                                $pageModel->setSorting((int)$parentPage->getSorting());
                                 // update all other pages AFTER this new one and set their sorting order + 1
                                 $otherPages = $pageCollection->where('parent_id = :parent_id AND sorting >= :sorting ORDER BY sorting ASC',
                                     [
@@ -478,13 +478,13 @@ class PageController extends BackendController
                                     ]);
                                 $pageCollection->reset();
                                 foreach ($otherPages as $sortedPage) {
-                                    $sortedPage->setSorting($sortedPage->getSorting() + 1);
+                                    $sortedPage->setSorting((int)$sortedPage->getSorting() + 1);
                                     $pageCollection->add($sortedPage);
                                 }
                                 $pageCollection->save();
                             } else {
                                 // AFTER
-                                $pageModel->setSorting($parentPage->getSorting() + 1);
+                                $pageModel->setSorting((int)$parentPage->getSorting() + 1);
                                 // update all other pages AFTER this new one and set their sorting order + 1
                                 $otherPages = $pageCollection->where('parent_id = :parent_id AND sorting > :sorting ORDER BY sorting ASC',
                                     [
@@ -493,7 +493,7 @@ class PageController extends BackendController
                                     ]);
                                 $pageCollection->reset();
                                 foreach ($otherPages as $sortedPage) {
-                                    $sortedPage->setSorting($sortedPage->getSorting() + 1);
+                                    $sortedPage->setSorting((int)$sortedPage->getSorting() + 1);
                                     $pageCollection->add($sortedPage);
                                 }
                                 $pageCollection->save();
@@ -534,11 +534,10 @@ class PageController extends BackendController
                 $jsonPages = [];
                 foreach ($savePageCollection->getAll() as $page) {
                     $jsonPageData = [
-                        'id'       => $page->getId(),
-                        'title'    => $page->getTitle(),
+                        'node'     => ['id' => $page->getId(), 'text' => $page->getTitle(), 'icon' => 'fa fa-file'],
                         // jsTree needs '#' for root nodes so parentId == 0 is ignored
                         'parent'   => ((int)$page->getParentId() > 0) ? $page->getParentId() : '#',
-                        'position' => $page->getSorting()
+                        'position' => $pagePlacement
                     ];
                     $jsonPages[] = $jsonPageData;
                 }
