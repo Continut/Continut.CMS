@@ -1,5 +1,5 @@
-<div class="row">
-    <div id="sidebar_tree" class="col-md-3">
+<div class="row page-editor">
+    <div id="sidebar_tree" class="col-md-3 col-sm-5">
         <!-- tree toolbar -->
         <div id="sidebar_toolbar" class="row">
             <form class="form">
@@ -9,7 +9,7 @@
                     <?php if ($domains->count() > 0): ?>
                         <select id="select_website" class="selectpicker" data-width="100%">
                             <?php foreach ($domains->getAll() as $domain): ?>
-                                <option value="<?= $domain->getId() ?>"><?= $domain->getTitle() ?></option>
+                                <option <?= (\Continut\Core\Utility::getSession()->get('current_domain') == $domain->getId()) ? 'selected="selected"' : ''?> value="<?= $domain->getId() ?>"><?= $domain->getTitle() ?></option>
                             <?php endforeach ?>
                         </select>
                         <script type="text/javascript">
@@ -17,7 +17,7 @@
                             $('#select_website').on('change', function (event) {
                                 $.ajax({
                                     url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'tree']) ?>',
-                                    data: {domain_id: this.value}
+                                    data: { domain_id: this.value }
                                 })
                                     .done(function (data) {
                                         var json = $.parseJSON(data);
@@ -49,7 +49,7 @@
                         <span class="hidden-md"><?= $this->__("backend.pageTree.language.label") ?></span></label>
                     <select id="select_language" class="selectpicker" data-width="100%">
                         <?php foreach ($languages->getAll() as $language): ?>
-                            <option data-icon="flag-icon flag-icon-<?= $language->getFlag() ?>"
+                            <option <?= (\Continut\Core\Utility::getSession()->get('current_language') == $language->getId()) ? 'selected="selected"' : ''?> data-icon="flag-icon flag-icon-<?= $language->getFlag() ?>"
                                     value="<?= $language->getId() ?>"><?= $language->getTitle() ?></option>
                         <?php endforeach ?>
                     </select>
@@ -72,20 +72,17 @@
             </form>
         </div>
         <div class="row tree-filter">
-            <div class="col-xs-7">
-                <form action="<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Index', '_action' => 'searchPageTree']) ?>"
-                      class="form-inline" method="post">
-                    <div class="form-group entire-area">
-                        <div class="input-group entire-area">
-                            <div class="input-group-addon"><i id="search_page_progress" class="fa fa-fw fa-file"></i>
-                            </div>
-                            <input type="text" class="form-control" name="search_page" id="search_page"
-                                   placeholder="<?= $this->__("backend.pageTree.findPage") ?>"/>
+            <div class="col-sm-7">
+                <div class="entire-area">
+                    <div class="input-group entire-area">
+                        <div class="input-group-addon"><i id="search_page_progress" class="fa fa-fw fa-search"></i>
                         </div>
+                        <input type="text" class="form-control" name="search_page" id="search_page"
+                               autocomplete="off" placeholder="<?= $this->__("backend.pageTree.findPage") ?>"/>
                     </div>
-                </form>
+                </div>
             </div>
-            <div class="col-xs-5">
+            <div class="col-sm-5">
                 <a href="#" class="btn btn-success col-xs-12 page-add"
                    title="<?= $this->__("backend.pageTree.createPage") ?>"><i
                         class="fa fa-fw fa-plus"></i> <?= $this->__("backend.pageTree.createPage") ?></a>
@@ -94,28 +91,11 @@
         <div id="cms_tree"></div>
         <script type="text/javascript">
             var searchPageTreeThread = null;
-            var searchPageSpinner = $('#search_page_progress');
             var oldSearch = null;
             var previousSelectedNode = null;
 
-            // --- Called by the search function below ---
-            // @TODO: Still needed? check the below TODO
-            function findPageByName(term) {
-                oldSearch = term;
-                searchPageSpinner.removeClass("fa-file").addClass("fa-spinner fa-pulse");
-                $.ajax({
-                        url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'searchTree']) ?>',
-                        data: {query: term, domain_id: $('#select_website').val()}
-                    }
-                ).done(function (data) {
-                    searchPageSpinner.removeClass("fa-spinner fa-pulse").addClass("fa-file");
-                    $('#cms_tree').tree('loadData', $.parseJSON(data).pages);
-                });
-            }
-
             // --- Handles search inside the page tree ---
-            // @TODO: Update it for jsTree
-            $('#search_page').keydown(function (e) {
+            $('#search_page').keyup(function (e) {
                 var $this = $(this);
                 if ($this.val() == oldSearch) {
                     return;
@@ -124,8 +104,8 @@
                 if (e.which != 9 && e.which != 13) {
                     clearTimeout(searchPageTreeThread);
                     searchPageTreeThread = setTimeout(function () {
-                        findPageByName($this.val())
-                    }, 500);
+                        $('#cms_tree').jstree(true).search($this.val());
+                    }, 200);
                 }
             });
             // --- Handles what happens when clicking on a page in the pagetree => loads the page in the BE preview ---
@@ -138,14 +118,14 @@
                     // once a node is clicked, load the corresponding page in the right side
                     $.ajax({
                         url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'show']) ?>',
-                        data: {page_id: nodeId},
-                        beforeSend: function (xhr) {
+                        data: { page_id: nodeId }
+                        /*beforeSend: function (xhr) {
                             $('#' + nodeId).prepend('<span class="pull-right fa fa-spinner fa-pulse"></span>');
-                        }
+                        }*/
                     })
                     .done(function (data) {
                         $('#content').html(data);
-                        $('#' + nodeId).find('.fa-spinner').remove();
+                        //$('#' + nodeId).find('.fa-spinner').remove();
                         if (previousSelectedNode) {
                             $('#' + previousSelectedNode).find('.page-add').eq(0).hide();
                         }
@@ -167,26 +147,31 @@
                 })
                 // --- jsTree initialization ---
                 .jstree({
-                'core' : {
-                    'multiple' : false,
-                    'animation' : 0,
-                    'check_callback': true,
-                    'themes' : {
-                        'variant' : 'large',
-                        'dots' : true
-                    },
-                    'data' : {
-                        'url' : '<?= $this->helper("Url")->linkToPath('editor', ['_controller' => 'Page', '_action' => 'tree']) ?>',
-                        'data' : function (node) {
-                            return { 'id' : node.id };
+                    'core' : {
+                        'multiple' : false,
+                        'animation' : 0,
+                        'check_callback': true,
+                        'themes' : {
+                            'variant' : 'large',
+                            'dots' : true
+                        },
+                        'data' : {
+                            'url' : '<?= $this->helper("Url")->linkToPath('editor', ['_controller' => 'Page', '_action' => 'tree']) ?>',
+                            /*'data' : function (node) {
+                                console.log(node);
+                                return { 'id' : node.id };
+                            }*/
                         }
-                    }
-                },
-                'dnd': {
-                    'check_while_dragging': false,
-                    'large_drag_target': true,
-                    'large_drop_target': true
-                },
+                    },
+                    'dnd': {
+                        'check_while_dragging': false,
+                        'large_drag_target': true,
+                        'large_drop_target': true
+                    },
+                    'search': {
+                        'show_only_matches': true,
+                        'show_only_matches_children': false,
+                    },
                 'plugins' : ['dnd', 'search', 'wholerow']
                 //'plugins' : ['dnd', 'search', 'wholerow', 'checkbox']
             });
@@ -210,5 +195,5 @@
         </script>
     </div>
     <!-- Main page content will be loaded inside this div -->
-    <div id="content" class="col-md-9"></div>
+    <div id="content" class="col-md-9 col-sm-7"></div>
 </div>

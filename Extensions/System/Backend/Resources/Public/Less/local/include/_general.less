@@ -118,6 +118,10 @@ body, html {
   }
 }
 
+.page-editor {
+  display: flex;
+}
+
 #sidebar_toolbar {
   padding: 10px 0;
   border-bottom: 1px solid #dcdcdc;
@@ -128,6 +132,7 @@ body, html {
 }
 
 #sidebar_tree {
+  background: white;
   border-right: 1px solid #dcdcdc;
 
   .tree {
@@ -667,6 +672,25 @@ ul.list-readable {
     &:hover,
     &:active {
       color: white !important;
+      background: @theme-primary;
     }
+  }
+
+  a.jstree-hovered {
+    color: white;
+  }
+
+  .jstree-wholerow-hovered {
+    background: fade(@theme-primary, 80%);
+  }
+
+  .jstree-wholerow-clicked {
+    background: @theme-primary;
+  }
+
+  a.jstree-search {
+    color: @theme-danger;
+    font-style: normal;
+    font-weight: bold;
   }
 }

@@ -76,10 +76,18 @@ class PageController extends BackendPageController
         /** @var \Continut\Core\System\Domain\Collection\PageCollection $pagesCollection */
         $pagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection');
 
+        // if a domain/language is already present in the session, then show these ones
+        if ($this->getRequest()->hasArgument('domain_id') || $this->getRequest()->hasArgument('domain_url_id')) {
+            $domainId    = (int)$this->getRequest()->getArgument('domain_id');
+            $domainUrlId = (int)$this->getRequest()->getArgument('domain_url_id', 0);
+        } else {
+            $domainId    = (int)$this->getSession()->get('current_domain');
+            $domainUrlId = (int)$this->getSession()->get('current_language');
+        }
+
         // get the domains collection
         $domainsCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection');
 
-        $domainId = $this->getRequest()->getArgument("domain_id", 0);
         if ($domainId == 0) {
             // fetch the first visible domain, ordered by sorting, if no domain_id is sent
             $domain = $domainsCollection->where("is_visible = 1 ORDER BY sorting ASC")
@@ -91,8 +99,8 @@ class PageController extends BackendPageController
 
         // then the domains url collection
         $domainsUrlCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection');
+
         // see if a domain url was sent, if not get the first one found for this domain
-        $domainUrlId = $this->getRequest()->getArgument("domain_url_id", 0);
         if ($domainUrlId == 0) {
             $domainUrl = $domainsUrlCollection->where(
                 "domain_id = :domain_id ORDER BY sorting ASC",
@@ -107,7 +115,16 @@ class PageController extends BackendPageController
                 ->getFirst();
         }
 
-        // if no domain url is found, then unfortunatelly there is nothing that we can show
+        // store the selection in the session so that we can show it once they refresh the page
+        if ($domain) {
+            $this->getSession()->set('current_domain', $domain->getId());
+        }
+        // store the language (domain_url)
+        if ($domainUrl) {
+            $this->getSession()->set('current_language', $domainUrl->getId());
+        }
+
+        // if no domain url is found, then unfortunately there is nothing that we can show
         if (!$domainUrl) {
             return json_encode(["success" => 0, "languages" => []]);
         }

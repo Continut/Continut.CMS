@@ -128,6 +128,9 @@ html {
   border: 1px solid #e0e0e0;
   background: #f9f9f9;
 }
+.page-editor {
+  display: flex;
+}
 #sidebar_toolbar {
   padding: 10px 0;
   border-bottom: 1px solid #dcdcdc;
@@ -136,6 +139,7 @@ html {
   padding: 4px 26px 4px 6px;
 }
 #sidebar_tree {
+  background: white;
   border-right: 1px solid #dcdcdc;
 }
 #sidebar_tree .tree {
@@ -611,6 +615,21 @@ ul.list-readable li {
 .jstree-default a.jstree-clicked:hover,
 .jstree-default a.jstree-clicked:active {
   color: white !important;
+  background: #045e85;
+}
+.jstree-default a.jstree-hovered {
+  color: white;
+}
+.jstree-default .jstree-wholerow-hovered {
+  background: rgba(4, 94, 133, 0.8);
+}
+.jstree-default .jstree-wholerow-clicked {
+  background: #045e85;
+}
+.jstree-default a.jstree-search {
+  color: #eb547c;
+  font-style: normal;
+  font-weight: bold;
 }
 @media (min-width: 768px) {
   .large-dialog .modal-dialog {

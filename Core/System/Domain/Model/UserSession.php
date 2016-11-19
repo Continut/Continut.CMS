@@ -35,7 +35,7 @@ class UserSession extends BaseModel implements \SessionHandlerInterface
     /**
      * @var string Table which stores our sessions
      */
-    protected $tablename;
+    protected $tableName;
 
     /**
      * @var \Continut\Core\System\Domain\Model\User User instance, if connected
@@ -47,7 +47,7 @@ class UserSession extends BaseModel implements \SessionHandlerInterface
      */
     public function __construct()
     {
-        $this->tablename = "sys_user_sessions";
+        $this->tableName = "sys_user_sessions";
     }
 
     /**
@@ -74,7 +74,7 @@ class UserSession extends BaseModel implements \SessionHandlerInterface
     public function read($sessionId)
     {
         try {
-            $sth = Utility::getDatabase()->prepare("SELECT session_data FROM $this->tablename WHERE session_id = :session_id AND session_expires >= :expire_time");
+            $sth = Utility::getDatabase()->prepare("SELECT session_data FROM $this->tableName WHERE session_id = :session_id AND session_expires >= :expire_time");
             $sth->execute([
                 ":session_id" => $sessionId,
                 ":expire_time" => time()
@@ -100,12 +100,12 @@ class UserSession extends BaseModel implements \SessionHandlerInterface
     {
         $newExpiryDate = time() + $this->lifetime;
 
-        $sth = Utility::getDatabase()->prepare("SELECT * FROM $this->tablename WHERE session_id = :session_id");
+        $sth = Utility::getDatabase()->prepare("SELECT * FROM $this->tableName WHERE session_id = :session_id");
         $sth->execute([":session_id" => $sessionId]);
         $sth->setFetchMode(\PDO::FETCH_ASSOC);
 
         if ($sth->rowCount() > 0) {
-            $sth = Utility::getDatabase()->prepare("UPDATE $this->tablename SET session_expires = :session_expires, session_data = :session_data WHERE session_id = :session_id");
+            $sth = Utility::getDatabase()->prepare("UPDATE $this->tableName SET session_expires = :session_expires, session_data = :session_data WHERE session_id = :session_id");
             $sth->execute(
                 [
                     ":session_expires" => $newExpiryDate,
@@ -113,7 +113,7 @@ class UserSession extends BaseModel implements \SessionHandlerInterface
                     ":session_data"    => $sessionData
                 ]);
         } else {
-            $sth = Utility::getDatabase()->prepare("INSERT INTO $this->tablename (session_id, session_expires, session_data) VALUES (:session_id, :session_expires, :session_data)");
+            $sth = Utility::getDatabase()->prepare("INSERT INTO $this->tableName (session_id, session_expires, session_data) VALUES (:session_id, :session_expires, :session_data)");
             $sth->execute(
                 [
                     ":session_id"      => $sessionId,
@@ -135,7 +135,7 @@ class UserSession extends BaseModel implements \SessionHandlerInterface
      */
     public function destroy($sessionId)
     {
-        $sth = Utility::getDatabase()->prepare("DELETE FROM $this->tablename WHERE session_id = :session_id");
+        $sth = Utility::getDatabase()->prepare("DELETE FROM $this->tableName WHERE session_id = :session_id");
         $sth->execute([":session_id" => $sessionId]);
 
         return ($sth->rowCount() > 0);
@@ -160,7 +160,7 @@ class UserSession extends BaseModel implements \SessionHandlerInterface
      */
     public function gc($maxLifetime)
     {
-        $sth = Utility::getDatabase()->prepare("DELETE FROM $this->tablename WHERE session_expires < :current_time");
+        $sth = Utility::getDatabase()->prepare("DELETE FROM $this->tableName WHERE session_expires < :current_time");
         $sth->execute([":current_time" => time()]);
 
         return ($sth->rowCount() > 0);

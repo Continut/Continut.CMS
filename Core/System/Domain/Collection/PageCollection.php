@@ -80,7 +80,7 @@ class PageCollection extends BaseCollection
                 $data->icon .= ' fa-disabled';
                 if (!$item->getIsInMenu()) {
                     $data->status = 'hidden-both';
-                    $data->icon = 'fa fa-eye-slash text-danger';
+                    $data->icon = 'fa-disabled fa fa-eye-slash text-danger';
                 }
             } elseif (!$item->getIsInMenu()) {
                 $data->status = 'hidden-menu';

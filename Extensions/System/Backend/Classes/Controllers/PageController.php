@@ -31,7 +31,8 @@ class PageController extends BackendController
         $domainsCollection->sql("SELECT sys_domains.* FROM sys_domains LEFT JOIN sys_domain_urls ON sys_domains.id=sys_domain_urls.domain_id WHERE sys_domain_urls.domain_id IS NOT NULL AND sys_domains.is_visible =:is_visible GROUP BY (sys_domains.id) ORDER BY sys_domains.sorting ASC", ["is_visible" => 1]);
 
         $languagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection');
-        $languagesCollection->where("domain_id = :domain_id ORDER BY sorting ASC", ["domain_id" => $domainsCollection->getFirst()->getId()]);
+        $domainId = ($this->getSession()->get('current_domain')) ? (int)$this->getSession()->get('current_domain') : $domainsCollection->getFirst()->getId();
+        $languagesCollection->where("domain_id = :domain_id ORDER BY sorting ASC", ["domain_id" => $domainId]);
 
         $this->getView()->assign("domains", $domainsCollection);
         $this->getView()->assign("languages", $languagesCollection);
@@ -50,69 +51,85 @@ class PageController extends BackendController
         /** @var \Continut\Core\System\Domain\Collection\PageCollection $pagesCollection */
         $pagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection');
 
+        // if a domain/language is already present in the session, then show these ones
+        if ($this->getRequest()->hasArgument('domain_id') || $this->getRequest()->hasArgument('domain_url_id')) {
+            $domainId    = (int)$this->getRequest()->getArgument('domain_id');
+            $domainUrlId = (int)$this->getRequest()->getArgument('domain_url_id', 0);
+        } else {
+            $domainId    = (int)$this->getSession()->get('current_domain');
+            $domainUrlId = (int)$this->getSession()->get('current_language');
+        }
+
         // get the domains collection
         $domainsCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection');
 
-        $domainId = $this->getRequest()->getArgument("domain_id", 0);
         if ($domainId == 0) {
             // fetch the first visible domain, ordered by sorting, if no domain_id is sent
-            $domain = $domainsCollection->where("is_visible = 1 ORDER BY sorting ASC")
+            $domain = $domainsCollection->where('is_visible = 1 ORDER BY sorting ASC')
                 ->getFirst();
         } else {
-            $domain = $domainsCollection->where("id = :id ORDER BY sorting ASC", ["id" => $domainId])
+            $domain = $domainsCollection->where('id = :id ORDER BY sorting ASC', ['id' => $domainId])
                 ->getFirst();
         }
 
         // then the domains url collection
         $domainsUrlCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection');
         // see if a domain url was sent, if not get the first one found for this domain
-        $domainUrlId = $this->getRequest()->getArgument("domain_url_id", 0);
         if ($domainUrlId == 0) {
             $domainUrl = $domainsUrlCollection->where(
-                "domain_id = :domain_id ORDER BY sorting ASC",
-                ["domain_id" => $domain->getId()]
+                'domain_id = :domain_id ORDER BY sorting ASC',
+                ['domain_id' => $domain->getId()]
             )
                 ->getFirst();
         } else {
             $domainUrl = $domainsUrlCollection->where(
-                "domain_id = :domain_id AND id = :id ORDER BY sorting ASC",
-                ["domain_id" => $domain->getId(), "id" => $domainUrlId]
+                'domain_id = :domain_id AND id = :id ORDER BY sorting ASC',
+                ['domain_id' => $domain->getId(), 'id' => $domainUrlId]
             )
                 ->getFirst();
         }
 
+        // store the selection in the session so that we can show it once they refresh the page
+        if ($domain) {
+            $this->getSession()->set('current_domain', $domain->getId());
+        }
+        // store the language (domain_url)
+        if ($domainUrl) {
+            $this->getSession()->set('current_language', $domainUrl->getId());
+        }
+
         // if no domain url is found, then unfortunatelly there is nothing that we can show
         if (!$domainUrl) {
-            return json_encode(["success" => 0, "languages" => []]);
+            return json_encode(['success' => 0, 'languages' => []]);
         }
 
         // get all the pages that belong to this domain
         // if the search filter is not empty, filter on page titles
         if (mb_strlen($term) > 0) {
             $pagesCollection->where(
-                "domain_url_id = :domain_url_id AND is_deleted = 0 AND title LIKE :title ORDER BY parent_id ASC, sorting ASC",
+                'domain_url_id = :domain_url_id AND is_deleted = 0 AND title LIKE :title ORDER BY parent_id ASC, sorting ASC',
                 [
-                    "domain_url_id" => $domainUrl->getId(),
-                    "title" => "%$term%"
+                    'domain_url_id' => $domainUrl->getId(),
+                    'title' => "%$term%"
                 ]
             );
         } else {
             $pagesCollection->where(
-                "domain_url_id = :domain_url_id AND is_deleted=0 ORDER BY parent_id ASC, sorting ASC",
+                'domain_url_id = :domain_url_id AND is_deleted=0 ORDER BY parent_id ASC, sorting ASC',
                 [
-                    "domain_url_id" => $domainUrl->getId()
+                    'domain_url_id' => $domainUrl->getId()
                 ]
             );
         }
 
         /** @var \Continut\Core\System\Domain\Collection\DomainUrlCollection $languagesCollection */
         $languagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection');
-        $languagesCollection->where("domain_id = :domain_id", ["domain_id" => $domain->getId()]);
+        $languagesCollection->where('domain_id = :domain_id', ['domain_id' => $domain->getId()]);
 
         $pagesData = [
-            "success" => 1,
-            "pages" => $pagesCollection->buildJsonTree(),
-            "languages" => $languagesCollection->toSimplifiedArray()
+            'success'   => 1,
+            'pages'     => $pagesCollection->buildJsonTree(),
+            'languages' => $languagesCollection->toSimplifiedArray()
         ];
 
         return json_encode($pagesData, JSON_UNESCAPED_UNICODE);

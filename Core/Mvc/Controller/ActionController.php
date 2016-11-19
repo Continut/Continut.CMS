@@ -38,7 +38,7 @@ namespace Continut\Core\Mvc\Controller {
         protected $name;
 
         /**
-         * @var \Continut\Core\System\Domain\Model\User Current session user
+         * @var \Continut\Core\System\Domain\Model\User Current user
          */
         protected $user;
 
