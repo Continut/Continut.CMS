@@ -2,6 +2,7 @@
   "Backend": {
     "en_US": {
       "product.name": "Conţinut CMS",
+      "product.version": "version %(version)",
       "general.yes": "Yes",
       "general.no": "No",
       "general.cancel": "Cancel",
@@ -62,6 +63,9 @@
       "backend.content.delete": "Delete element",
       "backend.content.history": "Element history",
       "backend.content.addNew": "Add new content element",
+      "backend.content.addNew.after": "Add new element after",
+      "backend.content.addNew.before": "Add new element before",
+      "backend.content.addNew.inside": "Add new element inside",
       "backend.content.noTitle": "-- No title --",
       "backend.content.headerIsHidden": " (This element is currently disabled)",
       "backend.content.operation.edit": "Edit content element",
@@ -169,6 +173,7 @@
     },
     "ro_RO": {
       "product.name": "Conţinut CMS",
+      "product.version": "versiunea %(version)",
       "general.yes": "Da",
       "general.no": "Nu",
       "general.cancel": "Anulare",
@@ -242,6 +247,9 @@
       "backend.content.delete": "Şterge element",
       "backend.content.history": "Istoric element",
       "backend.content.addNew": "Adaugă un element de conţinut",
+      "backend.content.addNew.after": "Adaugă element nou după",
+      "backend.content.addNew.before": "Adaugă element nou înainte",
+      "backend.content.addNew.inside": "Adaugă element înăuntru",
       "backend.content.noTitle": "-- Fără titlu --",
       "backend.content.headerIsHidden": " (Acest element este momentan dezactivat)",
       "backend.content.operation.edit": "Modifică elementul de conţinut",
@@ -336,6 +344,7 @@
     },
     "fr_FR": {
       "product.name": "Conţinut CMS",
+      "product.version": "version %(version)",
       "general.yes": "Oui",
       "general.no": "Non",
       "general.edit": "Editer",
@@ -401,6 +410,9 @@
       "backend.page.wizard.placeholder.title": "Titre de la page",
       "backend.content.templateMissing": "Le template utilisé par cet element de contenu n'existe pas ou ne peut pas être lu.",
       "backend.content.addNew": "Nouveau element de contenu",
+      "backend.content.addNew.after": "Nouveau element aprés",
+      "backend.content.addNew.before": "Nouveau element avant",
+      "backend.content.addNew.inside": "Nouveau element à l'interieur",
       "backend.content.noTitle": "-- Aucun titre --",
       "backend.content.headerIsHidden": " (Cet element est pour l'instant desactivé)",
       "backend.content.operation.edit": "Modifier l'element de contenu",

@@ -358,6 +358,11 @@ li a.helper-icon {
 .panel-backend-content > .panel-heading {
   cursor: move;
 }
+.panel-backend-content > .panel-heading:after {
+  content: '';
+  display: block;
+  clear: both;
+}
 .breadcrumb-page-tree {
   font-size: 12px;
   padding: 5px;

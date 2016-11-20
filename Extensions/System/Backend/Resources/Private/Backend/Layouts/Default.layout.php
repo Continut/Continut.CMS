@@ -33,7 +33,7 @@ $this->getPageView()
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="#">
-                <h1><img src="<?= $this->helper('Image')->getPath('Images/logo_negru.svg', 'Backend'); ?>" height="32" alt="Continut CMS" class="pull-left"/> Conţinut CMS <br/><small>versiunea 0.0.1</small></h1>
+                <h1><img src="<?= $this->helper('Image')->getPath('Images/logo_negru.svg', 'Backend'); ?>" height="32" alt="Continut CMS" class="pull-left"/> <?= $this->__('product.name') ?> <br/><small><?= $this->__('product.version', ['version' => \Continut\Core\Utility::getVersion()]) ?></small></h1>
             </a>
         </div>
 

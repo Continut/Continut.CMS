@@ -685,5 +685,14 @@ namespace Continut\Core {
             $string = transliterator_transliterate("Any-Latin; NFD; [:Nonspacing Mark:] Remove; NFC; [:Punctuation:] Remove; Lower();", $string);
             return str_replace(' ', '-', $string);
         }
+
+        /**
+         * Current software version
+         *
+         * @return string
+         */
+        public static function getVersion() {
+            return '1.0.0';
+        }
     }
 }

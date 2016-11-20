@@ -87,9 +87,16 @@ class BackendContainerContent extends BackendContent
             Utility::helper("Localization")->translate("backend.content.operation.show")
         );
 
-        $linkNewElement = sprintf('<a class="btn btn-sm btn-success content-wizard" title="%s" href="%s"><i class="fa fa-plus fa-fw"></i></a>',
-            Utility::helper("Localization")->translate("backend.content.addNew"),
-            Utility::helper("Url")->linkToPath('admin_backend', ['_controller' => 'Content', '_action' => 'wizard', 'id' => $this->getId(), 'page_id' => Utility::getRequest()->getArgument('page_id')])
+        $linkNewElement = sprintf('<li role="separator" class="divider"></li><li><a title="%s" href="%s"><i class="fa fa-plus fa-fw"></i> %s <i class="fa fa-level-up fa-fw"></i></a></li><li><a title="%s" href="%s"><i class="fa fa-plus fa-fw"></i> %s <i class="fa fa-archive fa-fw"></i></a></li><li><a title="%s" href="%s"><i class="fa fa-plus fa-fw"></i> %s <i class="fa fa-level-down fa-fw"></i></a></li>',
+            Utility::helper("Localization")->translate("backend.content.addNew.before"),
+            Utility::helper("Url")->linkToPath('admin_backend', ['_controller' => 'Content', '_action' => 'wizard', 'placement' => 'before', 'id' => $this->getId(), 'column_id' => $this->getColumnId(), 'page_id' => Utility::getRequest()->getArgument('page_id')]),
+            Utility::helper("Localization")->translate("backend.content.addNew.before"),
+            Utility::helper("Localization")->translate("backend.content.addNew.inside"),
+            Utility::helper("Url")->linkToPath('admin_backend', ['_controller' => 'Content', '_action' => 'wizard', 'placement' => 'inside', 'id' => $this->getId(), 'column_id' => $this->getColumnId(), 'page_id' => Utility::getRequest()->getArgument('page_id')]),
+            Utility::helper("Localization")->translate("backend.content.addNew.inside"),
+            Utility::helper("Localization")->translate("backend.content.addNew.after"),
+            Utility::helper("Url")->linkToPath('admin_backend', ['_controller' => 'Content', '_action' => 'wizard', 'placement' => 'after', 'id' => $this->getId(), 'column_id' => $this->getColumnId(), 'page_id' => Utility::getRequest()->getArgument('page_id')]),
+            Utility::helper("Localization")->translate("backend.content.addNew.after")
         );
 
         if ($this->getIsVisible()) {
@@ -105,12 +112,12 @@ class BackendContainerContent extends BackendContent
             $linkToCopy = "";
         }
 
-        $operationLinks = sprintf('<div class="btn-group btn-group-sm pull-right no-pep" role="group" aria-label="Element actions">%s %s<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button><ul class="dropdown-menu" role="menu"><li>%s</li><li>%s</li><li>%s</li></div>',
-            $linkNewElement,
+        $operationLinks = sprintf('<div class="btn-group btn-group-sm pull-right no-pep" role="group" aria-label="Element actions">%s<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button><ul class="dropdown-menu" role="menu"><li>%s</li><li>%s</li><li>%s</li>%s</ul></div>',
             $linkToEdit,
             $linkToCopy,
             $visibilityLink,
-            $linkToDelete);
+            $linkToDelete,
+            $linkNewElement);
 
         $overallWrap = '<div id="panel-backend-content-%s" data-id="%s" class="content-type-%s panel panel-backend-content content-drag-sender %s"><div class="panel-heading"><strong>%s</strong>%s</div><div class="panel-body no-pep">%s</div></div>';
 
