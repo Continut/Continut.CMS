@@ -203,7 +203,8 @@ class ContentController extends BackendController
         }
 
         return json_encode([
-            "success" => $success
+            "success" => $success,
+            "content" => $content->dataMapper()
         ]);
     }
 

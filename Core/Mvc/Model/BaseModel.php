@@ -103,4 +103,13 @@ class BaseModel
             }
         }
     }
+
+    /**
+     * Returns the dataMapper model data as JSON
+     *
+     * @return string
+     */
+    public function toJson() {
+        return json_encode($this->dataMapper());
+    }
 }

@@ -16,7 +16,7 @@ $elementType = (isset($settings['type'])) ? $settings['type'] : $element->getTyp
         </ol>
     </div>
 </div>
-<?= $this->partial("Content/editArea", "Backend", "Backend") ?>
+<?= $this->partial("Content/editArea", "Backend", "Backend", ["id" => $id, "pageId" => $pageId]) ?>
 <div class="row">
     <div class="col-sm-12">
         <form method="post" id="form_content" class="form-content"
@@ -37,7 +37,7 @@ $elementType = (isset($settings['type'])) ? $settings['type'] : $element->getTyp
 
 <script>
     // Post form using FormData, if supported
-    $('#form_content').on('submit', function () {
+    $('#form_content').on('submit', function (event) {
         var form = $(this);
         var formdata = false;
         if (window.FormData) {
@@ -56,6 +56,19 @@ $elementType = (isset($settings['type'])) ? $settings['type'] : $element->getTyp
                 $('.ajax-loader').hide();
                 if (data.success) {
                     $('.ajax-saved').show();
+                    if (saveAction == 'saveAndClose') {
+                        var contentId = data.content.id;
+                        $.ajax({
+                            url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'show']) ?>',
+                            data: {page_id: data.content.page_id}
+                        }).done(function (data) {
+                            // reload page data
+                            $('#content').html(data);
+                            // scroll to our updated element
+                            var scrollTo = $('.panel-backend-content[data-id="' + contentId + '"]');
+                            $('html, body').scrollTop(scrollTo.offset().top);
+                        });
+                    }
                 } else {
                     $('.ajax-not-saved').show();
                 }
@@ -64,11 +77,32 @@ $elementType = (isset($settings['type'])) ? $settings['type'] : $element->getTyp
 
         return false;
     });
+
+    // default action is save, without closing the form
+    var saveAction = 'save';
+
     // Submit form on click
-    $('.wizard-save').on('click', function () {
+    $('.wizard-save, .wizard-save-close').on('click', function (event) {
+        if ($(this).hasClass('wizard-save-close')) {
+            saveAction = 'saveAndClose';
+        }
+        event.preventDefault();
+
         $('.ajax-loader').show();
         $('.ajax-saved').hide();
         $('.ajax-not-saved').hide();
         $('#form_content').submit();
+    });
+
+    // close form
+    $('.wizard-close').on('click', function (event) {
+        event.preventDefault();
+
+        $.ajax({
+            url: $(this).attr('href')
+        }).done(function (data) {
+            // reload page data
+            $('#content').html(data);
+        });
     });
 </script>
