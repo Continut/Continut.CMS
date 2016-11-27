@@ -17,19 +17,12 @@ class SettingsController extends BackendController
     public function __construct()
     {
         parent::__construct();
+        $this->getMenuItems();
         $this->setLayoutTemplate(Utility::getResource("Default", "Backend", "Backend", "Layout"));
     }
 
     public function indexAction()
     {
-        $domainsCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection');
-        $domainsCollection->where("is_visible = :is_visible ORDER BY sorting ASC", ["is_visible" => 1]);
-
-        $languagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection');
-        $languagesCollection->where("domain_id = :domain_id ORDER BY sorting ASC", ["domain_id" => $domainsCollection->getFirst()->getId()]);
-
-        $this->getView()->assign("domains", $domainsCollection);
-        $this->getView()->assign("languages", $languagesCollection);
     }
 
     public function languagesAction()
@@ -44,5 +37,26 @@ class SettingsController extends BackendController
         $languages = $languagesCollection->toSimplifiedArray(TRUE, "All");
 
         return json_encode(["languages" => $languages]);
+    }
+
+    public function domainsAction() {
+    }
+
+    /**
+     * The menu should be displayed on every subsection of "settings", in a partial, so we call it in the constructor
+     */
+    protected function getMenuItems() {
+        $domainsCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection');
+        $domainsCollection->where("is_visible = :is_visible ORDER BY sorting ASC", ["is_visible" => 1]);
+
+        $languagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection');
+        $languagesCollection->where("domain_id = :domain_id ORDER BY sorting ASC", ["domain_id" => $domainsCollection->getFirst()->getId()]);
+
+        $this->getView()->assign('menu',
+            [
+                'domains'   => $domainsCollection,
+                'languages' => $languagesCollection
+            ]
+        );
     }
 }

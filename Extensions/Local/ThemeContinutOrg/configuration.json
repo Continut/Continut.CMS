@@ -37,6 +37,12 @@
           "description": "backend.themeContinutOrg.type.content.video.description",
           "icon": "Icons/video.png",
           "template": "Video"
+        },
+        "jumbotron": {
+          "label": "backend.themeContinutOrg.type.content.jumbotron.title",
+          "description": "backend.themeContinutOrg.type.content.jumbotron.description",
+          "icon": "Icons/jumbotron.png",
+          "template": "jumbotron"
         }
       },
       "container": {
@@ -45,12 +51,6 @@
           "description": "backend.themeContinutOrg.type.container.2columns.description",
           "icon": "Icons/container_2columns.png",
           "template": "2columns"
-        },
-        "jumbotron": {
-          "label": "backend.themeContinutOrg.type.container.jumbotron.title",
-          "description": "backend.themeContinutOrg.type.container.jumbotron.description",
-          "icon": "Icons/container_jumbotron.png",
-          "template": "jumbotron"
         }
       }
     }

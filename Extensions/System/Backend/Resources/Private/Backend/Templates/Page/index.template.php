@@ -4,8 +4,10 @@
         <div id="sidebar_toolbar" class="row">
             <form class="form">
                 <div class="col-sm-7 col-md-12 col-lg-7">
-                    <label for="select_website"><a class="btn btn-sm btn-default" href=""><i class="fa fa-cog"></i></a>
-                        <span class="hidden-md"><?= $this->__("backend.pageTree.domain.label") ?></span></label>
+                    <div class="simple-margins bottom">
+                        <a class="btn btn-sm btn-default" title="<?= $this->__('backend.settings.description') ?>" href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'domains']) ?>"><i class="fa fa-cog"></i></a>
+                        <label for="select_website"><?= $this->__('backend.pageTree.domain.label') ?></label>
+                    </div>
                     <?php if ($domains->count() > 0): ?>
                         <select id="select_website" class="selectpicker" data-width="100%">
                             <?php foreach ($domains->getAll() as $domain): ?>
@@ -45,8 +47,10 @@
                     <?php endif ?>
                 </div>
                 <div class="col-sm-5 col-md-12 col-lg-5">
-                    <label for="select_language"><a class="btn btn-sm btn-default" href=""><i class="fa fa-cog"></i></a>
-                        <span class="hidden-md"><?= $this->__("backend.pageTree.language.label") ?></span></label>
+                    <div class="simple-margins bottom">
+                        <a class="btn btn-sm btn-default" title="<?= $this->__('backend.settings.description') ?>" href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'domains']) ?>"><i class="fa fa-cog"></i></a>
+                        <label for="select_language"><?= $this->__('backend.pageTree.language.label') ?></label>
+                    </div>
                     <select id="select_language" class="selectpicker" data-width="100%">
                         <?php foreach ($languages->getAll() as $language): ?>
                             <option <?= (\Continut\Core\Utility::getSession()->get('current_language') == $language->getId()) ? 'selected="selected"' : ''?> data-icon="flag-icon flag-icon-<?= $language->getFlag() ?>"

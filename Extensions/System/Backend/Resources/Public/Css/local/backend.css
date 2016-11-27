@@ -138,6 +138,9 @@ html {
 #sidebar_toolbar .btn-backend {
   padding: 4px 26px 4px 6px;
 }
+.simple-margins.bottom {
+  margin-bottom: 5px;
+}
 #sidebar_tree {
   background: white;
   border-right: 1px solid #dcdcdc;
@@ -544,6 +547,7 @@ li a.helper-icon {
   box-shadow: none;
 }
 #settings_sidebar .list-group-item {
+  text-shadow: none;
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0;
@@ -568,6 +572,9 @@ li a.helper-icon {
 #settings_sidebar .list-group-item:focus,
 #settings_sidebar .list-group-item:hover {
   background: #045a7f;
+}
+#settings_sidebar .list-group-item.active {
+  background: #70c1b3;
 }
 #settings_sidebar #settings_menu {
   margin: 20px 0;

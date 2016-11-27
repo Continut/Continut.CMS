@@ -131,6 +131,12 @@ body, html {
   }
 }
 
+.simple-margins {
+  &.bottom {
+    margin-bottom: 5px;
+  }
+}
+
 #sidebar_tree {
   background: white;
   border-right: 1px solid #dcdcdc;
@@ -585,6 +591,7 @@ li a.helper-icon {
   }
 
   .list-group-item {
+    text-shadow: none;
     .border-radius(0);
     background: none;
     border: none;
@@ -603,6 +610,9 @@ li a.helper-icon {
     &:focus,
     &:hover {
       background: @settings-hover-background;
+    }
+    &.active {
+      background: @theme-success;
     }
   }
 

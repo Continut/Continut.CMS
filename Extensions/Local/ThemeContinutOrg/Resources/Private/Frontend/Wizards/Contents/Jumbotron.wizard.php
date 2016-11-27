@@ -16,3 +16,10 @@
         $this->valueOrDefault('class', '')
     ) ?>
 </div>
+<div class="form-group">
+    <?= $this->helper('Wizard')->rteField(
+        'content',
+        'Content',
+        $this->valueOrDefault('content', '')
+    ) ?>
+</div>
