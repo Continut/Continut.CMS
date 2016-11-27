@@ -42,6 +42,9 @@ class SettingsController extends BackendController
     public function domainsAction() {
     }
 
+    public function sessionAction() {
+    }
+
     /**
      * The menu should be displayed on every subsection of "settings", in a partial, so we call it in the constructor
      */

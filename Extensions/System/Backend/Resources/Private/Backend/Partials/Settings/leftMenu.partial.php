@@ -40,13 +40,13 @@
     <div class="row">
         <div class="list-group" id="settings_menu" role="tablist" aria-multiselectable="true">
             <a class="list-group-item collapsed" data-toggle="collapse" data-parent="#settings_menu" href="#settings_menu_1" aria-expanded="false" aria-controls="settings_menu_1">
-                <h4 class="list-group-item-heading"><i class="fa fa-fw fa-cog"></i> System</h4>
-                <p class="list-group-item-text">General system settings</p>
+                <h4 class="list-group-item-heading"><i class="fa fa-fw fa-cog"></i> <?= $this->__('backend.settings.general.title') ?></h4>
+                <p class="list-group-item-text"><?= $this->__('backend.settings.general.subtitle') ?></p>
             </a>
             <div id="settings_menu_1" class="list-group collapse" role="tabpanel">
-                <a id="link_system_domains" href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'domains']) ?>" class="active list-group-item"><i class="fa fa-fw fa-globe"></i> Domains and domain urls</a>
-                <a id="link_system_sessions" href="#" class="list-group-item"><i class="fa fa-fw fa-user-secret"></i> Session</a>
-                <a id="link_system_media" href="#" class="list-group-item"><i class="fa fa-fw fa-cloud"></i> Media storages</a>
+                <a id="link_system_domains" href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'domains']) ?>" class="active list-group-item"><i class="fa fa-fw fa-globe"></i> <?= $this->__('backend.settings.domains.title') ?></a>
+                <a id="link_system_sessions" href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'session']) ?>" class="list-group-item"><i class="fa fa-fw fa-user-secret"></i> <?= $this->__('backend.settings.session.title') ?></a>
+                <a id="link_system_media" href="#" class="list-group-item"><i class="fa fa-fw fa-cloud"></i> <?= $this->__('backend.settings.media.title')?></a>
             </div>
             <a class="list-group-item collapsed" data-toggle="collapse" data-parent="#settings_menu" href="#settings_menu_2" aria-expanded="false" aria-controls="settings_menu_2">
                 <h4 class="list-group-item-heading"><i class="fa fa-fw fa-list-alt"></i> News</h4>

@@ -25,6 +25,11 @@ class DomainUrl extends BaseModel
     protected $parent_id;
 
     /**
+     * @var string
+     */
+    protected $code;
+
+    /**
      * @var int
      */
     protected $domain_id;
@@ -67,14 +72,15 @@ class DomainUrl extends BaseModel
     public function dataMapper()
     {
         $fields = [
-            "is_alias" => $this->is_alias,
+            "is_alias"  => $this->is_alias,
             "parent_id" => $this->parent_id,
             "domain_id" => $this->domain_id,
-            "sorting" => $this->sorting,
-            "locale" => $this->locale,
-            "flag" => $this->flag,
-            "url" => $this->url,
-            "title" => $this->title
+            "sorting"   => $this->sorting,
+            "locale"    => $this->locale,
+            "flag"      => $this->flag,
+            "url"       => $this->url,
+            "title"     => $this->title,
+            "code"      => $this->code
         ];
         return array_merge($fields, parent::dataMapper());
     }
@@ -217,6 +223,22 @@ class DomainUrl extends BaseModel
             $this->domain = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection')->findById($this->domain_id);
         }
         return $this->domain;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param string $code
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
     }
 
 }

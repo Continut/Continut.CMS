@@ -1,10 +1,10 @@
 <div class="row">
-    <div class="col-sm-12 col-md-3 col-lg-2" id="settings_sidebar">
+    <div class="col-sm-12 col-md-3" id="settings_sidebar">
         <p><img src="<?= $this->helper('Image')->getPath('Images/profile_pic.jpg', 'Backend'); ?>" height="200" alt="" class="img-circle"></p>
         <p>Created on<br/><span class="fa fa-calendar-check-o"></span> <small>13 dec 2016</small></p>
         <p>Last connected on<br/><span class="fa fa-calendar-check-o"></span> <small>15 dec 2016 at 14h30</small></p>
     </div>
-    <div class="col-sm-12 col-md-9 col-lg-10">
+    <div class="col-sm-12 col-md-9">
         <form method="post" action="" class="form-horizontal">
             <div class="form-group">
                 <div class="col-sm-10 col-sm-offset-2">

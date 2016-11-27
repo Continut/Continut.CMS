@@ -111,9 +111,8 @@
         "moduleMedia": {
           "label": "backend.menu.media",
           "icon": "fa fa-fw fa-picture-o",
-          "extension": "Backend",
-          "controller": "Media",
-          "action": "index",
+          "path": "admin_backend",
+          "params": {"_controller": "Media", "_action": "index"},
           "position": 40
         }
       },
