@@ -276,4 +276,13 @@ class BaseCollection
     {
         return (sizeof($this->elements) == 0);
     }
+
+    /**
+     * @param int $index
+     *
+     * @return mixed
+     */
+    public function getElement($index) {
+        return $this->elements[$index];
+    }
 }

@@ -323,75 +323,26 @@ class PageController extends BackendController
         // If the page is valid, we change it's parentId field and then save the value
         if ($pageModel) {
             $pageModel->setParentId($newParentId);
-            $pageModel->setSorting($newPosition);
-            // @TODO: old jqTree version, to remove
-            /*switch ($moveType) {
-                // if it's after we need to check if it's on the same level or another one
-                case "after":
-                    $otherPage = $pagesCollection->where("id = :id", ["id" => $newParentId])
-                        ->getFirst();
-                    // if it's on a different level, set the new parent
-                    if ($otherPage->getParentId() != $pageModel->getParentId()) {
-                        $pageModel->setParentId($otherPage->getParentId());
-                    }
-                    // it will be placed AFTER the element, so we increase it's sorting by 1
-                    $pageModel->setSorting($otherPage->getSorting() + 1);
 
-                    // then we increment by 1 the sorting of all the other pages AFTER this one
-                    $pagesToModify = $pagesCollection->where("sorting >= :sorting_value", ["sorting_value" => $pageModel->getSorting()]);
-                    foreach ($pagesToModify->getAll() as $page) {
-                        $page->setSorting($page->getSorting() + 1);
-                    }
-                    $pagesToModify->save();
+            // get all pages on the parent level
+            $pagesOnSameLevel = $pagesCollection->reset()->where('domain_url_id = :domain_url_id AND parent_id = :parent_id ORDER BY sorting ASC', ['domain_url_id' => $pageModel->getDomainUrlId(), 'parent_id' => $newParentId]);
+            if ($pagesOnSameLevel->count()) {
+                $currentSorting = $pagesOnSameLevel->getElement($newPosition)->getSorting();
+                $pageModel->setSorting($currentSorting + 1);
 
-                    break;
-                case "before":
-                    $otherPage = $pagesCollection->where("id = :id", ["id" => $newParentId])
-                        ->getFirst();
-                    if ($otherPage->getParentId() != $pageModel->getParentId()) {
-                        $pageModel->setParentId($otherPage->getParentId());
-                    } else {
-                        $pageModel->setSorting($otherPage->getSorting());
-                        // then we increment by 1 the sorting of all the other pages AFTER this one
-                        $pagesToModify = $pagesCollection->where("sorting >= :sorting_value", ["sorting_value" => $pageModel->getSorting()]);
-                        foreach ($pagesToModify->getAll() as $page) {
-                            $page->setSorting($page->getSorting() + 1);
-                        }
-                        $pagesToModify->save();
-                    }
-                    break;
-                // if it's moved inside a page then it's easy, we just get it's parent
-                default:
-                    $pageModel->setParentId($newParentId);
-                    // for jqTree INSIDE is actually when it will be the first child of this parent
-                    // so we need to get the current sorting of it's child, if any, and update the sorting
-                    $firstChild = $pagesCollection->where("parent_id = :parent_id ORDER BY sorting ASC", ["parent_id" => $newParentId])
-                        ->getFirst();
-                    // if we found the first child, get it's sorting and increment the rest
-                    if ($firstChild) {
-                        $pageModel->setSorting($firstChild->getSorting());
-                        // then we increment by 1 the sorting of all the other pages AFTER this one
-                        $pagesToModify = $pagesCollection->where("sorting >= :sorting_value", ["sorting_value" => $pageModel->getSorting()]);
-                        foreach ($pagesToModify->getAll() as $page) {
-                            $page->setSorting($page->getSorting() + 1);
-                        }
-                        $pagesToModify->save();
-                    } // if it does not have any children, we can get the last sorting value and increment it by one
-                    else {
-                        $highestSorting = $pagesCollection->where("is_deleted = 0 ORDER BY sorting DESC")->getFirst();
-                        $pageModel->setSorting($highestSorting->getSorting() + 1);
-                    }
-            }*/
+                for ($i = $newPosition; $i < ($pagesOnSameLevel->count() - 1); $i++) {
+                    $pagesOnSameLevel->getElement($i)->setSorting($currentSorting + 1 + $i);
+                }
+            } else {
+                $pageModel->setSorting(0);
+            }
+
+            $pagesOnSameLevel->save();
+
             $pagesCollection
                 ->reset()
                 ->add($pageModel)
                 ->save();
-            // save a cached version of the breadcrumb
-            /*$pageModel->setCachedPath(implode(",", $pagesCollection->cachedBreadcrumb($pageModel->getParentId())));
-            $pagesCollection
-                ->reset()
-                ->add($pageModel)
-                ->save();*/
         }
 
         return "executed";
