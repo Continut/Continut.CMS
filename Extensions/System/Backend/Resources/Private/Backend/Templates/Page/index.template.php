@@ -140,12 +140,27 @@
                 // --- Handles moving pages in the page tree ---
                 .on('move_node.jstree', function(e, data) {
                     console.log(data);
+                    var pagesOrder = [];
+                    var children = null;
+                    if (data.parent == '#') {
+                        children = $($('#cms_tree').jstree().get_json(data.parent, {'no_children': false}));
+                        for (var i = 0; i < children.length; i++) {
+                            pagesOrder.push(children[i].id);
+                        }
+                    } else {
+                        var parent = $($('#cms_tree').jstree().get_json(data.parent, {'no_children': false}))
+                        for (var i = 0; i < parent[0].children.length; i++) {
+                            pagesOrder.push(parent[0].children[i].id);
+                        }
+                    }
+                    //console.log(pagesOrder);
                     $.post(
                         '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'treeMove']) ?>',
                         {
                             movedId: data.node.id,
                             position: data.position,
-                            newParentId: data.parent
+                            newParentId: data.parent,
+                            order: pagesOrder
                         }
                     );
                 })
@@ -168,6 +183,8 @@
                         }
                     },
                     'dnd': {
+                        'copy': false, // true allows to make copies while dragging and holding Ctrl. We don't want this
+                        'always_copy': false,
                         'check_while_dragging': false,
                         'large_drag_target': true,
                         'large_drop_target': true

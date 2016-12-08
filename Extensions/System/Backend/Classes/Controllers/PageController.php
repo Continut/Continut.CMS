@@ -315,6 +315,8 @@ class PageController extends BackendController
         $newPosition = $this->getRequest()->getArgument("position");
         // new parent to move into, or after
         $newParentId = (int)$this->getRequest()->getArgument("newParentId");
+        // get the new sorting for all pages on the same level
+        $orders = $this->getRequest()->getArgument("order");
 
         // Then we load it's Page Model
         $pagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection');
@@ -323,19 +325,25 @@ class PageController extends BackendController
         // If the page is valid, we change it's parentId field and then save the value
         if ($pageModel) {
             $pageModel->setParentId($newParentId);
+            foreach ($orders as $sortOrder => $pageId) {
+                if ($pageModel->getId() == $pageId) {
+                    $pageModel->setSorting($sortOrder);
+                }
+            }
 
             // get all pages on the parent level
             $pagesOnSameLevel = $pagesCollection->reset()->where('domain_url_id = :domain_url_id AND parent_id = :parent_id ORDER BY sorting ASC', ['domain_url_id' => $pageModel->getDomainUrlId(), 'parent_id' => $newParentId]);
             if ($pagesOnSameLevel->count()) {
-                $currentSorting = $pagesOnSameLevel->getElement($newPosition)->getSorting();
-                $pageModel->setSorting($currentSorting + 1);
-
-                for ($i = $newPosition; $i < ($pagesOnSameLevel->count() - 1); $i++) {
-                    $pagesOnSameLevel->getElement($i)->setSorting($currentSorting + 1 + $i);
+                foreach ($pagesOnSameLevel->getAll() as $page) {
+                    foreach ($orders as $sortOrder => $pageId) {
+                        if ($page->getId() == $pageId) {
+                            $page->setSorting($sortOrder);
+                        }
+                    }
                 }
-            } else {
+            }/* else {
                 $pageModel->setSorting(0);
-            }
+            }*/
 
             $pagesOnSameLevel->save();
 
@@ -410,7 +418,9 @@ class PageController extends BackendController
                     // added inside a selected page, at the very end of already existing pages
                     if ($pagePlacement == "inside") {
                         $pageModel->setParentId($pageId);
-                        $lastPage = $pageCollection->where('parent_id = :parent_id ORDER BY sorting DESC', [':parent_id' => $pageId])->getFirst();
+                        $lastPage = $pageCollection
+                            ->where('parent_id = :parent_id AND domain_url_id = :domain_url_id ORDER BY sorting DESC', ['domain_url_id' => $domainUrlId, 'parent_id' => $pageId])
+                            ->getFirst();
                         // if we don't have any page so far, just set the new one's sorting order to 1
                         if ($lastPage) {
                             // and add this new page at the very end of the page tree

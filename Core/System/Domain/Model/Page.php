@@ -623,4 +623,12 @@ class Page extends BaseModel
 
         return $this;
     }
+
+    /**
+     * @param $pageId
+     * @TODO Add method that automatically sets the sorting
+     */
+    public function moveBeforePageId($pageId) {
+
+    }
 }
