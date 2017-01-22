@@ -156,6 +156,7 @@ class BaseCollection
 
     /**
      * General method used to find by a certain column, eg: findById, findByName, findByIsDeleted
+     *
      * @param $method
      * @param $args
      * @return BaseCollection
@@ -249,6 +250,9 @@ class BaseCollection
         return Utility::getDatabase()->lastInsertId();
     }
 
+    /**
+     * Delete all elements from collection
+     */
     public function delete()
     {
         foreach ($this->elements as $element) {

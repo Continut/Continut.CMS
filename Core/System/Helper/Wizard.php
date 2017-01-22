@@ -127,17 +127,31 @@ HER;
          * @param        $name
          * @param        $label
          * @param string $value
+         * @param string $prefix
          *
          * @return string
          */
-        public function textField($name, $label = "", $value = "")
+        public function textField($name, $label = "", $value = "", $prefix = "")
         {
             $fieldName = $this->setFieldName($name);
             $fieldLabel = $this->setFieldLabel($name, $label);
 
+            $input = <<<HER
+			<input id="field_$name" type="text" class="form-control" value="$value" name="$fieldName"/>
+HER;
+
+            if ($prefix) {
+                $input = <<<HER
+			<div class="input-group">
+				<span class="input-group-addon">$prefix</span>
+				$input
+			</div>
+HER;
+            }
+
             $html = <<<HER
 			$fieldLabel
-			<input id="field_$name" type="text" class="form-control" value="$value" name="$fieldName"/>
+			$input
 HER;
             return $html;
         }

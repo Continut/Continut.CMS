@@ -31,7 +31,7 @@
                                 /<?= $language->getCode() ?>
                             </div>
                             <div class="col-sm-4 text-right">
-                                <a class="btn btn-sm btn-warning" href="#"><i class="fa fa-icon fa-pencil"></i> <?= $this->__('general.edit') ?></a>
+                                <a class="btn btn-sm btn-warning" href="<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'editDomainUrl', 'id' => $language->getId()]) ?>"><i class="fa fa-icon fa-pencil"></i> <?= $this->__('general.edit') ?></a>
                                 <a class="btn btn-sm btn-danger" href="#"><i class="fa fa-icon fa-recycle"></i> <?= $this->__('general.delete') ?></a>
                             </div>
                         </div>
