@@ -11,6 +11,8 @@
 namespace Continut\Core\Mvc\Model;
 
 use Continut\Core\Utility;
+use Respect\Validation\Exceptions\NestedValidationException;
+use Respect\Validation\Validator as v;
 
 /**
  * Class BaseModel
@@ -23,6 +25,11 @@ class BaseModel
      * @var int model unique identifier
      */
     protected $id;
+
+    /**
+     * @var array
+     */
+    protected $validationErrors = [];
 
     /**
      * @return int Model's unique id in the database
@@ -50,6 +57,75 @@ class BaseModel
         return [
             "id" => $this->id
         ];
+    }
+
+    /**
+     * Define the list of fields to validate and the validators to validate against
+     *
+     * @return array List of field names and their validators
+     */
+    public function dataValidation() {
+        return [
+            "id" => v::intVal()
+        ];
+    }
+
+    /**
+     * Check if all model properties validate
+     *
+     * @return bool
+     */
+    public function validate() {
+        $validates = true;
+        foreach ($this->dataValidation() as $field => $validators) {
+            try {
+                $validators->assert($this->fetchFromField($field));
+            } catch(NestedValidationException $exception) {
+                $this->validationErrors[$field] = $exception->getMessages();
+                $validates = false;
+            }
+            /*if (!$validators->validate($this->fetchFromField($field))) {
+                $validates = false;
+            }*/
+        }
+
+        return $validates;
+    }
+
+    /**
+     * Returns the validation error messages
+     *
+     * @param string $field Field name or leave empty to check if we have any errors on all fields
+     *
+     * @return array
+     */
+    public function getValidationErrors($field = "") {
+        if ($field) {
+            if (isset($this->validationErrors[$field])) {
+                return $this->validationErrors[$field];
+            } else {
+                return [];
+            }
+        }
+        return $this->validationErrors;
+    }
+
+    /**
+     * Checks if we have any validation error messages for a specific field or on all fields
+     *
+     * @param string $field Field name or leave empty to check if we have any error on all fields
+     *
+     * @return bool
+     */
+    public function hasValidationErrors($field = "") {
+        if ($field) {
+            if (isset($this->validationErrors[$field])) {
+                return (sizeof($this->validationErrors[$field]) > 0);
+            } else {
+                return false;
+            }
+        }
+        return (sizeof($this->validationErrors) > 0);
     }
 
     /**

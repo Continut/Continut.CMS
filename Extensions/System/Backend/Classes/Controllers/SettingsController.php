@@ -75,6 +75,31 @@ class SettingsController extends BackendController
     }
 
     /**
+     * Save domainUrl object
+     */
+    public function saveDomainUrlAction() {
+        $data = $this->getRequest()->getArgument("data");
+        $id   = (int)$data["id"];
+
+        $languagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection');
+        $domainUrl = $languagesCollection->findById($id);
+
+        $domainsCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection');
+
+        $domainUrl->update($data);
+
+        if ($domainUrl->validate()) {
+            $languagesCollection
+                ->reset()
+                ->add($domainUrl)
+                ->save();
+        }
+
+        $this->getView()->assign('domainUrl', $domainUrl);
+        $this->getView()->assign('domains',   $domainsCollection->getAll());
+    }
+
+    /**
      * Show session settings
      */
     public function sessionAction() {

@@ -9,6 +9,8 @@
  */
 namespace Continut\Core\System\Helper {
 
+    use Continut\Core\Mvc\Model\BaseModel;
+
     class Wizard
     {
 
@@ -45,12 +47,38 @@ namespace Continut\Core\System\Helper {
             if ($label) {
                 // we do not set the id if the fieldname is an array
                 if (strpos($name, "[")) {
-                    return "<label>$label</label>";
+                    return "<label class=\"control-label\">$label</label>";
                 } else {
-                    return "<label for='field_$name'>$label</label>";
+                    return "<label class=\"control-label\" for='field_$name'>$label</label>";
                 }
             }
             return '';
+        }
+
+        /**
+         * Set the error messages and error classes on the wrapping divs
+         *
+         * @param BaseModel $model
+         * @param string $columnName
+         *
+         * @return array Returns the error block with the messages and the error css class to use
+         */
+        protected function setErrors($model, $columnName) {
+            $errorsClass = "";
+            $errorsBlock = "";
+
+            if ($model->hasValidationErrors($columnName)) {
+                $errorsClass   = "has-error";
+                $errorMessages = "";
+                foreach ($model->getValidationErrors($columnName) as $error) {
+                    $errorMessages .= "<p>$error</p>";
+                }
+                $errorsBlock = <<<HER
+                <span class="help-block">$errorMessages</span>
+HER;
+            }
+
+            return ["errorsBlock" => $errorsBlock, "errorsClass" => $errorsClass];
         }
 
         /**
@@ -78,7 +106,7 @@ HER;
          */
         public function checkboxField($name, $label, $values, $selectedValue = null)
         {
-            $fieldName = $this->setFieldName($name);
+            $fieldName  = $this->setFieldName($name);
             $fieldLabel = $this->setFieldLabel($name, $label);
 
             $html = "";
@@ -111,7 +139,7 @@ HER;
          */
         public function dateTimeField($name, $label, $value = "")
         {
-            $fieldName = $this->setFieldName($name);
+            $fieldName  = $this->setFieldName($name);
             $fieldLabel = $this->setFieldLabel($name, $label);
 
             $html = <<<HER
@@ -124,23 +152,31 @@ HER;
         /**
          * Shows a simple text field with a label in a wizard
          *
-         * @param        $name
-         * @param        $label
-         * @param string $value
-         * @param string $prefix
+         * @param BaseModel $model  Model object
+         * @param string $name      Input name
+         * @param string $label     Input label
+         * @param string $value     Input default value
+         * @param array  $arguments Additional parameters to pass onto the wizard (like "prefix", etc)
          *
          * @return string
          */
-        public function textField($name, $label = "", $value = "", $prefix = "")
+        public function textField($model, $name, $label = "", $value = "", $arguments = array())
         {
-            $fieldName = $this->setFieldName($name);
+            $fieldName  = $this->setFieldName($name);
             $fieldLabel = $this->setFieldLabel($name, $label);
+            $errors     = $this->setErrors($model, $name);
+
+            // if no default value is set, get the one from the model
+            if (!$value) {
+                $value = $model->fetchFromField($name);
+            }
 
             $input = <<<HER
 			<input id="field_$name" type="text" class="form-control" value="$value" name="$fieldName"/>
 HER;
 
-            if ($prefix) {
+            if (isset($arguments["prefix"])) {
+                $prefix = $arguments["prefix"];
                 $input = <<<HER
 			<div class="input-group">
 				<span class="input-group-addon">$prefix</span>
@@ -150,8 +186,11 @@ HER;
             }
 
             $html = <<<HER
-			$fieldLabel
-			$input
+			<div class="form-group {$errors['errorsClass']}">
+				$fieldLabel
+				$input
+				{$errors['errorsBlock']}
+			</div>
 HER;
             return $html;
         }
@@ -159,16 +198,22 @@ HER;
         /**
          * Simple textarea field
          *
+         * @param BaseModel $model  Model object
          * @param $name
          * @param $label
          * @param $value
          *
          * @return string
          */
-        public function textareaField($name, $label, $value)
+        public function textareaField($model, $name, $label, $value)
         {
             $fieldName = $this->setFieldName($name);
             $fieldLabel = $this->setFieldLabel($name, $label);
+
+            // if no default value is set, get the one from the model
+            if (!$value) {
+                $value = $model->fetchFromField($name);
+            }
 
             $html = <<<HER
 			$fieldLabel
@@ -234,6 +279,7 @@ HER;
         /**
          * Select field
          *
+         * @param BaseModel $model Model object
          * @param string $name
          * @param string $label
          * @param array $values
@@ -241,11 +287,17 @@ HER;
          *
          * @return string
          */
-        public function selectField($name, $label, $values, $selectedValue = null)
+        public function selectField($model, $name, $label, $values, $selectedValue = null)
         {
             $fieldName = $this->setFieldName($name);
             $fieldLabel = $this->setFieldLabel($name, $label);
+            $errors     = $this->setErrors($model, $name);
             $options = array();
+
+            // if no default value is set, get the one from the model
+            if (!$selectedValue) {
+                $selectedValue = $model->fetchFromField($name);
+            }
 
             /* if $values is an multiarray then it means we have optgroup definitions
              *
@@ -283,10 +335,13 @@ HER;
             $optionsSelect = implode("\n", $options);
 
             $html = <<<HER
+			<div class="form-group {$errors['errorsClass']}">
 				$fieldLabel
 				<select name="$fieldName" id="field_$name" class="form-control selectpicker">
 				$optionsSelect
 				</select>
+				{$errors['errorsBlock']}
+			</div>
 HER;
 
             return $html;

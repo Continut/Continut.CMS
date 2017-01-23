@@ -65,10 +65,14 @@ namespace Continut\Core {
             Utility::$autoloader->addNamespace("Continut", __ROOTCMS__);
             // Debugbar: http://phpdebugbar.com
             Utility::$autoloader->addNamespace("DebugBar", __ROOTCMS__ . DS . "Lib" . DS . "DebugBar");
+            // Add Symfony components support
             Utility::$autoloader->addNamespace("Symfony", __ROOTCMS__ . DS . "Lib" . DS . "Symfony");
+            // Logger
             Utility::$autoloader->addNamespace("Psr", __ROOTCMS__ . DS . "Lib" . DS . "Psr");
             // Image resize capabilities: http://image.intervention.io
             Utility::$autoloader->addNamespace("Intervention", __ROOTCMS__ . DS . "Lib" . DS . "Intervention");
+            // Validators
+            Utility::$autoloader->addNamespace("Respect", __ROOTCMS__ . DS . "Lib" . DS . "Respect");
 
             set_exception_handler([$this, "handleException"]);
             set_error_handler([$this, 'handleError']);

@@ -257,10 +257,10 @@ namespace Continut\Core\Mvc\Controller {
             $this->setAction($to);
 
             $templateController = $this->getName();
-            $templateAction = $this->getAction();
-            $contextExtension = $this->getExtension();
-            $contextScope = $this->getScope();
-            $contextAction = $this->getAction() . "Action";
+            $templateAction     = $this->getAction();
+            $contextExtension   = $this->getExtension();
+            $contextScope       = $this->getScope();
+            $contextAction      = $this->getAction() . "Action";
 
             $this
                 ->getView()

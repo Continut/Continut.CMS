@@ -11,18 +11,19 @@ namespace Continut\Core\System\Domain\Model;
 
 use Continut\Core\Mvc\Model\BaseModel;
 use Continut\Core\Utility;
+use Respect\Validation\Validator as v;
 
 class DomainUrl extends BaseModel
 {
     /**
      * @var boolean
      */
-    protected $is_alias;
+    protected $isAlias;
 
     /**
      * @var int
      */
-    protected $parent_id;
+    protected $parentId;
 
     /**
      * @var string
@@ -32,7 +33,7 @@ class DomainUrl extends BaseModel
     /**
      * @var int
      */
-    protected $domain_id;
+    protected $domainId;
 
     /**
      * @var string
@@ -72,9 +73,9 @@ class DomainUrl extends BaseModel
     public function dataMapper()
     {
         $fields = [
-            "is_alias"  => $this->is_alias,
-            "parent_id" => $this->parent_id,
-            "domain_id" => $this->domain_id,
+            "is_alias"  => $this->isAlias,
+            "parent_id" => $this->parentId,
+            "domain_id" => $this->domainId,
             "sorting"   => $this->sorting,
             "locale"    => $this->locale,
             "flag"      => $this->flag,
@@ -86,19 +87,34 @@ class DomainUrl extends BaseModel
     }
 
     /**
+     * Validation rules for the data
+     *
+     * @return array
+     */
+    public function dataValidation()
+    {
+        return [
+            "title"  => v::length(3, 200),
+            "url"    => v::noWhitespace()->length(1, 200),
+            "locale" => v::noWhitespace()->length(2, 40)
+        ];
+        //return parent::dataValidation();
+    }
+
+    /**
      * @return boolean
      */
     public function getIsAlias()
     {
-        return $this->is_alias;
+        return $this->isAlias;
     }
 
     /**
-     * @param boolean $is_alias
+     * @param boolean $isAlias
      */
-    public function setIsAlias($is_alias)
+    public function setIsAlias($isAlias)
     {
-        $this->is_alias = $is_alias;
+        $this->isAlias = $isAlias;
     }
 
     /**
@@ -106,15 +122,15 @@ class DomainUrl extends BaseModel
      */
     public function getParentId()
     {
-        return $this->parent_id;
+        return $this->parentId;
     }
 
     /**
-     * @param int $parent_id
+     * @param int $parentId
      */
-    public function setParentId($parent_id)
+    public function setParentId($parentId)
     {
-        $this->parent_id = $parent_id;
+        $this->parentId = $parentId;
     }
 
     /**
@@ -186,15 +202,15 @@ class DomainUrl extends BaseModel
      */
     public function getDomainId()
     {
-        return $this->domain_id;
+        return $this->domainId;
     }
 
     /**
-     * @param int $domain_id
+     * @param int $domainId
      */
-    public function setDomainId($domain_id)
+    public function setDomainId($domainId)
     {
-        $this->domain_id = $domain_id;
+        $this->domainId = $domainId;
     }
 
     /**
@@ -220,7 +236,7 @@ class DomainUrl extends BaseModel
     public function getDomain()
     {
         if ($this->domain == null) {
-            $this->domain = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection')->findById($this->domain_id);
+            $this->domain = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection')->findById($this->domainId);
         }
         return $this->domain;
     }
