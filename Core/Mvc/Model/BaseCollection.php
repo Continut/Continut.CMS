@@ -159,16 +159,17 @@ class BaseCollection
      *
      * @param $method
      * @param $args
-     * @return BaseCollection
+     * @return array Array of found elements
      */
     public function __call($method, $args)
     {
         if (substr($method, 0, 6) == "findBy" && strlen($method) > 6) {
-            $field = lcfirst(substr($method, 6));
+            //$field = lcfirst(substr($method, 6));
+            $field = Utility::toUnderscore(substr($method, 6));
             // so far we only map 1 field, to be enhanced to more (AND, OR conditions)
             $values = [$field => $args[0]];
             $conditions = "$field = :$field";
-            return $this->where($conditions, $values);
+            return $this->where($conditions, $values)->getAll();
         }
     }
 

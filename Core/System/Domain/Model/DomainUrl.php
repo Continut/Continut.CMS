@@ -66,6 +66,12 @@ class DomainUrl extends BaseModel
     protected $title;
 
     /**
+     * Array of \Continut\Core\System\Domain\Model\DomainUrl
+     * @var array
+     */
+    protected $aliases = [];
+
+    /**
      * Simple datamapper used for the database
      *
      * @return array
@@ -255,6 +261,16 @@ class DomainUrl extends BaseModel
     public function setCode($code)
     {
         $this->code = $code;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAliases() {
+        if (empty($this->aliases)) {
+            $this->aliases = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection')->findByParentId($this->id);
+        }
+        return $this->aliases;
     }
 
 }

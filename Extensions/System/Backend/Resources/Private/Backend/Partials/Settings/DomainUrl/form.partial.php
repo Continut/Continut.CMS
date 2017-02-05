@@ -31,6 +31,18 @@
                 <div class="col-md-3">
                     <?= $this->helper("Wizard")->selectField($domainUrl, "is_alias", $this->__("backend.domainUrl.properties.isAlias"), array(0 => "No", 1 => "Yes")) ?>
                 </div>
+                <p>Aliases defined for this domain <a href="">(what is an alias?)</a>:</p>
+                <?php if($domainUrl->getAliases()): ?>
+                <div class="col-md-3">
+                    <?php foreach ($domainUrl->getAliases() as $alias): ?>
+                        <div class="form-group ">
+                            <label class="control-label" for="field_alias_<?= $alias->getId() ?>">Alias</label>
+                            <input id="field_alias_<?= $alias->getId() ?>" type="text" class="form-control" value="<?= $alias->getUrl()?>" name="data[alias][<?= $alias->getId() ?>]">
+                        </div>
+                    <?php endforeach; ?>
+                    <a class="btn btn-success">Add new alias</a>
+                </div>
+                <?php endif; ?>
             </div>
             <div class="panel-footer">
                 <input type="submit" name="submit" class="btn btn-primary"
