@@ -23,13 +23,13 @@
                     <?= $this->helper("Wizard")->textField($domainUrl, "locale", $this->__("backend.domainUrl.properties.locale")) ?>
                 </div>
                 <div class="col-md-3">
-                    <?= $this->helper("Wizard")->selectField($domainUrl, "flag", $this->__("backend.domainUrl.properties.flag"), array("fr" => "French flag", "en" => "US Flag", "ro" => "Romanian flag")) ?>
+                    <?= $this->helper("Wizard")->selectField($domainUrl, "flag", $this->__("backend.domainUrl.properties.flag"), $this->helper('Locale')->iso2LanguageCodes()) ?>
                 </div>
                 <div class="col-md-3">
                     <?= $this->helper("Wizard")->textField($domainUrl, "code", $this->__("backend.domainUrl.properties.code")) ?>
                 </div>
                 <div class="col-md-3">
-                    <?= $this->helper("Wizard")->selectField($domainUrl, "is_alias", $this->__("backend.domainUrl.properties.isAlias"), array(0 => "No", 1 => "Yes")) ?>
+                    <?= $this->helper("Wizard")->selectField($domainUrl, "is_alias", $this->__("backend.domainUrl.properties.isAlias"), [0 => $this->__("general.no"), 1 => $this->__("general.yes")]) ?>
                 </div>
                 <p>Aliases defined for this domain <a href="">(what is an alias?)</a>:</p>
                 <?php if($domainUrl->getAliases()): ?>

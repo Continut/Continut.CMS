@@ -155,6 +155,15 @@ class BaseCollection
     }
 
     /**
+     * Returns all elements from a collection
+     *
+     * @return array
+     */
+    public function findAll() {
+        return $this->where("1=1")->getAll();
+    }
+
+    /**
      * General method used to find by a certain column, eg: findById, findByName, findByIsDeleted
      *
      * @param $method
@@ -204,6 +213,7 @@ class BaseCollection
     public function save()
     {
         foreach ($this->elements as $element) {
+            // get the list of fields defined for this model in his dataMapper() function
             $dataMapper = $element->dataMapper();
             $listOfFields = implode(",", array_keys($dataMapper));
             $listOfValues = [];
@@ -216,7 +226,7 @@ class BaseCollection
                 }
             }
             // element does not exist, insert it
-            if (is_null($element->getId())) {
+            if (is_null($element->getId()) || $element->getId() == 0) {
                 foreach ($dataMapper as $key => $value) {
                     $listOfValues[] = ":" . $key;
                 }

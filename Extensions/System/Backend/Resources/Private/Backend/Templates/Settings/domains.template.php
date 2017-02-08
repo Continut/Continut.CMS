@@ -2,14 +2,14 @@
     <?= $this->partial('Settings/leftMenu', 'Backend', 'Backend', ['menu' => $menu]); ?>
     <div class="col-sm-12 col-md-9">
         <div class="quick-panel pull-right">
-            <a class="btn btn-success" href="#"><i class="fa fa-icon fa-plus"></i> <?= $this->__('backend.settings.domains.new') ?></a>
+            <a class="btn btn-success" href="<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'newDomain']) ?>"><i class="fa fa-icon fa-plus"></i> <?= $this->__('backend.settings.domains.new') ?></a>
         </div>
         <h3><?= $this->__('backend.settings.domains.title') ?></h3>
-        <?php if ($menu['domains']): ?>
+        <?php if ($allDomains): ?>
         <div class="panel panel-default panel-grid">
             <div class="panel-body">
                 <div class="grid">
-                <?php foreach ($menu['domains']->getAll() as $domain): ?>
+                <?php foreach ($allDomains as $domain): ?>
                 <div class="row grid-row grid-even">
                     <div class="col-sm-8">
                         <strong><?= $domain->getTitle() ?></strong>

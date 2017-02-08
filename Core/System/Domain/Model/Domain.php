@@ -104,7 +104,7 @@ class Domain extends BaseModel
     public function getDomainUrls()
     {
         if ($this->domainUrls == null) {
-            $this->domainUrls = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection')->findByDomain_id($this->id)->getAll();
+            $this->domainUrls = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection')->findByDomain_id($this->id);
         }
         return $this->domainUrls;
     }

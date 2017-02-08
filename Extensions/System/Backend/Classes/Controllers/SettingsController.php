@@ -54,6 +54,51 @@ class SettingsController extends BackendController
      * Show and handle domains and domainUrl settings
      */
     public function domainsAction() {
+        $allDomains = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection')->findAll();
+
+        $this->getView()->assign('allDomains', $allDomains);
+    }
+
+    /**
+     * Create a new domain
+     */
+    public function newDomainAction() {
+        $domain = Utility::createInstance('Continut\Core\System\Domain\Model\Domain');
+
+        $domain->setId(0);
+        $this->getView()->assign('domain', $domain);
+    }
+
+
+    public function saveDomainAction() {
+        $data = $this->getRequest()->getArgument("data");
+        $id = (int)$data["id"];
+
+        // reference the collection
+        $domainsCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection');
+
+        // new domain, to add
+        if ($id == 0) {
+            $domain = Utility::createInstance('Continut\Core\System\Domain\Model\Domain');
+
+            $domain->update($data);
+        }
+        // edit and save
+        else {
+            $domain = $domainsCollection->findById($id);
+        }
+
+        if ($domain->validate()) {
+            $domainsCollection
+                ->reset()
+                ->add($domain)
+                ->save();
+
+            // redirect to the "domainsAction" since all went well and data is saved
+            $this->redirect(Utility::helper("Url")->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'domains']));
+        }
+
+        $this->getView()->assign('domain', $domain);
     }
 
     /**

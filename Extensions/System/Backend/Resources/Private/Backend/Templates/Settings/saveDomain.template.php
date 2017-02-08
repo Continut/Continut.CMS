@@ -1,0 +1,1 @@
+<?= $this->partial('Settings/Domain/form', 'Backend', 'Backend', ['domain' => $domain]); ?>

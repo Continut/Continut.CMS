@@ -245,10 +245,10 @@ namespace Continut\Core {
             $domainUrls = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection')
                 ->findByUrl($_SERVER["SERVER_NAME"]);
 
-            if ($domainUrls->isEmpty()) {
+            if (sizeof($domainUrls) == 0) {
                 throw new HttpException(404, "The domain you are currently trying to access is not configured inside the CMS application!");
             } else {
-                $domainUrl = $domainUrls->getFirst();
+                $domainUrl = $domainUrls[0];
                 static::$site = Utility::createInstance('Continut\Core\System\Domain\Model\Site')
                     ->setDomainUrl($domainUrl);
             }
