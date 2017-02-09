@@ -1,0 +1,9 @@
+{
+  "backend.themeAtlas.layout.container.header": "Secţiunea antet",
+  "backend.themeAtlas.layout.container.main": "Conținutul principal",
+  "backend.themeAtlas.type.container.features.title": "Secțiune - Trăsături",
+  "backend.themeAtlas.type.container.features.description": "",
+  "backend.themeAtlas.type.container.about.title": "Secțiune - Despre",
+  "backend.themeAtlas.type.container.about.description": "",
+  "backend.themeAtlas.wizard.container.features.info": "Adaugă o secțiune container pentru Trăsături"
+}

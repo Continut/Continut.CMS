@@ -1,0 +1,9 @@
+{
+  "backend.themeAtlas.layout.container.header": "Header section",
+  "backend.themeAtlas.layout.container.main": "Main content",
+  "backend.themeAtlas.type.container.features.title": "Features section",
+  "backend.themeAtlas.type.container.features.description": "",
+  "backend.themeAtlas.type.container.about.title": "About section",
+  "backend.themeAtlas.type.container.about.description": "",
+  "backend.themeAtlas.wizard.container.features.info": "Adds a Features section container"
+}

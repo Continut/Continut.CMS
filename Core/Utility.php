@@ -320,11 +320,12 @@ namespace Continut\Core {
                 if (!file_exists($folderPath . DS . "configuration.json")) {
                     throw new ErrorException("configuration.json file not found for extension " . $folderName);
                 }
-                // also load localizations for the extension, if available
-                static::helper("Localization")->loadLabelsFromFile($folderPath . DS . "labels_" . strtolower(static::$applicationScope) . ".json");
+                // load localizations for the extension, if available
+                static::helper("Localization")->loadLabelsFromPath(static::getConfiguration("System/Locale"), $folderPath . DS . "Resources" . DS . "Private" . DS . static::$applicationScope . DS . "Language");
+                // then load the extension configuration data
                 $jsonData = json_decode(file_get_contents($folderPath . DS . "configuration.json"), true);
                 if ($jsonData === null) {
-                    throw new ErrorException("configuration.json file is empty or contains invalid json data. Please check syntax or remove the file if it is empty. Extension: " . $folderName);
+                    throw new ErrorException("Translation .json file is empty or contains invalid json data. Please check syntax or remove the file if it is empty. Extension: " . static::$applicationScope . " / " . $folderName);
                 } else {
                     static::$extensionsConfiguration = array_merge(static::$extensionsConfiguration, $jsonData);
                 }

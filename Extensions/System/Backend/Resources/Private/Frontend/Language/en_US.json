@@ -1,0 +1,4 @@
+{
+  "backend.layout.noLayoutSpecified": "No layout has been specified for this page. You need to assing a layout to this page if you want to be able to add/edit content elements.",
+  "backend.content.templateMissing": "Error reading content element template, or template not found."
+}

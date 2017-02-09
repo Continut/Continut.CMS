@@ -45,14 +45,14 @@ class LoginController extends FrontendController
         $password = $this->getRequest()->getArgument("cms_password");
 
         $userCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\BackendUserCollection');
-        $backendUser = $userCollection->where("username = :username AND password = :password AND is_deleted = 0 AND is_active = 1",
+        $backendUser = $userCollection->where("username = :username AND is_deleted = 0 AND is_active = 1",
             [
                 "username" => $username,
-                "password" => $password
+                //"password" => $password
             ]
         )->getFirst();
 
-        if (!$backendUser) {
+        if (!$backendUser || !password_verify($password, $backendUser->getPassword())) {
             $this->getSession()->addFlashMessage(Utility::helper("Localization")->translate("login.error.incorrect"), UserSession::FLASH_ERROR);
             $this->redirect(Utility::helper("Url")->linkToPath('admin_backend', ['_controller' => 'Login', '_action' => 'index']));
         }

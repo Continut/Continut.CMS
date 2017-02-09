@@ -1,0 +1,18 @@
+{
+  "backend.news.header": "Ştiri/Articole",
+  "backend.news.showAll": "Afişează toate ştirile",
+  "backend.news.createNew": "Creare articol nou",
+  "backend.news.pluginInfo": "Extensia de ştiri vă permite să afişaţi ştiri, articole sau postări de blog pe site-ul dumneavoastră",
+  "backend.news.pluginManual": "Un manual de utilizare precum şi videoclipuri de utilizare sunt disponibile şi vă permit să exploraţi complet extensia",
+  "backend.news.grid.title": "Administrare articole/știri",
+  "backend.news.grid.addNews": "Adaugă articol",
+  "backend.news.grid.field.photo": "Poză",
+  "backend.news.grid.field.categories": "Categorii",
+  "backend.news.grid.field.title": "Titlu",
+  "backend.news.grid.field.actions": "Acțiuni",
+  "backend.news.grid.field.description": "Descriere",
+  "backend.news.grid.field.isVisible": "Este afișat pe site",
+  "backend.news.preview.lastXArticles": "Afișare ultimele <strong>%(limit)</strong> articole",
+  "plugin.news.title": "Extensie știri/articole",
+  "plugin.news.description": "Extensia de știri vă permite să afișați știri/articole pe site."
+}

@@ -1,0 +1,18 @@
+{
+  "backend.news.header": "News",
+  "backend.news.showAll": "View all news",
+  "backend.news.createNew": "Create new news",
+  "backend.news.pluginInfo": "The News plugin allows you to create and to display news, articles or blog posts on your website",
+  "backend.news.pluginManual": "A written manual as well as introduction videos are available in order to get you started real quick",
+  "backend.news.grid.title": "News administration",
+  "backend.news.grid.addNews": "Add news",
+  "backend.news.grid.field.photo": "Photo",
+  "backend.news.grid.field.title": "Title",
+  "backend.news.grid.field.actions": "Actions",
+  "backend.news.grid.field.description": "Description",
+  "backend.news.grid.field.categories": "Categories",
+  "backend.news.grid.field.isVisible": "Is visible",
+  "backend.news.preview.lastXArticles": "Showing last <strong>%(limit)</strong> articles",
+  "plugin.news.title": "News plugin",
+  "plugin.news.description": "The news plugin allows you to show news on your website."
+}

@@ -79,7 +79,7 @@ class UsersController extends BackendController
                         ],
                         'filter' => [
                             'class' => 'Continut\Extensions\System\Backend\Classes\View\Filter\SelectFilter',
-                            'values' => ['' => '', '0' => 'No', '1' => 'Yes']
+                            'values' => ['' => '', '0' => $this->__('general.no'), '1' => $this->__('general.yes')]
                         ]
                     ],
                     'isActive' => [
@@ -90,14 +90,14 @@ class UsersController extends BackendController
                         ],
                         'filter' => [
                             'class' => 'Continut\Extensions\System\Backend\Classes\View\Filter\SelectFilter',
-                            'values' => ['' => '', '0' => 'No', '1' => 'Yes']
+                            'values' => ['' => '', '0' => $this->__('general.no'), '1' => $this->__('general.yes')]
                         ]
                     ],
                     'actions' => [
                         'label' => 'backend.users.grid.field.actions',
                         'css' => 'col-sm-2 text-right',
                         'renderer' => [
-                            'class' => 'Continut\Extensions\System\Backend\Classes\View\Renderer\BaseRenderer',
+                            'class' => 'Continut\Extensions\System\Backend\Classes\View\Renderer\ActionsRenderer',
                             'parameters' => ['showEdit' => true, 'showDelete' => true]
                         ]
                     ]
@@ -146,7 +146,7 @@ class UsersController extends BackendController
                         ],
                         'filter' => [
                             'class' => 'Continut\Extensions\System\Backend\Classes\View\Filter\SelectFilter',
-                            'values' => ['' => '', '0' => 'No', '1' => 'Yes']
+                            'values' => ['' => '', '0' => $this->__('general.no'), '1' => $this->__('general.yes')]
                         ]
                     ],
                     'actions' => [
@@ -201,8 +201,7 @@ class UsersController extends BackendController
                             'class' => 'Continut\Extensions\System\Backend\Classes\View\Renderer\BaseRenderer',
                         ],
                         'filter' => [
-                            'class' => 'Continut\Extensions\System\Backend\Classes\View\Filter\TextFilter',
-                            'values' => ['' => '', '0' => 'No', '1' => 'Yes']
+                            'class' => 'Continut\Extensions\System\Backend\Classes\View\Filter\TextFilter'
                         ]
                     ],
                     'isDeleted' => [
@@ -213,7 +212,7 @@ class UsersController extends BackendController
                         ],
                         'filter' => [
                             'class' => 'Continut\Extensions\System\Backend\Classes\View\Filter\SelectFilter',
-                            'values' => ['' => '', '0' => 'No', '1' => 'Yes']
+                            'values' => ['' => '', '0' => $this->__('general.no'), '1' => $this->__('general.yes')]
                         ]
                     ],
                     'isActive' => [
@@ -224,7 +223,7 @@ class UsersController extends BackendController
                         ],
                         'filter' => [
                             'class' => 'Continut\Extensions\System\Backend\Classes\View\Filter\SelectFilter',
-                            'values' => ['' => '', '0' => 'No', '1' => 'Yes']
+                            'values' => ['' => '', '0' => $this->__('general.no'), '1' => $this->__('general.yes')]
                         ]
                     ],
                     'actions' => [
@@ -281,7 +280,7 @@ class UsersController extends BackendController
                         ],
                         'filter' => [
                             'class' => 'Continut\Extensions\System\Backend\Classes\View\Filter\SelectFilter',
-                            'values' => ['' => '', '0' => 'No', '1' => 'Yes']
+                            'values' => ['' => '', '0' => $this->__('general.no'), '1' => $this->__('general.yes')]
                         ]
                     ],
                     'actions' => [

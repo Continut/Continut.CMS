@@ -1,0 +1,6 @@
+{
+  "backend.themeBootstrap.layout.container.header": "Header section",
+  "backend.themeBootstrap.layout.container.leftColumn": "Left column",
+  "backend.themeBootstrap.layout.container.rightColumn": "Right column",
+  "layout.columns2": "2 Columns layout"
+}

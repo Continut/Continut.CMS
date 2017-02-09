@@ -1,0 +1,4 @@
+{
+  "backend.layout.noLayoutSpecified": "Pentru această pagină nu a fost specificat nici un layout. Trebuie să setaţi un layout pentru această pagină dacă doriţi să puteţi adăuga/edita elemente de conţinut.",
+  "backend.content.templateMissing": "Template-ul folosit de acest element de conţinut nu există sau nu poate fi deschis."
+}

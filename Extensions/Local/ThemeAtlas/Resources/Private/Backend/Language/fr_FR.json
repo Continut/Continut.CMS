@@ -1,0 +1,9 @@
+{
+  "backend.themeAtlas.layout.container.header": "Section entête",
+  "backend.themeAtlas.layout.container.main": "Contenu principal",
+  "backend.themeAtlas.type.container.features.title": "Section Features",
+  "backend.themeAtlas.type.container.features.description": "",
+  "backend.themeAtlas.type.container.about.title": "Section Info",
+  "backend.themeAtlas.type.container.about.description": "",
+  "backend.themeAtlas.wizard.container.features.info": "Ajoute une section pour la partie Features"
+}

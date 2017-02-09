@@ -1,4 +1,4 @@
-<select name="<?= $this->getField()->getName() ?>" class="form-control selectpicker">
+<select name="<?= $this->getField()->getName() ?>" class="form-control selectpicker" data-none-selected-text="">
     <?php if ($this->getValues()): ?>
         <?php foreach ($this->getValues() as $key => $value): ?>
             <?php $key = (string)$key; ?>

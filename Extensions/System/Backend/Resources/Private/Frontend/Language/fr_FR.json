@@ -1,0 +1,4 @@
+{
+  "backend.layout.noLayoutSpecified": "Aucun layout n'est specifie pour cette page. Un layout doit être assigné au page si vous voulez ajouter/modifier les elements de contenu.",
+  "backend.content.templateMissing": "Le template utilisé par cet element de contenu n'existe pas ou ne peut pas être lu."
+}

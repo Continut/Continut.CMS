@@ -71,23 +71,23 @@ namespace Continut\Core\System\Helper {
         /**
          * Load language labels from a file
          *
-         * @param string $file
+         * @param string $locale
+         * @param string $path
          */
-        public function loadLabelsFromFile($file)
+        public function loadLabelsFromPath($locale, $path)
         {
-            if (file_exists($file)) {
-                $labels = json_decode(file_get_contents($file), TRUE);
+            $fileToLoad = $path . DS . $locale . '.json';
+            // en_US is the default locale, and extensions should at least be translated for this locale
+            // so if you're loading a different translation and it does not exist, check for the en_US one first
+            if (!file_exists($fileToLoad) && $locale != 'en_US') {
+                $fileToLoad = $path . DS . 'en_US.json';
+            }
+            if (file_exists($fileToLoad)) {
+                $labels = json_decode(file_get_contents($fileToLoad), TRUE);
                 if (is_array($labels)) {
-                    foreach ($labels as $extensionName => $languages) {
-                        foreach ($languages as $languageCode => $language) {
-                            // load only the labels for the current language
-                            if ($languageCode == Utility::getConfiguration("System/Locale")) {
-                                $this->translationLabels = Utility::arrayMergeRecursiveUnique($this->translationLabels, $language);
-                            }
-                        }
-                    }
+                    $this->translationLabels = Utility::arrayMergeRecursiveUnique($this->translationLabels, $labels);
                 } else {
-                    Utility::debugData("$file: The localization file could not be loaded. It was either empty, or has invalid data.", "error");
+                    Utility::debugData("$fileToLoad: The localization file could not be loaded. It was either empty, or has invalid data.", "error");
                 }
             }
         }

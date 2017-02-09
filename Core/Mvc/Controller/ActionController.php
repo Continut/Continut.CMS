@@ -243,6 +243,7 @@ namespace Continut\Core\Mvc\Controller {
         public function redirect($to, $status = 301)
         {
             header("Location: $to", true, $status);
+            exit();
         }
 
         /**
