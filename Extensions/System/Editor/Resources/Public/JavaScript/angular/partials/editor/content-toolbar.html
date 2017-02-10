@@ -1,0 +1,26 @@
+<div class="panel" id="panel_page_properties">
+  <div class="button">
+    <a href=""><i class="fa fa-refresh cfe" aria-hidden="true"></i></a>
+  </div>
+  <div ng-class="{'button': content.actions.canDelete, 'button disabled': !content.actions.canDelete}">
+    <a href=""><i class="fa fa-trash cfe" aria-hidden="true"></i></a>
+  </div>
+  <div ng-class="{'button': content.actions.canPaste, 'button disabled': !content.actions.canPaste}">
+    <a href=""><i class="fa fa-clipboard cfe" aria-hidden="true"></i></a>
+  </div>
+  <div ng-class="{'button': content.actions.canCut, 'button disabled': !content.actions.canCut}">
+    <a href=""><i class="fa fa-scissors cfe" aria-hidden="true"></i></a>
+  </div>
+  <div ng-class="{'button': content.actions.canCopy, 'button disabled': !content.actions.canCopy}">
+    <a href=""><i class="fa fa-files-o cfe" aria-hidden="true"></i></a>
+  </div>
+  <div ng-class="{'button': content.actions.isVisible, 'button disabled': !content.actions.isVisible}">
+    <a href=""><i class="fa fa-eye cfe" aria-hidden="true"></i></a>
+  </div>
+  <div ng-class="{'button': content.actions.canEdit, 'button disabled': !content.actions.canEdit}">
+    <a href=""><i class="fa fa-pencil cfe" aria-hidden="true"></i></a>
+  </div>
+  <div ng-class="{'button': content.actions.canCreate, 'button disabled': !content.actions.canCreate}">
+    <a href=""><i class="fa fa-plus cfe" aria-hidden="true"></i></a>
+  </div>
+</div>
