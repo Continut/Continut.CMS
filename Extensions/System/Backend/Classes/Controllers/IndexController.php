@@ -78,4 +78,8 @@ class IndexController extends BackendController
         $this->getView()->assign('mainMenu', $mainMenu);
         $this->getView()->assign('secondaryMenu', $secondaryMenu);
     }
+
+    public function notificationsAction() {
+
+    }
 }

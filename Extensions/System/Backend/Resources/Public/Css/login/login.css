@@ -155,11 +155,4 @@ footer p {
     min-width: 300px;
     margin: 30px auto;
   }
-  footer {
-    width: 640px;
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    margin-left: -320px;
-  }
 }

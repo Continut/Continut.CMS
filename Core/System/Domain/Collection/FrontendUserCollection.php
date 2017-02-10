@@ -19,7 +19,7 @@ class FrontendUserCollection extends BaseCollection
      */
     public function __construct()
     {
-        $this->tablename = "sys_frontend_users";
+        $this->tablename = 'sys_frontend_users';
         $this->elementClass = 'Continut\Core\System\Domain\Model\FrontendUser';
     }
 }

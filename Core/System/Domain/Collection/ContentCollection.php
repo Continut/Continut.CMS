@@ -19,7 +19,7 @@ class ContentCollection extends BaseCollection
      */
     public function __construct()
     {
-        $this->tablename = "sys_content";
+        $this->tablename = 'sys_content';
         $this->elementClass = 'Continut\Core\System\Domain\Model\Content';
     }
 

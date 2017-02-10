@@ -19,7 +19,7 @@ class RouteCollection extends BaseCollection
      */
     public function __construct()
     {
-        $this->tablename = "sys_routes";
+        $this->tablename = 'sys_routes';
         $this->elementClass = 'Continut\Core\System\Domain\Model\Route';
     }
 }

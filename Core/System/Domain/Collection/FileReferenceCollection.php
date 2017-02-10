@@ -19,7 +19,7 @@ class FileReferenceCollection extends BaseCollection
      */
     public function __construct()
     {
-        $this->tablename = "sys_file_references";
+        $this->tablename = 'sys_file_references';
         $this->elementClass = 'Continut\Core\System\Domain\Model\FileReference';
     }
 }

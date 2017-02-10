@@ -18,7 +18,7 @@ class BackendUserCollection extends BaseCollection
      */
     public function __construct()
     {
-        $this->tablename = "sys_backend_users";
+        $this->tablename = 'sys_backend_users';
         $this->elementClass = 'Continut\Core\System\Domain\Model\BackendUser';
     }
 }

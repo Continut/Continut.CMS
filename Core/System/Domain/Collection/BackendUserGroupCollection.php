@@ -18,7 +18,7 @@ class BackendUserGroupCollection extends BaseCollection
      */
     public function __construct()
     {
-        $this->tablename = "sys_backend_usergroups";
+        $this->tablename = 'sys_backend_usergroups';
         $this->elementClass = 'Continut\Core\System\Domain\Model\BackendUserGroup';
     }
 }

@@ -11,7 +11,7 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-10">
         <div class="btn-group" role="group">
             <button type="button" class="btn btn-warning" id="page-edit">
                 <i class="fa fa-fw fa-pencil"></i> <?= $this->__("backend.page.edit") ?>
@@ -30,7 +30,7 @@
             </button>
         </div>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-2">
         <div class="btn-group pull-right" role="group">
             <button type="button" class="btn btn-danger" id="page-delete"><i
                     class="fa fa-fw fa-trash"></i> <?= $this->__("backend.page.deletePage") ?></button>

@@ -19,10 +19,10 @@
                             $('#select_website').on('change', function (event) {
                                 $.ajax({
                                     url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'tree']) ?>',
+                                    dataType: 'json',
                                     data: { domain_id: this.value }
                                 })
-                                    .done(function (data) {
-                                        var json = $.parseJSON(data);
+                                    .done(function (json) {
                                         var $languages = $('#select_language');
                                         if (json.success == 1) {
                                             $languages.empty();
@@ -62,10 +62,10 @@
                         $('#select_language').on('change', function (event) {
                             $.ajax({
                                 url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'tree']) ?>',
+                                dataType: 'json',
                                 data: {domain_id: $('#select_website').val(), domain_url_id: this.value}
                             })
-                                .done(function (data) {
-                                    var json = $.parseJSON(data);
+                                .done(function (json) {
                                     $('#cms_tree').jstree(true).settings.core.data = json.pages;
                                     $('#cms_tree').jstree(true).refresh();
                                     $('#content').empty();
@@ -139,7 +139,7 @@
                 })
                 // --- Handles moving pages in the page tree ---
                 .on('move_node.jstree', function(e, data) {
-                    console.log(data);
+                    //console.log(data);
                     var pagesOrder = [];
                     var children = null;
                     if (data.parent == '#') {
@@ -163,39 +163,42 @@
                             order: pagesOrder
                         }
                     );
-                })
+                });
                 // --- jsTree initialization ---
-                .jstree({
-                    'core' : {
-                        'multiple' : false,
-                        'animation' : 0,
-                        'check_callback': true,
-                        'themes' : {
-                            'variant' : 'large',
-                            'dots' : true
+                $.ajax({
+                    url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'tree']) ?>',
+                    dataType: 'json'
+                })
+                .done(function (json) {
+                    $('#cms_tree').jstree({
+                        'core' : {
+                            'multiple' : false,
+                            'animation' : 0,
+                            'check_callback': true,
+                            'themes' : {
+                                'variant' : 'large',
+                                'dots' : true
+                            },
+                            'strings': {
+                                'Loading ...' : '<?= $this->__('backend.tree.loading') ?>',
+                            },
+                            'data': json.pages
                         },
-                        'data' : {
-                            'url' : '<?= $this->helper("Url")->linkToPath('editor', ['_controller' => 'Page', '_action' => 'tree']) ?>',
-                            /*'data' : function (node) {
-                                console.log(node);
-                                return { 'id' : node.id };
-                            }*/
-                        }
-                    },
-                    'dnd': {
-                        'copy': false, // true allows to make copies while dragging and holding Ctrl. We don't want this
-                        'always_copy': false,
-                        'check_while_dragging': false,
-                        'large_drag_target': true,
-                        'large_drop_target': true
-                    },
-                    'search': {
-                        'show_only_matches': true,
-                        'show_only_matches_children': false,
-                    },
-                'plugins' : ['dnd', 'search', 'wholerow']
-                //'plugins' : ['dnd', 'search', 'wholerow', 'checkbox']
-            });
+                        'dnd': {
+                            'copy': false, // true allows to make copies while dragging and holding Ctrl. We don't want this
+                            'always_copy': false,
+                            'check_while_dragging': false,
+                            'large_drag_target': true,
+                            'large_drop_target': true
+                        },
+                        'search': {
+                            'show_only_matches': true,
+                            'show_only_matches_children': false
+                        },
+                        'plugins' : ['dnd', 'search', 'wholerow']
+                        //'plugins' : ['dnd', 'search', 'wholerow', 'checkbox']
+                    });
+                });
 
             // --- Shows the "Add new page" modal ---
 

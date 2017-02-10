@@ -18,7 +18,7 @@ class DomainUrlCollection extends BaseCollection
      */
     public function __construct()
     {
-        $this->tablename = "sys_domain_urls";
+        $this->tablename = 'sys_domain_urls';
         $this->elementClass = 'Continut\Core\System\Domain\Model\DomainUrl';
     }
 

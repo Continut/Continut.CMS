@@ -20,7 +20,7 @@ class PageCollection extends BaseCollection
      */
     public function __construct()
     {
-        $this->tablename = "sys_pages";
+        $this->tablename = 'sys_pages';
         $this->elementClass = 'Continut\Core\System\Domain\Model\Page';
     }
 

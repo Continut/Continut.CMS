@@ -11,35 +11,35 @@
             <div class="panel-body">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <?= $this->helper("Wizard")->textField("title", $this->__("backend.page.properties.pageTitle"), $page->getTitle()) ?>
+                        <?= $this->helper("Wizard")->textField($page, "title", $this->__("backend.page.properties.pageTitle"), $page->getTitle()) ?>
                     </div>
                     <div class="form-group">
-                        <?= $this->helper("Wizard")->textField("slug", $this->__("backend.page.properties.pageSlug"), $page->getSlug()) ?>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <?= $this->helper("Wizard")->selectField("layout", $this->__("backend.page.properties.pageLayout"), array_merge(array("" => $this->__("backend.layout.selectLayout")), $layouts), $page->getLayout()) ?>
+                        <?= $this->helper("Wizard")->textField($page, "slug", $this->__("backend.page.properties.pageSlug"), $page->getSlug()) ?>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <?= $this->helper("Wizard")->textField("meta_keywords", $this->__("backend.page.properties.metaKeywords"), $page->getMetaKeywords()) ?>
+                        <?= $this->helper("Wizard")->selectField($page, "layout", $this->__("backend.page.properties.pageLayout"), array_merge(array("" => $this->__("backend.layout.selectLayout")), $layouts), $page->getLayout()) ?>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <?= $this->helper("Wizard")->selectField("layout_recursive", $this->__("backend.page.properties.pageLayoutRecursive"), array(0 => "No", 1 => "Yes"), $page->getIsLayoutRecursive()) ?>
+                        <?= $this->helper("Wizard")->textField($page, "meta_keywords", $this->__("backend.page.properties.metaKeywords"), $page->getMetaKeywords()) ?>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <?= $this->helper("Wizard")->textareaField("meta_description", $this->__("backend.page.properties.metaDescription"), $page->getMetaDescription()) ?>
+                        <?= $this->helper("Wizard")->selectField($page, "layout_recursive", $this->__("backend.page.properties.pageLayoutRecursive"), array(0 => "No", 1 => "Yes"), $page->getIsLayoutRecursive()) ?>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <?= $this->helper("Wizard")->dateTimeField("start_date", $this->__("backend.page.properties.startDate"), $page->getStartDate()) ?>
+                        <?= $this->helper("Wizard")->textareaField($page, "meta_description", $this->__("backend.page.properties.metaDescription"), $page->getMetaDescription()) ?>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <?= $this->helper("Wizard")->dateTimeField(c"start_date", $this->__("backend.page.properties.startDate"), $page->getStartDate()) ?>
                     </div>
                 </div>
                 <div class="col-md-6">

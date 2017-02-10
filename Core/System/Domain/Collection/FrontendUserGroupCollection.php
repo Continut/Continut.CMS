@@ -18,7 +18,7 @@ class FrontendUserGroupCollection extends BaseCollection
      */
     public function __construct()
     {
-        $this->tablename = "sys_frontend_usergroups";
+        $this->tablename = 'sys_frontend_usergroups';
         $this->elementClass = 'Continut\Core\System\Domain\Model\FrontendUserGroup';
     }
 }
