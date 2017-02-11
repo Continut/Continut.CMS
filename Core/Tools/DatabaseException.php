@@ -7,10 +7,9 @@
  * Date: 09.08.2015 @ 14:51
  * Project: Conţinut CMS
  */
-namespace Continut\Core\Tools {
 
-    class DatabaseException extends ErrorException
-    {
-    }
+namespace Continut\Core\Tools;
 
+class DatabaseException extends ErrorException
+{
 }

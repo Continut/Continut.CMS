@@ -7,6 +7,7 @@
  * Date: 07.04.2015 @ 22:46
  * Project: Conţinut CMS
  */
+
 namespace Continut\Core\System\Domain\Model;
 
 use Continut\Core\Mvc\Model\BaseModel;

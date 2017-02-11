@@ -8,14 +8,13 @@
  * Project: Conţinut CMS
  */
 
-namespace Continut\Core\System\Cache {
+namespace Continut\Core\System\Cache;
 
-    interface CacheInterface
-    {
-        public function getByUid($uid, $type);
+interface CacheInterface
+{
+    public function getByUid($uid, $type);
 
-        public function getByKey($key, $type);
+    public function getByKey($key, $type);
 
-        public function setByUid($uid, $type, $data);
-    }
+    public function setByUid($uid, $type, $data);
 }

@@ -7,6 +7,7 @@
  * Date: 05.04.2015 @ 12:40
  * Project: Conţinut CMS
  */
+
 namespace Continut\Core\System\Domain\Model;
 
 use Continut\Core\Mvc\Model\BaseModel;
@@ -152,7 +153,7 @@ class Page extends BaseModel
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getIsInMenu()
     {
@@ -160,7 +161,7 @@ class Page extends BaseModel
     }
 
     /**
-     * @param boolean $isInMenu
+     * @param bool $isInMenu
      *
      * @return $this
      */
@@ -256,7 +257,7 @@ class Page extends BaseModel
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getIsVisible()
     {
@@ -264,7 +265,7 @@ class Page extends BaseModel
     }
 
     /**
-     * @param boolean $isVisible
+     * @param bool $isVisible
      *
      * @return $this
      */
@@ -565,7 +566,7 @@ class Page extends BaseModel
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getIsLayoutRecursive()
     {
@@ -573,7 +574,7 @@ class Page extends BaseModel
     }
 
     /**
-     * @param boolean $isLayoutRecursive
+     * @param bool $isLayoutRecursive
      *
      * @return $this
      */

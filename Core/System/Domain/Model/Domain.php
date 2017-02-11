@@ -7,6 +7,7 @@
  * Date: 07.04.2015 @ 22:46
  * Project: Conţinut CMS
  */
+
 namespace Continut\Core\System\Domain\Model;
 
 use Continut\Core\Mvc\Model\BaseModel;
@@ -20,7 +21,7 @@ class Domain extends BaseModel
     protected $title;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $isVisible;
 
@@ -66,7 +67,7 @@ class Domain extends BaseModel
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isIsVisible()
     {
@@ -74,7 +75,7 @@ class Domain extends BaseModel
     }
 
     /**
-     * @param boolean $isVisible
+     * @param bool $isVisible
      */
     public function setIsVisible($isVisible)
     {

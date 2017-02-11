@@ -7,6 +7,7 @@
  * Date: 19.04.2015 @ 17:31
  * Project: Conţinut CMS
  */
+
 namespace Continut\Core\System\Helper;
 
 class Text

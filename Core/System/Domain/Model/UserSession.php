@@ -7,6 +7,7 @@
  * Date: 04.04.2015 @ 20:41
  * Project: Conţinut CMS
  */
+
 namespace Continut\Core\System\Domain\Model;
 
 use Continut\Core\Mvc\Model\BaseModel;
@@ -203,7 +204,7 @@ class UserSession extends BaseModel implements \SessionHandlerInterface
         if (isset($_SESSION[$name])) {
             return $_SESSION[$name];
         }
-        return NULL;
+        return null;
     }
 
     /**

@@ -7,10 +7,10 @@
  * Date: 07.04.2015 @ 22:46
  * Project: Conţinut CMS
  */
+
 namespace Continut\Core\System\Domain\Model;
 
 use Continut\Core\Mvc\Model\BaseModel;
-use Continut\Core\Utility;
 
 class Category extends BaseModel
 {
@@ -20,12 +20,12 @@ class Category extends BaseModel
     protected $parentId;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $isVisible;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $isDeleted;
 
@@ -85,7 +85,7 @@ class Category extends BaseModel
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getIsVisible()
     {
@@ -93,7 +93,7 @@ class Category extends BaseModel
     }
 
     /**
-     * @param boolean $isVisible
+     * @param bool $isVisible
      */
     public function setIsVisible($isVisible)
     {
@@ -101,7 +101,7 @@ class Category extends BaseModel
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getIsDeleted()
     {
@@ -109,7 +109,7 @@ class Category extends BaseModel
     }
 
     /**
-     * @param boolean $isDeleted
+     * @param bool $isDeleted
      */
     public function setIsDeleted($isDeleted)
     {

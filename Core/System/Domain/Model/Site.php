@@ -7,6 +7,7 @@
  * Date: 08.08.2015 @ 16:25
  * Project: Conţinut CMS
  */
+
 namespace Continut\Core\System\Domain\Model;
 
 class Site

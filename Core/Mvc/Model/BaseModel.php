@@ -95,7 +95,7 @@ class BaseModel
     /**
      * Returns the validation error messages
      *
-     * @param string $field Field name or leave empty to check if we have any errors on all fields
+     * @param string $field Field name or leave empty to check if we have any errors on all fields of this object
      *
      * @return array
      */
@@ -161,7 +161,7 @@ class BaseModel
             $method = "get" . Utility::toCamelCase($key, TRUE);
             return $this->$method();
         }
-        return null;
+        //return null;
     }
 
     /**

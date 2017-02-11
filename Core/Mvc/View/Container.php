@@ -7,149 +7,146 @@
  * Date: 03.04.2015 @ 18:59
  * Project: Conţinut CMS
  */
-namespace Continut\Core\Mvc\View {
 
-    use Continut\Core\Utility;
+namespace Continut\Core\Mvc\View;
 
-    class Container extends BaseView
+class Container extends BaseView
+{
+    /**
+     * @var array List of children elements added to container
+     */
+    protected $elements = [];
+
+    /**
+     * A container belongs to a layout
+     *
+     * @var BaseLayout
+     */
+    protected $layout;
+
+    /**
+     * @var string Container title
+     */
+    protected $title;
+
+    /**
+     * @var int Container id
+     */
+    protected $id;
+
+    /**
+     * @return BaseLayout
+     */
+    public function getLayout()
     {
-        /**
-         * @var array List of children elements added to container
-         */
-        protected $elements = [];
+        return $this->layout;
+    }
 
-        /**
-         * A container belongs to a layout
-         *
-         * @var BaseLayout
-         */
-        protected $layout;
+    /**
+     * @param BaseLayout $layout
+     */
+    public function setLayout($layout)
+    {
+        $this->layout = $layout;
+    }
 
-        /**
-         * @var string Container title
-         */
-        protected $title;
+    /**
+     * @return mixed
+     */
 
-        /**
-         * @var int Container id
-         */
-        protected $id;
+    public function getId()
+    {
+        return $this->id;
+    }
 
-        /**
-         * @return BaseLayout
-         */
-        public function getLayout()
-        {
-            return $this->layout;
-        }
+    /**
+     * @param mixed $id
+     *
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
 
-        /**
-         * @param BaseLayout $layout
-         */
-        public function setLayout($layout)
-        {
-            $this->layout = $layout;
-        }
+        return $this;
+    }
 
-        /**
-         * @return mixed
-         */
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
 
-        public function getId()
-        {
-            return $this->id;
-        }
+    /**
+     * @param string $title
+     *
+     * @return $this
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
 
-        /**
-         * @param mixed $id
-         *
-         * @return $this
-         */
-        public function setId($id)
-        {
-            $this->id = $id;
+        return $this;
+    }
 
-            return $this;
-        }
+    /**
+     * Add content element to container
+     *
+     * @param $element
+     *
+     * @return $this
+     */
+    public function addElement($element)
+    {
+        $this->elements[$element->getId()] = $element;
 
-        /**
-         * @return string
-         */
-        public function getTitle()
-        {
-            return $this->title;
-        }
+        return $this;
+    }
 
-        /**
-         * @param string $title
-         *
-         * @return $this
-         */
-        public function setTitle($title)
-        {
-            $this->title = $title;
+    /**
+     * Show all content from a child container, can be called recursively inside other containers
+     *
+     * @param int $id Id if the container to show
+     *
+     * @return string
+     */
+    public function showContainerColumn($id)
+    {
+        $htmlElements = "";
 
-            return $this;
-        }
-
-        /**
-         * Add content element to container
-         *
-         * @param $element
-         *
-         * @return $this
-         */
-        public function addElement($element)
-        {
-            $this->elements[$element->getId()] = $element;
-
-            return $this;
-        }
-
-        /**
-         * Show all content from a child container, can be called recursively inside other containers
-         *
-         * @param $id Id if the container to show
-         *
-         * @return string
-         */
-        public function showContainerColumn($id)
-        {
-            $htmlElements = "";
-
-            foreach ($this->getElements() as $element) {
-                if ($element->getColumnId() == $id) {
-                    $htmlElements .= $element->render($element->children);
-                }
+        foreach ($this->getElements() as $element) {
+            if ($element->getColumnId() == $id) {
+                $htmlElements .= $element->render($element->children);
             }
-
-            return $htmlElements;
         }
 
-        /**
-         * Get container elements
-         *
-         * @return array
-         */
-        public function getElements()
-        {
-            return $this->elements;
-        }
+        return $htmlElements;
+    }
 
-        /**
-         * Assign the list of elements that this container must render
-         *
-         * @param $elements array
-         *
-         * @return $this
-         */
-        public function setElements($elements)
-        {
-            $this->elements = $elements;
+    /**
+     * Get container elements
+     *
+     * @return array
+     */
+    public function getElements()
+    {
+        return $this->elements;
+    }
 
-            return $this;
-        }
+    /**
+     * Assign the list of elements that this container must render
+     *
+     * @param $elements array
+     *
+     * @return $this
+     */
+    public function setElements($elements)
+    {
+        $this->elements = $elements;
 
+        return $this;
     }
 
 }

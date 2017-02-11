@@ -1,17 +1,15 @@
 <div role="tabpanel">
     <div class="form-group">
         <?php if (sizeof($extensions) > 0): ?>
-            <?= $this->helper('Wizard')->selectField('theme', $this->__('backend.content.wizard.select.theme'), array_merge(["" => $this->__("backend.content.wizard.select.theme.all")], $extensions)); ?>
+            <?= $this->helper('Form')->selectField('theme', $this->__('backend.content.wizard.select.theme'), array_merge(["" => $this->__("backend.content.wizard.select.theme.all")], $extensions)); ?>
         <?php endif ?>
     </div>
 
     <ul class="nav nav-tabs" role="tablist">
         <?php $counter = 0; ?>
         <?php foreach ($types as $type => $elements): ?>
-            <li role="presentation" <?= ($counter == 0) ? 'class="active"' : ''; ?>><a href="#wizard_tab_<?= $type ?>"
-                                                                                       aria-controls="<?= $type ?>"
-                                                                                       role="tab"
-                                                                                       data-toggle="tab"><?= $this->__("backend.content.wizard.type.$type") ?></a>
+            <li role="presentation" <?= ($counter == 0) ? 'class="active"' : ''; ?>>
+                <a href="#wizard_tab_<?= $type ?>" aria-controls="<?= $type ?>"  role="tab" data-toggle="tab"><?= $this->__("backend.content.wizard.type.$type") ?></a>
             </li>
             <?php $counter++; ?>
         <?php endforeach ?>

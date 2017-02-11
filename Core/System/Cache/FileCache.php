@@ -8,35 +8,35 @@
  * Project: Conţinut CMS
  */
 
-namespace Continut\Core\System\Cache {
+namespace Continut\Core\System\Cache;
 
-    class FileCache implements CacheInterface
+class FileCache implements CacheInterface
+{
+    const CACHE_DIR = "/Cache/Content/";
+
+    /**
+     * @var int Default lifetime for cache, in seconds
+     */
+    protected $lifetime = 3600;
+
+    public function getByUid($uid, $type)
     {
-        const CACHE_DIR = "/Cache/Content/";
+        return null;
+        // @TODO : improve cache handling
+        /*$filename = __ROOTCMS__ . self::CACHE_DIR . $type . "_" . $uid;
+        if (file_exists($filename)) {
+            return file_get_contents($filename);
+        }*/
+    }
 
-        /**
-         * @var int Default lifetime for cache, in seconds
-         */
-        protected $lifetime = 3600;
+    public function setByUid($uid, $type, $data)
+    {
+        $filename = __ROOTCMS__ . self::CACHE_DIR . $type . "_" . $uid;
+        file_put_contents($filename, $data);
+    }
 
-        public function getByUid($uid, $type)
-        {
-            return NULL;
-            $filename = __ROOTCMS__ . self::CACHE_DIR . $type . "_" . $uid;
-            if (file_exists($filename)) {
-                return file_get_contents($filename);
-            }
-        }
+    public function getByKey($key, $type)
+    {
 
-        public function setByUid($uid, $type, $data)
-        {
-            $filename = __ROOTCMS__ . self::CACHE_DIR . $type . "_" . $uid;
-            file_put_contents($filename, $data);
-        }
-
-        public function getByKey($key, $type)
-        {
-
-        }
     }
 }

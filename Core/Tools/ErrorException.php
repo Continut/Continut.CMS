@@ -7,19 +7,18 @@
  * Date: 09.08.2015 @ 15:29
  * Project: Conţinut CMS
  */
-namespace Continut\Core\Tools {
 
-    class ErrorException extends Exception
+namespace Continut\Core\Tools;
+
+class ErrorException extends Exception
+{
+    /**
+     * @param string $message
+     * @param int $code
+     */
+    public function __construct($message, $code = 0)
     {
-        /**
-         * @param string $message
-         * @param int    $code
-         */
-        public function __construct($message, $code = 0)
-        {
-            $message = $message . " | Error occured in the file " . $this->getFile() . " on line " . $this->getLine();
-            parent::__construct($message, $code);
-        }
+        $message = $message . " | Error occured in the file " . $this->getFile() . " on line " . $this->getLine();
+        parent::__construct($message, $code);
     }
-
 }

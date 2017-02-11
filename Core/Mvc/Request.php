@@ -194,17 +194,20 @@ class Request
      */
     public function setArgument($argument, $value)
     {
+        $this->arguments[$argument] = $value;
         switch ($argument) {
             case '_controller':
                 $this->setController($value);
+                break;
             case '_extension':
                 $this->setExtension($value);
+                break;
             case '_action':
                 $this->setAction($value);
+                break;
             case '_format':
                 $this->setFormat($value);
-            default:
-                $this->arguments[$argument] = $value;
+                break;
         }
     }
 

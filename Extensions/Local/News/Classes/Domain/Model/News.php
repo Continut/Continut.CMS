@@ -84,7 +84,7 @@ class News extends BaseModel
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getIsVisible()
     {
@@ -92,7 +92,7 @@ class News extends BaseModel
     }
 
     /**
-     * @param boolean $isVisible
+     * @param bool $isVisible
      *
      * @return News
      */

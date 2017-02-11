@@ -7,6 +7,7 @@
  * Date: 04.04.2015 @ 13:02
  * Project: Conţinut CMS
  */
+
 namespace Continut\Core\System\Domain\Collection;
 
 use Continut\Core\Mvc\Model\BaseCollection;
@@ -151,6 +152,7 @@ class ContentCollection extends BaseCollection
                 }
             }
         }
+        return null;
     }
 }
 

@@ -8,25 +8,22 @@
  * Project: Conţinut CMS
  */
 
-namespace Continut\Core\Mvc\Controller {
+namespace Continut\Core\Mvc\Controller;
 
-    use Continut\Core\Mvc\Controller\ActionController;
+/**
+ * Frontend Controller base class
+ *
+ * @package Continut\Core\Mvc\Controller
+ */
+class FrontendController extends ActionController
+{
 
     /**
-     * Frontend Controller base class
-     *
-     * @package Continut\Core\Mvc\Controller
+     * Frontend constructor
      */
-    class FrontendController extends ActionController
+    public function __construct()
     {
-
-        /**
-         * Frontend constructor
-         */
-        public function __construct()
-        {
-            parent::__construct();
-            $this->setScope('Frontend');
-        }
+        parent::__construct();
+        $this->setScope('Frontend');
     }
 }

@@ -139,7 +139,7 @@ class BackendContent extends Content
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getFromReference()
     {
@@ -147,7 +147,7 @@ class BackendContent extends Content
     }
 
     /**
-     * @param boolean $fromReference
+     * @param bool $fromReference
      *
      * @return $this;
      */

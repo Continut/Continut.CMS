@@ -7,6 +7,7 @@
  * Date: 08.08.2015 @ 14:58
  * Project: Conţinut CMS
  */
+
 namespace Continut\Core\System\Domain\Model;
 
 use Continut\Core\Mvc\Model\BaseModel;
@@ -16,7 +17,7 @@ use Respect\Validation\Validator as v;
 class DomainUrl extends BaseModel
 {
     /**
-     * @var boolean
+     * @var bool
      */
     protected $isAlias;
 
@@ -108,7 +109,7 @@ class DomainUrl extends BaseModel
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getIsAlias()
     {
@@ -116,7 +117,7 @@ class DomainUrl extends BaseModel
     }
 
     /**
-     * @param boolean $isAlias
+     * @param bool $isAlias
      */
     public function setIsAlias($isAlias)
     {

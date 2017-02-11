@@ -7,6 +7,7 @@
  * Date: 04.04.2015 @ 12:39
  * Project: Conţinut CMS
  */
+
 namespace Continut\Core\System\Domain\Collection;
 
 use Continut\Core\Mvc\Model\BaseCollection;
@@ -27,6 +28,8 @@ class PageCollection extends BaseCollection
     /**
      * Build a tree out of the returned pages
      * Optionally return only the children for a certain child id
+     *
+     * @param int $childId
      *
      * @return array
      */

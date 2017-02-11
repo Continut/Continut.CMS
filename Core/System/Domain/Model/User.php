@@ -7,6 +7,7 @@
  * Date: 04.04.2015 @ 20:46
  * Project: Conţinut CMS
  */
+
 namespace Continut\Core\System\Domain\Model;
 
 use Continut\Core\Mvc\Model\BaseModel;
@@ -94,7 +95,7 @@ class User extends BaseModel
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getIsDeleted()
     {
@@ -102,7 +103,7 @@ class User extends BaseModel
     }
 
     /**
-     * @param boolean $isDeleted
+     * @param bool $isDeleted
      */
     public function setIsDeleted($isDeleted)
     {
@@ -110,7 +111,7 @@ class User extends BaseModel
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getIsActive()
     {
@@ -118,7 +119,7 @@ class User extends BaseModel
     }
 
     /**
-     * @param boolean $isActive
+     * @param bool $isActive
      */
     public function setIsActive($isActive)
     {
@@ -142,7 +143,7 @@ class User extends BaseModel
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getIsConnected()
     {
@@ -150,7 +151,7 @@ class User extends BaseModel
     }
 
     /**
-     * @param boolean $isConnected
+     * @param bool $isConnected
      */
     public function setIsConnected($isConnected)
     {

@@ -271,7 +271,7 @@ class Content extends BaseModel
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getIsDeleted()
     {
@@ -279,7 +279,7 @@ class Content extends BaseModel
     }
 
     /**
-     * @param boolean $isDeleted
+     * @param bool $isDeleted
      *
      * @return $this
      */

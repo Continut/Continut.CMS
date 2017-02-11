@@ -7,6 +7,7 @@
  * Date: 07.04.2015 @ 22:46
  * Project: Conţinut CMS
  */
+
 namespace Continut\Core\System\Domain\Model;
 
 use Continut\Core\Mvc\Model\BaseModel;
@@ -24,7 +25,7 @@ class FrontendUserGroup extends BaseModel
     protected $access;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $isDeleted;
 
@@ -76,7 +77,7 @@ class FrontendUserGroup extends BaseModel
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getIsDeleted()
     {
@@ -84,7 +85,7 @@ class FrontendUserGroup extends BaseModel
     }
 
     /**
-     * @param boolean $isDeleted
+     * @param bool $isDeleted
      */
     public function setIsDeleted($isDeleted)
     {

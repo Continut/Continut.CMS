@@ -7,29 +7,28 @@
  * Date: 27.04.2015 @ 22:55
  * Project: Conţinut CMS
  */
-namespace Continut\Core\Mvc\Controller {
 
-    use Continut\Core\Utility;
+namespace Continut\Core\Mvc\Controller;
 
-    class AuthenticatedController extends ActionController
+use Continut\Core\Utility;
+
+class AuthenticatedController extends ActionController
+{
+
+    /**
+     * AuthenticatedController constructor.
+     */
+    public function __construct()
     {
-
-        /**
-         * AuthenticatedController constructor.
-         */
-        public function __construct()
-        {
-            parent::__construct();
-            if (!$this->isConnected()) {
-                $url = Utility::helper("Url")->linkToPath('admin_backend', ['_controller' => 'Login', '_action' => 'index']);
-                if ($this->getRequest()->isAjax()) {
-                    echo "<script>window.location = '$url';</script>";
-                    die();
-                } else {
-                    $this->redirect($url);
-                }
+        parent::__construct();
+        if (!$this->isConnected()) {
+            $url = Utility::helper("Url")->linkToPath('admin_backend', ['_controller' => 'Login', '_action' => 'index']);
+            if ($this->getRequest()->isAjax()) {
+                echo "<script>window.location = '$url';</script>";
+                die();
+            } else {
+                $this->redirect($url);
             }
         }
     }
-
 }

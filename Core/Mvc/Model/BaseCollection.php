@@ -7,6 +7,7 @@
  * Date: 04.04.2015 @ 11:54
  * Project: Conţinut CMS
  */
+
 namespace Continut\Core\Mvc\Model;
 
 use Continut\Core\Utility;
@@ -48,7 +49,7 @@ class BaseCollection
         if (!empty($this->elements)) {
             return $this->elements[0];
         }
-        return NULL;
+        return null;
     }
 
     /**
@@ -180,6 +181,7 @@ class BaseCollection
             $conditions = "$field = :$field";
             return $this->where($conditions, $values)->getAll();
         }
+        return null;
     }
 
     /**
@@ -285,7 +287,7 @@ class BaseCollection
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isEmpty()
     {

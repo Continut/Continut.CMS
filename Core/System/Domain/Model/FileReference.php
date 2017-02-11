@@ -15,17 +15,17 @@ use Continut\Core\Mvc\Model\BaseModel;
 class FileReference extends BaseModel
 {
     /**
-     * @var integer
+     * @var int
      */
     protected $fileId;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $isVisible;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $isDeleted;
 
@@ -92,7 +92,7 @@ class FileReference extends BaseModel
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getIsVisible()
     {
@@ -100,7 +100,7 @@ class FileReference extends BaseModel
     }
 
     /**
-     * @param boolean $isVisible
+     * @param bool $isVisible
      *
      * @return FileReference
      */
@@ -112,7 +112,7 @@ class FileReference extends BaseModel
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getIsDeleted()
     {
@@ -120,7 +120,7 @@ class FileReference extends BaseModel
     }
 
     /**
-     * @param boolean $isDeleted
+     * @param bool $isDeleted
      *
      * @return FileReference
      */

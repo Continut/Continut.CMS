@@ -20,7 +20,7 @@ class File extends BaseModel
     protected $filename;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $filesize;
 

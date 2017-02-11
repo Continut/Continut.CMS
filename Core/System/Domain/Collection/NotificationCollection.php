@@ -7,6 +7,7 @@
  * Date: 10.02.2018 @ 18:04
  * Project: Conţinut CMS
  */
+
 namespace Continut\Core\System\Domain\Collection;
 
 use Continut\Core\Mvc\Model\BaseCollection;
