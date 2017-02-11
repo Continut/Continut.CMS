@@ -39,7 +39,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <?= $this->helper("Wizard")->dateTimeField(c"start_date", $this->__("backend.page.properties.startDate"), $page->getStartDate()) ?>
+                        <?= $this->helper("Wizard")->dateTimeField("start_date", $this->__("backend.page.properties.startDate"), $page->getStartDate()) ?>
                     </div>
                 </div>
                 <div class="col-md-6">

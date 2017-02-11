@@ -34,6 +34,18 @@ class Notification extends BaseModel
     protected $message;
 
     /**
+     * @var bool
+     */
+    protected $isRead;
+
+    /**
+     * Message data variables, serialized and stored as an array
+     *
+     * @var array
+     */
+    protected $data;
+
+    /**
      * Simple datamapper used for the database
      *
      * @return array
@@ -41,10 +53,12 @@ class Notification extends BaseModel
     public function dataMapper()
     {
         $fields = [
-            "created_at" => $this->createdAt,
-            "user"       => $this->user,
-            "link"       => $this->link,
-            "message"    => $this->message,
+            'created_at' => $this->createdAt,
+            'user'       => $this->user,
+            'link'       => $this->link,
+            'message'    => $this->message,
+            'is_read'    => $this->isRead,
+            'data'       => $this->data
         ];
         return array_merge($fields, parent::dataMapper());
     }
@@ -111,5 +125,37 @@ class Notification extends BaseModel
     public function setMessage($message)
     {
         $this->message = $message;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsRead()
+    {
+        return $this->isRead;
+    }
+
+    /**
+     * @param bool $isRead
+     */
+    public function setIsRead($isRead)
+    {
+        $this->isRead = $isRead;
+    }
+
+    /**
+     * @return array
+     */
+    public function getData()
+    {
+        return json_decode($this->data, true);
+    }
+
+    /**
+     * @param array $data
+     */
+    public function setData($data)
+    {
+        $this->data = json_encode($data);
     }
 }

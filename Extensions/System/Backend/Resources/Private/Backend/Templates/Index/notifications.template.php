@@ -1,9 +1,24 @@
 <a href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'notifications']) ?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-    <i class="fa fa-fw fa-2x fa-envelope-o fa-alerted"></i> <?= $this->__('backend.menu.notifications') ?>
+    <i class="fa fa-fw fa-2x fa-envelope-o <?= ($notifications) ? 'fa-alerted' : ''; ?>"></i> <?= $this->__('backend.menu.notifications') ?>
 </a>
 <ul class="dropdown-menu media-list">
-    <li class="dropdown-header"><strong>9</strong> new notifications</li>
-    <li role="separator" class="divider"></li>
+    <li class="dropdown-header"><strong><?= sizeof($notifications) ?></strong> new notifications</li>
+    <?php foreach ($notifications as $notification): ?>
+        <li role="separator" class="divider"></li>
+        <li class="media">
+            <a href="#">
+                <div class="media-left">
+                    <img src="<?= $this->helper('Image')->getPath('Images/profile_pic.jpg', 'Backend'); ?>" height="40" alt="" class="img-circle">
+                </div>
+                <div class="media-body">
+                    <small class="pull-right time"><i class="fa fa-clock-o"></i> 10:30</small>
+                    <h4 class="media-heading">Gringo Deluxe</h4>
+                    <small><?= $this->__($notification->getMessage(), $notification->getData()); ?></small>
+                </div>
+            </a>
+        </li>
+    <?php endforeach; ?>
+    <!--<li role="separator" class="divider"></li>
     <li class="media">
         <a href="#">
             <div class="media-left">
@@ -67,7 +82,7 @@
                 <p><small>3 new <span class="label label-danger">failed</span> connection attempts.<br/>Check the logs for more information!</small></p>
             </div>
         </a>
-    </li>
+    </li>-->
     <li role="separator" class="divider"></li>
     <li>
         <a href="#">

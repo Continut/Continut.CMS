@@ -188,5 +188,6 @@
   "backend.frontendUsers.grid.title": "Utilisateurs Frontend",
   "backend.users.grid.addFrontendUser": "Ajouter nouveau utilisateur Frontend",
   "backend.groups.grid.addFrontendUserGroup": "Ajouter nouveau group d'utilisateurs Frontend",
-  "backend.frontendGroups.grid.title": "Groups d'utilisateurs Frontend"
+  "backend.frontendGroups.grid.title": "Groups d'utilisateurs Frontend",
+  "backend.notifications.newPage": "<strong>%(user)</strong> as crée une nouvelle page: <em>%(title)</em>"
 }

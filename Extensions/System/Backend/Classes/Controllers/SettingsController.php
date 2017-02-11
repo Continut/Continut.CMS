@@ -54,7 +54,7 @@ class SettingsController extends BackendController
      * Show and handle domains and domainUrl settings
      */
     public function domainsAction() {
-        $allDomains = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection')->findAll();
+        $allDomains = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection')->getAll();
 
         $this->getView()->assign('allDomains', $allDomains);
     }

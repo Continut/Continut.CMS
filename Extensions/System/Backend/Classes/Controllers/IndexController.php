@@ -80,6 +80,10 @@ class IndexController extends BackendController
     }
 
     public function notificationsAction() {
+        $notifications = Utility::createInstance('\Continut\Core\System\Domain\Collection\NotificationCollection')
+            ->where('user IN (0, :user) AND is_read = 0', ['user' => $this->getUser()->getId()])
+            ->getAll();
 
+        $this->getView()->assign('notifications', $notifications);
     }
 }
