@@ -43,13 +43,13 @@
             <div id="wizard_pages">
                 <div class="row page-line form-group">
                     <div class="col-sm-6">
-                        <?= $this->helper("Wizard")->textField("name[]", $this->__("backend.page.wizard.placeholder.title")) ?>
+                        <?= $this->helper('Form')->textField("name[]", $this->__("backend.page.wizard.placeholder.title")) ?>
                     </div>
                     <div class="col-sm-3">
-                        <?= $this->helper("Wizard")->selectField("layout[]", $this->__("backend.page.properties.pageLayout"), array_merge(array("" => $this->__("backend.layout.selectLayout")), $layouts)) ?>
+                        <?= $this->helper('Form')->selectField("layout[]", $this->__("backend.page.properties.pageLayout"), array_merge(array("" => $this->__("backend.layout.selectLayout")), $layouts)) ?>
                     </div>
                     <div class="col-sm-3">
-                        <?= $this->helper("Wizard")->selectField("visibility[]", $this->__("backend.page.properties.visibility"), [
+                        <?= $this->helper('Form')->selectField("visibility[]", $this->__("backend.page.properties.visibility"), [
                             'visible' => $this->__('backend.page.wizard.state.visible'),
                             'hidden'  => $this->__('backend.page.wizard.state.hidden'),
                             'hidden_in_menu'    => $this->__('backend.page.wizard.state.hiddenInMenu')
