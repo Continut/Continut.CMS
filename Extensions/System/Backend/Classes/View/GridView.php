@@ -73,9 +73,9 @@ class GridView extends BaseView
         }
 
         if ($filterQueries) {
-            $filterQueries = implode(" AND ", $filterQueries);
+            $filterQueries = implode(' AND ', $filterQueries);
         } else {
-            $filterQueries = "1=1";
+            $filterQueries = '1=1';
         }
 
         $this->setTotalRecords($this->collection->whereCount($filterQueries, $filterValues));

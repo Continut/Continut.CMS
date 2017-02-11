@@ -8,7 +8,7 @@
  * Project: Conţinut CMS
  */
 
-namespace Continut\Core\System\Domain\Collection;
+namespace Continut\Extensions\System\Backend\Classes\Domain\Collection;
 
 use Continut\Core\Mvc\Model\BaseCollection;
 
@@ -20,6 +20,6 @@ class NotificationCollection extends BaseCollection
     public function __construct()
     {
         $this->tablename = 'sys_notifications';
-        $this->elementClass = 'Continut\Core\System\Domain\Model\Notification';
+        $this->elementClass = 'Continut\Extensions\System\Backend\Classes\Domain\Model\Notification';
     }
 }

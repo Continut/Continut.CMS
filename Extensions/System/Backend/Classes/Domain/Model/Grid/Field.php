@@ -7,6 +7,7 @@
  * Date: 03.01.2016 @ 17:50
  * Project: Conţinut CMS
  */
+
 namespace Continut\Extensions\System\Backend\Classes\Domain\Model\Grid;
 
 use Continut\Core\Mvc\Model\BaseModel;
@@ -186,5 +187,13 @@ class Field extends BaseModel
         $this->value = $value;
 
         return $this;
+    }
+
+    /**
+     * Gets the column name of the field. Eg: usergroupId becomes usergroup_id
+     * @return string
+     */
+    public function getDatabaseColumn() {
+        return Utility::toUnderscore($this->name);
     }
 }

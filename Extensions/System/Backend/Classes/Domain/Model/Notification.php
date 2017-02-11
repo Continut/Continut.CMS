@@ -8,7 +8,7 @@
  * Project: Conţinut CMS
  */
 
-namespace Continut\Core\System\Domain\Model;
+namespace Continut\Extensions\System\Backend\Classes\Domain\Model;
 
 use Continut\Core\Mvc\Model\BaseModel;
 

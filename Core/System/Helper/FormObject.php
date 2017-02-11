@@ -100,14 +100,20 @@ HER;
     /**
      * Wizard helper used to generate a hidden input
      *
+     * @param BaseModel $model
      * @param string $name
      * @param string $value
      *
      * @return string
      */
-    public function hiddenField($name, $value)
+    public function hiddenField($model, $name, $value)
     {
         $fieldName = $this->setFieldName($name);
+
+        // if no default value is set, get the one from the model
+        if (!$value) {
+            $value = $model->fetchFromField($name);
+        }
         $html = <<<HER
 			<input id="field_$name" type="hidden" class="form-control" value="$value" name="$fieldName"/>
 HER;

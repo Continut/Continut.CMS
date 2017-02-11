@@ -7,6 +7,7 @@
  * Date: 02.01.2016 @ 16:33
  * Project: Conţinut CMS
  */
+
 namespace Continut\Extensions\System\Backend\Classes\View\Renderer;
 
 use Continut\Core\Mvc\View\BaseView;

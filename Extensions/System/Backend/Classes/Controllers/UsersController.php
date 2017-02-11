@@ -27,6 +27,9 @@ class UsersController extends BackendController
     {
         $grid = Utility::createInstance('Continut\Extensions\System\Backend\Classes\View\GridView');
 
+        $backendUsergroups = Utility::createInstance('Continut\Core\System\Domain\Collection\BackendUserGroupCollection')
+            ->findAll();
+
         $grid
             ->setFormAction(Utility::helper('Url')->linkToPath('admin_backend', ['_controller' => 'Users', '_action' => 'backendUsers']))
             ->setTemplate(Utility::getResource('Grid/gridView', 'Backend', 'Backend', 'Template'))
@@ -62,24 +65,14 @@ class UsersController extends BackendController
                     ],
                     'usergroupId' => [
                         'label' => 'backend.users.grid.field.usergroupId',
-                        'css' => 'col-sm-1',
+                        'css' => 'col-sm-2',
                         'renderer' => [
-                            'class' => 'Continut\Extensions\System\Backend\Classes\View\Renderer\BaseRenderer',
-                        ],
-                        'filter' => [
-                            'class' => 'Continut\Extensions\System\Backend\Classes\View\Filter\TextFilter',
-                            'values' => ['' => '', '0' => 'No', '1' => 'Yes']
-                        ]
-                    ],
-                    'isDeleted' => [
-                        'label' => 'backend.users.grid.field.isDeleted',
-                        'css' => 'col-sm-1',
-                        'renderer' => [
-                            'class' => 'Continut\Extensions\System\Backend\Classes\View\Renderer\YesNoRenderer',
+                            'class' => 'Continut\Extensions\System\Backend\Classes\View\Renderer\TextRenderer',
+                            'parameters' => ['fromValues' => $backendUsergroups->getElements(), 'fromField'  => 'title']
                         ],
                         'filter' => [
                             'class' => 'Continut\Extensions\System\Backend\Classes\View\Filter\SelectFilter',
-                            'values' => ['' => '', '0' => $this->__('general.no'), '1' => $this->__('general.yes')]
+                            'values' => $backendUsergroups->toSelect('id', 'title', true)
                         ]
                     ],
                     'isActive' => [
@@ -106,6 +99,32 @@ class UsersController extends BackendController
             ->initialize();
 
         $this->getView()->assign('grid', $grid);
+    }
+
+    /**
+     * Edit backend user action
+     */
+    public function editBackendUserAction() {
+        $id = (int)$this->getRequest()->getArgument('id');
+
+        $user = Utility::createInstance('Continut\Core\System\Domain\Collection\BackendUserCollection')
+            ->findById($id);
+
+        $this->getView()->assign('user', $user);
+    }
+
+    /**
+     * New backend user action
+     */
+    public function newBackendUserAction() {
+        $user = Utility::createInstance('Continut\Core\System\Domain\Model\BackendUser');
+        $backendUsergroups = Utility::createInstance('Continut\Core\System\Domain\Collection\BackendUserGroupCollection')
+            ->findAll();
+
+        $this->getView()->assignMultiple([
+            'user' => $user,
+            'backendUsergroups' => $backendUsergroups->toSelect('id', 'title')
+        ]);
     }
 
     /**

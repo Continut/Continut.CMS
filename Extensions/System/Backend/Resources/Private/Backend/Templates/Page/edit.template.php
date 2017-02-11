@@ -1,6 +1,6 @@
 <form method="POST" id="page_edit_template"
       action="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'saveProperties']) ?>">
-    <?= $this->helper('FormObject')->hiddenField('id', $page->getId()); ?>
+    <?= $this->helper('FormObject')->hiddenField($page, 'id', $page->getId()); ?>
     <div class="col-sm-12">
         <div class="panel panel-warning">
             <div class="panel-heading">

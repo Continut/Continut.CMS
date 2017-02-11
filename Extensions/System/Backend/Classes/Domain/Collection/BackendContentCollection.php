@@ -7,6 +7,7 @@
  * Date: 04.04.2015 @ 13:02
  * Project: Conţinut CMS
  */
+
 namespace Continut\Extensions\System\Backend\Classes\Domain\Collection;
 
 use Continut\Core\System\Domain\Collection\ContentCollection;

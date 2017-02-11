@@ -116,7 +116,7 @@ class Bootstrap
                 Utility::debugData($exception, "exception");
             }
             Utility::debugAjax();
-            //var_dump($exception);
+            var_dump($exception);
         }
     }
 
@@ -248,8 +248,8 @@ class Bootstrap
                 self::$renderContent = $pageView->render();
             }
         } catch (Exception $e) {
-            throw new ErrorException("Could not finalise execution of the backend controller");
-            //self::$renderContent = $e->getMessage();
+            //throw new ErrorException("Could not finalise execution of the backend controller");
+            self::$renderContent = $e->getMessage();
         }
 
         return $this;

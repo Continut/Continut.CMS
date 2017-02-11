@@ -7,6 +7,7 @@
  * Date: 02.01.2016 @ 16:33
  * Project: Conţinut CMS
  */
+
 namespace Continut\Extensions\System\Backend\Classes\View\Filter;
 
 use Continut\Core\Utility;
@@ -26,7 +27,7 @@ class TextFilter extends BaseFilter
      */
     public function getQueryText()
     {
-        $fieldName = $this->getField()->getName();
+        $fieldName = $this->getField()->getDatabaseColumn();
         if ($this->getField()->getValue()) {
             return "$fieldName LIKE :$fieldName";
         }
@@ -39,7 +40,7 @@ class TextFilter extends BaseFilter
     {
         $filterValue = $this->getField()->getValue();
         if ($filterValue) {
-            return [$this->getField()->getName() => "%$filterValue%"];
+            return [$this->getField()->getDatabaseColumn() => "%$filterValue%"];
         }
     }
 }

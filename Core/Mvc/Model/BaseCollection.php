@@ -22,22 +22,12 @@ class BaseCollection
     /**
      * @var string Class of each element
      */
-    protected $elementClass = "";
+    protected $elementClass = '';
 
     /**
      * @var array List of elements held by this collection
      */
     protected $elements = [];
-
-    /**
-     * Get all elements from the collection
-     *
-     * @return array
-     */
-    public function getAll()
-    {
-        return $this->elements;
-    }
 
     /**
      * Get first element from the collection
@@ -134,14 +124,14 @@ class BaseCollection
     /**
      * Return 1 record by id
      *
-     * @param $id
+     * @param int $id
      *
-     * @return mixed
+     * @return BaseModel|null Model or null, if not found
      */
     public function findById($id)
     {
         $sth = Utility::getDatabase()->prepare("SELECT * FROM $this->tablename WHERE id = :id");
-        $sth->execute(["id" => $id]);
+        $sth->execute(['id' => $id]);
 
         $row = $sth->fetch(\PDO::FETCH_ASSOC);
         if ($row) {
@@ -158,10 +148,10 @@ class BaseCollection
     /**
      * Returns all elements from a collection
      *
-     * @return array
+     * @return $this
      */
     public function findAll() {
-        return $this->where("1=1")->getAll();
+        return $this->where('1=1');
     }
 
     /**
@@ -173,7 +163,7 @@ class BaseCollection
      */
     public function __call($method, $args)
     {
-        if (substr($method, 0, 6) == "findBy" && strlen($method) > 6) {
+        if (substr($method, 0, 6) == 'findBy' && strlen($method) > 6) {
             //$field = lcfirst(substr($method, 6));
             $field = Utility::toUnderscore(substr($method, 6));
             // so far we only map 1 field, to be enhanced to more (AND, OR conditions)
@@ -195,7 +185,7 @@ class BaseCollection
     public function where($conditions, $values = [])
     {
         $this->elements = [];
-        $sth = Utility::getDatabase()->prepare("SELECT * FROM $this->tablename WHERE " . $conditions);
+        $sth = Utility::getDatabase()->prepare('SELECT * FROM ' . $this->tablename . ' WHERE ' . $conditions);
         $sth->execute($values);
 
         while ($row = $sth->fetch(\PDO::FETCH_ASSOC)) {
@@ -217,7 +207,7 @@ class BaseCollection
         foreach ($this->elements as $element) {
             // get the list of fields defined for this model in his dataMapper() function
             $dataMapper = $element->dataMapper();
-            $listOfFields = implode(",", array_keys($dataMapper));
+            $listOfFields = implode(',', array_keys($dataMapper));
             $listOfValues = [];
             // MySQL seems to treat Booleans as strings so it's better if we cast them to integers...
             // @see https://evertpot.com/mysql-bool-behavior-and-php/
@@ -230,15 +220,15 @@ class BaseCollection
             // element does not exist, insert it
             if (is_null($element->getId()) || $element->getId() == 0) {
                 foreach ($dataMapper as $key => $value) {
-                    $listOfValues[] = ":" . $key;
+                    $listOfValues[] = ':' . $key;
                 }
-                $listOfValues = implode(",", $listOfValues);
+                $listOfValues = implode(',', $listOfValues);
                 // $listOfValues = ':'.implode(",", array_keys($dataMapper)); // @TODO : replace instead of the lines above
                 $sth = Utility::getDatabase()->prepare("INSERT INTO $this->tablename ($listOfFields) VALUES ($listOfValues)");
                 // element exists, update it
             } else {
                 foreach ($dataMapper as $key => $value) {
-                    $listOfValues[] = $key . "= :" . $key;
+                    $listOfValues[] = $key . '= :' . $key;
                 }
                 $listOfValues = implode(",", $listOfValues);
                 $sth = Utility::getDatabase()->prepare("UPDATE $this->tablename SET $listOfValues WHERE id = :id");
@@ -270,8 +260,8 @@ class BaseCollection
     {
         foreach ($this->elements as $element) {
             if (!is_null($element->getId)) {
-                $sth = Utility::getDatabase()->prepare("DELETE FROM $this->tablename WHERE id = :id");
-                $sth->execute(["id" => $element->getId()]);
+                $sth = Utility::getDatabase()->prepare('DELETE FROM ' . $this->tablename . 'WHERE id = :id');
+                $sth->execute(['id' => $element->getId()]);
             }
         }
     }
@@ -301,5 +291,45 @@ class BaseCollection
      */
     public function getElement($index) {
         return $this->elements[$index];
+    }
+
+    /**
+     * Get all elements from the collection
+     *
+     * @return array
+     */
+    public function getAll()
+    {
+        return $this->elements;
+    }
+
+    /**
+     * Alias for getAll()
+     *
+     * @return array
+     */
+    public function getElements() {
+        return $this->getAll();
+    }
+
+    /**
+     * Returns an array that can be passed to a select form viewhelper or gridview
+     *
+     * @param string $keyField Model column to use as the <option value="">
+     * @param string $valueField Model column to use as the <option> label
+     * @param bool $emptyValue Should an empty value be prepended to the list?
+     *
+     * @return array
+     */
+    public function toSelect($keyField, $valueField, $emptyValue = false) {
+        $selectOptions = [];
+        if ($emptyValue) {
+            $selectOptions = ['' => ''];
+        }
+        foreach ($this->getElements() as $element) {
+            $selectOptions[$element->fetchFromField($keyField)] = $element->fetchFromField($valueField);
+        }
+
+        return $selectOptions;
     }
 }

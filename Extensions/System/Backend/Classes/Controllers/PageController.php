@@ -170,7 +170,7 @@ class PageController extends BackendController
         // format end date for MySql
         $date = new \DateTime($data['end_date']);
         $data['end_date'] = $date->format('Y-m-d H:i:s');
-        // this calls all the "setXYZ" methods for the passed properties present in $data
+        // this calls all the "setXYZ" methods of the model for the passed properties present in the $data array
         $pageModel->update($data);
 
         $pageCollection
@@ -215,7 +215,7 @@ class PageController extends BackendController
         // Since content elements can have containers and be recursive, we need to build a Tree object to handle them
         $contentTree = $contentCollection->buildTree();
 
-        // A PageView is the model that we use to load a layout and render the elements
+        // A PageView is the model that loads a layout and renders the elements
         $pageView = Utility::createInstance('Continut\Core\System\View\BackendPageView');
         $pageView
             ->setPageModel($pageModel)
@@ -224,13 +224,14 @@ class PageController extends BackendController
         // Send the tree of elements to this page's layout
         $pageView->getLayout()->setElements($contentTree);
 
-        // Render the Tree elements and save them in a variable
+        // Render the Tree elements and save the generated HTML in a variable
         $pageContent = $pageView->render();
 
         // Send all the data to the view
         $this->getView()->assign("page", $pageModel);
         $this->getView()->assign("pageContent", $pageContent);
         $this->getView()->assign("breadcrumbs", $breadcrumbs);
+        // notify the debugger
         Utility::debugData("page_rendering", "stop");
     }
 
@@ -241,7 +242,7 @@ class PageController extends BackendController
      */
     public function toggleVisibilityAction()
     {
-        $pageId = (int)$this->getRequest()->getArgument("page_id", 0);
+        $pageId = (int)$this->getRequest()->getArgument('page_id', 0);
 
         // Load the pages collection model
         $pagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection');
@@ -254,9 +255,10 @@ class PageController extends BackendController
             ->add($pageModel)
             ->save();
 
+        // since it's an ajax call we return directly the data as json
         return json_encode([
-            "visible" => $pageModel->getIsVisible(),
-            "pid" => $pageModel->getId()
+            'visible' => $pageModel->getIsVisible(),
+            'pid'     => $pageModel->getId()
         ]);
     }
 
@@ -267,7 +269,7 @@ class PageController extends BackendController
      */
     public function toggleMenuAction()
     {
-        $pageId = (int)$this->getRequest()->getArgument("page_id", 0);
+        $pageId = (int)$this->getRequest()->getArgument('page_id', 0);
 
         // Load the pages collection model
         $pagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection');
@@ -284,8 +286,8 @@ class PageController extends BackendController
 
         //$this->getView()->assign("page", $pageModel);
         return json_encode([
-            "isInMenu" => $pageModel->getIsInMenu(),
-            "pid" => $pageModel->getId()
+            'isInMenu' => $pageModel->getIsInMenu(),
+            'pid'      => $pageModel->getId()
         ]);
     }
 
@@ -296,8 +298,10 @@ class PageController extends BackendController
      */
     public function searchTreeAction()
     {
-        $term = $this->getRequest()->getArgument("query", "");
+        // get the search term
+        $term = $this->getRequest()->getArgument('query', '');
 
+        // and filter the page tree on this text
         return $this->treeAction($term);
     }
 
@@ -353,7 +357,7 @@ class PageController extends BackendController
                 ->save();
         }
 
-        return "executed";
+        return json_encode(['success' => 1]);
     }
 
     /**
@@ -361,7 +365,7 @@ class PageController extends BackendController
      */
     public function deleteAction()
     {
-        $pageId = (int)$this->getRequest()->getArgument("page_id");
+        $pageId = (int)$this->getRequest()->getArgument('page_id');
 
         $pagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection');
         $pageModel = $pagesCollection->findById($pageId);
@@ -369,18 +373,18 @@ class PageController extends BackendController
         $pageModel->setIsDeleted(true);
 
         $pagesCollection->reset()->add($pageModel)->save();
-        // @TODO : show maybe a warning if subpages are present and then delete all tree
+        // @TODO : show maybe a warning if subpages are present and then delete all subtree
         // A page can have multiple children so we get it's tree and we delete all subpages
         //$pageTree = $pagesCollection->where("is_deleted = 0")->buildTree($pageId);
-        return json_encode(["success" => 1]);
+        return json_encode(['success' => 1]);
     }
 
     /**
-     * Called when the page creation wizard should be displayed
+     * Called when the page creation wizard is displayed
      */
     public function wizardAction()
     {
-        $pageId = (int)$this->getRequest()->getArgument("id");
+        $pageId = (int)$this->getRequest()->getArgument('id');
         $pageModel = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection')
             ->findById($pageId);
 

@@ -53,9 +53,8 @@
             "backendUserAdd": {
               "label": "backend.menu.users.backend.add",
               "icon": "fa fa-fw fa-plus",
-              "extension": "Backend",
-              "controller": "Users",
-              "action": "test"
+              "path": "admin_backend",
+              "params": {"_controller": "Users", "_action": "newBackendUser"}
             },
             "backendUsergroupAll": {
               "label": "backend.menu.usergroups.backend.all",
@@ -66,9 +65,8 @@
             "backendUsergroupAdd": {
               "label": "backend.menu.usergroups.backend.add",
               "icon": "fa fa-fw fa-plus",
-              "extension": "Backend",
-              "controller": "Users",
-              "action": "test"
+              "path": "admin_backend",
+              "params": {"_controller": "Users", "_action": "newBackendUsergroup"}
             },
             "dividerGroups": {
               "type": "divider"
