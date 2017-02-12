@@ -39,6 +39,8 @@ class Form
      */
     protected function setFieldName($name)
     {
+        // you can also pass config keys as input names, in which case the slash needs to be replaced
+        $name = str_replace('/', '_', $name);
         $fieldName = $this->prefix . "[$name]";
         // if the field name contains a square bracket, it means it's an array
         // so we need to set it up accordingly
@@ -48,6 +50,16 @@ class Form
             $fieldName = $this->prefix . "[$name][]";
         }
         return $fieldName;
+    }
+
+    /**
+     * Sets the id attribute of the input
+     *
+     * @param string $name
+     * @return string
+     */
+    protected function setFieldId($name) {
+        return 'field_' . str_replace('/', '_', strtolower($name));
     }
 
     /**
@@ -107,8 +119,9 @@ HER;
     public function hiddenField($name, $value)
     {
         $fieldName = $this->setFieldName($name);
+        $fieldId   = $this->setFieldId($name);
         $html = <<<HER
-			<input id="field_$name" type="hidden" class="form-control" value="$value" name="$fieldName"/>
+            <input id="$fieldId" type="hidden" class="form-control" value="$value" name="$fieldName"/>
 HER;
         return $html;
     }
@@ -125,7 +138,8 @@ HER;
      */
     public function checkboxField($name, $label, $values, $selectedValue = null)
     {
-        $fieldName = $this->setFieldName($name);
+        $fieldName  = $this->setFieldName($name);
+        $fieldId    = $this->setFieldId($name);
         $fieldLabel = $this->setFieldLabel($name, $label);
 
         $html = "";
@@ -133,15 +147,15 @@ HER;
             $fieldName = $fieldName . "[]";
             foreach ($values as $text => $value) {
                 $html .= <<<HER
-					<input id="field_$name_$value" type="text" value="$value" name="$fieldName"/> $text
+                    <input id="$fieldId_$value" type="text" value="$value" name="$fieldName"/> $text
 HER;
             }
         } else {
             $html = <<<HER
-				<div class="checkbox">
-				$fieldLabel
-				<input id="field_$name" class="form-control" type="checkbox" value="$selectedValue" name="$fieldName"/>
-				</div>
+                <div class="checkbox">
+                $fieldLabel
+                <input id="$fieldId" class="form-control" type="checkbox" value="$selectedValue" name="$fieldName"/>
+                </div>
 HER;
         }
         return $html;
@@ -159,11 +173,12 @@ HER;
     public function dateTimeField($name, $label, $value = "")
     {
         $fieldName = $this->setFieldName($name);
+        $fieldId    = $this->setFieldId($name);
         $fieldLabel = $this->setFieldLabel($name, $label);
 
         $html = <<<HER
-			$fieldLabel
-			<input id="field_$name" type="text" data-field="datetime" class="form-control" value="$value" name="$fieldName"/>
+            $fieldLabel
+            <input id="$fieldId" type="text" data-field="datetime" class="form-control" value="$value" name="$fieldName"/>
 HER;
         return $html;
     }
@@ -180,28 +195,29 @@ HER;
      */
     public function textField($name, $label = "", $value = "", $arguments = array())
     {
-        $fieldName = $this->setFieldName($name);
+        $fieldName  = $this->setFieldName($name);
+        $fieldId    = $this->setFieldId($name);
         $fieldLabel = $this->setFieldLabel($name, $label);
 
         $input = <<<HER
-			<input id="field_$name" type="text" class="form-control" value="$value" name="$fieldName"/>
+            <input id="$fieldId" type="text" class="form-control" value="$value" name="$fieldName"/>
 HER;
 
         if (isset($arguments["prefix"])) {
             $prefix = $arguments["prefix"];
             $input = <<<HER
-			<div class="input-group">
-				<span class="input-group-addon">$prefix</span>
-				$input
-			</div>
+            <div class="input-group">
+                <span class="input-group-addon">$prefix</span>
+                $input
+            </div>
 HER;
         }
 
         $html = <<<HER
-			<div class="form-group">
-				$fieldLabel
-				$input
-			</div>
+            <div class="form-group">
+                $fieldLabel
+                $input
+            </div>
 HER;
         return $html;
     }
@@ -217,12 +233,13 @@ HER;
      */
     public function textareaField($name, $label, $value)
     {
-        $fieldName = $this->setFieldName($name);
+        $fieldName  = $this->setFieldName($name);
+        $fieldId    = $this->setFieldId($name);
         $fieldLabel = $this->setFieldLabel($name, $label);
 
         $html = <<<HER
-			$fieldLabel
-			<textarea id="field_$name" name="$fieldName" class="form-control" rows="5">$value</textarea>
+            $fieldLabel
+            <textarea id="$fieldId" name="$fieldName" class="form-control" rows="5">$value</textarea>
 HER;
         return $html;
     }
@@ -238,45 +255,46 @@ HER;
      */
     public function rteField($name, $label, $value)
     {
-        $fieldName = $this->setFieldName($name);
+        $fieldName  = $this->setFieldName($name);
+        $fieldId    = $this->setFieldId($name);
         $fieldLabel = $this->setFieldLabel($name, $label);
 
         $html = <<<HER
-			$fieldLabel
-			<div class="rte-toolbar" id="rte_toolbar_$name">
-				<div class="btn-group">
-			  		<a class="btn btn-default" data-wysihtml5-command="bold"><i class="fa fa-fw fa-bold"></i></a>
-			  		<a class="btn btn-default" data-wysihtml5-command="italic"><i class="fa fa-fw fa-italic"></i></a>
-			  		<a class="btn btn-default" data-wysihtml5-command="underline"><i class="fa fa-fw fa-underline"></i></a>
-				</div>
-				<div class="btn-group">
-					<a class="btn btn-default" data-wysihtml5-command="alignLeftStyle"><i class="fa fa-fw fa-align-left"></i></a>
-					<a class="btn btn-default" data-wysihtml5-command="alignCenterStyle"><i class="fa fa-fw fa-align-center"></i></a>
-					<a class="btn btn-default" data-wysihtml5-command="alignRightStyle"><i class="fa fa-fw fa-align-right"></i></a>
-				</div>
-				<div class="btn-group">
-					<a class="btn btn-default" data-wysihtml5-command="insertUnorderedList"><i class="fa fa-fw fa-list"></i></a>
-					<a class="btn btn-default" data-wysihtml5-command="insertOrderedList"><i class="fa fa-fw fa-list-ol"></i></a>
-				</div>
-				<select class="selectpicker">
-					<option value="p" data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="p" data-icon="fa fa-fw fa-paragraph">Paragraph</option>
-					<option value="h1" data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h1" data-icon="fa fa-fw fa-header">Heading 1</option>
-					<option value="h2" data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h2" data-icon="fa fa-fw fa-header">Heading 2</option>
-					<option value="h3" data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h3" data-icon="fa fa-fw fa-header">Heading 3</option>
-					<option value="h4" data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h4" data-icon="fa fa-fw fa-header">Heading 4</option>
-					<option value="h5" data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h5" data-icon="fa fa-fw fa-header">Heading 5</option>
-					<option value="">-- No format block --</option>
-				</select>
-			  	<a class="btn btn-default" data-wysihtml5-action="change_view"><i class="fa fa-fw fa-code"></i></a>
-			</div>
-			<textarea id="field_$name" name="$fieldName" class="form-control rte">$value</textarea>
-			<script type="text/javascript">
-			var editor_$name = new wysihtml5.Editor('field_$name', {
-				toolbar: 'rte_toolbar_$name',
-				parserRules:  wysihtml5ParserRules
-			});
-			$('.selectpicker').selectpicker();
-			</script>
+            $fieldLabel
+            <div class="rte-toolbar" id="rte_toolbar_$name">
+                <div class="btn-group">
+                    <a class="btn btn-default" data-wysihtml5-command="bold"><i class="fa fa-fw fa-bold"></i></a>
+                    <a class="btn btn-default" data-wysihtml5-command="italic"><i class="fa fa-fw fa-italic"></i></a>
+                    <a class="btn btn-default" data-wysihtml5-command="underline"><i class="fa fa-fw fa-underline"></i></a>
+                </div>
+                <div class="btn-group">
+                    <a class="btn btn-default" data-wysihtml5-command="alignLeftStyle"><i class="fa fa-fw fa-align-left"></i></a>
+                    <a class="btn btn-default" data-wysihtml5-command="alignCenterStyle"><i class="fa fa-fw fa-align-center"></i></a>
+                    <a class="btn btn-default" data-wysihtml5-command="alignRightStyle"><i class="fa fa-fw fa-align-right"></i></a>
+                </div>
+                <div class="btn-group">
+                    <a class="btn btn-default" data-wysihtml5-command="insertUnorderedList"><i class="fa fa-fw fa-list"></i></a>
+                    <a class="btn btn-default" data-wysihtml5-command="insertOrderedList"><i class="fa fa-fw fa-list-ol"></i></a>
+                </div>
+                <select class="selectpicker">
+                    <option value="p" data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="p" data-icon="fa fa-fw fa-paragraph">Paragraph</option>
+                    <option value="h1" data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h1" data-icon="fa fa-fw fa-header">Heading 1</option>
+                    <option value="h2" data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h2" data-icon="fa fa-fw fa-header">Heading 2</option>
+                    <option value="h3" data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h3" data-icon="fa fa-fw fa-header">Heading 3</option>
+                    <option value="h4" data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h4" data-icon="fa fa-fw fa-header">Heading 4</option>
+                    <option value="h5" data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h5" data-icon="fa fa-fw fa-header">Heading 5</option>
+                    <option value="">-- No format block --</option>
+                </select>
+                <a class="btn btn-default" data-wysihtml5-action="change_view"><i class="fa fa-fw fa-code"></i></a>
+            </div>
+            <textarea id="$fieldId" name="$fieldName" class="form-control rte">$value</textarea>
+            <script type="text/javascript">
+            var editor_$name = new wysihtml5.Editor('field_$name', {
+                toolbar: 'rte_toolbar_$name',
+                parserRules:  wysihtml5ParserRules
+            });
+            $('.selectpicker').selectpicker();
+            </script>
 HER;
         return $html;
     }
@@ -293,7 +311,8 @@ HER;
      */
     public function selectField($name, $label, $values, $selectedValue = null)
     {
-        $fieldName = $this->setFieldName($name);
+        $fieldName  = $this->setFieldName($name);
+        $fieldId    = $this->setFieldId($name);
         $fieldLabel = $this->setFieldLabel($name, $label);
         $options = array();
 
@@ -333,12 +352,12 @@ HER;
         $optionsSelect = implode("\n", $options);
 
         $html = <<<HER
-			<div class="form-group">
-				$fieldLabel
-				<select name="$fieldName" id="field_$name" class="form-control selectpicker">
-				$optionsSelect
-				</select>
-			</div>
+            <div class="form-group">
+                $fieldLabel
+                <select name="$fieldName" id="$fieldId" class="form-control selectpicker">
+                $optionsSelect
+                </select>
+            </div>
 HER;
 
         return $html;

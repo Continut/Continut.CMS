@@ -128,8 +128,8 @@ class BaseView
     {
         if (!is_file($this->template)) {
             Utility::debugData("View missing: " . $this->getRelativePath(), "error");
-            throw new ErrorException("The specified template file does not exist " . $this->template, 10000001);
-            //return $this->__("backend.content.templateMissing");
+            //throw new ErrorException("The specified template file does not exist " . $this->template, 10000001);
+            return $this->__("backend.content.templateMissing");
         } else {
             Utility::debugData("View loaded: " . $this->getRelativePath(), "message");
             Utility::debugData("View render " . str_replace(__ROOTCMS__, "", $this->template), "start");

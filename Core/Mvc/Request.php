@@ -264,7 +264,7 @@ class Request
         $this->routes = new RouteCollection();
 
         // Grab all our routes defined in the database
-        $routeCollection = Utility::createInstance('\Continut\Core\System\Domain\Collection\RouteCollection')
+        $routeCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\RouteCollection')
             ->findAll();
         foreach ($routeCollection->getAll() as $route) {
             $routeData    = unserialize($route->getData());

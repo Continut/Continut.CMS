@@ -1,6 +1,6 @@
 <form method="POST" id="content_edit"
       action="<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'saveDomainUrl', 'id' => $domainUrl->getId()]) ?>">
-    <?= $this->helper("Wizard")->hiddenField("id", $domainUrl->getId()); ?>
+    <?= $this->helper('FormObject')->hiddenField($domainUrl, 'id', $domainUrl->getId()); ?>
     <?= $this->partial('General/formValidator', 'Backend', 'Backend', ['model' => $domainUrl])?>
     <div class="col-sm-12">
         <div class="panel panel-warning">
@@ -11,25 +11,25 @@
             </div>
             <div class="panel-body">
                 <div class="col-md-3">
-                    <?= $this->helper("Wizard")->textField($domainUrl, "title", $this->__("backend.domainUrl.properties.title")) ?>
+                    <?= $this->helper('FormObject')->textField($domainUrl, "title", $this->__("backend.domainUrl.properties.title")) ?>
                 </div>
                 <div class="col-md-3">
-                    <?= $this->helper("Wizard")->selectField($domainUrl, "domain_id", $this->__("backend.domainUrl.properties.domainId"), $domains) ?>
+                    <?= $this->helper('FormObject')->selectField($domainUrl, "domain_id", $this->__("backend.domainUrl.properties.domainId"), $domains->toSelect('id', 'title'), $domainUrl->getDomainId()) ?>
                 </div>
                 <div class="col-md-6">
-                    <?= $this->helper("Wizard")->textField($domainUrl, "url", $this->__("backend.domainUrl.properties.url"), $domainUrl->getUrl(), ["prefix" => "http://"]) ?>
+                    <?= $this->helper('FormObject')->textField($domainUrl, "url", $this->__("backend.domainUrl.properties.url"), $domainUrl->getUrl(), ["prefix" => "http://"]) ?>
                 </div>
                 <div class="col-md-3">
-                    <?= $this->helper("Wizard")->textField($domainUrl, "locale", $this->__("backend.domainUrl.properties.locale")) ?>
+                    <?= $this->helper('FormObject')->textField($domainUrl, "locale", $this->__("backend.domainUrl.properties.locale")) ?>
                 </div>
                 <div class="col-md-3">
-                    <?= $this->helper("Wizard")->selectField($domainUrl, "flag", $this->__("backend.domainUrl.properties.flag"), $this->helper('Locale')->iso2LanguageCodes()) ?>
+                    <?= $this->helper('FormObject')->selectField($domainUrl, "flag", $this->__("backend.domainUrl.properties.flag"), $this->helper('Locale')->iso2LanguageCodes()) ?>
                 </div>
                 <div class="col-md-3">
-                    <?= $this->helper("Wizard")->textField($domainUrl, "code", $this->__("backend.domainUrl.properties.code")) ?>
+                    <?= $this->helper('FormObject')->textField($domainUrl, "code", $this->__("backend.domainUrl.properties.code")) ?>
                 </div>
                 <div class="col-md-3">
-                    <?= $this->helper("Wizard")->selectField($domainUrl, "is_alias", $this->__("backend.domainUrl.properties.isAlias"), [0 => $this->__("general.no"), 1 => $this->__("general.yes")]) ?>
+                    <?= $this->helper('FormObject')->selectField($domainUrl, "is_alias", $this->__("backend.domainUrl.properties.isAlias"), [0 => $this->__("general.no"), 1 => $this->__("general.yes")]) ?>
                 </div>
                 <p>Aliases defined for this domain <a href="">(what is an alias?)</a>:</p>
                 <?php if($domainUrl->getAliases()): ?>

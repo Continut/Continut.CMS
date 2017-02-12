@@ -167,8 +167,28 @@ class Bootstrap
             if (Utility::getSite()->getDomainUrl()->getLocale()) {
                 Utility::setConfiguration("System/Locale", Utility::getSite()->getDomainUrl()->getLocale());
             }
+
+            // merge configuration stored in the files with the configuration stored in the database
+            // get "Global [domain_id = 0, language_id = 0]" config, then "Domain" config [domain_id = currentDomain, language_id = 0]
+            // and finally get "Language" config [domain_id = currentDomain, language_id = currentLanguage]
+            $configurationCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\ConfigurationCollection')
+                ->where(
+                    '(domain_id = 0 AND language_id = 0) OR (domain_id = :domain_id AND language_id = 0) OR (domain_id = :domain_id AND language_id = :language_id) ORDER BY domain_id ASC, language_id ASC',
+                    [
+                        'domain_id'  => Utility::getSite()->getDomain()->getId(),
+                        'language_id' => Utility::getSite()->getDomainUrl()->getId()
+                    ]
+                );
+            // and merge them with the configuration we have in configuration.php
+            foreach ($configurationCollection->getAll() as $configuration) {
+                Utility::setConfiguration($configuration->getKey(), $configuration->getValue());
+            }
+        } else {
+            // @TODO: check if we need to merge the config for the backend too
+            // and if so, get the value from the session called 'configurationSite'
         }
         setlocale(LC_ALL, Utility::getConfiguration("System/Locale"));
+        Utility::debugData(Utility::$configuration, "config");
 
         return $this;
     }
@@ -228,11 +248,11 @@ class Bootstrap
             } else {
                 // If it's not an AJAX request, load layout and pageview then render it otherwise just return directly the response
                 /* @var \Continut\Core\System\View\BackendLayout $layout */
-                $layout = Utility::createInstance('\Continut\Core\System\View\BackendLayout');
+                $layout = Utility::createInstance('Continut\Core\System\View\BackendLayout');
                 $layout->setTemplate("/Extensions/System/Backend/Resources/Private/Backend/Layouts/Default.layout.php");
 
                 /* @var \Continut\Core\Mvc\View\PageView $pageView */
-                $pageView = Utility::createInstance('\Continut\Core\Mvc\View\PageView');
+                $pageView = Utility::createInstance('Continut\Core\Mvc\View\PageView');
                 $pageView
                     ->setWrapperTemplate('Extensions/System/Backend/Resources/Private/Backend/Wrappers/Html5')
                     ->setLayout($layout);

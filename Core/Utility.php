@@ -166,8 +166,6 @@ class Utility
         // store the basic configuration from the file. It will be later on merged with the other configuration
         // options defined in the database
         static::$configuration = $result;
-        static::debugData($result, "config");
-
         unset($config);
 
         static::$imageManager = new ImageManager();
@@ -558,7 +556,7 @@ class Utility
     public static function helper($helperName)
     {
         if (!isset(static::$helpers[$helperName])) {
-            static::$helpers[$helperName] = static::createInstance("Continut\\Core\\System\\Helper\\$helperName");
+            static::$helpers[$helperName] = static::createInstance('Continut\Core\System\Helper\\' . $helperName);
         }
         return static::$helpers[$helperName];
     }

@@ -106,7 +106,7 @@ HER;
      *
      * @return string
      */
-    public function hiddenField($model, $name, $value)
+    public function hiddenField($model, $name, $value = "")
     {
         $fieldName = $this->setFieldName($name);
 
@@ -165,7 +165,7 @@ HER;
      */
     public function dateTimeField($name, $label, $value = "")
     {
-        $fieldName = $this->setFieldName($name);
+        $fieldName  = $this->setFieldName($name);
         $fieldLabel = $this->setFieldLabel($name, $label);
 
         $html = <<<HER

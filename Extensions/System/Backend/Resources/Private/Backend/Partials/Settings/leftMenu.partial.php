@@ -2,38 +2,15 @@
     <h2><?= $this->__('backend.menu.settings') ?></h2>
     <p><?= $this->__('backend.settings.description')?></p>
     <div class="row">
-        <div class="col-md-6">
-            <select id="select_website" class="selectpicker" data-width="100%">
-                <option value="0">- Global -</option>
-                <?php foreach ($menu['domains']->getAll() as $domain): ?>
-                    <option value="<?= $domain->getId() ?>"><?= $domain->getTitle() ?></option>
-                <?php endforeach ?>
-            </select>
+        <div class="col-md-12">
+            <form id="form_scope" method="post" action="<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => $data['action']]) ?>">
+            <?= $this->partial('General/domainsSelect', 'Backend', 'Backend', ['data' => $data]) ?>
+            </form>
             <script type="text/javascript">
-                $('#select_website').on('change', function (event) {
-                    $.ajax({
-                        url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'languages']) ?>',
-                        data: {domain_id: this.value}
-                    })
-                        .done(function (data) {
-                            var $languages = $('#select_language');
-                            $languages.empty();
-                            $.each($.parseJSON(data).languages, function (value, key) {
-                                $languages.append($("<option data-icon='flag-icon flag-icon-" + key.flag + "'></option>").attr("value", value).text(key.title));
-                            });
-                            $languages.selectpicker('refresh');
-                        });
+                $('#configuration_site').on('change', function (event) {
+                    $('#form_scope').submit();
                 });
             </script>
-        </div>
-        <div class="col-md-6">
-            <select id="select_language" class="selectpicker" data-width="100%">
-                <option value="0"><?= $this->__('backend.select.allLanguages') ?></option>
-                <?php foreach ($menu['languages']->getAll() as $language): ?>
-                    <option data-icon="flag-icon flag-icon-<?= $language->getFlag() ?>"
-                            value="<?= $language->getId() ?>"><?= $language->getTitle() ?></option>
-                <?php endforeach ?>
-            </select>
         </div>
     </div>
 
@@ -44,9 +21,9 @@
                 <p class="list-group-item-text"><?= $this->__('backend.settings.general.subtitle') ?></p>
             </a>
             <div id="settings_menu_1" class="list-group collapse" role="tabpanel">
-                <a id="link_system_domains" href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'domains']) ?>" class="active list-group-item"><i class="fa fa-fw fa-globe"></i> <?= $this->__('backend.settings.domains.title') ?></a>
-                <a id="link_system_sessions" href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'session']) ?>" class="list-group-item"><i class="fa fa-fw fa-user-secret"></i> <?= $this->__('backend.settings.session.title') ?></a>
-                <a id="link_system_media" href="#" class="list-group-item"><i class="fa fa-fw fa-cloud"></i> <?= $this->__('backend.settings.media.title')?></a>
+                <a id="link_system_domains" href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'domains']) ?>" class="<?= ($data['action'] == 'domains' ? 'active' : '')?> list-group-item"><i class="fa fa-fw fa-globe"></i> <?= $this->__('backend.settings.domains.title') ?></a>
+                <a id="link_system_sessions" href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'session']) ?>" class="<?= ($data['action'] == 'session' ? 'active' : '')?> list-group-item"><i class="fa fa-fw fa-user-secret"></i> <?= $this->__('backend.settings.session.title') ?></a>
+                <a id="link_system_media" href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'media']) ?>" class="<?= ($data['action'] == 'media' ? 'active' : '')?> list-group-item"><i class="fa fa-fw fa-cloud"></i> <?= $this->__('backend.settings.media.title')?></a>
             </div>
             <a class="list-group-item collapsed" data-toggle="collapse" data-parent="#settings_menu" href="#settings_menu_2" aria-expanded="false" aria-controls="settings_menu_2">
                 <h4 class="list-group-item-heading"><i class="fa fa-fw fa-list-alt"></i> News</h4>

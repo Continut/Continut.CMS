@@ -20,7 +20,7 @@ class SettingsController extends BackendController
     public function __construct()
     {
         parent::__construct();
-        $this->getMenuItems();
+        $this->initializeDefaults();
         $this->setLayoutTemplate(Utility::getResource("Default", "Backend", "Backend", "Layout"));
     }
 
@@ -54,7 +54,8 @@ class SettingsController extends BackendController
      * Show and handle domains and domainUrl settings
      */
     public function domainsAction() {
-        $allDomains = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection')->getAll();
+        $allDomains = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection')
+            ->findAll();
 
         $this->getView()->assign('allDomains', $allDomains);
     }
@@ -107,7 +108,8 @@ class SettingsController extends BackendController
     public function editDomainUrlAction() {
         $domainUrlId = $this->getRequest()->getArgument("id", 0);
 
-        $domainsCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection');
+        $domainsCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection')
+            ->findAll();
         $languagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection');
 
         $domainUrl = null;
@@ -116,7 +118,7 @@ class SettingsController extends BackendController
         }
 
         $this->getView()->assign('domainUrl', $domainUrl);
-        $this->getView()->assign('domains', $domainsCollection->getAll());
+        $this->getView()->assign('domains', $domainsCollection);
     }
 
     /**
@@ -129,7 +131,8 @@ class SettingsController extends BackendController
         $languagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection');
         $domainUrl = $languagesCollection->findById($id);
 
-        $domainsCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection');
+        $domainsCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection')
+            ->findAll();
 
         $domainUrl->update($data);
 
@@ -141,29 +144,79 @@ class SettingsController extends BackendController
         }
 
         $this->getView()->assign('domainUrl', $domainUrl);
-        $this->getView()->assign('domains',   $domainsCollection->getAll());
+        $this->getView()->assign('domains',   $domainsCollection);
     }
 
     /**
      * Show session settings
      */
     public function sessionAction() {
+        //var_dump(Utility::getConfiguration());
+    }
+
+    /**
+     * Show media/files settings
+     */
+    public function mediaAction() {
     }
 
     /**
      * The menu should be displayed on every subsection of "settings", in a partial, so we call it in the constructor
      */
-    protected function getMenuItems() {
+    protected function initializeDefaults() {
         $domainsCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection');
-        $domainsCollection->where("is_visible = :is_visible ORDER BY sorting ASC", ["is_visible" => 1]);
+        $domainsCollection->findAll();
 
-        $languagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection');
-        $languagesCollection->where("domain_id = :domain_id ORDER BY sorting ASC", ["domain_id" => $domainsCollection->getFirst()->getId()]);
+        if ($this->getSession()->has('configurationSite')) {
+            $this->getSession()->set('configurationSite', (string)$this->getRequest()->getArgument('configuration_site', $this->getSession()->get('configurationSite')));
+        } else {
+            $this->getSession()->set('configurationSite', (string)$this->getRequest()->getArgument('configuration_site', 0));
+        }
 
-        $this->getView()->assign('menu',
+        $configurationCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\ConfigurationCollection');
+        $config = [];
+
+        // if we are in global scope, get global config only
+        if ($this->getSession()->get('configurationSite') === '0') {
+            $configurationCollection->where('domain_id = 0 AND language_id = 0 ORDER BY domain_id ASC, language_id ASC');
+        }
+
+        // or get domain level
+        if (strpos($this->getSession()->get('configurationSite'), 'domain_') === 0) {
+            $parts = explode('_', $this->getSession()->get('configurationSite'));
+            $domainId = (int)$parts[1];
+            $configurationCollection
+                ->where(
+                    '(domain_id = 0 AND language_id = 0) OR (domain_id = :domain_id AND language_id = 0) ORDER BY domain_id ASC, language_id ASC',
+                    [
+                        'domain_id' => $domainId
+                    ]
+                );
+        }
+
+        // or language one
+        if (strpos($this->getSession()->get('configurationSite'), 'url_') === 0) {
+            $parts = explode('_', $this->getSession()->get('configurationSite'));
+            $languageId = (int)$parts[1];
+            $configurationCollection
+                ->where(
+                    'language_id = :language_id ORDER BY domain_id ASC, language_id ASC',
+                    [
+                        'language_id' => $languageId
+                    ]
+                );
+        }
+
+        foreach ($configurationCollection->getAll() as $configuration) {
+            $config[$configuration->getKey()] = $configuration->getValue();
+        }
+
+        $this->getView()->assign('data',
             [
-                'domains'   => $domainsCollection,
-                'languages' => $languagesCollection
+                'domains' => $domainsCollection,
+                'action'  => $this->getRequest()->getAction(),
+                'config'  => $config,
+                'configurationSite' => $this->getSession()->get('configurationSite')
             ]
         );
     }

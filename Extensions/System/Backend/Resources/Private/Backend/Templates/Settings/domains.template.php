@@ -1,5 +1,5 @@
 <div class="row">
-    <?= $this->partial('Settings/leftMenu', 'Backend', 'Backend', ['menu' => $menu]); ?>
+    <?= $this->partial('Settings/leftMenu', 'Backend', 'Backend', ['data' => $data]); ?>
     <div class="col-sm-12 col-md-9">
         <div class="quick-panel pull-right">
             <a class="btn btn-success" href="<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'newDomain']) ?>"><i class="fa fa-icon fa-plus"></i> <?= $this->__('backend.settings.domains.new') ?></a>
@@ -9,7 +9,7 @@
         <div class="panel panel-default panel-grid">
             <div class="panel-body">
                 <div class="grid">
-                <?php foreach ($allDomains as $domain): ?>
+                <?php foreach ($allDomains->getAll() as $domain): ?>
                 <div class="row grid-row grid-even">
                     <div class="col-sm-8">
                         <strong><?= $domain->getTitle() ?></strong>
