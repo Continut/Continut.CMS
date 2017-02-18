@@ -32,7 +32,7 @@ $this->getPageView()
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Index', '_action' => 'dashboard']); ?>">
                 <h1><img src="<?= $this->helper('Image')->getPath('Images/logo_negru.svg', 'Backend'); ?>" height="32" alt="Continut CMS" class="pull-left"/> <?= $this->__('product.name') ?> <br/><small><?= $this->__('product.version', ['version' => \Continut\Core\Utility::getVersion()]) ?></small></h1>
             </a>
         </div>

@@ -71,4 +71,7 @@ RewriteRule .* index.php [L]
 # Add your own rules here
 php_value xdebug.max_nesting_level 500
 
-php_value display_errors 1
+php_value display_errors 0
+php_value memory_limit 32M
+php_value max_execution_time 30
+php_value post_max_size 8M

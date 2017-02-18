@@ -27,7 +27,7 @@ class IndexController extends BackendController
     }
 
     /**
-     * Main dashboard action
+     * Main dashboard action, shown after admin login
      *
      * @return string
      */
@@ -36,6 +36,9 @@ class IndexController extends BackendController
         // load the chart.js file for the dashboard
         $this->getPageView()->addJsAsset(['identifier' => 'chart-js', 'extension' => 'Backend', 'file' => 'chart-js/Chart.js', 'after' => 'jquery']);
 
+        $domains = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection')->findAll();
+
+        $this->getView()->assign('domains', $domains);
         $this->getView()->assign('user', $this->getUser());
     }
 
@@ -79,6 +82,9 @@ class IndexController extends BackendController
         $this->getView()->assign('secondaryMenu', $secondaryMenu);
     }
 
+    /**
+     * Gets all the non read notifications for the current admin user
+     */
     public function notificationsAction() {
         $notifications = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Collection\NotificationCollection')
             ->where('user IN (0, :user) AND is_read = 0', ['user' => $this->getUser()->getId()])

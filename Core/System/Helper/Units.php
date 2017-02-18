@@ -41,4 +41,24 @@ class Units
 
         return Utility::helper("Localization")->translate($unitLabels[$pow], ["size" => round($size, $precision)]);
     }
+
+    /**
+     * Converts an ini_get size value to it's bytes equivalent
+     *
+     * @param string $iniValue
+     * @return int|string
+     */
+    public function iniValueToBytes($iniValue) {
+        $iniValue = trim($iniValue);
+        $last = strtolower($iniValue[strlen($iniValue)-1]);
+        switch($last) {
+            case 'g':
+                $iniValue *= 1024;
+            case 'm':
+                $iniValue *= 1024;
+            case 'k':
+                $iniValue *= 1024;
+        }
+        return $iniValue;
+    }
 }

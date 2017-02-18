@@ -465,8 +465,6 @@ CREATE TABLE `sys_user_sessions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `sys_user_sessions` (`session_id`, `session_data`, `session_expires`, `user_id`, `user_type`) VALUES
-('5cadeb2c812e42275f4214633a34ff9f',	'PHPDEBUGBAR_STACK_DATA|a:0:{}',	1486922681,	NULL,	NULL),
-('8d7ff992486ab47e01ef98a25fe9124e',	'user_id|s:1:\"1\";current_domain|s:1:\"3\";current_language|s:1:\"3\";configurationSite|s:5:\"url_2\";PHPDEBUGBAR_STACK_DATA|a:0:{}',	1486922811,	NULL,	NULL),
-('d46e0c7ed432e16dd2339f085e85d67b',	'PHPDEBUGBAR_STACK_DATA|a:0:{}',	1486922800,	NULL,	NULL);
+('7825482dea3cf27ed5cc6311f7ce4f8f',	'user_id|s:1:\"1\";current_domain|s:1:\"1\";current_language|s:1:\"1\";configurationSite|s:1:\"0\";',	1487440813,	NULL,	NULL);
 
--- 2017-02-12 17:08:11
+-- 2017-02-18 17:04:58
