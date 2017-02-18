@@ -148,7 +148,7 @@ class Utility
         static::$applicationEnvironment = $applicationEnvironment;
 
         // load environment configuration
-        require_once(__ROOTCMS__ . "/Extensions/configuration.php");
+        require_once __ROOTCMS__ . '/Extensions/configuration.php';
 
         // convert the multiarray to a 2d array
         // $config is defined inside configuration.php

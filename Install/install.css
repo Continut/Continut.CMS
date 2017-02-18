@@ -1,0 +1,142 @@
+@font-face {
+    font-family: 'Libre Franklin';
+    src: url('../Extensions/System/Backend/Resources/Public/Fonts/librefranklin/LibreFranklin-Bold.eot');
+    src: url('../Extensions/System/Backend/Resources/Public/Fonts/librefranklin/LibreFranklin-Bold.eot?#iefix') format('embedded-opentype'),
+    url('../Extensions/System/Backend/Resources/Public/Fonts/librefranklin/LibreFranklin-Bold.woff2') format('woff2'),
+    url('../Extensions/System/Backend/Resources/Public/Fonts/librefranklin/LibreFranklin-Bold.woff') format('woff'),
+    url('../Extensions/System/Backend/Resources/Public/Fonts/librefranklin/LibreFranklin-Bold.ttf') format('truetype'),
+    url('../Extensions/System/Backend/Resources/Public/Fonts/librefranklin/LibreFranklin-Bold.svg#LibreFranklin-Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Libre Franklin';
+    src: url('../Extensions/System/Backend/Resources/Public/Fonts/librefranklin/LibreFranklin-Regular.eot');
+    src: url('../Extensions/System/Backend/Resources/Public/Fonts/librefranklin/LibreFranklin-Regular.eot?#iefix') format('embedded-opentype'),
+    url('../Extensions/System/Backend/Resources/Public/Fonts/librefranklin/LibreFranklin-Regular.woff2') format('woff2'),
+    url('../Extensions/System/Backend/Resources/Public/Fonts/librefranklin/LibreFranklin-Regular.woff') format('woff'),
+    url('../Extensions/System/Backend/Resources/Public/Fonts/librefranklin/LibreFranklin-Regular.ttf') format('truetype'),
+    url('../Extensions/System/Backend/Resources/Public/Fonts/librefranklin/LibreFranklin-Regular.svg#LibreFranklin-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #F9F9F9;
+    color: #333333;
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 14px;
+}
+
+.clear:after {
+    content: '';
+    clear: both;
+    display: block;
+}
+
+.lines .line {
+    width: 20%;
+    background: #70c1b3;
+    height: 10px;
+    float: left;
+}
+
+.line.theme1 {
+    background: #247ba0;
+}
+
+.line.theme3 {
+    background: #b2dbbf;
+}
+
+.line.theme4 {
+    background: #f3ffbd;
+}
+
+.line.theme5 {
+    background: #eb547c;
+}
+
+.main {
+    margin: 20px 10px;
+}
+
+.logo {
+    text-align: center;
+    margin: 0;
+}
+
+.panel-login {
+    overflow: hidden;
+    background: white;
+    border: 1px solid #E0E0E0;
+    box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.panel-login h2 {
+    font-weight: normal;
+    font-size: 2rem;
+    margin: 1em 0;
+    padding: 0;
+}
+
+.panel-heading {
+    background: #F9F9F9;
+    padding: 20px;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.panel-body {
+    padding: 20px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.title {
+    align-items: center;
+    margin: 10px 0;
+    font-size: 1.6rem;
+}
+
+.form .field {
+    margin: 15px 0;
+    width: 100%;
+}
+
+.form .text,
+.form .password,
+.form .button {
+    width: 100%;
+    border: 1px solid #EAEAEA;
+    color: #333333;
+    font: inherit;
+    padding: 15px;
+    box-sizing: border-box;
+    background: white;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.form .button.submit {
+    background: #247ba0;
+    color: #ffffff;
+    text-transform: uppercase;
+}
+
+.form fieldset {
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+@media (min-width: 640px) {
+    .main {
+        margin: 20px auto;
+        max-width: 640px;
+    }
+}

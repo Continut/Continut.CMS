@@ -96,7 +96,7 @@ class BaseView
     public function setTemplate($template)
     {
         $this->template = $template;
-        $this->relativePath = str_replace(__ROOTCMS__, "", $this->template);
+        $this->relativePath = str_replace(__ROOTCMS__, '', $this->template);
 
         return $this;
     }
