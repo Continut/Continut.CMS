@@ -21,5 +21,5 @@ $autoloader->addNamespace('Continut', __ROOTCMS__);
 
 /* @var $installer \Continut\Core\Setup\Installer */
 $installer = new \Continut\Core\Setup\Installer();
-$step = (isset($_GET['step'])) ? trim(htmlspecialchars($_GET['step'])) : 'run';
+$step = 'step' . ((isset($_GET['step'])) ? (int)$_GET['step'] : 1);
 echo $installer->$step();

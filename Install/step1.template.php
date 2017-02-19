@@ -19,17 +19,16 @@
         </div>
         <div id="main" class="main">
             <p class="text-center title">
-                <img src="Extensions/System/Backend/Resources/Public/Images/logo_negru.svg" height="60" alt="Conținut CMS Logo" />
+                <img src="Extensions/System/Backend/Resources/Public/Images/logo_negru.svg" height="50" alt="Conținut CMS Logo" />
                 <br/>Conținut CMS Installer
             </p>
             <div class="panel panel-login" id="steps_container">
                 <div class="panel-heading">
-                    <strong>Phase 1</strong> - Getting ready
+                    <strong>Step 1</strong> - Getting ready
                 </div>
                 <div class="panel panel-body">
-                    <form method="post" class="form login"
-                          action="install.php?step=step2">
-                        <p>Welcome to the Continut CMS v1.0.0 Installer</p>
+                    <form method="post" class="form login" action="install.php?step=2">
+                        <p>Welcome to the <strong>Conținut CMS Installer</strong>.</p>
                         <p>Before starting the installation we need to do a system check to ensure all the required software is present. We will guide you through the necessary steps.</p>
                         <p><input type="submit" class="button submit" value="Next" /></p>
                     </form>

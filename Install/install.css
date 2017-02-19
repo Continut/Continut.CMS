@@ -31,6 +31,10 @@ body {
     font-size: 14px;
 }
 
+p {
+    margin: 10px 0;
+}
+
 .clear:after {
     content: '';
     clear: both;
@@ -97,10 +101,23 @@ body {
     text-align: center;
 }
 
+.text-danger {
+    color: #eb547c;
+}
+
+.text-success {
+    color: #247ba0;
+}
+
+.text-success img,
+.text-danger img {
+    height: 1em;
+}
+
 .title {
     align-items: center;
     margin: 10px 0;
-    font-size: 1.6rem;
+    font-size: 1rem;
 }
 
 .form .field {
@@ -123,9 +140,21 @@ body {
 }
 
 .form .button.submit {
-    background: #247ba0;
+    background-color: #247ba0;
     color: #ffffff;
     text-transform: uppercase;
+}
+
+.form .button.error {
+    background-color: #eb547c;
+    color: #ffffff;
+    text-transform: uppercase;
+}
+
+.button.ajax {
+    background-image: url(Images/loader.gif);
+    background-position: 10px center;
+    background-repeat: no-repeat;
 }
 
 .form fieldset {
@@ -134,9 +163,41 @@ body {
     padding: 0;
 }
 
+ul.tabs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid #247ba0;
+}
+
+ul.tabs:after {
+    clear: both;
+    content: '';
+    display: block;
+}
+
+ul.tabs li {
+    float: left;
+}
+
+ul.tabs li a {
+    padding: 10px 20px;
+    display: block;
+    text-decoration: none;
+    color: #333333;
+    border: 1px solid #247ba0;
+    border-bottom: none;
+}
+
+ul.tabs li a.active {
+    background: #247ba0;
+    color: #ffffff;
+    font-weight: bold;
+}
+
 @media (min-width: 640px) {
     .main {
-        margin: 20px auto;
+        margin: 10px auto;
         max-width: 640px;
     }
 }
