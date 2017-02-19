@@ -246,8 +246,8 @@ $config = [
 HER;
         // Create the Extensions/configuration.php file
         if (!file_exists(__ROOTCMS__ . DS .'Extensions' . DS . 'configuration.php')) {
-            $config = str_replace(['db_driver', 'db_host', 'db_name', 'db_user', 'db_pass'], $params, $config);
-            $f = fopen(__ROOTCMS__ . DS .'Extensions' . DS . 'configuration.php', 'w');
+            $config = str_replace(array_keys($params), $params, $config);
+            $f = @fopen(__ROOTCMS__ . DS .'Extensions' . DS . 'configuration.php', 'w');
             if (!$f) {
                 $params['error'] = 'Cannot create Extensions/configuration.php file. Check permissions on root folder';
                 return $this->step5($params);
