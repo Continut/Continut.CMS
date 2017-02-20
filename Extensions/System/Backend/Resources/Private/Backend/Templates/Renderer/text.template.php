@@ -11,7 +11,7 @@ if (isset($this->getParameters()['crop'])) {
     $text = \Continut\Core\Utility::helper('Text')->truncate(\Continut\Core\Utility::helper('Text')->stripTags($text), $cropLength, $cropAppend);
 }
 
-if ($this->getParameters()['fromValues'] && $this->getParameters()['fromField']) {
+if (isset($this->getParameters()['fromValues']) && $this->getParameters()['fromField']) {
     $values = $this->getParameters()['fromValues'];
     $currentValue = $text;
     foreach ($values as $value) {

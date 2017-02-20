@@ -110,6 +110,7 @@ class Installer
         $host   = $params['db_host'];
         $pass   = $params['db_pass'];
         $user   = $params['db_user'];
+        //$file   = $params['db_file'];
 
         try {
             // the DSN for sqlite points to a file, we will take care of it in step 5
@@ -262,10 +263,10 @@ HER;
         $sql = <<<'HER'
 DROP TABLE IF EXISTS `sys_backend_usergroups`;
 CREATE TABLE `sys_backend_usergroups` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'unique id',
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Backend usergroup name',
-  `access` text COLLATE utf8_unicode_ci COMMENT 'json group permissions',
-  `is_deleted` tinyint(1) DEFAULT '0' COMMENT 'is the usergroup deleted?',
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `access` text,
+  `is_deleted` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -274,13 +275,13 @@ INSERT INTO `sys_backend_usergroups` (`id`, `title`, `access`, `is_deleted`) VAL
 
 DROP TABLE IF EXISTS `sys_backend_users`;
 CREATE TABLE `sys_backend_users` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'unique id',
-  `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'backend username',
-  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'backend encrypted password',
-  `is_deleted` tinyint(1) unsigned DEFAULT '0' COMMENT 'is the user deleted or not',
-  `is_active` tinyint(1) unsigned DEFAULT '1' COMMENT 'is the user active?',
-  `usergroup_id` int(10) unsigned DEFAULT NULL COMMENT 'Backend usergroup id',
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'user fullname',
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `is_deleted` tinyint(1) unsigned DEFAULT '0',
+  `is_active` tinyint(1) unsigned DEFAULT '1',
+  `usergroup_id` int(10) unsigned DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -322,8 +323,8 @@ CREATE TABLE `sys_categories_relations` (
 DROP TABLE IF EXISTS `sys_configuration`;
 CREATE TABLE `sys_configuration` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `domain_id` int(11) NOT NULL DEFAULT '0' COMMENT 'the domain to which this setting belongs to',
-  `language_id` int(11) NOT NULL DEFAULT '0' COMMENT 'the language to which it belongs',
+  `domain_id` int(11) NOT NULL DEFAULT '0',
+  `language_id` int(11) NOT NULL DEFAULT '0',
   `key` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `value` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -331,11 +332,11 @@ CREATE TABLE `sys_configuration` (
 
 DROP TABLE IF EXISTS `sys_content`;
 CREATE TABLE `sys_content` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'unique id',
-  `page_id` int(11) unsigned DEFAULT NULL COMMENT 'id of page where content is stored',
-  `type` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'element type: plugin or content',
-  `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Title of the content element',
-  `column_id` int(11) unsigned DEFAULT NULL COMMENT 'id of column where template and fields are stored',
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `page_id` int(11) unsigned DEFAULT NULL,
+  `type` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `column_id` int(11) unsigned DEFAULT NULL,
   `parent_id` int(11) unsigned DEFAULT '0' COMMENT 'currently only used for containers, for recursivity, stores the uid of the parent container it belongs to',
   `value` text COLLATE utf8_unicode_ci COMMENT 'value of the content element',
   `reference_id` int(11) unsigned DEFAULT NULL COMMENT 'reference to another content element',
