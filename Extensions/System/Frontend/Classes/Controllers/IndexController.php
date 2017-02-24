@@ -23,7 +23,7 @@ class IndexController extends FrontendController
         // or slug, whichever is sent
         $pageSlug = $this->getRequest()->getArgument("slug");
 
-        /*if ($cache = Utility::getCache()->getById($pageId, "page")) {
+        /*if ($cache = Utility::getCache()->getByUid($pageId, "page")) {
             return $cache;
         } else {*/
 
@@ -57,7 +57,7 @@ class IndexController extends FrontendController
 
         // dump it all on screen
         $cache = $pageView->render();
-        //Utility::getCache()->setById($pageId, "page", $cache);
+        //Utility::getCache()->setByUid($pageId, "page", $cache);
         //}
         //Utility::debugData("page_rendering", "stop");
         return $cache;

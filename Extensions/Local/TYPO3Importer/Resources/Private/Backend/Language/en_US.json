@@ -1,0 +1,5 @@
+{
+  "backend.typo3.import": "TYPO3 import",
+  "backend.typo3.importData": "Import TYPO3 data from existing website",
+  "backend.typo3.stats": "Stats comparing TYPO3 vs Continut CMS data"
+}

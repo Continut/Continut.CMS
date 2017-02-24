@@ -26,11 +26,6 @@ class BackendController extends AuthenticatedController
     public function __construct()
     {
         $this->setScope('Backend');
-        // if no configuration file exists, run the setup
-        if (!file_exists(__ROOTCMS__ . DS . 'Extensions' . DS . 'configuration.php')) {
-            $url = Utility::helper("Url")->linkToAction("Setup", "Install", "index");
-            $this->redirect($url);die('ha');
-        }
         parent::__construct();
     }
 

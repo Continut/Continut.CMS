@@ -97,9 +97,9 @@ class ActionController
      */
     public function __construct()
     {
-        $this->view = Utility::createInstance('Continut\Core\Mvc\View\BaseView');
+        $this->view    = Utility::createInstance('Continut\Core\Mvc\View\BaseView');
         $this->request = Utility::getRequest();
-        $this->user = Utility::getSession()->getUser();
+        $this->user    = Utility::getSession()->getUser();
     }
 
     /**

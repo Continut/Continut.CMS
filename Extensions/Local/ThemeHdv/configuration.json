@@ -1,0 +1,28 @@
+{
+  "ThemeHdv": {
+    "version": "0.0.1",
+    "name": "Valais Hospital Theme",
+    "folder": "ThemeHdv",
+    "type": "Local",
+    "description": "Theme for HDV - used as a test",
+    "author": {
+      "web": "www.pixelplant.ch",
+      "name": "Radu Mogoş",
+      "email": "radu.mogos@pixelplant.ch"
+    },
+    "dependencies": {
+      "sys_backend": {
+        "version": "0.0.1"
+      }
+    },
+    "ui": {
+      "layout": {
+        "default": {
+          "label": "layout.default",
+          "backendFile": "/Extensions/Local/ThemeHdv/Resources/Private/Backend/Layouts/Default.layout.php",
+          "frontendFile": "/Extensions/Local/ThemeHdv/Resources/Private/Frontend/Layouts/Default.layout.php"
+        }
+      }
+    }
+  }
+}

@@ -259,8 +259,8 @@ class BaseCollection
     public function delete()
     {
         foreach ($this->elements as $element) {
-            if (!is_null($element->getId)) {
-                $sth = Utility::getDatabase()->prepare('DELETE FROM ' . $this->tablename . 'WHERE id = :id');
+            if (!is_null($element->getId())) {
+                $sth = Utility::getDatabase()->prepare('DELETE FROM ' . $this->tablename . ' WHERE id = :id');
                 $sth->execute(['id' => $element->getId()]);
             }
         }

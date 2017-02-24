@@ -1,0 +1,41 @@
+{
+  "TYPO3Importer": {
+    "version": "0.0.1",
+    "name": "TYPO3 importer extension",
+    "folder": "TYPO3Importer",
+    "type": "Local",
+    "description": "Allows you to import data from an existing TYPO3 site",
+    "author": {
+      "web": "www.pixelplant.ch",
+      "name": "Radu Mogoş",
+      "email": "radu.mogos@pixelplant.ch"
+    },
+    "dependencies": {
+      "sys_backend": {
+        "version": "0.0.1"
+      }
+    },
+    "backend": {
+      "mainMenu": {
+        "extensionTYPO3Importer": {
+          "label": "backend.typo3.import",
+          "icon": "fa fa-fw fa-newspaper-o",
+          "items": {
+            "import": {
+              "label": "backend.typo3.importData",
+              "icon": "fa fa-fw fa-bars",
+              "path": "typo3_importer",
+              "params": {"_controller": "Import", "_action": "index"}
+            },
+            "status": {
+              "label": "backend.typo3.stats",
+              "icon": "fa fa-fw fa-plus",
+              "path": "typo3_importer",
+              "params": {"_controller": "Import", "_action": "index"}
+            }
+          }
+        }
+      }
+    }
+  }
+}
