@@ -38,12 +38,17 @@ class ContentController extends BackendController
             }
         }
 
+        // Load the page model, so that we can retrieve it's current layout, theme, etc
+        $page = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection')
+            ->findById($pageId);
+
         $this->getView()->assignMultiple(
             [
                 'types'      => $types,
                 'extensions' => $extensions,
                 'id'         => $id,
                 'pageId'     => $pageId,
+                'page'       => $page,
                 'columnId'   => $columnId
             ]
         );
@@ -110,7 +115,7 @@ class ContentController extends BackendController
 
         $wizard = Utility::createInstance('Continut\Core\Mvc\View\BaseView');
         $wizardTemplate = ucfirst($settings['type'] . 's/' . $settings['template']);
-        $wizard->setTemplate(Utility::getResource($wizardTemplate, $settings['extension'], 'Frontend', 'Wizard'));
+        $wizard->setTemplate(Utility::getResource($wizardTemplate, $settings['extension'], 'Backend', 'Wizard'));
 
         $contentCollection = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Collection\BackendContentCollection');
 
@@ -152,7 +157,7 @@ class ContentController extends BackendController
 
         $wizard = Utility::createInstance('Continut\Core\Mvc\View\BaseView');
         $wizardTemplate = ucfirst($content->getType()) . 's/'. $wizardData['template'];
-        $wizard->setTemplate(Utility::getResource($wizardTemplate, $wizardData['extension'], 'Frontend', 'Wizard'));
+        $wizard->setTemplate(Utility::getResource($wizardTemplate, $wizardData['extension'], 'Backend', 'Wizard'));
         if (!isset($wizardData['data']['title'])) {
             $wizardData['data']['title'] = $content->getTitle();
         }

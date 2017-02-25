@@ -45,7 +45,7 @@
           "label": "plugin.news.title",
           "description": "plugin.news.description",
           "icon": "Icons/news.png",
-          "template": "Show",
+          "template": "show",
           "templates": {
             "Extensions/Local/News/Resources/Private/Frontend/Templates/Index/show.template.php": "show",
             "Extensions/Local/ThemeAtlas/Resources/Private/Frontend/Templates/News/show.template.php": "atlas"

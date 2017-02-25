@@ -27,16 +27,16 @@
     "elements": {
       "container": {
         "wrapper": {
-          "label": "backend.themeHdv.type.container.wrapper.title",
-          "description": "backend.themeHdv.type.container.wrapper.description",
+          "label": "backend.themeHdv.type.container.wrapper.wizardTitle",
+          "description": "backend.themeHdv.type.container.wrapper.wizardDescription",
           "icon": "Icons/container_wrapper.png",
           "template": "Wrapper"
         }
       },
       "content": {
         "swiperHeader": {
-          "label": "backend.themeHdv.type.content.swiperHeader.title",
-          "description": "backend.themeHdv.type.content.swiperHeader.description",
+          "label": "backend.themeHdv.type.content.swiperHeader.wizardTitle",
+          "description": "backend.themeHdv.type.content.swiperHeader.wizardDescription",
           "icon": "Icons/swiperHeader.png",
           "template": "SwiperHeader"
         }

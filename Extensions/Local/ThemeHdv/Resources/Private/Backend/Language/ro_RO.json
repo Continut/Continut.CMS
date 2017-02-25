@@ -1,5 +1,8 @@
 {
   "backend.themeHdv.layout.container.main": "Zona principală de conținut",
+  "backend.themeHdv.layout.container.wrapper": "Container de conținut cu 1 coloană",
+  "backend.themeHdv.type.container.wrapper.wizardTitle": "Container HDV 1 coloană",
+  "backend.themeHdv.type.container.wrapper.wizardDescription": "Adaugă un container de conținut configurabil, dispus pe o singură coloană",
   "backend.themeHdv.type.container.wrapper.title": "Titlu",
   "backend.themeHdv.type.container.wrapper.subtitle": "Subtitlu",
   "backend.themeHdv.type.container.wrapper.theme": "Temă container",
@@ -10,6 +13,6 @@
   "backend.themeHdv.type.container.wrapper.offset.none": "Niciunul",
   "backend.themeHdv.type.container.wrapper.offset.1column": "1 coloană",
   "backend.themeHdv.type.container.wrapper.offset.2columns": "2 coloane",
-  "backend.themeHdv.type.content.swiperHeader.title": "Galerie foto/video Swiper",
-  "backend.themeHdv.type.content.swiperHeader.description": "Adaugă o galerie foto/video Swiper folosită de obicei ca elementul de start al paginii"
+  "backend.themeHdv.type.content.swiperHeader.wizardTitle": "Galerie foto/video Swiper",
+  "backend.themeHdv.type.content.swiperHeader.wizardDescription": "Adaugă o galerie foto/video Swiper folosită de obicei ca elementul de start al paginii"
 }

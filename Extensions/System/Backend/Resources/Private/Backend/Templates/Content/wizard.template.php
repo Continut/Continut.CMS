@@ -1,7 +1,7 @@
 <div role="tabpanel">
     <div class="form-group">
         <?php if (sizeof($extensions) > 0): ?>
-            <?= $this->helper('Form')->selectField('theme', $this->__('backend.content.wizard.select.theme'), array_merge(["" => $this->__("backend.content.wizard.select.theme.all")], $extensions)); ?>
+            <?= $this->helper('Form')->selectField('theme', $this->__('backend.content.wizard.select.theme'), array_merge(['' => $this->__("backend.content.wizard.select.theme.all")], $extensions), $page->getLayoutExtension()); ?>
         <?php endif ?>
     </div>
 

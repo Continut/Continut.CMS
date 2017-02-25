@@ -128,25 +128,25 @@ class Page extends BaseModel
     public function dataMapper()
     {
         $fields = [
-            "parent_id" => $this->parentId,
-            "title" => $this->title,
-            "slug" => $this->slug,
-            "language_iso3" => $this->languageIso3,
-            "cached_path" => $this->cachedPath,
-            "domain_url_id" => $this->domainUrlId,
-            "is_deleted" => $this->isDeleted,
-            "is_in_menu" => $this->isInMenu,
-            "is_visible" => $this->isVisible,
-            "layout" => $this->layout,
-            "is_layout_recursive" => $this->isLayoutRecursive,
-            "frontend_layout" => $this->frontendLayout,
-            "backend_layout" => $this->backendLayout,
-            "original_id" => $this->originalId,
-            "sorting" => $this->sorting,
-            "meta_keywords" => $this->metaKeywords,
-            "meta_description" => $this->metaDescription,
-            "start_date" => $this->startDate,
-            "end_date" => $this->endDate
+            'parent_id'           => $this->parentId,
+            'title'               => $this->title,
+            'slug'                => $this->slug,
+            'language_iso3'       => $this->languageIso3,
+            'cached_path'         => $this->cachedPath,
+            'domain_url_id'       => $this->domainUrlId,
+            'is_deleted'          => $this->isDeleted,
+            'is_in_menu'          => $this->isInMenu,
+            'is_visible'          => $this->isVisible,
+            'layout'              => $this->layout,
+            'is_layout_recursive' => $this->isLayoutRecursive,
+            'frontend_layout'     => $this->frontendLayout,
+            'backend_layout'      => $this->backendLayout,
+            'original_id'         => $this->originalId,
+            'sorting'             => $this->sorting,
+            'meta_keywords'       => $this->metaKeywords,
+            'meta_description'    => $this->metaDescription,
+            'start_date'          => $this->startDate,
+            'end_date'            => $this->endDate
         ];
 
         return array_merge($fields, parent::dataMapper());
@@ -530,17 +530,30 @@ class Page extends BaseModel
         // set the layout identifier
         $this->layout = $layout;
 
-        $extensionName = substr($layout, 0, strpos($layout, "."));
+        $extensionName = substr($layout, 0, strpos($layout, '.'));
         $settings = Utility::getExtensionSettings($extensionName);
         $layoutId = substr($layout, strlen($extensionName) + 1);
 
         // also set the BE and FE cached layout files
-        if (isset($settings["ui"]["layout"][$layoutId])) {
-            $this->setBackendLayout($settings["ui"]["layout"][$layoutId]["backendFile"]);
-            $this->setFrontendLayout($settings["ui"]["layout"][$layoutId]["frontendFile"]);
+        if (isset($settings['ui']['layout'][$layoutId])) {
+            $this->setBackendLayout($settings['ui']['layout'][$layoutId]['backendFile']);
+            $this->setFrontendLayout($settings['ui']['layout'][$layoutId]['frontendFile']);
         }
 
         return $this;
+    }
+
+    /**
+     * Layout is stored in the DB in the form ExtensionName.layoutName so this method extracts
+     * the extension name from layout value (the first part before the '.' dot)
+     *
+     * @return string
+     */
+    public function getLayoutExtension() {
+        if ($this->getLayout()) {
+            return substr($this->getLayout(), 0, strpos($this->getLayout(), '.'));
+        }
+        return '';
     }
 
     /**

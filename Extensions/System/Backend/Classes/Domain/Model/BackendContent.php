@@ -133,7 +133,7 @@ class BackendContent extends Content
             Utility::helper("Localization")->translate("backend.content.operation.move")
         );*/
 
-        $overallWrap = '<div id="panel-backend-content-%s" data-id="%s" class="content-type-%s panel panel-backend-content content-drag-sender %s"><div class="panel-heading"><strong>%s</strong>%s</div><div class="panel-body no-pep">%s</div></div>';
+        $overallWrap = '<div id="panel-backend-content-%s" data-id="%s" class="content-type-%s panel panel-backend-content content-drag-sender %s"><div class="panel-heading"><span class="fa fa-list-alt"></span>  <strong>%s</strong>%s</div><div class="panel-body no-pep">%s</div></div>';
 
         return sprintf($overallWrap, $this->getId(), $this->getId(), $this->getType(), $visibilityClass, $title, $operationLinks, $content);
     }

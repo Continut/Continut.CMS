@@ -1,5 +1,8 @@
 {
   "backend.themeHdv.layout.container.main": "Main content section",
+  "backend.themeHdv.layout.container.wrapper": "Container 1 column",
+  "backend.themeHdv.type.container.wrapper.wizardTitle": "Container HDV with 1 column",
+  "backend.themeHdv.type.container.wrapper.wizardDescription": "Adds a configurable content container with a 1 column layout",
   "backend.themeHdv.type.container.wrapper.title": "Title",
   "backend.themeHdv.type.container.wrapper.subtitle": "Subtitle",
   "backend.themeHdv.type.container.wrapper.theme": "Container theme",
@@ -10,6 +13,6 @@
   "backend.themeHdv.type.container.wrapper.offset.none": "None",
   "backend.themeHdv.type.container.wrapper.offset.1column": "1 column",
   "backend.themeHdv.type.container.wrapper.offset.2columns": "2 columns",
-  "backend.themeHdv.type.content.swiperHeader.title": "Swiper image/video gallery",
-  "backend.themeHdv.type.content.swiperHeader.description": "Adds an image/video gallery usually placed in the header of the page"
+  "backend.themeHdv.type.content.swiperHeader.wizardTitle": "Swiper image/video gallery",
+  "backend.themeHdv.type.content.swiperHeader.wizardDescription": "Adds an image/video gallery usually placed in the header of the page"
 }
