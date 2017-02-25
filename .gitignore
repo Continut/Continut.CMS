@@ -1,7 +1,6 @@
 .idea/*
 Extensions/configuration.php
-Cache/Temp/*
-Cache/Content/*
+Cache/*
 Media/*
 node_modules
 phpcompatinfo.json

@@ -187,7 +187,7 @@ class Page extends BaseModel
      */
     public function setSlug($slug)
     {
-        $slug = Utility::generateSlug($slug);
+        //$slug = Utility::generateSlug($slug);
         $this->slug = $slug;
 
         return $this;

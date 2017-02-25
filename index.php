@@ -17,7 +17,7 @@ require __ROOTCMS__ . DS . 'Core' . DS . 'Bootstrap.php';
 /* @var $bootstrap \Continut\Core\Bootstrap */
 $bootstrap = \Continut\Core\Bootstrap::getInstance();
 $bootstrap
-    ->setEnvironment('Frontend', 'Development') // Change this to 'Production' before going LIVE
+    ->setEnvironment('Frontend', 'Production') // Change this to 'Production' before going LIVE
     ->connectToDatabase()
     ->initializeWebsite()
     ->loadExtensionsConfiguration()

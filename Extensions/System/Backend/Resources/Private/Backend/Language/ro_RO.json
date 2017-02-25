@@ -161,6 +161,7 @@
   "backend.menu.usergroups.frontend.add": "Creează un nou Grup de Utilizatori Frontend",
   "backend.menu.usergroups.frontend.all": "Afişează toate Grupurile de Utilizatori Frontend",
   "backend.menu.usergroups.backend.all": "Afişează toate Grupurile de Utilizatori Backend",
+  "backend.menu.import.header": "Import date",
   "backend.media.files.missing": "Nu a fost găsit nici un fişier sau director",
   "backend.tree.loading": "Încărcare informații...",
   "backend.menu.settings": "Setări",

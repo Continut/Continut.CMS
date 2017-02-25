@@ -60,6 +60,9 @@ class Bootstrap
         require_once 'Tools/Autoloader.php';
         require_once 'Utility.php';
 
+        set_exception_handler([$this, 'handleException']);
+        set_error_handler([$this, 'handleError']);
+
         Utility::$autoloader = new Tools\Autoloader();
         Utility::$autoloader->register();
         // Main namespace for app
@@ -75,9 +78,6 @@ class Bootstrap
         // Validators
         Utility::$autoloader->addNamespace('Respect', __ROOTCMS__ . DS . 'Lib' . DS . 'Respect');
 
-        set_exception_handler([$this, 'handleException']);
-        set_error_handler([$this, 'handleError']);
-
         Utility::setApplicationScope($applicationScope, $environment);
         Utility::debugData('Application', 'start');
 
@@ -90,7 +90,7 @@ class Bootstrap
     public function handleException($exception)
     {
         // General error template, for production mode
-        $errorTemplate = "Public/Error.html";
+        $errorTemplate = 'Public/Error.html';
 
         // Http exceptions have custom html templates, based on the error code
         // They are all stored inside the Public folder
@@ -98,22 +98,22 @@ class Bootstrap
             switch ($exception->getCode()) {
                 default:
                     $code = (int)$exception->getCode();
-                    $errorTemplate = "Public/$code.html";
+                    $errorTemplate = 'Public/' . $code .'.html';
                     break;
             }
         }
 
         // In production mode, we log any errors/exceptions and we do not show them in the frontend
         // For all the other environments, "Test", "Development" or your custom ones, we show the errors
-        if (Utility::getApplicationEnvironment() == "Production") {
+        if (Utility::getApplicationEnvironment() == 'Production') {
             // @TODO Create log class and log data
             echo file_get_contents(__ROOTCMS__ . DS . $errorTemplate);
         } else {
             // in PHP 7 you can receive both an error or an exception in the exception handler function
             if ($exception instanceof \Error) {
-                Utility::debugData($exception->getMessage() . ' ' . $exception->getTraceAsString(), "error");
+                Utility::debugData($exception->getMessage() . ' ' . $exception->getTraceAsString(), 'error');
             } else {
-                Utility::debugData($exception, "exception");
+                Utility::debugData($exception, 'exception');
             }
             Utility::debugAjax();
             var_dump($exception);
@@ -135,7 +135,6 @@ class Bootstrap
         } else {
             Utility::debugData($message . ' in file ' . $file . ' on line ' . $line, "error");
             Utility::debugAjax();
-            die('Error: ' . $message . ' on line ' . $line);
         }
     }
 
@@ -267,9 +266,8 @@ class Bootstrap
 
                 self::$renderContent = $pageView->render();
             }
-        } catch (Exception $e) {
-            //throw new ErrorException("Could not finalise execution of the backend controller");
-            self::$renderContent = $e->getMessage();
+        } catch (\Exception $e) {
+            throw new ErrorException('Could not finalise execution of the backend controller');
         }
 
         return $this;

@@ -153,6 +153,7 @@
   "backend.menu.usergroups.frontend.add": "Create new Frontend Usergroup",
   "backend.menu.usergroups.frontend.all": "Show all Frontend Usergroups",
   "backend.menu.usergroups.backend.all": "Show all Backend Usergroups",
+  "backend.menu.import.header": "Import",
   "backend.menu.settings": "Settings",
   "backend.menu.notifications": "Notifications",
   "backend.menu.favorites": "Favorites",

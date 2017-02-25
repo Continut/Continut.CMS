@@ -6,7 +6,7 @@
     <base href="http://<?= $url ?>">
     <title><?= $pageTitle ?></title>
 
-    <?= $pageHeader ?>
+    <?= $pageHead ?>
 
     <meta name="description" value=<?= json_encode($this->getPageModel()->getMetaDescription()) ?>/>
     <meta name="keywords" value=<?= json_encode($this->getPageModel()->getMetaKeywords()) ?>/>

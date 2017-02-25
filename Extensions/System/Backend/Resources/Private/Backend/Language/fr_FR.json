@@ -152,6 +152,7 @@
   "backend.menu.usergroups.frontend.add": "Nouveau Group d'Utilisateur Frontend",
   "backend.menu.usergroups.frontend.all": "Afficher tous les Groups d'Utilisateurs Frontend",
   "backend.menu.usergroups.backend.all": "Afficher tous les Groups d'Utilisateurs Backend",
+  "backend.menu.import.header": "Import données",
   "backend.menu.settings": "Paramètres",
   "backend.menu.notifications": "Notifications",
   "backend.menu.favorites": "Favorites",

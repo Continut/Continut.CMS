@@ -1,5 +1,5 @@
 {
-  "backend.typo3.import": "TYPO3 import",
-  "backend.typo3.importData": "Import TYPO3 data from existing website",
-  "backend.typo3.stats": "Stats comparing TYPO3 vs Continut CMS data"
+  "backend.menu.import.typo3.header": "TYPO3 import",
+  "backend.menu.import.typo3.importData": "Import TYPO3 data from existing website",
+  "backend.menu.import.typo3.stats": "Compare data between TYPO3 and Conținut CMS"
 }

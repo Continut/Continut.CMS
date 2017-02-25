@@ -1,0 +1,5 @@
+{
+  "backend.menu.import.typo3.header": "Import din TYPO3",
+  "backend.menu.import.typo3.importData": "Importă datele dintr-un site TYPO3 existent",
+  "backend.menu.import.typo3.stats": "Compară datele între TYPO3 și Conținut CMS"
+}

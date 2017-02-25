@@ -6,7 +6,7 @@
     <base href="http://<?= $url ?>">
     <title><?= $pageTitle ?></title>
 
-    <?= $pageHeader ?>
+    <?= $pageHead ?>
 
     <meta name="description" value="Conținut CMS"/>
     <meta name="keywords" value=""/>

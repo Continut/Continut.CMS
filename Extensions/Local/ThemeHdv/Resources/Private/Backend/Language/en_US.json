@@ -1,0 +1,15 @@
+{
+  "backend.themeHdv.layout.container.main": "Main content section",
+  "backend.themeHdv.type.container.wrapper.title": "Title",
+  "backend.themeHdv.type.container.wrapper.subtitle": "Subtitle",
+  "backend.themeHdv.type.container.wrapper.theme": "Container theme",
+  "backend.themeHdv.type.container.wrapper.theme.white": "White background",
+  "backend.themeHdv.type.container.wrapper.theme.gray": "Gray background",
+  "backend.themeHdv.type.container.wrapper.offsetLeft": "Offset left side",
+  "backend.themeHdv.type.container.wrapper.offsetRight": "Offset right side",
+  "backend.themeHdv.type.container.wrapper.offset.none": "None",
+  "backend.themeHdv.type.container.wrapper.offset.1column": "1 column",
+  "backend.themeHdv.type.container.wrapper.offset.2columns": "2 columns",
+  "backend.themeHdv.type.content.swiperHeader.title": "Swiper image/video gallery",
+  "backend.themeHdv.type.content.swiperHeader.description": "Adds an image/video gallery usually placed in the header of the page"
+}

@@ -132,27 +132,27 @@ class PageView extends BaseView
     public function render()
     {
         $debugPath = str_replace(__ROOTCMS__, "", $this->layout->getTemplate());
-        Utility::debugData("Layout rendered " . $debugPath, "start");
-        Utility::debugData("Layout used: " . $debugPath, "message");
+        Utility::debugData('Layout rendered ' . $debugPath, 'start');
+        Utility::debugData('Layout used: ' . $debugPath, 'message');
         $pageContent = $this->getLayout()->render();
-        Utility::debugData("Layout rendered " . $debugPath, "stop");
+        Utility::debugData('Layout rendered ' . $debugPath, 'stop');
 
-        $pageHeader = $this->renderHeader();
+        $pageHead  = $this->renderHead();
         $bodyClass = $this->getBodyClass();
         $pageTitle = $this->getTitle();
-        $url = $_SERVER["HTTP_HOST"];
+        $url = $_SERVER['HTTP_HOST'];
         if (Utility::getApplicationScope() == Utility::SCOPE_FRONTEND) {
             $url = Utility::getSite()->getUrl();
         }
 
         // if the debuger is enabled, show debug data
-        if (Utility::getConfiguration("System/Debug/Enabled")) {
+        if (Utility::getConfiguration('System/Debug/Enabled')) {
             $pageContent .= Utility::debug()
                 ->getJavascriptRenderer()
-                ->setBaseUrl("Lib/DebugBar/Resources")
+                ->setBaseUrl('Lib/DebugBar/Resources')
                 ->setEnableJqueryNoConflict(TRUE)
                 ->render();
-            $pageHeader .= Utility::debug()
+            $pageHead .= Utility::debug()
                 ->getJavascriptRenderer()
                 ->renderHead();
         }
@@ -160,12 +160,12 @@ class PageView extends BaseView
         $this->setTemplate(__ROOTCMS__ . DS . $this->wrapperTemplate . '.wrapper.php')
             ->assignMultiple(
                 [
-                    "url" => $url,
-                    "pageTitle" => $pageTitle,
-                    "pageHeader" => $pageHeader,
-                    "bodyClass" => $bodyClass,
-                    "pageContent" => $pageContent,
-                    "pageModel" => $this->getPageModel()
+                    'url'         => $url,
+                    'pageTitle'   => $pageTitle,
+                    'pageHead'    => $pageHead,
+                    'bodyClass'   => $bodyClass,
+                    'pageContent' => $pageContent,
+                    'pageModel'   => $this->getPageModel()
                 ]
             );
 
@@ -177,9 +177,9 @@ class PageView extends BaseView
      *
      * @return string
      */
-    public function renderHeader()
+    public function renderHead()
     {
-        $header = "";
+        $header = '';
 
         if ($this->assets) {
             foreach ($this->assets as $assetType => $assets) {
@@ -204,20 +204,101 @@ class PageView extends BaseView
                     }
                 }
             }
-            foreach ($this->assets as $assetType => $assets) {
-                foreach ($assets as $identifier => $configuration) {
-                    // if it's an external css/js, just link it directly
-                    if (isset($configuration['external']) && $configuration['external'] == TRUE) {
-                        $filePath = $configuration['file'];
-                    } else {
-                        $filePath = Utility::getAssetPath($assetType . '/' . $configuration['file'], $configuration['extension']);
+            // if in Production and Frontend, merge all css/js files
+            // for the Backend we do not merge them, even in production
+            // @TODO : needs improvement and refactoring
+            if (Utility::getApplicationEnvironment() == 'Production' && Utility::getApplicationScope() == 'Frontend') {
+                $cssFile = '';
+                $jsFile  = '';
+                foreach ($this->assets as $assetType => $assets) {
+                    foreach ($assets as $identifier => $configuration) {
+                        if ($assetType == 'Css') {
+                            $cssFile .= '_' . $identifier;
+                        }
+                        if ($assetType == 'JavaScript') {
+                            $jsFile .= '_' . $identifier;
+                        }
                     }
+                }
 
-                    if ($assetType == 'Css') {
-                        $header .= "\t" . '<link rel="stylesheet" type="text/css" href="' . $filePath . '" />' . "\n";
+                if ($cssFile) {
+                    $cssFile = md5($cssFile) . '.css';
+                    $cachedCssFile = __ROOTCMS__ . DS . 'Cache' . DS . 'Assets' . DS . 'Css' . DS . $cssFile;
+                    if (!file_exists($cachedCssFile)) {
+                        $mergedCssCode = '';
+                        foreach ($this->assets['Css'] as $identifier => $configuration) {
+                            if (isset($configuration['external']) && $configuration['external'] == true) {
+                                $header .= "\t" . '<link rel="stylesheet" type="text/css" href="' . $configuration['file'] . '" />' . "\n";
+                            } else {
+                                $absoluteFilePath = __ROOTCMS__ . DS . Utility::getAssetPath('Css' . DS . $configuration['file'], $configuration['extension']);
+                                if (file_exists($absoluteFilePath)) {
+                                    $localCode =  file_get_contents($absoluteFilePath);
+                                    // check if any relative assets are used, get their absolute paths and then copy them
+                                    // to the Cache folder
+                                    if (preg_match_all('/url\s*\(\s*[\'"]([^\'"]+)[\'"]\s*\)/', $localCode, $matches)) {
+                                        $cssAssets = $matches[1];
+                                        foreach ($cssAssets as $cssAsset) {
+                                            $relativeCssAsset = str_replace('../', '', $cssAsset);
+                                            /*if (strpos($cssAsset, '?')) {
+                                                $cssAsset = substr($cssAsset, 0, strpos($cssAsset, '?'));
+                                            }*/
+                                            /*if (strpos($cssAsset, '?#')) {
+                                                $cssAsset = substr($cssAsset, 0, strpos($cssAsset, '?#'));
+                                            }*/
+                                            $localCode = str_replace($cssAsset, DS . Utility::getAssetPath($relativeCssAsset, $configuration['extension']), $localCode);
+                                        }
+                                    }
+                                    $mergedCssCode .= $localCode;
+                                }
+                            }
+                        }
+                        $f = fopen($cachedCssFile, 'w');
+                        fwrite($f, $mergedCssCode);
+                        fclose($f);
                     }
-                    if ($assetType == 'JavaScript') {
-                        $header .= "\t" . '<script type="text/javascript" src="' . $filePath . '"></script>' . "\n";
+                    if (!file_exists(__ROOTCMS__ . DS . 'Cache' . DS . 'Assets' . DS . 'Css')){
+                        mkdir(__ROOTCMS__ . DS . 'Cache' . DS . 'Assets' . DS . 'Css');
+                    }
+                    $header .= '<link rel="stylesheet" type="text/css" href="Cache/Assets/Css/' . $cssFile . '" />' . "\n";
+                }
+
+                if ($jsFile) {
+                    $jsFile = md5($jsFile) . '.js';
+                    $cachedJsFile = __ROOTCMS__ . DS . 'Cache' . DS . 'Assets' . DS . 'JavaScript' . DS .  $jsFile;
+                    if (!file_exists($cachedJsFile)) {
+                        $mergedJsCode = '';
+                        foreach ($this->assets['JavaScript'] as $identifier => $configuration) {
+                            $absoluteFilePath = __ROOTCMS__ . DS . Utility::getAssetPath('JavaScript' . DS . $configuration['file'], $configuration['extension']);
+                            if (file_exists($absoluteFilePath)) {
+                                $mergedJsCode .= file_get_contents($absoluteFilePath);
+                            }
+                        }
+                        $f = fopen($cachedJsFile, 'w');
+                        fwrite($f, $mergedJsCode);
+                        fclose($f);
+                    }
+                    if (!file_exists(__ROOTCMS__ . DS . 'Cache' . DS . 'Assets' . DS . 'JavaScript')){
+                        mkdir(__ROOTCMS__ . DS . 'Cache' . DS . 'Assets' . DS . 'JavaScript');
+                    }
+                    $header .= "\t" . '<script type="text/javascript" src="Cache/Assets/JavaScript/' . $jsFile . '"></script>' . "\n";
+                }
+            // if in dev, test or other custom environment, include css/js of them separately
+            } else {
+                foreach ($this->assets as $assetType => $assets) {
+                    foreach ($assets as $identifier => $configuration) {
+                        // if it's an external css/js, just link it directly
+                        if (isset($configuration['external']) && $configuration['external'] == true) {
+                            $filePath = $configuration['file'];
+                        } else {
+                            $filePath = Utility::getAssetPath($assetType . '/' . $configuration['file'], $configuration['extension']);
+                        }
+
+                        if ($assetType == 'Css') {
+                            $header .= "\t" . '<link rel="stylesheet" type="text/css" href="' . $filePath . '" />' . "\n";
+                        }
+                        if ($assetType == 'JavaScript') {
+                            $header .= "\t" . '<script type="text/javascript" src="' . $filePath . '"></script>' . "\n";
+                        }
                     }
                 }
             }

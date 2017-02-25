@@ -329,7 +329,7 @@ class Utility
             // then load the extension configuration data
             $jsonData = json_decode(file_get_contents($folderPath . DS . "configuration.json"), true);
             if ($jsonData === null) {
-                throw new ErrorException("Translation .json file is empty or contains invalid json data. Please check syntax or remove the file if it is empty. Extension: " . static::$applicationScope . " / " . $folderName);
+                throw new ErrorException("Configuration .json file is empty or contains invalid json data. Please check syntax or remove the file if it is empty. Extension: " . $folderName . " / " . static::$applicationScope. " scope");
             } else {
                 static::$extensionsConfiguration = array_merge(static::$extensionsConfiguration, $jsonData);
             }

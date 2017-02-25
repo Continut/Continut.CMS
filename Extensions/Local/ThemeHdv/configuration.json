@@ -23,6 +23,24 @@
           "frontendFile": "/Extensions/Local/ThemeHdv/Resources/Private/Frontend/Layouts/Default.layout.php"
         }
       }
+    },
+    "elements": {
+      "container": {
+        "wrapper": {
+          "label": "backend.themeHdv.type.container.wrapper.title",
+          "description": "backend.themeHdv.type.container.wrapper.description",
+          "icon": "Icons/container_wrapper.png",
+          "template": "Wrapper"
+        }
+      },
+      "content": {
+        "swiperHeader": {
+          "label": "backend.themeHdv.type.content.swiperHeader.title",
+          "description": "backend.themeHdv.type.content.swiperHeader.description",
+          "icon": "Icons/swiperHeader.png",
+          "template": "SwiperHeader"
+        }
+      }
     }
   }
 }

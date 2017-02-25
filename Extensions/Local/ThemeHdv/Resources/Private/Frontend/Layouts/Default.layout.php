@@ -19,9 +19,5 @@ $this->getPageView()
 ?>
 
     <?= $this->plugin('ThemeHdv', 'Menu', 'mainmenu'); ?>
-    <section id="content">
-        <div class="container">
-            <?= $this->showContainerColumn(1); ?>
-        </div>
-    </section>
+    <?= $this->showContainerColumn(1); ?>
     <?= $this->plugin('ThemeHdv', 'Menu', 'footer'); ?>

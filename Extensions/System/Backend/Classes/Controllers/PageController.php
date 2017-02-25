@@ -171,6 +171,9 @@ class PageController extends BackendController
         $date = new \DateTime($data['end_date']);
         $data['end_date'] = $date->format('Y-m-d H:i:s');
         // this calls all the "setXYZ" methods of the model for the passed properties present in the $data array
+        if (trim($data['slug']) === '') {
+            $data['slug'] = Utility::generateSlug($data['title']);
+        }
         $pageModel->update($data);
 
         $pageCollection
@@ -485,7 +488,7 @@ class PageController extends BackendController
                     // @TODO: check why you need to set the iso3 per page. Forgot why I added this!!!
                     //$pageModel->setLanguageIso3($language->getLanguageIso3());
                     $pageModel
-                        ->setSlug($title)
+                        ->setSlug(Utility::generateSlug($title))
                         ->setIsDeleted(false)
                         // @TODO : check if a translation or not
                         ->setOriginalId(0)

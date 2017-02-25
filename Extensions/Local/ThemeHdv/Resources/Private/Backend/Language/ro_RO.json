@@ -1,0 +1,15 @@
+{
+  "backend.themeHdv.layout.container.main": "Zona principală de conținut",
+  "backend.themeHdv.type.container.wrapper.title": "Titlu",
+  "backend.themeHdv.type.container.wrapper.subtitle": "Subtitlu",
+  "backend.themeHdv.type.container.wrapper.theme": "Temă container",
+  "backend.themeHdv.type.container.wrapper.theme.white": "Fond alb",
+  "backend.themeHdv.type.container.wrapper.theme.gray": "Fond gri",
+  "backend.themeHdv.type.container.wrapper.offsetLeft": "Offset partea stângă",
+  "backend.themeHdv.type.container.wrapper.offsetRight": "Offset partea dreaptă",
+  "backend.themeHdv.type.container.wrapper.offset.none": "Niciunul",
+  "backend.themeHdv.type.container.wrapper.offset.1column": "1 coloană",
+  "backend.themeHdv.type.container.wrapper.offset.2columns": "2 coloane",
+  "backend.themeHdv.type.content.swiperHeader.title": "Galerie foto/video Swiper",
+  "backend.themeHdv.type.content.swiperHeader.description": "Adaugă o galerie foto/video Swiper folosită de obicei ca elementul de start al paginii"
+}

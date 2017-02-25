@@ -25,11 +25,11 @@ class Image
      *
      * @return string The fullpath of the newly generated image
      */
-    public function resize($image, $width, $height, $prefix = "resize")
+    public function resize($image, $width, $height, $prefix = 'resize')
     {
 
         $extension = pathinfo($image, PATHINFO_EXTENSION);
-        $newFilename = "Cache/Temp/Images/" . $prefix . "_" . md5($image . $width . $height) . "." . $extension;
+        $newFilename = 'Cache/Temp/Images/' . $prefix . '_' . md5($image . $width . $height) . '.' . $extension;
         $newFilenameFullpath = __ROOTCMS__ . DS . $newFilename;
 
         $absoluteFilename = __ROOTCMS__ . $image;
@@ -38,20 +38,23 @@ class Image
             return $newFilename;
         }
         if (!file_exists($absoluteFilename)) {
-            return "";
+            return '';
         }
 
-        Utility::$imageManager->make($absoluteFilename)->resize($width, $height, function ($constraint) {
-            $constraint->aspectRatio();
-        })->save($newFilenameFullpath);
+        Utility::$imageManager
+            ->make($absoluteFilename)
+            ->resize($width, $height, function ($constraint) {
+                $constraint->aspectRatio();
+            })
+            ->save($newFilenameFullpath);
 
         return $newFilename;
     }
 
-    public function crop($image, $width, $height, $prefix = "crop")
+    public function crop($image, $width, $height, $prefix = 'crop')
     {
         $extension = pathinfo($image, PATHINFO_EXTENSION);
-        $newFilename = "Cache/Temp/Images/" . $prefix . "_" . md5($image . $width . $height) . "." . $extension;
+        $newFilename = 'Cache/Temp/Images/' . $prefix . '_' . md5($image . $width . $height) . '.' . $extension;
         $newFilenameFullpath = __ROOTCMS__ . DS . $newFilename;
 
         $absoluteFilename = __ROOTCMS__ . $image;
@@ -60,12 +63,13 @@ class Image
             return $newFilename;
         }
         if (!file_exists($absoluteFilename)) {
-            return "";
+            return '';
         }
 
-        Utility::$imageManager->make($absoluteFilename)->resize($width, $height, function ($constraint) {
-            $constraint->aspectRatio();
-        })->crop($width, $height)->save($newFilenameFullpath);
+        Utility::$imageManager
+            ->make($absoluteFilename)
+            ->fit($width, $height)
+            ->save($newFilenameFullpath);
 
         return $newFilename;
     }
