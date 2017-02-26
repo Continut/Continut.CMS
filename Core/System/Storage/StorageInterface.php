@@ -26,4 +26,6 @@ interface StorageInterface
     public function getFolders($path);
 
     public function createFolder($folder, $path);
+
+    public function getFileInfo($identifier);
 }

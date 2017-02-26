@@ -1,0 +1,9 @@
+{
+  "hdv.footer.contact.title": "Contacter",
+  "hdv.footer.contact.subtitle": "l'Hôpital du Valais",
+  "hdv.footer.social.followUs": "Suivez-nous sur les réseaux sociaux",
+  "hdv.footer.contactByMail.title": "Contact par mail",
+  "hdv.footer.contactByMail.link": "Vous avez la possibilité de nous contacter à l'aide d'un <a href='%(link)'><strong>formulaire de contact.</strong></a>",
+  "hdv.footer.emergency.phoneNumber": "Numéro d'urgence <strong><a href=\"tel:%(phone)\">%(phone)</a></strong>",
+  "hdv.footer.emergency.doctor": "Médecins de garde <strong><a href=\"tel:%(phone)\">%(phone)</a></strong> (Fr. 0,50/appel + Fr. 2.-/min.)"
+}

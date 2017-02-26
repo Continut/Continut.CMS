@@ -1,0 +1,9 @@
+{
+  "hdv.footer.contact.title": "Contactați",
+  "hdv.footer.contact.subtitle": "spitalul Valais",
+  "hdv.footer.social.followUs": "Urmăriți-ne pe rețelele sociale",
+  "hdv.footer.contactByMail.title": "Contacți-ne pe email",
+  "hdv.footer.contactByMail.link": "Puteți să ne contactați folosind <a href='%(link)'><strong>formularul de contact.</strong></a>",
+  "hdv.footer.emergency.phoneNumber": "Număr urgențe <strong><a href='tel:%(phone)'>%(phone)</a></strong>",
+  "hdv.footer.emergency.doctor": "Doctor de gardă <strong><a href=\"tel:%(phone)\">%(phone)</a></strong> (0.5 CHF/apel + 2 CHF/minut)"
+}

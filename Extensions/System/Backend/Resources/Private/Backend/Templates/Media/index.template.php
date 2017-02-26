@@ -58,16 +58,20 @@
                 <?php if ($files): ?>
                     <div class="row">
                         <?php foreach ($files as $file): ?>
-                            <div class="col-xs-6 col-md-2">
-                                <a href="#" class="thumbnail filetype-<?= $file->getExtension() ?>">
+                            <div class="col-xs-6 col-md-3">
+                                <a href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Media', '_action' => 'fileInfo', 'file' => urlencode($file->getRelativeFilename())]) ?>" class="thumbnail filetype-<?= $file->getExtension() ?>">
                                     <span class="extension"><?= $file->getExtension() ?>
                                         : <?= $this->helper("Units")->formatBytes($file->getSize()); ?></span>
-                                    <?php if (in_array($file->getExtension(), array("JPG", "PNG", "GIF", "BMP"))): ?>
+                                    <?php if (in_array($file->getExtension(), array('JPG', 'PNG', 'GIF'))): ?>
                                         <img
-                                            src="<?= $this->helper("Image")->resize($file->getRelativeFilename(), 300, 300, "storage") ?>"
+                                            src="<?= $this->helper("Image")->crop($file->getRelativeFilename(), 300, 300, "storage") ?>"
+                                            alt=""/>
+                                    <?php elseif ($file->getExtension() == 'SVG'): ?>
+                                        <img
+                                            src="<?= $file->getRelativeFilename() ?>"
                                             alt=""/>
                                     <?php else: ?>
-                                        <i class="fa fa-file" style="font-size: 100px"></i>
+                                        <i class="fa fa-file" style="font-size: 125px"></i>
                                     <?php endif; ?>
                                     <div class="caption">
                                         <p><?= $file->getFullname(); ?></p>

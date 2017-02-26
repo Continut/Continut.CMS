@@ -23,7 +23,7 @@ use Continut\Core\Utility;
 class LocalStorage implements StorageInterface
 {
 
-    const MEDIA_DIRECTORY = "Media";
+    const MEDIA_DIRECTORY = '/Media';
 
     /**
      * Get root directory of the storage
@@ -42,10 +42,10 @@ class LocalStorage implements StorageInterface
      *
      * @return array
      */
-    public function getFiles($path = "")
+    public function getFiles($path = '')
     {
-        if ($path === "") {
-            $path = DS . self::MEDIA_DIRECTORY;
+        if ($path === '') {
+            $path = self::MEDIA_DIRECTORY;
         }
 
         $existingFiles = new \FilesystemIterator($this->getRoot() . $path);
@@ -54,11 +54,11 @@ class LocalStorage implements StorageInterface
 
         foreach ($existingFiles as $existingFile) {
             try {
-                if ($existingFile->getType() == "file") {
+                if ($existingFile->getType() == 'file') {
                     $fileRelativePath = $path . DS . $existingFile->getFilename();
 
                     $fileObject = Utility::createInstance('Continut\Core\System\Storage\File');
-                    $fileObject->setName($existingFile->getBasename("." . $existingFile->getExtension()));
+                    $fileObject->setName($existingFile->getBasename('.' . $existingFile->getExtension()));
                     $fileObject->setExtension(strtoupper($existingFile->getExtension()));
                     $fileObject->setRelativePath($path);
                     $fileObject->setRelativeFilename($fileRelativePath);
@@ -136,5 +136,39 @@ class LocalStorage implements StorageInterface
             $path = DS . self::MEDIA_DIRECTORY;
         }
         return mkdir($this->getRoot() . $path . DS . $folder);
+    }
+
+    /**
+     * @param string $identifier
+     *
+     * @return \Continut\Core\System\Storage\File
+     */
+    public function getFileInfo($identifier) {
+        $file = __ROOTCMS__ . str_replace('../', '', urldecode($identifier));
+
+        $splFile = new \SplFileInfo($file);
+        $fileObject = $this->setFileInfo($identifier, $splFile);
+
+        return $fileObject;
+    }
+
+    /**
+     * @param \SplFileInfo $splFile
+     *
+     * @return \Continut\Core\System\Storage\File
+     */
+    protected function setFileInfo($filename, $splFile) {
+        $fileObject = Utility::createInstance('Continut\Core\System\Storage\File');
+
+        $fileObject->setName($splFile->getBasename('.' . $splFile->getExtension()));
+        $fileObject->setExtension(strtoupper($splFile->getExtension()));
+        $fileObject->setRelativePath(str_replace(__ROOTCMS__, '', $splFile->getPath()));
+        $fileObject->setRelativeFilename(str_replace(__ROOTCMS__, '', $splFile->getPathname()));
+        $fileObject->setAbsolutePath($splFile->getPath());
+        $fileObject->setAbsoluteFilename($splFile->getPathname());
+        $fileObject->setFullname($splFile->getFilename());
+        $fileObject->setSize($splFile->getSize());
+
+        return $fileObject;
     }
 }

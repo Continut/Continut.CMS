@@ -3,8 +3,8 @@
         <div class="row">
             <div class="col-xs-12">
                 <h1>
-                    Contacter
-                    <small>l'Hôpital du Valais</small>
+                    <?= $this->__('hdv.footer.contact.title') ?>
+                    <small><?= $this->__('hdv.footer.contact.subtitle') ?></small>
                 </h1>
             </div>
         </div>
@@ -141,22 +141,42 @@
                 <hr/>
                 <div class="row mobile-text-center">
                     <div class="col-xs-12 col-sm-6">
-                        <p class="uppercase"><strong>Suivez-nous sur les réseaux sociaux</strong></p>
+                        <p class="uppercase"><strong><?= $this->__('hdv.footer.social.followUs') ?></strong></p>
                         <p class="social-networks">
-                            <a href=""><span class="icon-2x icon-twitter"></span></a>
-                            <a href=""><span class="icon-2x icon-facebook"></span></a>
-                            <a href=""><span class="icon-2x icon-vimeo"></span></a>
+                            <a href="http://www.twitter.com"><span class="icon-2x icon-twitter"></span></a>
+                            <a href="http://www.facebook.com"><span class="icon-2x icon-facebook"></span></a>
+                            <a href="http://www.vimeo.com"><span class="icon-2x icon-vimeo"></span></a>
                         </p>
                     </div>
                     <div class="col-xs-12 col-sm-6">
-                        <p class="uppercase"><strong>Contact par mail</strong></p>
-                        <p>Vous avez la possibilité de nous contacter à l'aide d'un <a href=""><strong>formulaire de contact.</strong></a></p>
+                        <p class="uppercase"><strong><?= $this->__('hdv.footer.contactByMail.title') ?></strong></p>
+                        <p><?= $this->__('hdv.footer.contactByMail.link', ['link' => '@TODO:linkToContactPage']) ?></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </footer>
+
+<section class="container-fluid emergency">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-offset-1 col-sm-11">
+                <div class="row mobile-text-center">
+                    <div class="col-xs-12 col-sm-3 hide-mobile">
+                        <p><strong><a href="">Urgences</a></strong></p>
+                    </div>
+                    <div class="col-xs-12 col-sm-3">
+                        <p><?= $this->__('hdv.footer.emergency.phoneNumber', ['phone' => '144']) ?></p>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <p><?= $this->__('hdv.footer.emergency.doctor', ['phone' => '0900144033']) ?></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <aside id="sidebar" class="sidebar">
     <div class="links">

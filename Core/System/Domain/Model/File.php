@@ -57,13 +57,13 @@ class File extends BaseModel
     public function dataMapper()
     {
         $fields = [
-            "filename"    => $this->filename,
-            "filesize"    => $this->filesize,
-            "location"    => $this->location,
-            "mime"        => $this->mime,
-            "created_at"  => $this->createdAt,
-            "modified_at" => $this->modifiedAt,
-            "mount_id"    => $this->mountId
+            'filename'    => $this->filename,
+            'filesize'    => $this->filesize,
+            'location'    => $this->location,
+            'mime'        => $this->mime,
+            'created_at'  => $this->createdAt,
+            'modified_at' => $this->modifiedAt,
+            'mount_id'    => $this->mountId
         ];
         return array_merge($fields, parent::dataMapper());
     }

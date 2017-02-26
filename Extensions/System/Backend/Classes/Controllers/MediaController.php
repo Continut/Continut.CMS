@@ -10,6 +10,7 @@
 namespace Continut\Extensions\System\Backend\Classes\Controllers;
 
 use Continut\Core\Mvc\Controller\BackendController;
+use Continut\Core\System\Storage\LocalStorage;
 use Continut\Core\Utility;
 
 class MediaController extends BackendController
@@ -22,22 +23,25 @@ class MediaController extends BackendController
     public function __construct()
     {
         parent::__construct();
-        $this->setLayoutTemplate(Utility::getResource("Default", "Backend", "Backend", "Layout"));
+        $this->setLayoutTemplate(Utility::getResource('Default', 'Backend', 'Backend', 'Layout'));
 
         $this->storage = Utility::createInstance('Continut\Core\System\Storage\LocalStorage');
     }
 
     /**
-     * Index page
+     * Index page, by default shows the entry /Media folder with its files
      */
     public function indexAction()
     {
+        $path = urldecode($this->getRequest()->getArgument('path', LocalStorage::MEDIA_DIRECTORY));
 
-        $path = urldecode($this->getRequest()->getArgument("path", ""));
-
-        $this->getView()->assign("path", $path);
-        $this->getView()->assign("files", $this->storage->getFiles($path));
-        $this->getView()->assign("folders", $this->storage->getFolders($path));
+        $this->getView()->assignMultiple(
+            [
+                'path'    => $path,
+                'files'   => $this->storage->getFiles($path),
+                'folders' => $this->storage->getFolders($path)
+            ]
+        );
     }
 
     /**
@@ -45,11 +49,20 @@ class MediaController extends BackendController
      */
     public function createFolderAction()
     {
-        $folder = $this->getRequest()->getArgument("folder");
-        $path = urldecode($this->getRequest()->getArgument("path", ""));
+        $folder = $this->getRequest()->getArgument('folder');
+        $path = urldecode($this->getRequest()->getArgument('path', ''));
 
         $createdFolder = $this->storage->createFolder($folder, $path);
 
-        return json_encode(["success" => $createdFolder]);
+        return json_encode(['success' => $createdFolder]);
+    }
+
+    /**
+     * Show detailed information about a file
+     */
+    public function fileInfoAction() {
+        $fileInfo = $this->storage->getFileInfo($this->getRequest()->getArgument('file'));
+
+        $this->getView()->assign('fileInfo', $fileInfo);
     }
 }
