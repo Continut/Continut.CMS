@@ -42,7 +42,7 @@
   "backend.page.notVisibleInMenu": "Page cachée dans les menus",
   "backend.page.deletePage": "Supprimer la page",
   "backend.page.deletePage.confirm": "Êtes-vous sûr que vous voulez supprimer la page <strong>%(page)</strong>? Si la page contient des sous-pages, elles seront supprimes aussi!",
-  "backend.page.edit": "Editer les proprietes",
+  "backend.page.edit": "Editer",
   "backend.page.refresh": "Recharger",
   "backend.page.properties.header": "Editer les proprietes de la page",
   "backend.page.properties.metaKeywords": "Mots clés",

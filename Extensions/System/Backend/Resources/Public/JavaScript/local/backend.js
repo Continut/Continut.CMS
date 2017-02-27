@@ -1,4 +1,3 @@
-$(document).ready(function()
-{
+$(document).ready(function() {
     $("#dtBox").DateTimePicker({language: "ro"});
 });

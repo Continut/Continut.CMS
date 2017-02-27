@@ -1,9 +1,9 @@
 <div class="row page-editor">
-    <div id="sidebar_tree" class="col-md-3 col-sm-5">
+    <div id="sidebar_tree" class="col-md-4 col-sm-5">
         <!-- tree toolbar -->
         <div id="sidebar_toolbar" class="row">
             <form class="form">
-                <div class="col-sm-7 col-md-12 col-lg-7">
+                <div class="col-xs-6 col-sm-12 col-lg-6">
                     <div class="simple-margins bottom">
                         <a class="btn btn-sm btn-default" title="<?= $this->__('backend.settings.description') ?>" href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'domains']) ?>"><i class="fa fa-cog"></i></a>
                         <label for="select_website"><?= $this->__('backend.pageTree.domain.label') ?></label>
@@ -46,7 +46,7 @@
                                     class="fa fa-fw fa-plus"></i> </a></p>
                     <?php endif ?>
                 </div>
-                <div class="col-sm-5 col-md-12 col-lg-5">
+                <div class="col-xs-6 col-sm-12 col-lg-6">
                     <div class="simple-margins bottom">
                         <a class="btn btn-sm btn-default" title="<?= $this->__('backend.settings.description') ?>" href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'domains']) ?>"><i class="fa fa-cog"></i></a>
                         <label for="select_language"><?= $this->__('backend.pageTree.language.label') ?></label>
@@ -76,7 +76,7 @@
             </form>
         </div>
         <div class="row tree-filter">
-            <div class="col-sm-7">
+            <div class="col-xs-6">
                 <div class="entire-area">
                     <div class="input-group entire-area">
                         <div class="input-group-addon"><i id="search_page_progress" class="fa fa-fw fa-search"></i>
@@ -86,138 +86,154 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-5">
+            <div class="col-xs-6">
                 <a href="#" class="btn btn-success col-xs-12 page-add"
                    title="<?= $this->__("backend.pageTree.createPage") ?>"><i
                         class="fa fa-fw fa-plus"></i> <?= $this->__("backend.pageTree.createPage") ?></a>
             </div>
         </div>
         <div id="cms_tree"></div>
-        <script type="text/javascript">
-            var searchPageTreeThread = null;
-            var oldSearch = null;
-            var previousSelectedNode = null;
-
-            // --- Handles search inside the page tree ---
-            $('#search_page').keyup(function (e) {
-                var $this = $(this);
-                if ($this.val() == oldSearch) {
-                    return;
-                }
-                // ignore Enter or Tab
-                if (e.which != 9 && e.which != 13) {
-                    clearTimeout(searchPageTreeThread);
-                    searchPageTreeThread = setTimeout(function () {
-                        $('#cms_tree').jstree(true).search($this.val());
-                    }, 200);
-                }
-            });
-            // --- Handles what happens when clicking on a page in the pagetree => loads the page in the BE preview ---
-            $('#cms_tree')
-                .on('changed.jstree', function (e, data) {
-                    if (data.selected.length == 0) {
-                        return;
-                    }
-                    var nodeId = data.selected[0];
-                    // once a node is clicked, load the corresponding page in the right side
-                    $.ajax({
-                        url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'show']) ?>',
-                        data: { page_id: nodeId }
-                        /*beforeSend: function (xhr) {
-                            $('#' + nodeId).prepend('<span class="pull-right fa fa-spinner fa-pulse"></span>');
-                        }*/
-                    })
-                    .done(function (data) {
-                        $('#content').html(data);
-                        //$('#' + nodeId).find('.fa-spinner').remove();
-                        if (previousSelectedNode) {
-                            $('#' + previousSelectedNode).find('.page-add').eq(0).hide();
-                        }
-                        $('#' + nodeId).find('.page-add').eq(0).show();
-                        previousSelectedNode = nodeId;
-                    });
-                })
-                // --- Handles moving pages in the page tree ---
-                .on('move_node.jstree', function(e, data) {
-                    //console.log(data);
-                    var pagesOrder = [];
-                    var children = null;
-                    if (data.parent == '#') {
-                        children = $($('#cms_tree').jstree().get_json(data.parent, {'no_children': false}));
-                        for (var i = 0; i < children.length; i++) {
-                            pagesOrder.push(children[i].id);
-                        }
-                    } else {
-                        var parent = $($('#cms_tree').jstree().get_json(data.parent, {'no_children': false}))
-                        for (var i = 0; i < parent[0].children.length; i++) {
-                            pagesOrder.push(parent[0].children[i].id);
-                        }
-                    }
-                    //console.log(pagesOrder);
-                    $.post(
-                        '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'treeMove']) ?>',
-                        {
-                            movedId: data.node.id,
-                            position: data.position,
-                            newParentId: data.parent,
-                            order: pagesOrder
-                        }
-                    );
-                });
-                // --- jsTree initialization ---
-                $.ajax({
-                    url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'tree']) ?>',
-                    dataType: 'json'
-                })
-                .done(function (json) {
-                    $('#cms_tree').jstree({
-                        'core' : {
-                            'multiple' : false,
-                            'animation' : 0,
-                            'check_callback': true,
-                            'themes' : {
-                                'variant' : 'large',
-                                'dots' : true
-                            },
-                            'strings': {
-                                'Loading ...' : '<?= $this->__('backend.tree.loading') ?>',
-                            },
-                            'data': json.pages
-                        },
-                        'dnd': {
-                            'copy': false, // true allows to make copies while dragging and holding Ctrl. We don't want this
-                            'always_copy': false,
-                            'check_while_dragging': false,
-                            'large_drag_target': true,
-                            'large_drop_target': true
-                        },
-                        'search': {
-                            'show_only_matches': true,
-                            'show_only_matches_children': false
-                        },
-                        'plugins' : ['dnd', 'search', 'wholerow']
-                        //'plugins' : ['dnd', 'search', 'wholerow', 'checkbox']
-                    });
-                });
-
-            // --- Shows the "Add new page" modal ---
-
-            // Add page modal reference. Would be better if it would be self-contained
-            // @TODO: check for a solution to use it inside the modal's context, even for remote content
-            var addModal;
-
-            $('.page-add').on('click', function (e) {
-                e.preventDefault();
-                var pid = $('#cms_tree').jstree('get_selected');
-                addModal = BootstrapDialog.show({
-                    title: <?= json_encode($this->__("backend.page.wizard.create.title")) ?>,
-                    message: $('<div></div>').load('<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'wizard']) ?>?id=' + pid),
-                    cssClass: 'large-dialog'
-                });
-            });
-
-        </script>
     </div>
     <!-- Main page content will be loaded inside this div -->
-    <div id="content" class="col-md-9 col-sm-7"></div>
+    <div id="content_wrapper" class="col-md-8 col-sm-7">
+        <a href="#" class="btn btn-success" title="Toggle sidebar visibility" id="toggle_sidebar">
+            <span class="fa fa-chevron-left open"></span>
+            <span class="fa fa-chevron-right closed"></span>
+        </a>
+        <div id="content"></div>
+    </div>
 </div>
+
+<script type="text/javascript">
+    var searchPageTreeThread = null;
+    var oldSearch = null;
+    var previousSelectedNode = null;
+
+    // --- Handles search inside the page tree ---
+    $('#search_page').keyup(function (e) {
+        var $this = $(this);
+        if ($this.val() == oldSearch) {
+            return;
+        }
+        // ignore Enter or Tab
+        if (e.which != 9 && e.which != 13) {
+            clearTimeout(searchPageTreeThread);
+            searchPageTreeThread = setTimeout(function () {
+                $('#cms_tree').jstree(true).search($this.val());
+            }, 200);
+        }
+    });
+    // --- Handles what happens when clicking on a page in the pagetree => loads the page in the BE preview ---
+    $('#cms_tree')
+        .on('changed.jstree', function (e, data) {
+            if (data.selected.length == 0) {
+                return;
+            }
+            var nodeId = data.selected[0];
+            // once a node is clicked, load the corresponding page in the right side
+            $.ajax({
+                url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'show']) ?>',
+                data: { page_id: nodeId }
+                /*beforeSend: function (xhr) {
+                 $('#' + nodeId).prepend('<span class="pull-right fa fa-spinner fa-pulse"></span>');
+                 }*/
+            })
+                .done(function (data) {
+                    $('#content').html(data);
+                    //$('#' + nodeId).find('.fa-spinner').remove();
+                    if (previousSelectedNode) {
+                        $('#' + previousSelectedNode).find('.page-add').eq(0).hide();
+                    }
+                    $('#' + nodeId).find('.page-add').eq(0).show();
+                    previousSelectedNode = nodeId;
+                });
+        })
+        // --- Handles moving pages in the page tree ---
+        .on('move_node.jstree', function(e, data) {
+            //console.log(data);
+            var pagesOrder = [];
+            var children = null;
+            if (data.parent == '#') {
+                children = $($('#cms_tree').jstree().get_json(data.parent, {'no_children': false}));
+                for (var i = 0; i < children.length; i++) {
+                    pagesOrder.push(children[i].id);
+                }
+            } else {
+                var parent = $($('#cms_tree').jstree().get_json(data.parent, {'no_children': false}))
+                for (var i = 0; i < parent[0].children.length; i++) {
+                    pagesOrder.push(parent[0].children[i].id);
+                }
+            }
+            //console.log(pagesOrder);
+            $.post(
+                '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'treeMove']) ?>',
+                {
+                    movedId: data.node.id,
+                    position: data.position,
+                    newParentId: data.parent,
+                    order: pagesOrder
+                }
+            );
+        });
+    // --- jsTree initialization ---
+    $.ajax({
+        url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'tree']) ?>',
+        dataType: 'json'
+    })
+        .done(function (json) {
+            $('#cms_tree').jstree({
+                'core' : {
+                    'multiple' : false,
+                    'animation' : 0,
+                    'check_callback': true,
+                    'themes' : {
+                        'variant' : 'large',
+                        'dots' : true
+                    },
+                    'strings': {
+                        'Loading ...' : '<?= $this->__('backend.tree.loading') ?>',
+                    },
+                    'data': json.pages
+                },
+                'dnd': {
+                    'copy': false, // true allows to make copies while dragging and holding Ctrl. We don't want this
+                    'always_copy': false,
+                    'check_while_dragging': false,
+                    'large_drag_target': true,
+                    'large_drop_target': true
+                },
+                'search': {
+                    'show_only_matches': true,
+                    'show_only_matches_children': false
+                },
+                'plugins' : ['dnd', 'search', 'wholerow']
+                //'plugins' : ['dnd', 'search', 'wholerow', 'checkbox']
+            });
+        });
+
+    // --- Shows the "Add new page" modal ---
+
+    // Add page modal reference. Would be better if it would be self-contained
+    // @TODO: check for a solution to use it inside the modal's context, even for remote content
+    var addModal;
+
+    $('.page-add').on('click', function (e) {
+        e.preventDefault();
+        var pid = $('#cms_tree').jstree('get_selected');
+        addModal = BootstrapDialog.show({
+            title: <?= json_encode($this->__("backend.page.wizard.create.title")) ?>,
+            message: $('<div></div>').load('<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'wizard']) ?>?id=' + pid),
+            cssClass: 'large-dialog'
+        });
+    });
+
+    $(document).ready(function() {
+        $("#toggle_sidebar").click(function (e) {
+            e.preventDefault();
+            $(this).toggleClass('toggled');
+            $("#sidebar_tree").toggle();
+            $("#content_wrapper").toggleClass('col-md-9 col-sm-7 col-xs-12');
+        });
+    });
+
+</script>

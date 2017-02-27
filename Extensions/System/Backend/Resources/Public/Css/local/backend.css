@@ -128,9 +128,6 @@ html {
   border: 1px solid #e0e0e0;
   background: #f9f9f9;
 }
-.page-editor {
-  display: flex;
-}
 #sidebar_toolbar {
   padding: 10px 0;
   border-bottom: 1px solid #dcdcdc;
@@ -165,7 +162,25 @@ html {
 .entire-area {
   width: 100%;
 }
-#content {
+#content_wrapper #toggle_sidebar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 20;
+}
+#content_wrapper #toggle_sidebar .open {
+  display: inline-block;
+}
+#content_wrapper #toggle_sidebar .closed {
+  display: none;
+}
+#content_wrapper #toggle_sidebar.toggled .open {
+  display: none;
+}
+#content_wrapper #toggle_sidebar.toggled .closed {
+  display: inline-block;
+}
+#content_wrapper #content {
   padding-top: 15px;
 }
 li a.helper-icon {
@@ -371,7 +386,7 @@ li a.helper-icon {
 }
 .breadcrumb-page-tree {
   font-size: 12px;
-  padding: 5px;
+  padding: 5px 5px 5px 35px;
   margin-bottom: 3px;
   border-radius: 0;
 }

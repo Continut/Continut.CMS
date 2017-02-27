@@ -191,7 +191,6 @@
     //    once this.startTrigger occurs, handle all of the logic
     //    that must go on. This is where Pep's heavy lifting is done.
     Pep.prototype.handleStart = function(ev) {
-
         // ignorePropagation is set to true if the event originates from an element
         // listed in this.options.elementsWithInteraction
         if (ev.ignorePropagation) return;

@@ -14,19 +14,19 @@
     <div class="col-sm-10">
         <div class="btn-group" role="group">
             <button type="button" class="btn btn-warning" id="page-edit">
-                <i class="fa fa-fw fa-pencil"></i> <?= $this->__("backend.page.edit") ?>
+                <i class="fa fa-fw fa-pencil"></i> <span class="visible-lg-inline"><?= $this->__("backend.page.edit") ?></span>
             </button>
             <button type="button" class="btn btn-default" id="page-visibility-frontend">
                 <span class="element-visible <?= $page->getIsVisible() ? "" : "hide" ?>"><i
-                        class="fa fa-fw fa-check"></i> <?= $this->__("backend.page.visibleInFrontend") ?></span>
+                            class="fa fa-fw fa-check"></i> <span class="visible-lg-inline"><?= $this->__("backend.page.visibleInFrontend") ?></span></span>
                 <span class="element-hide <?= $page->getIsVisible() ? "hide" : "" ?>"><i
-                        class="fa fa-fw fa-close text-danger"></i> <?= $this->__("backend.page.notVisibleInFrontend") ?></span>
+                            class="fa fa-fw fa-close text-danger"></i> <span class="visible-lg-inline"><?= $this->__("backend.page.notVisibleInFrontend") ?></span></span>
             </button>
             <button type="button" class="btn btn-default" id="page-visibility-menu">
                 <span class="element-visible <?= $page->getIsInMenu() ? "" : "hide" ?>"><i
-                        class="fa fa-fw fa-eye"></i> <?= $this->__("backend.page.visibleInMenu") ?></span>
+                            class="fa fa-fw fa-eye"></i> <span class="visible-lg-inline"><?= $this->__("backend.page.visibleInMenu") ?></span></span>
                 <span class="element-hide <?= $page->getIsInMenu() ? "hide" : "" ?>"><i
-                        class="fa fa-fw fa-eye-slash text-danger"></i> <?= $this->__("backend.page.notVisibleInMenu") ?></span>
+                            class="fa fa-fw fa-eye-slash text-danger"></i> <span class="visible-lg-inline"><?= $this->__("backend.page.notVisibleInMenu") ?></span></span>
             </button>
         </div>
     </div>
@@ -209,16 +209,20 @@
             //obj.$el.css({left: 0, top: 0})
         },
         initiate: function (ev, obj) {
-            this.options.prevParent  = obj.$el.parent();
-            this.options.prevBrother = obj.$el.prev();
-            obj.$el.css({left: obj.$el.offset().left, top: obj.$el.offset().top});
-            obj.$el.detach().appendTo('body');
-            $('.container-receiver').prepend($('<div class="content-drag-receiver receiver-on"></div>'));
-            $('.panel-backend-content').each(function (index, item) {
-                if (!$(item).is(obj.$el)) {
-                    $(item).after($('<div class="content-drag-receiver receiver-on"></div>'));
-                }
-            });
+            // we need to see if the class is not applied already, as the touch/click events
+            // are called twice on tablets/mobiles
+            if (!$('.content-drag-receiver').length) {
+                this.options.prevParent = obj.$el.parent();
+                this.options.prevBrother = obj.$el.prev();
+                obj.$el.css({left: obj.$el.offset().left, top: obj.$el.offset().top});
+                obj.$el.detach().appendTo('body');
+                $('.container-receiver').prepend($('<div class="content-drag-receiver receiver-on"></div>'));
+                $('.panel-backend-content').each(function (index, item) {
+                    if (!$(item).is(obj.$el)) {
+                        $(item).after($('<div class="content-drag-receiver receiver-on"></div>'));
+                    }
+                });
+            }
             /*$('html, body').animate({
                 scrollTop: obj.$el.offset().top
             }, 2000);*/

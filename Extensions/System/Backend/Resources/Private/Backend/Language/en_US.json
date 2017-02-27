@@ -43,7 +43,7 @@
   "backend.page.notVisibleInMenu": "Page not shown in menus",
   "backend.page.deletePage": "Delete page",
   "backend.page.deletePage.confirm": "Are you sure you want to delete the page <strong>%(page)</strong>? If this page contains subpages, they will be deleted too!",
-  "backend.page.edit": "Edit properties",
+  "backend.page.edit": "Edit",
   "backend.page.properties.header": "Edit the page properties",
   "backend.page.properties.metaKeywords": "Meta keywords",
   "backend.page.properties.metaDescription": "Meta description",
