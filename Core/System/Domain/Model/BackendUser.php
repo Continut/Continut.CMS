@@ -18,6 +18,11 @@ class BackendUser extends User
     protected $name;
 
     /**
+     * @var string Language for this backend user
+     */
+    protected $language;
+
+    /**
      * @return string
      */
     public function getName()
@@ -34,6 +39,22 @@ class BackendUser extends User
     }
 
     /**
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * @param string $language
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+    }
+
+    /**
      * Simple datamapper used for the database
      *
      * @return array
@@ -41,7 +62,8 @@ class BackendUser extends User
     public function dataMapper()
     {
         $fields = [
-            "name" => $this->name
+            'name'     => $this->name,
+            'language' => $this->language
         ];
 
         return array_merge($fields, parent::dataMapper());

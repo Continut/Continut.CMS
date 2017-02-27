@@ -20,15 +20,11 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="username">Username</label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" id="username" placeholder="Username" value="<?= $user->getUsername() ?>" />
+                    <p class="form-control-static"><?= $user->getUsername() ?></p>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="name" class="col-sm-2 control-label">Full name</label>
-                <div class="col-sm-4">
-                    <input type="text" class="form-control" id="name" placeholder="Name" value="<?= $user->getName() ?>" />
-                </div>
-            </div>
+            <?= $this->helper('FormObject')->selectField($user, 'language', 'Language', $this->helper('Locale')->iso2LanguageCodes(), $user->getLanguage()) ?>
+            <?= $this->helper('FormObject')->textField($user, 'name', 'Full name', $user->getName()) ?>
             <div class="form-group">
                 <label for="usergroup_id" class="col-sm-2 control-label">User group</label>
                 <div class="col-sm-4">
