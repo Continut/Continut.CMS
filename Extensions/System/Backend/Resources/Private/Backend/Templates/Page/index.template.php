@@ -232,7 +232,7 @@
             e.preventDefault();
             $(this).toggleClass('toggled');
             $("#sidebar_tree").toggle();
-            $("#content_wrapper").toggleClass('col-md-9 col-sm-7 col-xs-12');
+            $("#content_wrapper").toggleClass('col-md-8 col-sm-7 col-xs-12');
         });
     });
 
