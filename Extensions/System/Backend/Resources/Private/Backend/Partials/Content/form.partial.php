@@ -59,7 +59,7 @@ $elementType = (isset($settings['type'])) ? $settings['type'] : $element->getTyp
                     if (saveAction == 'saveAndClose') {
                         var contentId = data.content.id;
                         $.ajax({
-                            url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'show']) ?>',
+                            url: '<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'show']) ?>',
                             data: {page_id: data.content.page_id}
                         }).done(function (data) {
                             // reload page data

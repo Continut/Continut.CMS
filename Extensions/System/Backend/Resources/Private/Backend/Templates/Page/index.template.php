@@ -74,6 +74,10 @@
                     </script>
                 </div>
             </form>
+            <a href="#" class="btn btn-success" title="Toggle touch enhancements" id="toggle_touch">
+                <span class="fa fa-fw fa-hand-pointer-o open"></span>
+                <span class="fa fa-fw fa-mouse-pointer closed"></span>
+            </a>
         </div>
         <div class="row tree-filter">
             <div class="col-xs-6">
@@ -97,8 +101,8 @@
     <!-- Main page content will be loaded inside this div -->
     <div id="content_wrapper" class="col-md-8 col-sm-7">
         <a href="#" class="btn btn-success" title="Toggle sidebar visibility" id="toggle_sidebar">
-            <span class="fa fa-chevron-left open"></span>
-            <span class="fa fa-chevron-right closed"></span>
+            <span class="fa fa-fw fa-chevron-left open"></span>
+            <span class="fa fa-fw fa-chevron-right closed"></span>
         </a>
         <div id="content"></div>
     </div>
@@ -227,13 +231,17 @@
         });
     });
 
-    $(document).ready(function() {
-        $("#toggle_sidebar").click(function (e) {
-            e.preventDefault();
-            $(this).toggleClass('toggled');
-            $("#sidebar_tree").toggle();
-            $("#content_wrapper").toggleClass('col-md-8 col-sm-7 col-xs-12');
-        });
+    $("#toggle_sidebar").click(function (e) {
+        e.preventDefault();
+        $(this).toggleClass('toggled');
+        $("#sidebar_tree").toggle();
+        $("#content_wrapper").toggleClass('col-md-8 col-sm-7 col-xs-12');
+    });
+
+    $("#toggle_touch").click(function (e) {
+        e.preventDefault();
+        $(this).toggleClass('toggled');
+        $("#cms_tree, #content_wrapper .page-panel").toggleClass('touch-friendly');
     });
 
 </script>

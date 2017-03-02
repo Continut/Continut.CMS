@@ -35,21 +35,7 @@
                                 class="fa fa-fw fa-upload"></i></a>
                     </div>
                 </div>
-                <div class="list-group folders-list" id="folders_menu">
-                    <h4><?= $this->__("backend.media.folders.subfolders") ?></h4>
-                    <?php if ($path != ""): ?>
-                        <a class="list-group-item list-group-item-info" href="<?= $path ?>"><span class="badge"><i
-                                    class="fa fa-angle-double-up"></i></span> <?= $this->__("backend.media.folders.up") ?>
-                        </a>
-                    <?php endif ?>
-                    <?php foreach ($folders as $folder): ?>
-                        <a class="list-group-item"
-                           href="<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Media', '_action' => 'index', 'path' => urlencode($folder->getRelativePath())]) ?>"><span
-                                class="badge"><?= $folder->getCountFolders() ?> <i
-                                    class="fa fa-fw fa-folder"></i> / <?= $folder->getCountFiles() ?> <i
-                                    class="fa fa-fw fa-file"></i></span> <?= $folder->getName() ?></a>
-                    <?php endforeach ?>
-                </div>
+                <div id="file_tree"></div>
             </div>
             <div class="col-sm-9">
                 <p>
@@ -91,6 +77,36 @@
 </div>
 
 <script>
+    $('#file_tree').jstree({
+        'core' : {
+            'multiple' : false,
+            'animation' : 0,
+            'check_callback': true,
+            'themes' : {
+                'variant' : 'large',
+                'dots' : true
+            },
+            'strings': {
+                'Loading ...' : '<?= $this->__('backend.tree.loading') ?>',
+            },
+            'data': {}
+        },
+        'dnd': {
+            'copy': false, // true allows to make copies while dragging and holding Ctrl. We don't want this
+            'always_copy': false,
+            'check_while_dragging': false,
+            'large_drag_target': true,
+            'large_drop_target': true
+        },
+        'search': {
+            'show_only_matches': true,
+            'show_only_matches_children': false
+        },
+        'plugins' : ['dnd', 'search', 'wholerow']
+        //'plugins' : ['dnd', 'search', 'wholerow', 'checkbox']
+    });
+
+    // create folder button
     $('#create_folder').on('click', function (event) {
         event.preventDefault();
         var path = $(this).attr('href');
@@ -111,6 +127,7 @@
         });
     });
 
+    // browse folder button - @TODO remove, replaced by jstree
     $('#folders_menu .list-group-item').on('click', function (event) {
         event.preventDefault();
         var path = $(this).attr('href');

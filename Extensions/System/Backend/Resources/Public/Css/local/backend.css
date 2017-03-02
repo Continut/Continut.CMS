@@ -146,9 +146,18 @@ html {
   border: none;
   padding: 0;
 }
+#sidebar_tree #toggle_touch {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
+}
 #cms_tree {
   overflow-y: auto;
   padding: 10px 0;
+}
+.touch-friendly {
+  margin-right: 50px;
 }
 #sidebar .list-group {
   font-size: 1.2em;
@@ -167,18 +176,6 @@ html {
   left: 0;
   top: 0;
   z-index: 1;
-}
-#content_wrapper #toggle_sidebar .open {
-  display: inline-block;
-}
-#content_wrapper #toggle_sidebar .closed {
-  display: none;
-}
-#content_wrapper #toggle_sidebar.toggled .open {
-  display: none;
-}
-#content_wrapper #toggle_sidebar.toggled .closed {
-  display: inline-block;
 }
 #content_wrapper #content {
   padding-top: 15px;
@@ -394,6 +391,18 @@ li a.helper-icon {
 .dropdown-menu {
   border-radius: 0;
   margin: 0;
+}
+.btn .open {
+  display: inline-block;
+}
+.btn .closed {
+  display: none;
+}
+.btn.toggled .open {
+  display: none;
+}
+.btn.toggled .closed {
+  display: inline-block;
 }
 .btn-backend,
 .btn-backend.focus,
