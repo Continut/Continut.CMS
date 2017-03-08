@@ -17,7 +17,9 @@ class PageController extends BackendController
     public function __construct()
     {
         parent::__construct();
-        $this->setLayoutTemplate(Utility::getResource("Default", "Backend", "Backend", "Layout"));
+        // pass the user to every action
+        $this->getView()->assign('user', $this->getUser());
+        $this->setLayoutTemplate(Utility::getResource('Default', 'Backend', 'Backend', 'Layout'));
     }
 
     /**
@@ -28,14 +30,18 @@ class PageController extends BackendController
     public function indexAction()
     {
         $domainsCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection');
-        $domainsCollection->sql("SELECT sys_domains.* FROM sys_domains LEFT JOIN sys_domain_urls ON sys_domains.id=sys_domain_urls.domain_id WHERE sys_domain_urls.domain_id IS NOT NULL AND sys_domains.is_visible =:is_visible GROUP BY (sys_domains.id) ORDER BY sys_domains.sorting ASC", ["is_visible" => 1]);
+        $domainsCollection->sql('SELECT sys_domains.* FROM sys_domains LEFT JOIN sys_domain_urls ON sys_domains.id=sys_domain_urls.domain_id WHERE sys_domain_urls.domain_id IS NOT NULL AND sys_domains.is_visible =:is_visible GROUP BY (sys_domains.id) ORDER BY sys_domains.sorting ASC', ['is_visible' => 1]);
 
         $languagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection');
         $domainId = ($this->getSession()->get('current_domain')) ? (int)$this->getSession()->get('current_domain') : $domainsCollection->getFirst()->getId();
-        $languagesCollection->where("domain_id = :domain_id ORDER BY sorting ASC", ["domain_id" => $domainId]);
+        $languagesCollection->where('domain_id = :domain_id ORDER BY sorting ASC', ['domain_id' => $domainId]);
 
-        $this->getView()->assign("domains", $domainsCollection);
-        $this->getView()->assign("languages", $languagesCollection);
+        $this->getView()->assignMultiple(
+            [
+                'domains'   => $domainsCollection,
+                'languages' => $languagesCollection
+            ]
+        );
     }
 
     /**
@@ -538,5 +544,19 @@ class PageController extends BackendController
 
         // @TODO: check for errors and return them
         return json_encode(['success' => 0, 'error' => '@TODO']);
+    }
+
+    /**
+     * Toggles the touch enhancements for tree and page elements handling
+     */
+    public function toggleTouchAction()
+    {
+        $touchEnabled = !$this->getUser()->getAttribute('touchEnabled', 0);
+        $this
+            ->getUser()
+            ->setAttribute('touchEnabled', $touchEnabled)
+            ->save();
+
+        return json_encode(['touchEnabled' => $this->getUser()->getAttribute('touchEnabled'), 'success' => 1]);
     }
 }

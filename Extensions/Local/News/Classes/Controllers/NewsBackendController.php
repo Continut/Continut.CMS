@@ -32,7 +32,7 @@ class NewsBackendController extends BackendController
         $grid = Utility::createInstance('Continut\Extensions\System\Backend\Classes\View\GridView');
 
         $grid
-            ->setFormAction(Utility::helper('Url')->linkToPath('news_backend', ['_controller' => 'NewsBackend', '_action' => 'index']))
+            ->setFormAction(Utility::helper('Url')->linkToPath('admin_backend', ['_extension' => 'News', '_controller' => 'NewsBackend', '_action' => 'index']))
             ->setTemplate(Utility::getResource('Grid/gridView', 'Backend', 'Backend', 'Template'))
             ->setCollection(Utility::createInstance('Continut\Extensions\Local\News\Classes\Domain\Collection\NewsCollection'))
             ->setPager(10, Utility::getRequest()->getArgument('page', 1))
@@ -104,20 +104,55 @@ class NewsBackendController extends BackendController
     /**
      * Create news
      */
-    public function createNewsAction() {
+    public function createNewsAction()
+    {
         $news = Utility::createInstance('Continut\Extensions\Local\News\Classes\Domain\Model\News');
+        $usersCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\FrontendUserCollection');
 
         $this->getView()->assign('news', $news);
+        $this->getView()->assign('authors', $usersCollection->findAll());
     }
 
     /**
      * Edit news
      */
-    public function editNewsAction() {
+    public function editNewsAction()
+    {
         $id = (int)$this->getRequest()->getArgument('id');
 
-        $newsCollection = Utility::createInstance('Continut\Extensions\Local\News\Classes\Domain\Collection\NewsCollection');
+        $newsCollection  = Utility::createInstance('Continut\Extensions\Local\News\Classes\Domain\Collection\NewsCollection');
+        $usersCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\FrontendUserCollection');
         $news = $newsCollection->findById($id);
+
+        $this->getView()->assign('news', $news);
+        $this->getView()->assign('authors', $usersCollection->findAll());
+    }
+
+    public function saveNewsAction()
+    {
+        $data = $this->getRequest()->getArgument('data');
+        $id = (int)$data['id'];
+
+        // reference the collection
+        $newsCollection = Utility::createInstance('Continut\Extensions\Local\News\Classes\Domain\Collection\NewsCollection');
+
+        if ($id == 0) {
+            $news = Utility::createInstance('Continut\Extensions\Local\News\Classes\Domain\Model\News');
+        }
+        else {
+            $news = $newsCollection->findById($id);
+        }
+        $news->update($data);
+
+        if ($news->validate()) {
+            $newsCollection
+                ->reset()
+                ->add($news)
+                ->save();
+
+            // redirect to the "domainsAction" since all went well and data is saved
+            $this->redirect(Utility::helper('Url')->linkToPath('admin_backend', ['_extension' => 'News', '_controller' => 'NewsBackend', '_action' => 'index']));
+        }
 
         $this->getView()->assign('news', $news);
     }

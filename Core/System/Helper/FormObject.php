@@ -225,9 +225,9 @@ HER;
      * Simple textarea field
      *
      * @param BaseModel $model Model object
-     * @param $name
-     * @param $label
-     * @param $value
+     * @param string $name
+     * @param string $label
+     * @param string $value
      *
      * @return string
      */
@@ -235,6 +235,7 @@ HER;
     {
         $fieldName = $this->setFieldName($name);
         $fieldLabel = $this->setFieldLabel($name, $label);
+        $errors = $this->setErrors($model, $name);
 
         // if no default value is set, get the one from the model
         if (!$value) {
@@ -242,8 +243,11 @@ HER;
         }
 
         $html = <<<HER
+        <div class="form-group {$errors['errorsClass']}">
 			$fieldLabel
 			<textarea id="field_$name" name="$fieldName" class="form-control" rows="5">$value</textarea>
+			{$errors['errorsBlock']}
+		</div>
 HER;
         return $html;
     }
@@ -251,53 +255,64 @@ HER;
     /**
      * RTE field
      *
-     * @param $name
-     * @param $label
-     * @param $value
+     * @param BaseModel $model Model object
+     * @param string $name
+     * @param string $label
+     * @param string $value
+     * @param string $height Height of textarea
      *
      * @return string
      */
-    public function rteField($name, $label, $value)
+    public function rteField($model, $name, $label, $value, $height = '100px')
     {
         $fieldName = $this->setFieldName($name);
         $fieldLabel = $this->setFieldLabel($name, $label);
+        $errors = $this->setErrors($model, $name);
+
+        // if no default value is set, get the one from the model
+        if (!$value) {
+            $value = $model->fetchFromField($name);
+        }
 
         $html = <<<HER
+		<div class="form-group {$errors['errorsClass']}">
 			$fieldLabel
 			<div class="rte-toolbar" id="rte_toolbar_$name">
 				<div class="btn-group">
-			  		<a class="btn btn-default" data-wysihtml5-command="bold"><i class="fa fa-fw fa-bold"></i></a>
-			  		<a class="btn btn-default" data-wysihtml5-command="italic"><i class="fa fa-fw fa-italic"></i></a>
-			  		<a class="btn btn-default" data-wysihtml5-command="underline"><i class="fa fa-fw fa-underline"></i></a>
+			  		<a class="btn btn-default" data-wysihtml-command="bold"><i class="fa fa-fw fa-bold"></i></a>
+			  		<a class="btn btn-default" data-wysihtml-command="italic"><i class="fa fa-fw fa-italic"></i></a>
+			  		<a class="btn btn-default" data-wysihtml-command="underline"><i class="fa fa-fw fa-underline"></i></a>
 				</div>
 				<div class="btn-group">
-					<a class="btn btn-default" data-wysihtml5-command="alignLeftStyle"><i class="fa fa-fw fa-align-left"></i></a>
-					<a class="btn btn-default" data-wysihtml5-command="alignCenterStyle"><i class="fa fa-fw fa-align-center"></i></a>
-					<a class="btn btn-default" data-wysihtml5-command="alignRightStyle"><i class="fa fa-fw fa-align-right"></i></a>
+					<a class="btn btn-default" data-wysihtml-command="alignLeftStyle"><i class="fa fa-fw fa-align-left"></i></a>
+					<a class="btn btn-default" data-wysihtml-command="alignCenterStyle"><i class="fa fa-fw fa-align-center"></i></a>
+					<a class="btn btn-default" data-wysihtml-command="alignRightStyle"><i class="fa fa-fw fa-align-right"></i></a>
 				</div>
 				<div class="btn-group">
-					<a class="btn btn-default" data-wysihtml5-command="insertUnorderedList"><i class="fa fa-fw fa-list"></i></a>
-					<a class="btn btn-default" data-wysihtml5-command="insertOrderedList"><i class="fa fa-fw fa-list-ol"></i></a>
+					<a class="btn btn-default" data-wysihtml-command="insertUnorderedList"><i class="fa fa-fw fa-list"></i></a>
+					<a class="btn btn-default" data-wysihtml-command="insertOrderedList"><i class="fa fa-fw fa-list-ol"></i></a>
 				</div>
 				<select class="selectpicker">
-					<option value="p" data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="p" data-icon="fa fa-fw fa-paragraph">Paragraph</option>
-					<option value="h1" data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h1" data-icon="fa fa-fw fa-header">Heading 1</option>
-					<option value="h2" data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h2" data-icon="fa fa-fw fa-header">Heading 2</option>
-					<option value="h3" data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h3" data-icon="fa fa-fw fa-header">Heading 3</option>
-					<option value="h4" data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h4" data-icon="fa fa-fw fa-header">Heading 4</option>
-					<option value="h5" data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h5" data-icon="fa fa-fw fa-header">Heading 5</option>
+					<option value="p" data-wysihtml-command="formatBlock" data-wysihtml-command-value="p" data-icon="fa fa-fw fa-paragraph">Paragraph</option>
+					<option value="h1" data-wysihtml-command="formatBlock" data-wysihtml-command-value="h1" data-icon="fa fa-fw fa-header">Heading 1</option>
+					<option value="h2" data-wysihtml-command="formatBlock" data-wysihtml-command-value="h2" data-icon="fa fa-fw fa-header">Heading 2</option>
+					<option value="h3" data-wysihtml-command="formatBlock" data-wysihtml-command-value="h3" data-icon="fa fa-fw fa-header">Heading 3</option>
+					<option value="h4" data-wysihtml-command="formatBlock" data-wysihtml-command-value="h4" data-icon="fa fa-fw fa-header">Heading 4</option>
+					<option value="h5" data-wysihtml-command="formatBlock" data-wysihtml-command-value="h5" data-icon="fa fa-fw fa-header">Heading 5</option>
 					<option value="">-- No format block --</option>
 				</select>
-			  	<a class="btn btn-default" data-wysihtml5-action="change_view"><i class="fa fa-fw fa-code"></i></a>
+			  	<a class="btn btn-default" data-wysihtml-action="change_view"><i class="fa fa-fw fa-code"></i></a>
 			</div>
-			<textarea id="field_$name" name="$fieldName" class="form-control rte">$value</textarea>
+			<textarea id="field_$name" name="$fieldName" class="form-control rte" style="height: $height">$value</textarea>
 			<script type="text/javascript">
-			var editor_$name = new wysihtml5.Editor('field_$name', {
+			var editor_$name = new wysihtml.Editor('field_$name', {
 				toolbar: 'rte_toolbar_$name',
-				parserRules:  wysihtml5ParserRules
+				parserRules: wysihtmlParserRules
 			});
 			$('.selectpicker').selectpicker();
 			</script>
+			{$errors['errorsBlock']}
+		</div>
 HER;
         return $html;
     }

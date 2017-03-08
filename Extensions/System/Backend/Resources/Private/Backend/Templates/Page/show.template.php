@@ -43,7 +43,7 @@
 </div>
 
 <div id="page_edit_block" class="row"></div>
-<div class="panel panel-warning page-panel">
+<div class="panel panel-warning page-panel <?= $user->getAttribute('touchEnabled', false) ? 'touch-friendly' : ''; ?>">
     <div class="panel-heading"><i class="fa fa-fw fa-file-o"></i> <span
             class="current-page-title"><?= $page->getTitle() ?></span></div>
     <div class="panel-body">

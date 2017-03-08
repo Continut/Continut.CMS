@@ -14,7 +14,6 @@ use Continut\Core\Mvc\Model\BaseCollection;
 
 class FrontendUserCollection extends BaseCollection
 {
-
     /**
      * Set tablename and element class
      */

@@ -19,7 +19,8 @@ $this->getPageView()
     ->addJsAsset(['identifier' => 'datetimepicker-i18n', 'extension' => 'Backend', 'file' => 'datetimepicker/i18n/DateTimePicker-i18n.js'])
     ->addJsAsset(['identifier' => 'jstree',              'extension' => 'Backend', 'file' => 'jstree/jstree.js'])
     ->addJsAsset(['identifier' => 'pep',                 'extension' => 'Backend', 'file' => 'pep/jquery.pep.js'])
-    ->addJsAsset(['identifier' => 'wysihtml-toolbar',    'extension' => 'Backend', 'file' => 'wysihtml/wysihtml-toolbar.min.js'])
+    ->addJsAsset(['identifier' => 'wysihtml',            'extension' => 'Backend', 'file' => 'wysihtml/wysihtml.min.js'])
+    ->addJsAsset(['identifier' => 'wysihtml-toolbar',    'extension' => 'Backend', 'file' => 'wysihtml/wysihtml.toolbar.min.js'])
     ->addJsAsset(['identifier' => 'wysihtml-parser',     'extension' => 'Backend', 'file' => 'wysihtml/parser_rules/advanced_and_extended.js'])
     ->addJsAsset(['identifier' => 'local',               'extension' => 'Backend', 'file' => 'local/backend.js']);
 ?>

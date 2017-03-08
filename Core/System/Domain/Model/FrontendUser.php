@@ -10,6 +10,16 @@
 
 namespace Continut\Core\System\Domain\Model;
 
+use Continut\Core\Utility;
+
 class FrontendUser extends User
 {
+    /**
+     * Save FrontendUser data
+     */
+    public function save()
+    {
+        $collection = Utility::createInstance('Continut\Core\System\Domain\Collection\FrontendUserCollection');
+        $collection->add($this)->save();
+    }
 }

@@ -11,6 +11,7 @@ namespace Continut\Extensions\Local\News\Classes\Domain\Model;
 
 use Continut\Core\Mvc\Model\BaseModel;
 use Continut\Core\Utility;
+use Respect\Validation\Validator as v;
 
 class News extends BaseModel
 {
@@ -54,13 +55,24 @@ class News extends BaseModel
     public function dataMapper()
     {
         $fields = [
-            "title"       => $this->title,
-            "description" => $this->description,
-            "is_visible"  => $this->isVisible,
-            "author"      => $this->author
+            'title'       => $this->title,
+            'description' => $this->description,
+            'is_visible'  => $this->isVisible,
+            'author'      => $this->author
         ];
 
         return array_merge($fields, parent::dataMapper());
+    }
+
+    /**
+     * Define the list of fields to validate and the validators to validate against
+     *
+     * @return array List of field names and their validators
+     */
+    public function dataValidation() {
+        return [
+            'title'  => v::length(3, 250)
+        ];
     }
 
     /**

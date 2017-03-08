@@ -80,15 +80,15 @@ class DomainUrl extends BaseModel
     public function dataMapper()
     {
         $fields = [
-            "is_alias"  => $this->isAlias,
-            "parent_id" => $this->parentId,
-            "domain_id" => $this->domainId,
-            "sorting"   => $this->sorting,
-            "locale"    => $this->locale,
-            "flag"      => $this->flag,
-            "url"       => $this->url,
-            "title"     => $this->title,
-            "code"      => $this->code
+            'is_alias'  => $this->isAlias,
+            'parent_id' => $this->parentId,
+            'domain_id' => $this->domainId,
+            'sorting'   => $this->sorting,
+            'locale'    => $this->locale,
+            'flag'      => $this->flag,
+            'url'       => $this->url,
+            'title'     => $this->title,
+            'code'      => $this->code
         ];
         return array_merge($fields, parent::dataMapper());
     }
@@ -101,9 +101,9 @@ class DomainUrl extends BaseModel
     public function dataValidation()
     {
         return [
-            "title"  => v::length(3, 200),
-            "url"    => v::noWhitespace()->length(1, 200),
-            "locale" => v::noWhitespace()->length(2, 40)
+            'title'  => v::length(3, 200),
+            'url'    => v::noWhitespace()->length(1, 200),
+            'locale' => v::noWhitespace()->length(2, 40)
         ];
         //return parent::dataValidation();
     }

@@ -243,7 +243,7 @@ li a.helper-icon {
   background: rgba(17, 17, 17, 0.5);
   padding: 5px;
   color: white;
-  z-index: 100;
+  z-index: 2;
 }
 .folders-list {
   margin-top: 10px;

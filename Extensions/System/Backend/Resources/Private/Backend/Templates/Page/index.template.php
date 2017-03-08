@@ -74,7 +74,7 @@
                     </script>
                 </div>
             </form>
-            <a href="#" class="btn btn-success" title="Toggle touch enhancements" id="toggle_touch">
+            <a href="#" class="btn btn-success <?= $user->getAttribute('touchEnabled', false) ? 'toggled' : ''; ?>" title="Toggle touch enhancements" id="toggle_touch">
                 <span class="fa fa-fw fa-hand-pointer-o open"></span>
                 <span class="fa fa-fw fa-mouse-pointer closed"></span>
             </a>
@@ -96,7 +96,7 @@
                         class="fa fa-fw fa-plus"></i> <?= $this->__("backend.pageTree.createPage") ?></a>
             </div>
         </div>
-        <div id="cms_tree"></div>
+        <div id="cms_tree" class="<?= $user->getAttribute('touchEnabled', false) ? 'touch-friendly' : ''; ?>"></div>
     </div>
     <!-- Main page content will be loaded inside this div -->
     <div id="content_wrapper" class="col-md-8 col-sm-7">
@@ -240,8 +240,18 @@
 
     $("#toggle_touch").click(function (e) {
         e.preventDefault();
-        $(this).toggleClass('toggled');
-        $("#cms_tree, #content_wrapper .page-panel").toggleClass('touch-friendly');
+
+        var $link = $(this);
+
+        $.getJSON('<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'toggleTouch']) ?>', function(data) {
+            if (data.touchEnabled) {
+                $link.addClass('toggled');
+                $("#cms_tree, #content_wrapper .page-panel").addClass('touch-friendly');
+            } else {
+                $link.removeClass('toggled');
+                $("#cms_tree, #content_wrapper .page-panel").removeClass('touch-friendly');
+            }
+        });
     });
 
 </script>

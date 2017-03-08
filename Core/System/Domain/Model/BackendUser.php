@@ -10,6 +10,8 @@
 
 namespace Continut\Core\System\Domain\Model;
 
+use Continut\Core\Utility;
+
 class BackendUser extends User
 {
     /**
@@ -67,5 +69,14 @@ class BackendUser extends User
         ];
 
         return array_merge($fields, parent::dataMapper());
+    }
+
+    /**
+     * Save FrontendUser data
+     */
+    public function save()
+    {
+        $collection = Utility::createInstance('Continut\Core\System\Domain\Collection\BackendUserCollection');
+        $collection->add($this)->save();
     }
 }
