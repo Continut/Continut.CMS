@@ -25,6 +25,17 @@ class PageCollection extends BaseCollection
         $this->elementClass = 'Continut\Core\System\Domain\Model\Page';
     }
 
+    protected function beforeSave()
+    {
+        parent::beforeSave();
+        // before saving the page collection go through all the pages and generate
+        // their breadcrumb path and store it in cached_path
+        foreach ($this->getElements() as $element) {
+            $cachedPath = $this->cachedBreadcrumb($element->getParentId());
+            $element->setCachedPath(implode(',', $cachedPath));
+        }
+    }
+
     /**
      * Build a tree out of the returned pages
      * Optionally return only the children for a certain child id
@@ -113,15 +124,14 @@ class PageCollection extends BaseCollection
     }
 
     /**
-     * @param int $pageId
+     * @param int $parentId
      *
      * @return array
      */
-    public function cachedBreadcrumb($pageId)
+    public function cachedBreadcrumb($parentId)
     {
         $cachedPath = [];
-
-        $this->fetchParent($cachedPath, $pageId);
+        $cachedPath = $this->fetchParent($cachedPath, $parentId);
 
         return $cachedPath;
     }
@@ -132,14 +142,16 @@ class PageCollection extends BaseCollection
      *
      * @return mixed
      */
-    protected function fetchParent(&$path, $id)
+    protected function fetchParent($path, $id)
     {
-        $page = $this->findById($id);
-        $path[] = $id;
-        if ($page->getParentId() == 0) {
-            return null;
-        } else {
-            return $this->fetchParent($path, $page->getParentId());
+        if ($id > 0) {
+            $page = $this->findById($id);
+            $path[] = $id;
+            if ($page->getParentId() == 0) {
+                return $path;
+            } else {
+                return $this->fetchParent($path, $page->getParentId());
+            }
         }
     }
 
@@ -193,20 +205,56 @@ class PageCollection extends BaseCollection
      *
      * @return $this
      */
-    public function findByParentId($parentId, $includeDeleted = false, $includeHidden = false) {
-        $deletedString = "";
+    public function findByParentId($parentId, $includeDeleted = false, $includeHidden = false)
+    {
+        $deletedString = '';
         if (!$includeDeleted) {
-            $deletedString = "AND is_deleted = 0";
+            $deletedString = 'AND is_deleted = 0';
         }
-        $visibleString = "";
+        $visibleString = '';
         if (!$includeHidden) {
-            $visibleString = "AND is_visible = 1";
+            $visibleString = 'AND is_visible = 1';
         }
         return $this->where("is_in_menu = 1 $visibleString $deletedString AND domain_url_id = :domain_url_id AND parent_id = :parent_id ORDER BY parent_id ASC, sorting ASC",
             [
-                "domain_url_id" => Utility::getSite()->getDomainUrl()->getId(),
-                "parent_id"     => $parentId
+                'domain_url_id' => Utility::getSite()->getDomainUrl()->getId(),
+                'parent_id'     => $parentId
             ]
             );
+    }
+
+    /**
+     * Fetches all pages for a specified domain language that contain the searchTerm in their title
+     *
+     * @param int    $languageId
+     * @param string $searchTerm
+     *
+     * @return $this
+     */
+    public function whereLanguageAndTitle($languageId, $searchTerm)
+    {
+        return $this->where(
+            'domain_url_id = :domain_url_id AND is_deleted = 0 AND title LIKE :title ORDER BY parent_id ASC, sorting ASC',
+            [
+                'domain_url_id' => $languageId,
+                'title'         => '%' . $searchTerm . '%'
+            ]
+        );
+    }
+
+    /**
+     * Fetches all pages for a specified domain language
+     *
+     * @param int $languageId
+     *
+     * @return $this
+     */
+    public function whereLanguage($languageId) {
+        return $this->where(
+            'domain_url_id = :domain_url_id AND is_deleted=0 ORDER BY parent_id ASC, sorting ASC',
+            [
+                'domain_url_id' => $languageId
+            ]
+        );
     }
 }

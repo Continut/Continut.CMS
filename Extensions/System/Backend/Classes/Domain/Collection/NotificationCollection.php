@@ -22,4 +22,13 @@ class NotificationCollection extends BaseCollection
         $this->tablename = 'sys_notifications';
         $this->elementClass = 'Continut\Extensions\System\Backend\Classes\Domain\Model\Notification';
     }
+
+    /**
+     * Shorthand method to fetch all notifications for a user
+     *
+     * @return $this
+     */
+    public function whereUser($user) {
+        return $this->where('user IN (0, :user) AND is_read = 0', ['user' => $user->getId()]);
+    }
 }

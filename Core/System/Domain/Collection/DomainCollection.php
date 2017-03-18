@@ -23,4 +23,13 @@ class DomainCollection extends BaseCollection
         $this->tablename = 'sys_domains';
         $this->elementClass = 'Continut\Core\System\Domain\Model\Domain';
     }
+
+    /**
+     * Fetches all domains which are set as visible
+     *
+     * @return $this
+     */
+    public function whereVisible() {
+        return $this->where('is_visible = 1 ORDER BY sorting ASC');
+    }
 }

@@ -1,5 +1,6 @@
 <form method="POST" id="page_edit_template"
       action="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'saveProperties']) ?>">
+    <input type="hidden" name="id" value="<?= $page->getId(); ?>" />
     <?= $this->helper('FormObject')->hiddenField($page, 'id', $page->getId()); ?>
     <div class="col-sm-12">
         <div class="panel panel-warning">
@@ -10,42 +11,26 @@
             </div>
             <div class="panel-body">
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <?= $this->helper('FormObject')->textField($page, 'title', $this->__('backend.page.properties.pageTitle'), $page->getTitle()) ?>
-                    </div>
-                    <div class="form-group">
-                        <?= $this->helper('FormObject')->textField($page, 'slug', $this->__('backend.page.properties.pageSlug'), $page->getSlug()) ?>
-                    </div>
+                    <?= $this->helper('FormObject')->textField($page, 'title', $this->__('backend.page.properties.pageTitle'), $page->getTitle()) ?>
+                    <?= $this->helper('FormObject')->textField($page, 'slug', $this->__('backend.page.properties.pageSlug'), $page->getSlug()) ?>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <?= $this->helper('FormObject')->selectField($page, 'layout', $this->__('backend.page.properties.pageLayout'), array_merge(array('' => $this->__('backend.layout.selectLayout')), $layouts), $page->getLayout()) ?>
-                    </div>
+                    <?= $this->helper('FormObject')->selectField($page, 'layout', $this->__('backend.page.properties.pageLayout'), array_merge(array('' => $this->__('backend.layout.selectLayout')), $layouts), $page->getLayout()) ?>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <?= $this->helper('FormObject')->textField($page, 'meta_keywords', $this->__('backend.page.properties.metaKeywords'), $page->getMetaKeywords()) ?>
-                    </div>
+                    <?= $this->helper('FormObject')->selectField($page, 'layout_recursive', $this->__('backend.page.properties.pageLayoutRecursive'), array(0 => $this->__('general.no'), 1 => $this->__('general.yes')), $page->getIsLayoutRecursive()) ?>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <?= $this->helper('FormObject')->selectField($page, 'layout_recursive', $this->__('backend.page.properties.pageLayoutRecursive'), array(0 => $this->__('general.no'), 1 => $this->__('general.yes')), $page->getIsLayoutRecursive()) ?>
-                    </div>
+                    <?= $this->helper('FormObject')->textField($page, 'meta_keywords', $this->__('backend.page.properties.metaKeywords'), $page->getMetaKeywords()) ?>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <?= $this->helper('FormObject')->textareaField($page, 'meta_description', $this->__('backend.page.properties.metaDescription'), $page->getMetaDescription()) ?>
-                    </div>
+                    <?= $this->helper('FormObject')->textareaField($page, 'meta_description', $this->__('backend.page.properties.metaDescription'), $page->getMetaDescription()) ?>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <?= $this->helper('FormObject')->dateTimeField('start_date', $this->__('backend.page.properties.startDate'), $page->getStartDate()) ?>
-                    </div>
+                    <?= $this->helper('FormObject')->dateTimeField($page, 'start_date', $this->__('backend.page.properties.startDate'), $page->getStartDate()) ?>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <?= $this->helper('FormObject')->dateTimeField('end_date', $this->__('backend.page.properties.endDate'), $page->getEndDate()) ?>
-                    </div>
+                    <?= $this->helper('FormObject')->dateTimeField($page, 'end_date', $this->__('backend.page.properties.endDate'), $page->getEndDate()) ?>
                 </div>
             </div>
             <div class="panel-footer">

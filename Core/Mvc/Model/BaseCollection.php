@@ -137,7 +137,7 @@ class BaseCollection
         if ($row) {
             $element = Utility::createInstance($this->elementClass);
             $element->setDataFromDatabase($row);
-            $this->elements = [$element];
+            //$this->elements = [$element];
 
             return $element;
         }
@@ -198,12 +198,23 @@ class BaseCollection
     }
 
     /**
+     * Called before the collection is saved
+     */
+    protected function beforeSave() {}
+
+    /**
+     * Called after the collection is saved
+     */
+    protected function afterSave() {}
+
+    /**
      * Save all the collection elements
      *
      * @return $this
      */
     public function save()
     {
+        $this->beforeSave();
         foreach ($this->elements as $element) {
             // get the list of fields defined for this model in his dataMapper() function
             $dataMapper = $element->dataMapper();
@@ -240,6 +251,7 @@ class BaseCollection
                 $element->setId($this->getLastInsertId());
             }
         }
+        $this->afterSave();
 
         return $this;
     }

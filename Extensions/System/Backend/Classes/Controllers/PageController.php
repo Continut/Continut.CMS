@@ -34,12 +34,11 @@ class PageController extends BackendController
 
         $languagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection');
         $domainId = ($this->getSession()->get('current_domain')) ? (int)$this->getSession()->get('current_domain') : $domainsCollection->getFirst()->getId();
-        $languagesCollection->where('domain_id = :domain_id ORDER BY sorting ASC', ['domain_id' => $domainId]);
 
         $this->getView()->assignMultiple(
             [
                 'domains'   => $domainsCollection,
-                'languages' => $languagesCollection
+                'languages' => $languagesCollection->whereDomain($domainId)
             ]
         );
     }
@@ -60,10 +59,10 @@ class PageController extends BackendController
         // if a domain/language is already present in the session, then show these ones
         if ($this->getRequest()->hasArgument('domain_id') || $this->getRequest()->hasArgument('domain_url_id')) {
             $domainId    = (int)$this->getRequest()->getArgument('domain_id');
-            $domainUrlId = (int)$this->getRequest()->getArgument('domain_url_id', 0);
+            $languageId = (int)$this->getRequest()->getArgument('domain_url_id', 0);
         } else {
             $domainId    = (int)$this->getSession()->get('current_domain');
-            $domainUrlId = (int)$this->getSession()->get('current_language');
+            $languageId = (int)$this->getSession()->get('current_language');
         }
 
         // get the domains collection
@@ -71,27 +70,22 @@ class PageController extends BackendController
 
         if ($domainId == 0) {
             // fetch the first visible domain, ordered by sorting, if no domain_id is sent
-            $domain = $domainsCollection->where('is_visible = 1 ORDER BY sorting ASC')
+            $domain = $domainsCollection->whereVisible()
                 ->getFirst();
         } else {
-            $domain = $domainsCollection->where('id = :id ORDER BY sorting ASC', ['id' => $domainId])
-                ->getFirst();
+            $domain = $domainsCollection->findById($domainId);
         }
 
         // then the domains url collection
-        $domainsUrlCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection');
+        $languagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection');
         // see if a domain url was sent, if not get the first one found for this domain
-        if ($domainUrlId == 0) {
-            $domainUrl = $domainsUrlCollection->where(
-                'domain_id = :domain_id ORDER BY sorting ASC',
-                ['domain_id' => $domain->getId()]
-            )
+        if ($languageId == 0) {
+            $domainUrl = $languagesCollection
+                ->whereDomain($domain->getId())
                 ->getFirst();
         } else {
-            $domainUrl = $domainsUrlCollection->where(
-                'domain_id = :domain_id AND id = :id ORDER BY sorting ASC',
-                ['domain_id' => $domain->getId(), 'id' => $domainUrlId]
-            )
+            $domainUrl = $languagesCollection
+                ->whereDomainAndLanguage($domain->getId(), $languageId)
                 ->getFirst();
         }
 
@@ -112,20 +106,9 @@ class PageController extends BackendController
         // get all the pages that belong to this domain
         // if the search filter is not empty, filter on page titles
         if (mb_strlen($term) > 0) {
-            $pagesCollection->where(
-                'domain_url_id = :domain_url_id AND is_deleted = 0 AND title LIKE :title ORDER BY parent_id ASC, sorting ASC',
-                [
-                    'domain_url_id' => $domainUrl->getId(),
-                    'title' => "%$term%"
-                ]
-            );
+            $pagesCollection->whereLanguageAndTitle($domainUrl->getId(), $term);
         } else {
-            $pagesCollection->where(
-                'domain_url_id = :domain_url_id AND is_deleted=0 ORDER BY parent_id ASC, sorting ASC',
-                [
-                    'domain_url_id' => $domainUrl->getId()
-                ]
-            );
+            $pagesCollection->whereLanguage($domainUrl->getId());
         }
 
         /** @var \Continut\Core\System\Domain\Collection\DomainUrlCollection $languagesCollection */
@@ -150,8 +133,7 @@ class PageController extends BackendController
     {
         $pageId = (int)$this->getRequest()->getArgument("page_id");
         $pageModel = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection')
-            ->where("id = :id", ["id" => $pageId])
-            ->getFirst();
+            ->findById($pageId);
         $pageModel->mergeOriginal();
 
         $layouts = Utility::getLayouts();
@@ -165,8 +147,9 @@ class PageController extends BackendController
      */
     public function savePropertiesAction()
     {
-        $data = $this->getRequest()->getArgument("data");
-        $id = (int)$data["id"];
+        $data = $this->getRequest()->getArgument('data');
+        // page id to save properties for
+        $id = (int)$data['id'];
 
         $pageCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection');
         $pageModel = $pageCollection->findById($id);
@@ -187,7 +170,6 @@ class PageController extends BackendController
             ->add($pageModel)
             ->save();
 
-        $this->getRequest()->setArgument("page_id", $id);
         $this->forward('show');
 
         //return json_encode(["success" => 1, "id" => $id]);
@@ -200,16 +182,15 @@ class PageController extends BackendController
      */
     public function showAction()
     {
-        Utility::debugData("page_rendering", "start", "Page rendering");
+        Utility::debugData('page_rendering', 'start', 'Page rendering');
+
         // Load the pages collection model
         $pagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\PageCollection');
-        // Using the collection, load the page specified in the argument "page_id"
-        $pageId = (int)$this->getRequest()->getArgument("page_id", 0);
+        $pageId = (int)$this->getRequest()->getArgument('id', 0);
         $pageModel = $pagesCollection->findById($pageId);
         $pageModel->mergeOriginal();
 
-        // The breadcrumbs path is cached in the variable "cached_path" as a comma separated list of values
-        // so that we can easily traverse it in 1 query
+        // The breadcrumb path is cached in the variable "cached_path" as a comma separated list of values
         $breadcrumbs = [];
         if ($pageModel->getCachedPath()) {
             $breadcrumbs = $pagesCollection
@@ -219,7 +200,7 @@ class PageController extends BackendController
 
         // Load the content collection model and then find all the content elements that belong to this page_id
         $contentCollection = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Collection\BackendContentCollection');
-        $contentCollection->where("page_id = :page_id AND is_deleted = 0 ORDER BY sorting ASC", [":page_id" => $pageId]);
+        $contentCollection->where('page_id = :page_id AND is_deleted = 0 ORDER BY sorting ASC', [':page_id' => $pageId]);
 
         // Since content elements can have containers and be recursive, we need to build a Tree object to handle them
         $contentTree = $contentCollection->buildTree();
@@ -237,11 +218,16 @@ class PageController extends BackendController
         $pageContent = $pageView->render();
 
         // Send all the data to the view
-        $this->getView()->assign("page", $pageModel);
-        $this->getView()->assign("pageContent", $pageContent);
-        $this->getView()->assign("breadcrumbs", $breadcrumbs);
+        $this->getView()->assignMultiple(
+            [
+                'page'        => $pageModel,
+                'pageContent' => $pageContent,
+                'breadcrumbs' => $breadcrumbs
+            ]
+        );
+
         // notify the debugger
-        Utility::debugData("page_rendering", "stop");
+        Utility::debugData('page_rendering', 'stop');
     }
 
     /**

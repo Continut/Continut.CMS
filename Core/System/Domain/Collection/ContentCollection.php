@@ -33,25 +33,27 @@ class ContentCollection extends BaseCollection
     {
         $children = [];
 
-        // add a root child node, that selects the page
-        $rootChild = new \stdClass();
-        $rootChild->id = '9999';
+        // add a root child node, that allows us to select the page
+        // this is a virtual node, as it does not exist in the actual page content
+        // used for the moment only for the FEEditor
+        $rootChild           = new \stdClass();
+        $rootChild->id       = '9999';
         $rootChild->parentId = '0';
-        $rootChild->label = 'Root node';
-        $rootChild->text = 'Root';
-        $rootChild->icon = 'fa fa-sitemap';
-        $rootChild->status = 'normal';
+        $rootChild->label    = 'Root node';
+        $rootChild->text     = 'Root';
+        $rootChild->icon     = 'fa fa-sitemap';
+        $rootChild->status   = 'normal';
 
         $children[0][] = $rootChild;
 
         foreach ($this->getAll() as $item) {
-            $data = new \stdClass();
-            $data->id = $item->getId();
+            $data           = new \stdClass();
+            $data->id       = $item->getId();
             $data->parentId = $item->getParentId();
-            $data->label = $item->getTitle() . " [id: $data->id]";
-            $data->text = $item->getTitle();
-            $data->status = "normal";
-            //$data->type = $item->getType();
+            $data->label    = $item->getTitle() . " [id: $data->id]";
+            $data->text     = $item->getTitle();
+            $data->status   = "normal";
+            //$data->type   = $item->getType();
             switch ($item->getType()) {
                 case 'content':
                     $data->icon = 'fa fa-file-text';

@@ -29,18 +29,48 @@ class DomainUrlCollection extends BaseCollection
      *
      * @return array
      */
-    public function toSimplifiedArray($addEmpty = false, $emptyTitle = "")
+    public function toSimplifiedArray($addEmpty = false, $emptyTitle = '')
     {
         $data = [];
+        // Too much EU patriotism, I know. still waiting for a globe icon to replace it
         if ($addEmpty) {
-            $data = [0 => ["title" => $emptyTitle, "flag" => "eu"]];
+            $data = [0 => ['title' => $emptyTitle, 'flag' => 'eu']];
         }
         foreach ($this->getAll() as $language) {
             $data[$language->getId()] = [
-                "title" => $language->getTitle(),
-                "flag" => $language->getFlag()
+                'title' => $language->getTitle(),
+                'flag'  => $language->getFlag()
             ];
         }
         return $data;
+    }
+
+    /**
+     * Fetches all languages (domainUrls) for a certain domain
+     *
+     * @param int    $domainId
+     * @oaram string $orderBy
+     *
+     * @return $this
+     */
+    public function whereDomain($domainId, $orderBy = 'sorting ASC')
+    {
+        return $this->where('domain_id = :domain_id ORDER BY :order_by', ['domain_id' => $domainId, 'order_by' => $orderBy]);
+    }
+
+    /**
+     * Fetches the language specified by id and makes sure it also belongs to the right domain
+     *
+     * @param int $domainId
+     * @param int $languageId
+     *
+     * @return $this
+     */
+    public function whereDomainAndLanguage($domainId, $languageId)
+    {
+        return $this->where(
+            'domain_id = :domain_id AND id = :id ORDER BY sorting ASC',
+            ['domain_id' => $domainId, 'id' => $languageId]
+        );
     }
 }

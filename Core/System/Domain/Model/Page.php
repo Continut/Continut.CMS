@@ -18,7 +18,7 @@ class Page extends BaseModel
     /**
      * @var string Page title
      */
-    protected $title = "Unnamed page";
+    protected $title = 'Unnamed page';
 
     /**
      * @var \Continut\Core\System\Domain\Model\Page
@@ -33,22 +33,22 @@ class Page extends BaseModel
     /**
      * @var string iso3 code of this page's language
      */
-    protected $languageIso3 = "";
+    protected $languageIso3 = '';
 
     /**
      * @var bool Is our Page visible in the Frontend?
      */
-    protected $isVisible = TRUE;
+    protected $isVisible = true;
 
     /**
      * @var bool Is our page shown in frontend menus?
      */
-    protected $isInMenu = TRUE;
+    protected $isInMenu = true;
 
     /**
      * @var bool Has our Page been deleted?
      */
-    protected $isDeleted = FALSE;
+    protected $isDeleted = false;
 
     /**
      * @var int The id of the domain url this page belongs to
@@ -426,6 +426,7 @@ class Page extends BaseModel
             $this->setBackendLayout($originalPage->getBackendLayout());
             $this->setFrontendLayout($originalPage->getFrontendLayout());
         }
+        // @TODO: Add additional merging data that is language specific
 
         return $this;
     }

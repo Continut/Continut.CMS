@@ -20,7 +20,7 @@ class BackendContentCollection extends ContentCollection
      */
     public function __construct()
     {
-        $this->tablename = "sys_content";
+        $this->tablename = 'sys_content';
         $this->elementClass = 'Continut\Extensions\System\Backend\Classes\Domain\Model\BackendContent';
     }
 
@@ -39,7 +39,7 @@ class BackendContentCollection extends ContentCollection
         $sth->execute($values);
         $sth->setFetchMode(\PDO::FETCH_ASSOC);
         while ($row = $sth->fetch()) {
-            $element = $this->createEmptyFromType($row["type"]);
+            $element = $this->createEmptyFromType($row['type']);
             $element->update($row);
             $this->add($element);
         }
@@ -55,13 +55,13 @@ class BackendContentCollection extends ContentCollection
     public function createEmptyFromType($type)
     {
         switch ($type) {
-            case "plugin":
+            case 'plugin':
                 $element = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Model\Content\BackendPluginContent');
                 break;
-            case "container":
+            case 'container':
                 $element = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Model\Content\BackendContainerContent');
                 break;
-            case "reference":
+            case 'reference':
                 $element = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Model\Content\BackendReferenceContent');
                 break;
             default:

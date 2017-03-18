@@ -61,7 +61,7 @@ class FormObject
     {
         if ($label) {
             // we do not set the id if the field $name is an array
-            if (strpos($name, "[")) {
+            if (strpos($name, '[')) {
                 return "<label class=\"control-label\">$label</label>";
             } else {
                 return "<label class=\"control-label\" for='field_$name'>$label</label>";
@@ -80,12 +80,12 @@ class FormObject
      */
     protected function setErrors($model, $columnName)
     {
-        $errorsClass = "";
-        $errorsBlock = "";
+        $errorsClass = '';
+        $errorsBlock = '';
 
         if ($model->hasValidationErrors($columnName)) {
-            $errorsClass = "has-error";
-            $errorMessages = "";
+            $errorsClass = 'has-error';
+            $errorMessages = '';
             foreach ($model->getValidationErrors($columnName) as $error) {
                 $errorMessages .= "<p>$error</p>";
             }
@@ -94,7 +94,7 @@ class FormObject
 HER;
         }
 
-        return ["errorsBlock" => $errorsBlock, "errorsClass" => $errorsClass];
+        return ['errorsBlock' => $errorsBlock, 'errorsClass' => $errorsClass];
     }
 
     /**
@@ -106,7 +106,7 @@ HER;
      *
      * @return string
      */
-    public function hiddenField($model, $name, $value = "")
+    public function hiddenField($model, $name, $value = '')
     {
         $fieldName = $this->setFieldName($name);
 
@@ -157,20 +157,25 @@ HER;
     /**
      * Shows a simple DateTime field with a label in a wizard
      *
+     * @param BaseModel $model Model object
      * @param string $name Input name
      * @param string $label Input label
      * @param string $value Default value
      *
      * @return string
      */
-    public function dateTimeField($name, $label, $value = "")
+    public function dateTimeField($model, $name, $label, $value = '')
     {
         $fieldName  = $this->setFieldName($name);
         $fieldLabel = $this->setFieldLabel($name, $label);
+        $errors     = $this->setErrors($model, $name);
 
         $html = <<<HER
-			$fieldLabel
-			<input id="field_$name" type="text" data-field="datetime" class="form-control" value="$value" name="$fieldName"/>
+			<div class="form-group {$errors['errorsClass']}">
+				$fieldLabel
+				<input id="field_$name" type="text" data-field="datetime" class="form-control" value="$value" name="$fieldName"/>
+				{$errors['errorsBlock']}
+			</div>
 HER;
         return $html;
     }
@@ -186,11 +191,11 @@ HER;
      *
      * @return string
      */
-    public function textField($model, $name, $label = "", $value = "", $arguments = array())
+    public function textField($model, $name, $label = '', $value = '', $arguments = array())
     {
-        $fieldName = $this->setFieldName($name);
+        $fieldName  = $this->setFieldName($name);
         $fieldLabel = $this->setFieldLabel($name, $label);
-        $errors = $this->setErrors($model, $name);
+        $errors     = $this->setErrors($model, $name);
 
         // if no default value is set, get the one from the model
         if (!$value) {

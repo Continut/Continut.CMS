@@ -137,7 +137,7 @@
             // once a node is clicked, load the corresponding page in the right side
             $.ajax({
                 url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'show']) ?>',
-                data: { page_id: nodeId }
+                data: { id: nodeId }
                 /*beforeSend: function (xhr) {
                  $('#' + nodeId).prepend('<span class="pull-right fa fa-spinner fa-pulse"></span>');
                  }*/
