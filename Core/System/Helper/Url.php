@@ -14,45 +14,6 @@ use Continut\Core\Utility;
 
 class Url
 {
-
-    /**
-     * Returns a link to a certain action
-     *
-     * @param        $extension
-     * @param string $controller
-     * @param string $action
-     * @param array $additionalArguments
-     *
-     * @return string Final url
-     */
-    public function linkToAction($extension, $controller = "Index", $action = "index", $additionalArguments = [])
-    {
-        $params = [
-            "_extension" => $extension,
-            "_controller" => $controller,
-            "_action" => $action
-        ];
-        $params = array_merge($params, $additionalArguments);
-
-        return $this->linkTo($params);
-    }
-
-    /**
-     * Returns a manual link to an action or to any page
-     *
-     * @param $params
-     *
-     * @return string Final url
-     */
-    public function linkTo($params)
-    {
-        $index = "/index.php";
-        if (Utility::getApplicationScope() == Utility::SCOPE_BACKEND) {
-            $index = "/admin.php";
-        }
-        return $index . "?" . http_build_query($params);
-    }
-
     /**
      * Frontend link to a page by using it's id
      *
@@ -63,10 +24,10 @@ class Url
     public function linkToPage($pageId)
     {
         $params = [
-            "_extension" => "Frontend",
-            "_controller" => "Index",
-            "_action" => "index",
-            "pid" => $pageId
+            '_extension'  => 'Frontend',
+            '_controller' => 'Index',
+            '_action'     => 'index',
+            'pid'         => $pageId
         ];
         return $this->linkTo($params);
     }
@@ -76,9 +37,9 @@ class Url
      */
     public function linkToHome()
     {
-        //return $this->linkToAction("Frontend", "Index", "index");
+        //return $this->linkToAction('Frontend', 'Index', 'index');
         // TODO modify method to incorporate the domain url settings
-        return "";
+        return '';
     }
 
     /**
@@ -118,7 +79,7 @@ class Url
             $params = isset($settings['params']) ? $settings['params'] : [];
             return $this->linkToPath($settings['path'], $params);
         } else {
-            return $this->linkToAction($settings["extension"], $settings["controller"], $settings["action"]);
+            return $this->linkToAction($settings['extension'], $settings['controller'], $settings['action']);
         }
     }
 }

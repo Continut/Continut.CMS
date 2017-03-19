@@ -11,28 +11,30 @@ namespace Continut\Extensions\System\Frontend\Classes\Controllers;
 
 use Continut\Core\Mvc\Controller\FrontendController;
 use Continut\Core\Tools\Exception;
+use Continut\Core\Tools\HttpException;
 use Continut\Core\Utility;
 
 class IndexController extends FrontendController
 {
     public function indexAction()
     {
-        //Utility::debugData("page_rendering", "start", "Page rendering");
+        //Utility::debugData('page_rendering', 'start', 'Page rendering');
         // get page id request
-        $pageId = (int)$this->getRequest()->getArgument("id");
+        $pageId = (int)$this->getRequest()->getArgument('id');
         // or slug, whichever is sent
-        $pageSlug = $this->getRequest()->getArgument("slug");
+        $pageSlug = $this->getRequest()->getArgument('slug');
 
-        /*if ($cache = Utility::getCache()->getByUid($pageId, "page")) {
+        /*if ($cache = Utility::getCache()->getByUid($pageId, 'page')) {
             return $cache;
         } else {*/
 
-        // Load the page model from the database, by id or slugfr
+        // Load the page model from the database, by id or slug
         $pageModel = Utility::createInstance('Continut\Extensions\System\Frontend\Classes\Domain\Collection\FrontendPageCollection')
             ->findWithIdOrSlug($pageId, $pageSlug);
 
         if (!$pageModel) {
-            throw new Exception($this->__("exception.page.notFound"));
+            // throw a 404 notFound page
+            throw new HttpException(404, $this->__('exception.page.notFound'));
         }
         $pageModel->mergeOriginal();
 
@@ -57,9 +59,9 @@ class IndexController extends FrontendController
 
         // dump it all on screen
         $cache = $pageView->render();
-        //Utility::getCache()->setByUid($pageId, "page", $cache);
+        //Utility::getCache()->setByUid($pageId, 'page', $cache);
         //}
-        //Utility::debugData("page_rendering", "stop");
+        //Utility::debugData('page_rendering', 'stop');
         return $cache;
     }
 }

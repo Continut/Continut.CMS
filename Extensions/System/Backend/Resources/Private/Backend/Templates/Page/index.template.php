@@ -18,7 +18,7 @@
                             <!-- once the current website is changed, it loads the pages for it's first domain url/language -->
                             $('#select_website').on('change', function (event) {
                                 $.ajax({
-                                    url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'tree']) ?>',
+                                    url: '<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'tree']) ?>',
                                     dataType: 'json',
                                     data: { domain_id: this.value }
                                 })
@@ -61,7 +61,7 @@
                         <!-- Once the domain url/language is changed, it loads it's pages -->
                         $('#select_language').on('change', function (event) {
                             $.ajax({
-                                url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'tree']) ?>',
+                                url: '<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'tree']) ?>',
                                 dataType: 'json',
                                 data: {domain_id: $('#select_website').val(), domain_url_id: this.value}
                             })
@@ -134,22 +134,30 @@
                 return;
             }
             var nodeId = data.selected[0];
+            var anchor = $(this);
+            if (anchor.data('requestRunning')) {
+                return;
+            }
+            // prevent multiple clicks and multiple requests on same page while an ajax request
+            // has not yet completed
+            anchor.data('requestRunning', true);
             // once a node is clicked, load the corresponding page in the right side
             $.ajax({
-                url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'show']) ?>',
-                data: { id: nodeId }
-                /*beforeSend: function (xhr) {
-                 $('#' + nodeId).prepend('<span class="pull-right fa fa-spinner fa-pulse"></span>');
-                 }*/
+                url: '<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'show']) ?>',
+                data: { id: nodeId },
+                beforeSend: function (xhr) {
+                    $('#' + nodeId + ' > .jstree-anchor').append('<span class="fa fa-spinner fa-pulse"></span>');
+                }
             })
                 .done(function (data) {
                     $('#content').html(data);
-                    //$('#' + nodeId).find('.fa-spinner').remove();
+                    $('#' + nodeId).find('.fa-spinner').remove();
                     if (previousSelectedNode) {
                         $('#' + previousSelectedNode).find('.page-add').eq(0).hide();
                     }
                     $('#' + nodeId).find('.page-add').eq(0).show();
                     previousSelectedNode = nodeId;
+                    anchor.data('requestRunning', false);
                 });
         })
         // --- Handles moving pages in the page tree ---
@@ -168,20 +176,19 @@
                     pagesOrder.push(parent[0].children[i].id);
                 }
             }
-            //console.log(pagesOrder);
             $.post(
-                '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'treeMove']) ?>',
+                '<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'treeMove']) ?>',
                 {
-                    movedId: data.node.id,
-                    position: data.position,
+                    movedId:     data.node.id,
+                    position:    data.position,
                     newParentId: data.parent,
-                    order: pagesOrder
+                    order:       pagesOrder
                 }
             );
         });
     // --- jsTree initialization ---
     $.ajax({
-        url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'tree']) ?>',
+        url: '<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'tree']) ?>',
         dataType: 'json'
     })
         .done(function (json) {
@@ -225,31 +232,31 @@
         e.preventDefault();
         var pid = $('#cms_tree').jstree('get_selected');
         addModal = BootstrapDialog.show({
-            title: <?= json_encode($this->__("backend.page.wizard.create.title")) ?>,
-            message: $('<div></div>').load('<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'wizard']) ?>?id=' + pid),
+            title: <?= json_encode($this->__('backend.page.wizard.create.title')) ?>,
+            message: $('<div></div>').load('<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'wizard']) ?>?id=' + pid),
             cssClass: 'large-dialog'
         });
     });
 
-    $("#toggle_sidebar").click(function (e) {
+    $('#toggle_sidebar').click(function (e) {
         e.preventDefault();
         $(this).toggleClass('toggled');
-        $("#sidebar_tree").toggle();
-        $("#content_wrapper").toggleClass('col-md-8 col-sm-7 col-xs-12');
+        $('#sidebar_tree').toggle();
+        $('#content_wrapper').toggleClass('col-md-8 col-sm-7 col-xs-12');
     });
 
-    $("#toggle_touch").click(function (e) {
+    $('#toggle_touch').click(function (e) {
         e.preventDefault();
 
         var $link = $(this);
 
-        $.getJSON('<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'toggleTouch']) ?>', function(data) {
+        $.getJSON('<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'toggleTouch']) ?>', function(data) {
             if (data.touchEnabled) {
                 $link.addClass('toggled');
-                $("#cms_tree, #content_wrapper .page-panel").addClass('touch-friendly');
+                $('#cms_tree, #content_wrapper .page-panel').addClass('touch-friendly');
             } else {
                 $link.removeClass('toggled');
-                $("#cms_tree, #content_wrapper .page-panel").removeClass('touch-friendly');
+                $('#cms_tree, #content_wrapper .page-panel').removeClass('touch-friendly');
             }
         });
     });

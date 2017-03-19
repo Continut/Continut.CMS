@@ -1,16 +1,18 @@
-<div class="row">
-    <div class="col-sm-12 col-md-3" id="settings_sidebar">
-        <p><img src="<?= $this->helper('Image')->getPath('Images/profile_pic.jpg', 'Backend'); ?>" height="200" alt="" class="img-circle"></p>
-        <p>Created on<br/><span class="fa fa-calendar-check-o"></span> <small>13 dec 2016</small></p>
-        <p>Last connected on<br/><span class="fa fa-calendar-check-o"></span> <small>15 dec 2016 at 14h30</small></p>
+    <div class="col-sm-12">
+        <h2>Manage your profile</h2>
     </div>
-    <div class="col-sm-12 col-md-9">
-        <form method="post" action="" class="form-horizontal">
-            <div class="form-group">
-                <div class="col-sm-10 col-sm-offset-2">
-                    <h3>User profile</h3>
-                </div>
+    <div class="col-sm-3">
+        <div class="thumbnail">
+            <img src="<?= $this->helper('Image')->getPath('Images/profile_pic.jpg', 'Backend'); ?>" alt="" class="">
+            <div class="caption">
+                <h3><?= $user->getName(); ?></h3>
+                <p>Account created on<br/><span class="fa fa-calendar-check-o"></span> <small>13 dec 2016</small></p>
+                <p>Last connected on<br/><span class="fa fa-calendar-check-o"></span> <small>15 dec 2016 at 14h30</small></p>
             </div>
+        </div>
+    </div>
+    <div class="col-sm-9">
+        <form method="post" action="" class="form-horizontal">
             <div class="form-group">
                 <label class="col-sm-2 control-label">Id</label>
                 <div class="col-sm-4">
@@ -23,7 +25,7 @@
                     <p class="form-control-static"><?= $user->getUsername() ?></p>
                 </div>
             </div>
-            <?= $this->helper('FormObject')->selectField($user, 'language', 'Language', $this->helper('Locale')->iso2LanguageCodes(), $user->getLanguage()) ?>
+            <?= $this->helper('FormObject')->selectField($user, 'language', 'Backend language', $this->helper('Locale')->iso2LanguageCodes(), $user->getLanguage()) ?>
             <?= $this->helper('FormObject')->textField($user, 'name', 'Full name', $user->getName()) ?>
             <div class="form-group">
                 <label for="usergroup_id" class="col-sm-2 control-label">User group</label>
@@ -79,4 +81,3 @@
             </div>
         </form>
     </div>
-</div>
