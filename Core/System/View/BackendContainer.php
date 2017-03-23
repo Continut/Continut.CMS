@@ -24,7 +24,7 @@ class BackendContainer extends Container
      */
     public function showContainerColumn($id)
     {
-        $htmlElements = "";
+        $htmlElements = '';
 
         foreach ($this->getElements() as $element) {
             if ($element->getColumnId() == $id) {
@@ -36,8 +36,8 @@ class BackendContainer extends Container
             $this->getId(),
             $id,
             $htmlElements,
-            $this->__("backend.content.addNew"),
-            Utility::helper("Url")->linkToPath('admin_backend', ['_controller' => 'Content', '_action' => 'wizard', 'id' => $this->getId(), 'column_id' => $id, 'page_id' => Utility::getRequest()->getArgument('page_id')])
+            $this->__('backend.content.addNew'),
+            Utility::helper('Url')->linkToPath('admin_backend', ['_controller' => 'Content', '_action' => 'wizard', 'id' => $this->getId(), 'column_id' => $id, 'page_id' => Utility::getRequest()->getArgument('id')])
         );
     }
 }

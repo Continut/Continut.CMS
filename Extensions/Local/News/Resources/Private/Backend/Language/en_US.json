@@ -13,6 +13,12 @@
   "backend.news.grid.field.categories": "Categories",
   "backend.news.grid.field.isVisible": "Is visible",
   "backend.news.preview.lastXArticles": "Showing last <strong>%(limit)</strong> articles",
+  "backend.news.wizard.show.limit": "How many news to display",
+  "backend.news.wizard.show.order": "Sort news by",
+  "backend.news.wizard.show.order.title": "News title",
+  "backend.news.wizard.show.order.createdAt": "Creation date",
+  "backend.news.wizard.show.direction": "Sorting order",
+  "backend.news.wizard.show.template": "Template to use",
   "plugin.news.title": "News plugin",
   "plugin.news.description": "The news plugin allows you to show news on your website."
 }

@@ -13,6 +13,12 @@
   "backend.news.grid.field.description": "Descriere",
   "backend.news.grid.field.isVisible": "Este afișat pe site",
   "backend.news.preview.lastXArticles": "Afișare ultimele <strong>%(limit)</strong> articole",
+  "backend.news.wizard.show.limit": "Numărul de articole de afișat",
+  "backend.news.wizard.show.order": "Ordonează articolele după",
+  "backend.news.wizard.show.order.title": "Titlul articolului/știrii",
+  "backend.news.wizard.show.order.createdAt": "Data de creare",
+  "backend.news.wizard.show.direction": "Ordine de triere",
+  "backend.news.wizard.show.template": "Template de utilizat",
   "plugin.news.title": "Extensie știri/articole",
   "plugin.news.description": "Extensia de știri vă permite să afișați știri/articole pe site."
 }

@@ -1,1 +1,1 @@
-<?= $this->partial("Content/form", "Backend", "Backend", ["element" => $element, "content" => $content, "action" => "update", "pageId" => $pageId, "id" => $id, "columnId" => $columnId]) ?>
+<?= $this->partial('Content/form', 'Backend', 'Backend', ['element' => $element, 'content' => $content, 'action' => 'update', 'pageId' => $pageId, 'id' => $id, 'columnId' => $columnId]) ?>

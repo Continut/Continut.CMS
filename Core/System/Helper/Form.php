@@ -25,11 +25,10 @@ use Continut\Core\Mvc\Model\BaseModel;
  */
 class Form
 {
-
     /**
      * @var string Field prefix used in the backend form
      */
-    protected $prefix = "data";
+    protected $prefix = 'data';
 
     /**
      * Sets up the input's name accordingly
@@ -44,10 +43,10 @@ class Form
         $fieldName = $this->prefix . "[$name]";
         // if the field name contains a square bracket, it means it's an array
         // so we need to set it up accordingly
-        if (strpos($name, "[")) {
+        if (strpos($name, '[')) {
             // extract only the field name
-            $name = substr($name, 0, strpos($name, "["));
-            $fieldName = $this->prefix . "[$name][]";
+            $name = substr($name, 0, strpos($name, '['));
+            $fieldName = $this->prefix . '[$name][]';
         }
         return $fieldName;
     }
@@ -72,7 +71,7 @@ class Form
     {
         if ($label) {
             // we do not set the id if the field $name is an array
-            if (strpos($name, "[")) {
+            if (strpos($name, '[')) {
                 return "<label class=\"control-label\">$label</label>";
             } else {
                 return "<label class=\"control-label\" for='field_$name'>$label</label>";
@@ -91,21 +90,21 @@ class Form
      */
     protected function setErrors($model, $columnName)
     {
-        $errorsClass = "";
-        $errorsBlock = "";
+        $errorsClass = '';
+        $errorsBlock = '';
 
         if ($model->hasValidationErrors($columnName)) {
-            $errorsClass = "has-error";
-            $errorMessages = "";
+            $errorsClass   = 'has-error';
+            $errorMessages = '';
             foreach ($model->getValidationErrors($columnName) as $error) {
-                $errorMessages .= "<p>$error</p>";
+                $errorMessages .= '<p>$error</p>';
             }
             $errorsBlock = <<<HER
                 <span class="help-block">$errorMessages</span>
 HER;
         }
 
-        return ["errorsBlock" => $errorsBlock, "errorsClass" => $errorsClass];
+        return ['errorsBlock' => $errorsBlock, 'errorsClass' => $errorsClass];
     }
 
     /**
@@ -142,12 +141,13 @@ HER;
         $fieldId    = $this->setFieldId($name);
         $fieldLabel = $this->setFieldLabel($name, $label);
 
-        $html = "";
+        $html = '';
         if (is_array($values)) {
-            $fieldName = $fieldName . "[]";
+            $fieldName = $fieldName . '[]';
             foreach ($values as $text => $value) {
+                $id = $fieldId . '_' . $value;
                 $html .= <<<HER
-                    <input id="$fieldId_$value" type="text" value="$value" name="$fieldName"/> $text
+                    <input id="$id" type="text" value="$value" name="$fieldName"/> $text
 HER;
             }
         } else {
@@ -170,7 +170,7 @@ HER;
      *
      * @return string
      */
-    public function dateTimeField($name, $label, $value = "")
+    public function dateTimeField($name, $label, $value = '')
     {
         $fieldName = $this->setFieldName($name);
         $fieldId    = $this->setFieldId($name);
@@ -193,7 +193,7 @@ HER;
      *
      * @return string
      */
-    public function textField($name, $label = "", $value = "", $arguments = array())
+    public function textField($name, $label = '', $value = '', $arguments = array())
     {
         $fieldName  = $this->setFieldName($name);
         $fieldId    = $this->setFieldId($name);
@@ -203,8 +203,8 @@ HER;
             <input id="$fieldId" type="text" class="form-control" value="$value" name="$fieldName"/>
 HER;
 
-        if (isset($arguments["prefix"])) {
-            $prefix = $arguments["prefix"];
+        if (isset($arguments['prefix'])) {
+            $prefix = $arguments['prefix'];
             $input = <<<HER
             <div class="input-group">
                 <span class="input-group-addon">$prefix</span>
@@ -289,9 +289,9 @@ HER;
             </div>
             <textarea id="$fieldId" name="$fieldName" class="form-control rte">$value</textarea>
             <script type="text/javascript">
-            var editor_$name = new wysihtml5.Editor('field_$name', {
+            var editor_$name = new wysihtml.Editor('field_$name', {
                 toolbar: 'rte_toolbar_$name',
-                parserRules:  wysihtml5ParserRules
+                parserRules: wysihtmlParserRules
             });
             $('.selectpicker').selectpicker();
             </script>

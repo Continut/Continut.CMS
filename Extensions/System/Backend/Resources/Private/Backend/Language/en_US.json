@@ -7,6 +7,8 @@
   "general.cancel": "Cancel",
   "general.edit": "Edit",
   "general.delete": "Delete",
+  "general.ascending": "Ascending order",
+  "general.descending": "Descending order",
   "copyright.text": "Conţinut CMS is an open-source software licensed under the GPL-3 license.",
   "copyright.footer": "&copy; Copyright %(link) 2017",
   "login.helpmenu.gettingStarted": "Just getting started?",

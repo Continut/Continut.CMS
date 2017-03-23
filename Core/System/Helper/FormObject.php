@@ -26,11 +26,10 @@ use Continut\Core\Mvc\Model\BaseModel;
  */
 class FormObject
 {
-
     /**
      * @var string Field prefix used in the backend form
      */
-    protected $prefix = "data";
+    protected $prefix = 'data';
 
     /**
      * Sets up the input's name accordingly
@@ -43,7 +42,7 @@ class FormObject
         $fieldName = $this->prefix . "[$name]";
         // if the field name contains a square bracket, it means it's an array
         // so we need to set it up accordingly
-        if (strpos($name, "[")) {
+        if (strpos($name, '[')) {
             // extract only the field name
             $name = substr($name, 0, strpos($name, "["));
             $fieldName = $this->prefix . "[$name][]";
@@ -135,12 +134,13 @@ HER;
         $fieldName = $this->setFieldName($name);
         $fieldLabel = $this->setFieldLabel($name, $label);
 
-        $html = "";
+        $html = '';
         if (is_array($values)) {
-            $fieldName = $fieldName . "[]";
+            $fieldName = $fieldName . '[]';
             foreach ($values as $text => $value) {
+                $id = 'field_' . $name . '_' . $value;
                 $html .= <<<HER
-					<input id="field_$name_$value" type="text" value="$value" name="$fieldName"/> $text
+					<input id="$id" type="text" value="$value" name="$fieldName"/> $text
 HER;
             }
         } else {

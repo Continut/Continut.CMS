@@ -84,10 +84,10 @@ class LocalStorage implements StorageInterface
      *
      * @return array
      */
-    public function getFolders($path = "")
+    public function getFolders($path = '')
     {
-        if ($path === "") {
-            $path = DS . self::MEDIA_DIRECTORY;
+        if ($path === '') {
+            $path = self::MEDIA_DIRECTORY;
         }
 
         $existingFolders = new \FilesystemIterator($this->getRoot() . $path);
@@ -96,7 +96,7 @@ class LocalStorage implements StorageInterface
 
         foreach ($existingFolders as $existingFolder) {
             try {
-                if ($existingFolder->getType() == "dir") {
+                if ($existingFolder->getType() == 'dir') {
                     $folderObject = Utility::createInstance('Continut\Core\System\Storage\Folder');
 
                     $folderObject->setName($existingFolder->getFilename());
@@ -132,7 +132,7 @@ class LocalStorage implements StorageInterface
      */
     public function createFolder($folder, $path)
     {
-        if ($path == "") {
+        if ($path == '') {
             $path = DS . self::MEDIA_DIRECTORY;
         }
         return mkdir($this->getRoot() . $path . DS . $folder);

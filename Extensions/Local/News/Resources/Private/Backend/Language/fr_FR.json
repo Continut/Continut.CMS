@@ -13,6 +13,12 @@
   "backend.news.grid.field.description": "Description",
   "backend.news.grid.field.isVisible": "Visible?",
   "backend.news.preview.lastXArticles": "Afichage des <strong>%(limit)</strong> dernieres articles",
+  "backend.news.wizard.show.limit": "Limite d'affichage news",
+  "backend.news.wizard.show.order": "Trier les news par",
+  "backend.news.wizard.show.order.title": "Titre de l'article",
+  "backend.news.wizard.show.order.createdAt": "Date de creation",
+  "backend.news.wizard.show.direction": "Direction de tri",
+  "backend.news.wizard.show.template": "Template à utiliser",
   "plugin.news.title": "Extension articles",
   "plugin.news.description": "L'extension vous permet d'afficher des articles sur votre site web"
 }

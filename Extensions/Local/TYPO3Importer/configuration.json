@@ -29,14 +29,14 @@
             "import": {
               "label": "backend.menu.import.typo3.importData",
               "icon": "fa fa-fw fa-refresh",
-              "path": "typo3_importer",
-              "params": {"_controller": "Import", "_action": "index"}
+              "path": "admin_backend",
+              "params": {"_extension": "TYPO3Importer", "_controller": "Import", "_action": "index"}
             },
             "status": {
               "label": "backend.menu.import.typo3.stats",
               "icon": "fa fa-fw fa-info",
-              "path": "typo3_importer",
-              "params": {"_controller": "Import", "_action": "index"}
+              "path": "admin_backend",
+              "params": {"_extension": "TYPO3Importer", "_controller": "Import", "_action": "index"}
             }
           }
         }

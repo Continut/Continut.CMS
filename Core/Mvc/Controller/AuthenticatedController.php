@@ -14,15 +14,14 @@ use Continut\Core\Utility;
 
 class AuthenticatedController extends ActionController
 {
-
     /**
-     * AuthenticatedController constructor.
+     * Check if the BE user is still connected, otherwise redirect him to the login page
      */
     public function __construct()
     {
         parent::__construct();
         if (!$this->isConnected()) {
-            $url = Utility::helper("Url")->linkToPath('admin_backend', ['_controller' => 'Login', '_action' => 'index']);
+            $url = Utility::helper('Url')->linkToPath('admin_backend', ['_controller' => 'Login', '_action' => 'index']);
             if ($this->getRequest()->isAjax()) {
                 //echo "<script>window.location = '$url';</script>";
                 header('Continut-Redirect: ' . $url);

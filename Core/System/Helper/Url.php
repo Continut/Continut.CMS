@@ -79,7 +79,7 @@ class Url
             $params = isset($settings['params']) ? $settings['params'] : [];
             return $this->linkToPath($settings['path'], $params);
         } else {
-            return $this->linkToAction($settings['extension'], $settings['controller'], $settings['action']);
+            //return $this->linkToAction($settings['extension'], $settings['controller'], $settings['action']);
         }
     }
 }

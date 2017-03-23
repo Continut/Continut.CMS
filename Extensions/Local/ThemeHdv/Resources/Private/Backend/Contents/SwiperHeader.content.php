@@ -1,5 +1,1 @@
-<?php
-$width = (!isset($width)) ? 800 : $width;
-$height = (!isset($height)) ? null : $height;
-?>
-<img class="img-responsive img-centered" src="<?= $this->helper('Image')->resize($image, $width, $height, 'backend') ?>" alt=""/>
+<img class="img-responsive img-centered" src="<?= $this->helper('Image')->resize($image, $this->valueOrDefault('width', 800), $this->valueOrDefault('height', null), 'backend') ?>" alt=""/>

@@ -27,11 +27,11 @@
                 <div class="btn-group btn-group-justified" role="group" aria-label="...">
                     <div class="btn-group" role="group">
                         <a class="btn btn-success" id="create_folder"
-                           href="<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Media', '_action' => 'createFolder', 'path' => urlencode($path)]) ?>"><?= $this->__("backend.media.folders.create") ?>
+                           href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Media', '_action' => 'createFolder', 'path' => urlencode($path)]) ?>"><?= $this->__("backend.media.folders.create") ?>
                             <i class="fa fa-fw fa-plus"></i></a>
                     </div>
                     <div class="btn-group" role="group">
-                        <a class="btn btn-primary"><?= $this->__("backend.media.files.upload") ?> <i
+                        <a class="btn btn-primary"><?= $this->__('backend.media.files.upload') ?> <i
                                 class="fa fa-fw fa-upload"></i></a>
                     </div>
                 </div>
@@ -47,10 +47,10 @@
                             <div class="col-xs-6 col-md-3">
                                 <a href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Media', '_action' => 'fileInfo', 'file' => urlencode($file->getRelativeFilename())]) ?>" class="thumbnail filetype-<?= $file->getExtension() ?>">
                                     <span class="extension"><?= $file->getExtension() ?>
-                                        : <?= $this->helper("Units")->formatBytes($file->getSize()); ?></span>
+                                        : <?= $this->helper('Units')->formatBytes($file->getSize()); ?></span>
                                     <?php if (in_array($file->getExtension(), array('JPG', 'PNG', 'GIF'))): ?>
                                         <img
-                                            src="<?= $this->helper("Image")->crop($file->getRelativeFilename(), 300, 300, "storage") ?>"
+                                            src="<?= $this->helper('Image')->crop($file->getRelativeFilename(), 300, 300, 'storage') ?>"
                                             alt=""/>
                                     <?php elseif ($file->getExtension() == 'SVG'): ?>
                                         <img
@@ -68,7 +68,7 @@
                     </div>
                 <?php else: ?>
                     <div class="alert alert-warning" role="alert">
-                        <p><?= $this->__("backend.media.files.missing") ?></p>
+                        <p><?= $this->__('backend.media.files.missing') ?></p>
                     </div>
                 <?php endif; ?>
             </div>
@@ -89,7 +89,13 @@
             'strings': {
                 'Loading ...' : '<?= $this->__('backend.tree.loading') ?>',
             },
-            'data': {}
+            'data': {
+                'url': '<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Media', '_action' => 'treeGetNode']) ?>',
+                'data' : function (node) {
+                    return { 'id' : node.id };
+                }
+            },
+            force_text: true
         },
         'dnd': {
             'copy': false, // true allows to make copies while dragging and holding Ctrl. We don't want this
@@ -101,6 +107,10 @@
         'search': {
             'show_only_matches': true,
             'show_only_matches_children': false
+        },
+        'types' : {
+            'default' : { 'icon' : 'folder' },
+            'file' : { 'valid_children' : [], 'icon' : 'file' }
         },
         'plugins' : ['dnd', 'search', 'wholerow']
         //'plugins' : ['dnd', 'search', 'wholerow', 'checkbox']

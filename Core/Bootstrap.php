@@ -267,7 +267,7 @@ class Bootstrap
                 self::$renderContent = $pageView->render();
             }
         } catch (\Exception $e) {
-            throw new ErrorException('Could not finalise execution of the backend controller');
+            throw new ErrorException('Could not finalise execution of the backend controller'.$e->getTraceAsString());
         }
 
         return $this;

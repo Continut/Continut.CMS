@@ -18,7 +18,7 @@ class BackendLayout extends BaseLayout
     /**
      * @var string Content to show in the layout
      */
-    protected $content = NULL;
+    protected $content = null;
 
     /**
      * @return string
@@ -48,8 +48,8 @@ class BackendLayout extends BaseLayout
         return sprintf('<div data-id="%s" data-parent="0" class="container-receiver">%s</div><a class="btn btn-sm btn-success content-wizard" title="%s" href="%s"><i class="fa fa-plus fa-fw"></i></a>',
             $id,
             parent::showContainerColumn($id),
-            $this->__("backend.content.addNew"),
-            Utility::helper("Url")->linkToPath('admin_backend', ['_controller' => 'Content', '_action' => 'wizard', 'column_id' => $id, 'page_id' => Utility::getRequest()->getArgument('page_id')])
+            $this->__('backend.content.addNew'),
+            Utility::helper('Url')->linkToPath('admin_backend', ['_controller' => 'Content', '_action' => 'wizard', 'column_id' => $id, 'page_id' => Utility::getRequest()->getArgument('id')])
         );
     }
 }

@@ -7,6 +7,8 @@
   "general.save": "Salvare",
   "general.edit": "Editare",
   "general.delete": "Ștergere",
+  "general.ascending": "Ordine crescătoare",
+  "general.descending": "Ordine descrescătoare",
   "copyright.text": "Conţinut CMS este un program open-source sub licenţă GPL-3.",
   "copyright.footer": "&copy; Copyright %(link) 2017",
   "login.helpmenu.gettingStarted": "Sunteţi la început?",

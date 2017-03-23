@@ -4,10 +4,10 @@ $elementType = (isset($settings['type'])) ? $settings['type'] : $element->getTyp
 <div class="row">
     <div class="col-sm-12">
         <ol class="breadcrumb breadcrumb-page-tree">
-            <li class="active"><?= $this->__("backend.content.type." . $elementType) ?></li>
+            <li class="active"><?= $this->__('backend.content.type.' . $elementType) ?></li>
             <li>
                 <?php if (!$element->getTitle()): ?>
-                    <?= $this->__("backend.content.noTitle") ?>
+                    <?= $this->__('backend.content.noTitle') ?>
                 <?php else: ?>
                     <?= $element->getTitle() ?>
                 <?php endif ?>
@@ -16,7 +16,7 @@ $elementType = (isset($settings['type'])) ? $settings['type'] : $element->getTyp
         </ol>
     </div>
 </div>
-<?= $this->partial("Content/editArea", "Backend", "Backend", ["id" => $id, "pageId" => $pageId]) ?>
+<?= $this->partial('Content/editButtons', 'Backend', 'Backend', ['id' => $id, 'pageId' => $pageId]) ?>
 <div class="row">
     <div class="col-sm-12">
         <form method="post" id="form_content" class="form-content"
@@ -33,7 +33,7 @@ $elementType = (isset($settings['type'])) ? $settings['type'] : $element->getTyp
         </form>
     </div>
 </div>
-<?= $this->partial("Content/editArea", "Backend", "Backend") ?>
+<?= $this->partial('Content/editButtons', 'Backend', 'Backend', ['id' => $id, 'pageId' => $pageId]) ?>
 
 <script>
     // Post form using FormData, if supported
@@ -60,7 +60,7 @@ $elementType = (isset($settings['type'])) ? $settings['type'] : $element->getTyp
                         var contentId = data.content.id;
                         $.ajax({
                             url: '<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'show']) ?>',
-                            data: {page_id: data.content.page_id}
+                            data: {id: data.content.page_id}
                         }).done(function (data) {
                             // reload page data
                             $('#content').html(data);

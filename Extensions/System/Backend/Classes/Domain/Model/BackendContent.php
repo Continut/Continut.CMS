@@ -91,15 +91,15 @@ class BackendContent extends Content
         );
 
         $linkToHide = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-eye-slash fa-fw"></i> %s</a>',
-            Utility::helper("Localization")->translate("backend.content.operation.hide"),
-            Utility::helper("Url")->linkToPath('admin_backend', ['_controller' => 'Content', '_action' => 'toggleVisibility', 'id' => $this->getId(), 'show' => 0]),
-            Utility::helper("Localization")->translate("backend.content.operation.hide")
+            Utility::helper('Localization')->translate("backend.content.operation.hide"),
+            Utility::helper('Url')->linkToPath('admin_backend', ['_controller' => 'Content', '_action' => 'toggleVisibility', 'id' => $this->getId(), 'show' => 0]),
+            Utility::helper('Localization')->translate("backend.content.operation.hide")
         );
 
         $linkToShow = sprintf('<a title="%s" class="content-operation-link" href="%s"><i class="fa fa-eye fa-fw"></i> %s</a>',
-            Utility::helper("Localization")->translate("backend.content.operation.show"),
-            Utility::helper("Url")->linkToPath('admin_backend', ['_controller' => 'Content', '_action' => 'toggleVisibility', 'id' => $this->getId(), 'show' => 1]),
-            Utility::helper("Localization")->translate("backend.content.operation.show")
+            Utility::helper('Localization')->translate("backend.content.operation.show"),
+            Utility::helper('Url')->linkToPath('admin_backend', ['_controller' => 'Content', '_action' => 'toggleVisibility', 'id' => $this->getId(), 'show' => 1]),
+            Utility::helper('Localization')->translate("backend.content.operation.show")
         );
 
         $linkNewElement = sprintf('<li role="separator" class="divider"></li><li><a title="%s" href="%s"><i class="fa fa-plus fa-fw"></i> %s <i class="fa fa-level-up fa-fw"></i></a></li><li><a title="%s" href="%s"><i class="fa fa-plus fa-fw"></i> %s <i class="fa fa-level-down fa-fw"></i></a></li>',

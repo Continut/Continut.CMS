@@ -21,7 +21,7 @@ use Continut\Core\Utility;
 class ActionController
 {
     /**
-     * @var array Data, in case the controller belongs to a plugin
+     * @var array Data configured in the plugin's wizard, if the controller belongs to a plugin
      */
     public $data;
 

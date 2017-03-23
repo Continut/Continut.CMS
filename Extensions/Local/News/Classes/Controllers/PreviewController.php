@@ -23,8 +23,10 @@ namespace Continut\Extensions\Local\News\Classes\Controllers {
         {
             $newsCollection = Utility::createInstance('Continut\Extensions\Local\News\Classes\Domain\Collection\NewsCollection');
 
-            $limit = (isset($this->data["limit"])) ? $this->data["limit"] : 1;
-            $newsCollection->where("1=1 LIMIT $limit");
+            $limit = (isset($this->data['limit'])) ? $this->data['limit'] : 1;
+            $order = (isset($this->data['order'])) ? $this->data['order'] : 'created_at';
+            $direction = (isset($this->data['direction'])) ? $this->data['direction'] : 'asc';
+            $newsCollection->where("1=1 ORDER BY $order $direction LIMIT $limit");
 
             $this->getView()->assign('news', $newsCollection);
             $this->getView()->assign('data', $this->data);

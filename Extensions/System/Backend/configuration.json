@@ -29,9 +29,8 @@
             "recovery": {
               "label": "backend.menu.web.history",
               "icon": "fa fa-fw fa-recycle",
-              "extension": "Backend",
-              "controller": "Backend/Recovery",
-              "action": "index"
+              "path": "admin_backend",
+              "params": {"_controller": "Recovery", "_action": "index"}
             }
           }
         },

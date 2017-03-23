@@ -39,6 +39,12 @@
           "description": "backend.themeHdv.type.content.swiperHeader.wizardDescription",
           "icon": "Icons/swiperHeader.png",
           "template": "SwiperHeader"
+        },
+        "media": {
+          "label": "backend.themeHdv.type.content.media.wizardTitle",
+          "description": "backend.themeHdv.type.content.media.wizardDescription",
+          "icon": "Icons/media.png",
+          "template": "Media"
         }
       }
     }

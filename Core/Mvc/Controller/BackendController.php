@@ -28,10 +28,4 @@ class BackendController extends AuthenticatedController
         $this->setScope('Backend');
         parent::__construct();
     }
-
-    // @TODO: Cleanup required
-    public function loginAction()
-    {
-        return "Login dude";
-    }
 }

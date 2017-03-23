@@ -1,9 +1,4 @@
 <?php
-$title = (!isset($title)) ? "" : $title;
-$template = (!isset($template)) ? "" : $template;
-$limit = (!isset($limit)) ? 3 : $limit;
-$order = (!isset($order)) ? "crdate" : $order;
-$direction = (!isset($direction)) ? "desc" : $direction;
 $templates = \Continut\Core\Utility::getExtensionSettings('News')['elements']['plugin']['news']['templates'];
 ?>
 <blockquote>
@@ -11,49 +6,51 @@ $templates = \Continut\Core\Utility::getExtensionSettings('News')['elements']['p
     <footer><a href=""><?= $this->__('backend.news.pluginManual') ?></a></footer>
 </blockquote>
 <div class="form-group">
-    <?= $this->helper('Form')->textField('title', $this->__('backend.wizard.title'), $title) ?>
+    <?= $this->helper('Form')->textField('title', $this->__('backend.wizard.title'), $this->valueOrDefault('title', '')) ?>
 </div>
 <div class="row">
-    <div class="col-md-2">
+    <div class="col-md-4">
         <div class="form-group">
-            <?= $this->helper('Form')->textField('limit', 'How many news to show', $limit) ?>
+            <?= $this->helper('Form')->textField('limit', $this->__('backend.news.wizard.show.limit'), $this->valueOrDefault('limit', 3)) ?>
         </div>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-4">
         <div class="form-group">
             <?= $this->helper('Form')->selectField(
                 'order',
-                'Order by',
+                $this->__('backend.news.wizard.show.order'),
                 [
-                    'title' => 'Title',
-                    'created_at' => 'Creation date',
+                    'title'      => $this->__('backend.news.wizard.show.order.title'),
+                    'created_at' => $this->__('backend.news.wizard.show.order.createdAt'),
                 ],
-                $order
+                $this->valueOrDefault('order', 'created_at')
             )
             ?>
         </div>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-4">
         <div class="form-group">
             <?= $this->helper('Form')->selectField(
                 'direction',
-                'Order direction',
+                $this->__('backend.news.wizard.show.direction'),
                 [
-                    'asc'  => 'Ascending',
-                    'desc' => 'Descending',
+                    'asc'  => $this->__('general.ascending'),
+                    'desc' => $this->__('general.descending'),
                 ],
-                $direction
+                $this->valueOrDefault('direction', 'desc')
             )
             ?>
         </div>
     </div>
-    <div class="col-md-6">
+</div>
+<div class="row">
+    <div class="col-md-4">
         <div class="form-group">
             <?= $this->helper('Form')->selectField(
                 'template',
-                'Template',
+                $this->__('backend.news.wizard.show.template'),
                 $templates,
-                $template
+                $this->valueOrDefault('template', '')
             )
             ?>
         </div>

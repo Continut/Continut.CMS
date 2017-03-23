@@ -54,12 +54,19 @@
         return false;
     });
 
-    $('#field_theme').on('change', function (event) {
-        if ($(this).val() == "") {
+    function toggleThemeElements($select) {
+        if ($select.val() == "") {
             $('#themes_list li').show();
         } else {
             $('#themes_list li').hide();
-            $('#themes_list li.theme-' + $(this).val()).show();
+            $('#themes_list li.theme-' + $select.val()).show();
         }
+    }
+
+    $('#field_theme').on('change', function (event) {
+        toggleThemeElements($(this));
     });
+
+    // call it also after the first load
+    toggleThemeElements($('#field_theme'));
 </script>

@@ -60,9 +60,44 @@ class MediaController extends BackendController
     /**
      * Show detailed information about a file
      */
-    public function fileInfoAction() {
+    public function fileInfoAction()
+    {
         $fileInfo = $this->storage->getFileInfo($this->getRequest()->getArgument('file'));
 
         $this->getView()->assign('fileInfo', $fileInfo);
+    }
+
+    public function treeGetNodeAction()
+    {
+        $path = $this->getRequest()->getArgument('id');
+        $path = ($path == '#') ? '' : $path;
+
+        $jsonFiles = [];
+
+        // get list of folders
+        foreach ($this->storage->getFolders($path) as $folder) {
+            $jsonFiles[] = [
+                'text'     => $folder->getName(),
+                'id'       => $folder->getRelativePath(),
+                'children' => [],
+                'icon'     => 'folder'
+            ];
+        }
+
+        // then get list of files
+        foreach ($this->storage->getFiles($path) as $file)
+        {
+            $jsonFiles[] = [
+                'text'     => $file->getFullname(),
+                'id'       => $file->getRelativePath(),
+                'children' => [],
+                'icon'     => 'file'
+            ];
+        }
+
+        // add root element to the filebrowser
+        $jsonFiles = [['text' => 'Root', 'children' => $jsonFiles, 'id' => '/', 'icon' => 'folder', 'state' => array('opened' => true, 'disabled' => true)]];
+
+        return json_encode($jsonFiles);
     }
 }

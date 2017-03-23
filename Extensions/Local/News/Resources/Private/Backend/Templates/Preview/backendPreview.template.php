@@ -1,5 +1,5 @@
-<?php if (isset($data["limit"])): ?>
-    <p><?= $this->__("backend.news.preview.lastXArticles", ["limit" => $data["limit"]]) ?></p>
+<?php if (isset($data['limit'])): ?>
+    <p><?= $this->__('backend.news.preview.lastXArticles', ['limit' => $data['limit']]) ?></p>
 <?php endif ?>
 <?php foreach ($news->getAll() as $newsItem): ?>
     <div class="media">
@@ -14,9 +14,9 @@
         </div>
         <div class="media-body">
             <p>
-                <strong><?= $this->helper("Text")->truncate($this->helper("Text")->stripTags($newsItem->getTitle()), 100) ?></strong>
+                <strong><?= $this->helper('Text')->truncate($this->helper('Text')->stripTags($newsItem->getTitle()), 100) ?></strong>
             </p>
-            <p><?= $this->helper("Text")->truncate($this->helper("Text")->stripTags($newsItem->getDescription()), 100) ?></p>
+            <p><?= $this->helper('Text')->truncate($this->helper('Text')->stripTags($newsItem->getDescription()), 100) ?></p>
         </div>
     </div>
 <?php endforeach ?>

@@ -367,7 +367,10 @@ class PageController extends BackendController
 
         $pageModel->setIsDeleted(true);
 
-        $pagesCollection->reset()->add($pageModel)->save();
+        $pagesCollection
+            ->reset()
+            ->add($pageModel)
+            ->save();
         // @TODO : show maybe a warning if subpages are present and then delete all subtree
         // A page can have multiple children so we get it's tree and we delete all subpages
         //$pageTree = $pagesCollection->where("is_deleted = 0")->buildTree($pageId);
