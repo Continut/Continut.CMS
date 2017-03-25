@@ -112,6 +112,9 @@
     var searchPageTreeThread = null;
     var oldSearch = null;
     var previousSelectedNode = null;
+    // since we're dinamically loading the RTE editors we need to hold them into an array that gets empties
+    // after any BE content is closed
+    var rteEditor = [];
 
     // --- Handles search inside the page tree ---
     $('#search_page').keyup(function (e) {

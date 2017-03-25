@@ -1,10 +1,10 @@
 <div class="form-group">
-    <?= $this->helper('Wizard')->textField('title', $this->__('backend.wizard.title'), $this->valueOrDefault('title', '')) ?>
+    <?= $this->helper('Form')->textField('title', $this->__('backend.wizard.title'), $this->valueOrDefault('title', '')) ?>
 </div>
 <div class="row">
     <div class="col-md-6">
         <div class="form-group">
-            <?= $this->helper('Wizard')->selectField(
+            <?= $this->helper('Form')->selectField(
                 'icon',
                 'Icon',
                 [
@@ -19,7 +19,7 @@
     </div>
     <div class="col-md-6">
         <div class="form-group">
-            <?= $this->helper('Wizard')->selectField(
+            <?= $this->helper('Form')->selectField(
                 'align',
                 'Text alignment',
                 [
@@ -33,5 +33,5 @@
     </div>
 </div>
 <div class="form-group">
-    <?= $this->helper('Wizard')->textareaField('subtitle', 'Content', $this->valueOrDefault('subtitle', '')) ?>
+    <?= $this->helper('Form')->textareaField('subtitle', 'Content', $this->valueOrDefault('subtitle', '')) ?>
 </div>

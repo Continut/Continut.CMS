@@ -21,7 +21,7 @@ class LoginController extends FrontendController
     public function __construct()
     {
         parent::__construct();
-        $this->setLayoutTemplate(Utility::getResource("Default", "Backend", "Frontend", "Layout"));
+        $this->setLayoutTemplate(Utility::getResourcePath('Default', 'Backend', 'Frontend', 'Layout'));
     }
 
     /**
@@ -30,7 +30,7 @@ class LoginController extends FrontendController
     public function indexAction()
     {
         if ($this->isConnected()) {
-            $this->redirect(Utility::helper("Url")->LinkToPath('admin_backend'));
+            $this->redirect(Utility::helper('Url')->LinkToPath('admin_backend'));
         }
     }
 

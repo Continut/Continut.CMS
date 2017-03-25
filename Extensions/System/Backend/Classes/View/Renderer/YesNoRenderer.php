@@ -18,6 +18,6 @@ class YesNoRenderer extends BaseRenderer
      */
     public function __construct()
     {
-        $this->setTemplate(Utility::getResource('Renderer/yesNo', 'Backend', 'Backend', 'Template'));
+        $this->setTemplate(Utility::getResourcePath('Renderer/yesNo', 'Backend', 'Backend', 'Template'));
     }
 }

@@ -19,7 +19,7 @@ class PageController extends BackendController
         parent::__construct();
         // pass the user to every action
         $this->getView()->assign('user', $this->getUser());
-        $this->setLayoutTemplate(Utility::getResource('Default', 'Backend', 'Backend', 'Layout'));
+        $this->setLayoutTemplate(Utility::getResourcePath('Default', 'Backend', 'Backend', 'Layout'));
     }
 
     /**

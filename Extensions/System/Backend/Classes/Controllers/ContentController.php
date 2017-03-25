@@ -115,7 +115,7 @@ class ContentController extends BackendController
 
         $wizard = Utility::createInstance('Continut\Core\Mvc\View\BaseView');
         $wizardTemplate = ucfirst($settings['type'] . 's/' . $settings['template']);
-        $wizard->setTemplate(Utility::getResource($wizardTemplate, $settings['extension'], 'Backend', 'Wizard'));
+        $wizard->setTemplate(Utility::getResourcePath($wizardTemplate, $settings['extension'], 'Backend', 'Wizard'));
 
         $contentCollection = Utility::createInstance('Continut\Extensions\System\Backend\Classes\Domain\Collection\BackendContentCollection');
 
@@ -157,7 +157,7 @@ class ContentController extends BackendController
 
         $wizard = Utility::createInstance('Continut\Core\Mvc\View\BaseView');
         $wizardTemplate = ucfirst($content->getType()) . 's/'. $wizardData['template'];
-        $wizard->setTemplate(Utility::getResource($wizardTemplate, $wizardData['extension'], 'Backend', 'Wizard'));
+        $wizard->setTemplate(Utility::getResourcePath($wizardTemplate, $wizardData['extension'], 'Backend', 'Wizard'));
         if (!isset($wizardData['data']['title'])) {
             $wizardData['data']['title'] = $content->getTitle();
         }

@@ -31,18 +31,18 @@ class BackendContent extends Content
         $title = $this->getContentTitle();
 
         $configuration = json_decode($this->getValue(), TRUE);
-        $variables = $configuration["content"]["data"];
+        $variables = $configuration['content']['data'];
         $view = Utility::createInstance('Continut\Core\Mvc\View\BaseView');
-        $view->setTemplate(Utility::getResource(
-            $configuration["content"]["template"],
-            $configuration["content"]["extension"],
-            "Backend",
-            "Content"
+        $view->setTemplate(Utility::getResourcePath(
+            $configuration['content']['template'],
+            $configuration['content']['extension'],
+            'Backend',
+            'Content'
         ));
         $view->assignMultiple($variables);
 
         $value = $view->render();
-        return $this->formatBlock("content", $title, $value);
+        return $this->formatBlock('content', $title, $value);
     }
 
     /**

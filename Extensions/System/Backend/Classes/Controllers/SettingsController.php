@@ -21,7 +21,7 @@ class SettingsController extends BackendController
     {
         parent::__construct();
         $this->initializeDefaults();
-        $this->setLayoutTemplate(Utility::getResource("Default", "Backend", "Backend", "Layout"));
+        $this->setLayoutTemplate(Utility::getResourcePath('Default', 'Backend', 'Backend', 'Layout'));
     }
 
     /**

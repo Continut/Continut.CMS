@@ -30,11 +30,11 @@ class FrontendContainerContent extends FrontendContent
         $container->setId($this->getId());
         $container->setElements($elements);
         $container->setTemplate(
-            Utility::getResource(
-                $configuration["container"]["template"],
-                $configuration["container"]["extension"],
-                "Frontend",
-                "Container"
+            Utility::getResourcePath(
+                $configuration['container']['template'],
+                $configuration['container']['extension'],
+                'Frontend',
+                'Container'
             )
         );
         $container->setAdditionalData($this->frontendEditor());

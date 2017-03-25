@@ -19,7 +19,7 @@ class SelectFilter extends BaseFilter
      */
     public function __construct()
     {
-        $this->setTemplate(Utility::getResource("Filter/select", "Backend", "Backend", "Template"));
+        $this->setTemplate(Utility::getResourcePath('Filter/select', 'Backend', 'Backend', 'Template'));
     }
 
     /**

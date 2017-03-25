@@ -37,7 +37,7 @@ class BaseRenderer extends BaseView
      */
     public function __construct() {
         // define a default template for the base renderer
-        $this->setTemplate(Utility::getResource('Renderer/base', 'Backend', 'Backend', 'Template'));
+        $this->setTemplate(Utility::getResourcePath('Renderer/base', 'Backend', 'Backend', 'Template'));
     }
 
     /**

@@ -17,7 +17,7 @@ class UsersController extends BackendController
     public function __construct()
     {
         parent::__construct();
-        $this->setLayoutTemplate(Utility::getResource('Default', 'Backend', 'Backend', 'Layout'));
+        $this->setLayoutTemplate(Utility::getResourcePath('Default', 'Backend', 'Backend', 'Layout'));
     }
 
     /**
@@ -32,7 +32,7 @@ class UsersController extends BackendController
 
         $grid
             ->setFormAction(Utility::helper('Url')->linkToPath('admin_backend', ['_controller' => 'Users', '_action' => 'backendUsers']))
-            ->setTemplate(Utility::getResource('Grid/gridView', 'Backend', 'Backend', 'Template'))
+            ->setTemplate(Utility::getResourcePath('Grid/gridView', 'Backend', 'Backend', 'Template'))
             ->setCollection(Utility::createInstance('Continut\Core\System\Domain\Collection\BackendUserCollection'))
             ->setPager(10, Utility::getRequest()->getArgument('page', 1))
             ->setFields(
@@ -136,7 +136,7 @@ class UsersController extends BackendController
 
         $grid
             ->setFormAction(Utility::helper('Url')->linkToPath('admin_backend', ['_controller' => 'Users', '_action' => 'backendGroups']))
-            ->setTemplate(Utility::getResource('Grid/gridView', 'Backend', 'Backend', 'Template'))
+            ->setTemplate(Utility::getResourcePath('Grid/gridView', 'Backend', 'Backend', 'Template'))
             ->setCollection(Utility::createInstance('Continut\Core\System\Domain\Collection\BackendUserGroupCollection'))
             ->setPager(10, Utility::getRequest()->getArgument('page', 1))
             ->setFields(
@@ -192,7 +192,7 @@ class UsersController extends BackendController
 
         $grid
             ->setFormAction(Utility::helper('Url')->linkToPath('admin_backend', ['_controller' => 'Users', '_action' => 'frontendUsers']))
-            ->setTemplate(Utility::getResource('Grid/gridView', 'Backend', 'Backend', 'Template'))
+            ->setTemplate(Utility::getResourcePath('Grid/gridView', 'Backend', 'Backend', 'Template'))
             ->setCollection(Utility::createInstance('Continut\Core\System\Domain\Collection\FrontendUserCollection'))
             ->setPager(10, Utility::getRequest()->getArgument('page', 1))
             ->setFields(
@@ -270,7 +270,7 @@ class UsersController extends BackendController
 
         $grid
             ->setFormAction(Utility::helper('Url')->linkToPath('admin_backend', ['_controller' => 'Users', '_action' => 'backendGroups']))
-            ->setTemplate(Utility::getResource('Grid/gridView', 'Backend', 'Backend', 'Template'))
+            ->setTemplate(Utility::getResourcePath('Grid/gridView', 'Backend', 'Backend', 'Template'))
             ->setCollection(Utility::createInstance('Continut\Core\System\Domain\Collection\FrontendUserGroupCollection'))
             ->setPager(10, Utility::getRequest()->getArgument('page', 1))
             ->setFields(

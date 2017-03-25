@@ -22,7 +22,7 @@ use Continut\Core\Mvc\Model\BaseModel;
  * Whenever you need to show form inputs for a model, use the FormObject view helper
  * When you need to show form inputs not linked to a model, use the Form view helper instead
  *
- * @package Continut\Core\System\Helper
+ * @package Continut\Core\System\Helpers
  */
 class FormObject
 {

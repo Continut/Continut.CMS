@@ -50,7 +50,7 @@ class MediaController extends BackendController
     public function __construct()
     {
         parent::__construct();
-        $this->setLayoutTemplate(Utility::getResource('Default', 'Backend', 'Backend', 'Layout'));
+        $this->setLayoutTemplate(Utility::getResourcePath('Default', 'Backend', 'Backend', 'Layout'));
 
         $this->listType     = $this->getUser()->getAttribute('media.list', self::LIST_TYPE_LIST);
         $this->handlingType = self::HANDLING_TYPE_SELECT;

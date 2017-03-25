@@ -96,6 +96,7 @@ class Bootstrap
 
         // Http exceptions have custom html templates, based on the error code
         // They are all stored inside the Public folder
+        // Not all HTTP error codes have html files created, so please add the ones you need as you see fit
         if ($exception instanceof HttpException) {
             switch ($exception->getCode()) {
                 default:
@@ -118,6 +119,7 @@ class Bootstrap
                 Utility::debugData($exception, 'exception');
             }
             Utility::debugAjax();
+            // @TODO Log errors/exceptions
             var_dump($exception);
         }
     }
@@ -132,10 +134,10 @@ class Bootstrap
      */
     public function handleError($code, $message, $file, $line)
     {
-        if (Utility::getApplicationEnvironment() == "Production") {
+        if (Utility::getApplicationEnvironment() == 'Production') {
             echo file_get_contents(__ROOTCMS__ . DS . 'Public' . DS . 'Error.html');
         } else {
-            Utility::debugData($message . ' in file ' . $file . ' on line ' . $line, "error");
+            Utility::debugData($message . ' in file ' . $file . ' on line ' . $line, 'error');
             Utility::debugAjax();
         }
     }
@@ -148,10 +150,10 @@ class Bootstrap
     public function loadExtensionsConfiguration()
     {
         // Load Local and System extensions configuration data
-        Utility::debugData("Loading extensions configuration", "start");
-        Utility::loadExtensionsConfigurationFromFolder(__ROOTCMS__ . DS . "Extensions", "Local");
-        Utility::loadExtensionsConfigurationFromFolder(__ROOTCMS__ . DS . "Extensions", "System");
-        Utility::debugData("Loading extensions configuration", "stop");
+        Utility::debugData('Loading extensions configuration', 'start');
+        Utility::loadExtensionsConfigurationFromFolder(__ROOTCMS__ . DS . 'Extensions', 'Local');
+        Utility::loadExtensionsConfigurationFromFolder(__ROOTCMS__ . DS . 'Extensions', 'System');
+        Utility::debugData('Loading extensions configuration', 'stop');
 
         return $this;
     }
@@ -166,7 +168,7 @@ class Bootstrap
             Utility::setCurrentWebsite();
 
             if (Utility::getSite()->getDomainUrl()->getLocale()) {
-                Utility::setConfiguration("System/Locale", Utility::getSite()->getDomainUrl()->getLocale());
+                Utility::setConfiguration('System/Locale', Utility::getSite()->getDomainUrl()->getLocale());
             }
 
             // merge configuration stored in the files with the configuration stored in the database
@@ -188,8 +190,8 @@ class Bootstrap
             // @TODO: check if we need to merge the config for the backend too
             // and if so, get the value from the session called 'configurationSite'
         }
-        setlocale(LC_ALL, Utility::getConfiguration("System/Locale"));
-        Utility::debugData(Utility::$configuration, "config");
+        setlocale(LC_ALL, Utility::getConfiguration('System/Locale'));
+        Utility::debugData(Utility::$configuration, 'config');
 
         return $this;
     }
@@ -203,15 +205,15 @@ class Bootstrap
      */
     public function connectFrontendController()
     {
-        Utility::debugData("Main frontend controller called", "start");
+        Utility::debugData('Main frontend controller called', 'start');
 
         $request = Utility::getRequest();
         $request->mapRouting();
 
         // Get request argument values or switch to default values if not defined
-        $contextExtension = $request->getArgument("_extension", "Frontend");
-        $contextController = $request->getArgument("_controller", "Index");
-        $contextAction = $request->getArgument("_action", "index");
+        $contextExtension  = $request->getArgument('_extension', 'Frontend');
+        $contextController = $request->getArgument('_controller', 'Index');
+        $contextAction     = $request->getArgument('_action', 'index');
 
         self::$renderContent = Utility::callPlugin($contextExtension, $contextController, $contextAction);
 
@@ -227,16 +229,16 @@ class Bootstrap
      */
     public function connectBackendController()
     {
-        Utility::debugData("Main backend controller called", "start");
+        Utility::debugData('Main backend controller called', 'start');
 
         try {
             $request = Utility::getRequest();
             $request->mapRouting();
 
             // Get request argument values or switch to default values if not defined
-            $contextExtension  = $request->getArgument("_extension", "Backend");
-            $contextController = $request->getArgument("_controller", "Index");
-            $contextAction     = $request->getArgument("_action", "dashboard");
+            $contextExtension  = $request->getArgument('_extension', 'Backend');
+            $contextController = $request->getArgument('_controller', 'Index');
+            $contextAction     = $request->getArgument('_action', 'dashboard');
 
             $controller = Utility::getController($contextExtension, $contextController, $contextAction);
 
@@ -250,7 +252,7 @@ class Bootstrap
                 // If it's not an AJAX request, load layout and pageview then render it otherwise just return directly the response
                 /* @var \Continut\Core\System\View\BackendLayout $layout */
                 $layout = Utility::createInstance('Continut\Core\System\View\BackendLayout');
-                $layout->setTemplate("/Extensions/System/Backend/Resources/Private/Backend/Layouts/Default.layout.php");
+                $layout->setTemplate('/Extensions/System/Backend/Resources/Private/Backend/Layouts/Default.layout.php');
 
                 /* @var \Continut\Core\Mvc\View\PageView $pageView */
                 $pageView = Utility::createInstance('Continut\Core\Mvc\View\PageView');

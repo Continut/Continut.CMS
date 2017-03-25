@@ -20,7 +20,7 @@ use Continut\Core\Mvc\View\BaseView;
 class Installer
 {
     /**
-     * List of required PHP extensions
+     * List of required PHP extensions by the CMS, checked during install
      * @TODO : check if imagick is required
      * @var array
      */

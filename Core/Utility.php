@@ -425,35 +425,29 @@ class Utility
         $controller
             ->getView()
             ->setTemplate(
-                static::getResource("$templateController/$templateAction", $contextExtension, $contextScope, "Template")
+                static::getResourcePath("$templateController/$templateAction", $contextExtension, $contextScope, "Template")
             );
 
         return $controller;
     }
 
-    public static function getTemplateFileFromPath($extensionName, $type = "Templates", $pathToFile = "", $scope = "Frontend")
-    {
-        $extensionType = static::getExtensionSettings($extensionName)["type"];
-        return __ROOTCMS__ . "/Extensions/$extensionType/$extensionName/Resources/Private/$scope/$type/$pathToFile";
-    }
-
     /**
-     * @param string $resourceName Name of the resource to load (template filename, container filename, etc)
-     * @param string $contextExtension Name of the extension that holds the resource
-     * @param string $resourcePlacement Placement of the resource, either in Backend or Frontend
-     * @param string $resourceType Type of resource (Template, Container, Partial, Layout) - in singular form
+     * @param string $resourceName  Name of the resource to load (template filename, container filename, etc)
+     * @param string $extensionName Name of the extension that holds the resource
+     * @param string $scope         Scope of the resource, either for the Backend or the Frontend
+     * @param string $type          Type of resource (Template, Container, Partial, Layout, Helper) - in singular form
      *
      * @throws \Continut\Core\Tools\Exception
      *
      * @return string Absolute path to the resource to load
      */
-    public static function getResource($resourceName, $contextExtension, $resourcePlacement = "Frontend", $resourceType = "Template")
+    public static function getResourcePath($resourceName, $extensionName, $scope = 'Frontend', $type = 'Template')
     {
-        $extensionType = static::getExtensionSettings($contextExtension)["type"];
+        $extensionType = static::getExtensionSettings($extensionName)['type'];
 
-        $resourceExtension = "." . strtolower($resourceType) . ".php";
-        $resourceType = $resourceType . "s";
-        $resourcePath = __ROOTCMS__ . "/Extensions/$extensionType/$contextExtension/Resources/Private/$resourcePlacement/$resourceType/$resourceName$resourceExtension";
+        $resourceExtension = '.' . strtolower($type) . '.php';
+        $type = $type . 's';
+        $resourcePath = __ROOTCMS__ . "/Extensions/$extensionType/$extensionName/Resources/Private/$scope/$type/$resourceName$resourceExtension";
 
         /*if (!file_exists($resourcePath)) {
             throw new \Continut\Core\Tools\Exception("Resource cannot be found: " . $resourcePath);
@@ -551,7 +545,7 @@ class Utility
      *
      * @param $helperName
      *
-     * @return mixed Helper class instance
+     * @return mixed Helpers class instance
      */
     public static function helper($helperName)
     {

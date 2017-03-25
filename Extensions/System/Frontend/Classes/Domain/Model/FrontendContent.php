@@ -25,16 +25,16 @@ class FrontendContent extends Content
     {
         $configuration = json_decode($this->getValue(), TRUE);
 
-        $variables = $configuration["content"]["data"];
+        $variables = $configuration['content']['data'];
         // we overwrite the title, if such a variable exists, with the value of the column "title" in the content table
-        $variables["title"] = $this->getTitle();
+        $variables['title'] = $this->getTitle();
 
         $view = Utility::createInstance('Continut\Core\Mvc\View\BaseView');
-        $view->setTemplate(Utility::getResource(
-            $configuration["content"]["template"],
-            $configuration["content"]["extension"],
-            "Frontend",
-            "Content"
+        $view->setTemplate(Utility::getResourcePath(
+            $configuration['content']['template'],
+            $configuration['content']['extension'],
+            'Frontend',
+            'Content'
         ));
         $view->setAdditionalData($this->frontendEditor());
         $view->assignMultiple($variables);

@@ -20,14 +20,14 @@ namespace Continut\Core\System\Storage;
 interface StorageInterface
 {
     /**
-     * Returns the root path of this storage
+     * Returns the root path/id of this storage
      *
      * @return mixed
      */
     public function getRoot();
 
     /**
-     * Returns a list of all the files found in the path
+     * Returns a list of all the files/nodes found in the path
      *
      * @param string $path
      * @return mixed
@@ -35,7 +35,7 @@ interface StorageInterface
     public function getFiles($path);
 
     /**
-     * Returns a list of all the folders found in the path
+     * Returns a list of all the folders/nodes found in the path
      *
      * @param string $path
      * @return mixed
@@ -43,16 +43,16 @@ interface StorageInterface
     public function getFolders($path);
 
     /**
-     * Createa a folder in a certain path
+     * Creates a folder in a certain path/node
      *
-     * @param string $folder
-     * @param string $path
+     * @param string $folder New folder name
+     * @param string $path   Path into which it will be created
      * @return mixed
      */
     public function createFolder($folder, $path);
 
     /**
-     * Returns all the information found on a file
+     * Returns all the information found on a file/node
      *
      * @param $identifier
      * @return mixed

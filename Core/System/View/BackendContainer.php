@@ -17,6 +17,7 @@ class BackendContainer extends Container
 {
     /**
      * Show all content from a child container, can be called recursively inside other containers
+     * Only called in the Backend
      *
      * @param int $id Id if the container to show
      *

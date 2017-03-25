@@ -19,7 +19,7 @@ class TextFilter extends BaseFilter
      */
     public function __construct()
     {
-        $this->setTemplate(Utility::getResource("Filter/text", "Backend", "Backend", "Template"));
+        $this->setTemplate(Utility::getResourcePath('Filter/text', 'Backend', 'Backend', 'Template'));
     }
 
     /**

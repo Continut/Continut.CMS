@@ -21,7 +21,7 @@ class NewsBackendController extends BackendController
     public function __construct()
     {
         parent::__construct();
-        $this->setLayoutTemplate(Utility::getResource('Default', 'Backend', 'Backend', 'Layout'));
+        $this->setLayoutTemplate(Utility::getResourcePath('Default', 'Backend', 'Backend', 'Layout'));
     }
 
     /**
@@ -33,7 +33,7 @@ class NewsBackendController extends BackendController
 
         $grid
             ->setFormAction(Utility::helper('Url')->linkToPath('admin_backend', ['_extension' => 'News', '_controller' => 'NewsBackend', '_action' => 'index']))
-            ->setTemplate(Utility::getResource('Grid/gridView', 'Backend', 'Backend', 'Template'))
+            ->setTemplate(Utility::getResourcePath('Grid/gridView', 'Backend', 'Backend', 'Template'))
             ->setCollection(Utility::createInstance('Continut\Extensions\Local\News\Classes\Domain\Collection\NewsCollection'))
             ->setPager(10, Utility::getRequest()->getArgument('page', 1))
             ->setFields(

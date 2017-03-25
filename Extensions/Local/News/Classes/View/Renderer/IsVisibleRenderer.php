@@ -19,6 +19,6 @@ class IsVisibleRenderer extends BaseRenderer
      */
     public function __construct()
     {
-        $this->setTemplate(Utility::getResource('Renderer/isVisible', 'News', 'Backend', 'Template'));
+        $this->setTemplate(Utility::getResourcePath('Renderer/isVisible', 'News', 'Backend', 'Template'));
     }
 }

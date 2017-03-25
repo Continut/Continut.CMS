@@ -1,0 +1,1 @@
+<input id="<?= $fieldId ?>" type="hidden" value="<?= $value ?>" name="<?= $fieldName ?>"/>

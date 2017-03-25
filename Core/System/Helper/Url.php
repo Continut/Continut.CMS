@@ -23,13 +23,8 @@ class Url
      */
     public function linkToPage($pageId)
     {
-        $params = [
-            '_extension'  => 'Frontend',
-            '_controller' => 'Index',
-            '_action'     => 'index',
-            'pid'         => $pageId
-        ];
-        return $this->linkTo($params);
+        $params = ['id' => $pageId];
+        return $this->linkToPath('page_id', $params);
     }
 
     /**
@@ -52,7 +47,7 @@ class Url
      */
     public function linkToSlug($slug)
     {
-        return Utility::getRequest()->getUrlGenerator()->generate('page_slug', ['slug' => $slug]);
+        return $this->linkToPath('page_slug', ['slug' => $slug]);
     }
 
     /**

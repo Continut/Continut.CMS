@@ -7,6 +7,6 @@
     </div>
     <?php if ($link): ?>
         <div
-            style="background: dodgerblue; padding: 10px; text-align: center; color: white"><?= $this->__("backend.themeBootstrapModerna.content.box.learn.more") ?></div>
+            style="background: dodgerblue; padding: 10px; text-align: center; color: white"><?= $this->__('backend.themeBootstrapModerna.content.box.learn.more') ?></div>
     <?php endif ?>
 </div>

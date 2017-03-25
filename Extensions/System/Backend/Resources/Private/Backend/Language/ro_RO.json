@@ -179,6 +179,7 @@
   "backend.media.folders.create": "Creare director nou",
   "backend.media.folders.specifyName": "Specificaţi numele directorului ce va fi creat",
   "backend.media.files.count": "%(count) fișiere",
+  "backend.media.wizard.addFiles": "Adăugați fișiere",
   "system.helper.units.bytes": "%(size) B",
   "system.helper.units.kilobytes": "%(size) KB",
   "system.helper.megabytes": "%(size) MB",

@@ -19,6 +19,6 @@ class CategoriesRenderer extends BaseRenderer
      */
     public function __construct()
     {
-        $this->setTemplate(Utility::getResource('Renderer/categories', 'News', 'Backend', 'Template'));
+        $this->setTemplate(Utility::getResourcePath('Renderer/categories', 'News', 'Backend', 'Template'));
     }
 }

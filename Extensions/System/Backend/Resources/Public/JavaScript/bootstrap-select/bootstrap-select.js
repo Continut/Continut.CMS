@@ -255,7 +255,7 @@
           _li = [],
           optID = 0;
 
-      // Helper functions
+      // Helpers functions
       /**
        * @param content
        * @param [index]

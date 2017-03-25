@@ -178,6 +178,7 @@
   "backend.media.folders.create": "Create new folder",
   "backend.media.folders.specifyName": "Specify the name of the folder to create",
   "backend.media.files.count": "%(count) files",
+  "backend.media.wizard.addFiles": "Add files",
   "backend.tree.loading": "Loading data...",
   "system.helper.units.bytes": "%(size) B",
   "system.helper.units.kilobytes": "%(size) KB",

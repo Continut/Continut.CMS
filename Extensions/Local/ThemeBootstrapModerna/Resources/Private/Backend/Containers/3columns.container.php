@@ -3,7 +3,7 @@
         <div class="panel panel-warning">
             <div class="panel-heading">
                 <div
-                    class="panel-title"><?= $this->__("backend.themeBootstrapModerna.layout.container.column1") ?>
+                    class="panel-title"><?= $this->__('backend.themeBootstrapModerna.layout.container.column1') ?>
                 </div>
             </div>
             <div class="panel-body">
@@ -15,7 +15,7 @@
         <div class="panel panel-warning">
             <div class="panel-heading">
                 <div
-                    class="panel-title"><?= $this->__("backend.themeBootstrapModerna.layout.container.column2") ?>
+                    class="panel-title"><?= $this->__('backend.themeBootstrapModerna.layout.container.column2') ?>
                 </div>
             </div>
             <div class="panel-body">
@@ -27,7 +27,7 @@
         <div class="panel panel-warning">
             <div class="panel-heading">
                 <div
-                    class="panel-title"><?= $this->__("backend.themeBootstrapModerna.layout.container.column3") ?>
+                    class="panel-title"><?= $this->__('backend.themeBootstrapModerna.layout.container.column3') ?>
                 </div>
             </div>
             <div class="panel-body">

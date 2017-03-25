@@ -17,7 +17,7 @@ class UserController extends BackendController
     public function __construct()
     {
         parent::__construct();
-        $this->setLayoutTemplate(Utility::getResource("Default", "Backend", "Backend", "Layout"));
+        $this->setLayoutTemplate(Utility::getResourcePath('Default', 'Backend', 'Backend', 'Layout'));
     }
 
     public function profileAction()

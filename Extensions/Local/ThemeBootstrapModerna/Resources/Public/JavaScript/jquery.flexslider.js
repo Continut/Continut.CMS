@@ -887,7 +887,7 @@
         }
       });
     } else {
-      // Helper strings to quickly perform functions on the slider
+      // Helpers strings to quickly perform functions on the slider
       var $slider = $(this).data('flexslider');
       switch (options) {
         case "play": $slider.play(); break;

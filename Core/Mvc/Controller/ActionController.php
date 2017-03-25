@@ -266,7 +266,7 @@ class ActionController
         $this
             ->getView()
             ->setTemplate(
-                Utility::getResource("$templateController/$templateAction", $contextExtension, $contextScope, "Template")
+                Utility::getResourcePath("$templateController/$templateAction", $contextExtension, $contextScope, "Template")
             );
 
         if (!method_exists($this, $contextAction)) {

@@ -3,7 +3,7 @@
         <div class="panel panel-success">
             <div class="panel-heading">
                 <div class="panel-title">
-                    <?= $this->__("backend.themeBootstrapModerna.layout.container.callAction") ?>
+                    <?= $this->__('backend.themeBootstrapModerna.layout.container.callAction') ?>
                 </div>
             </div>
             <div class="panel-body">
@@ -17,7 +17,7 @@
         <div class="panel panel-success">
             <div class="panel-heading">
                 <div class="panel-title">
-                    <?= $this->__("backend.themeBootstrapModerna.layout.container.main") ?>
+                    <?= $this->__('backend.themeBootstrapModerna.layout.container.main') ?>
                 </div>
             </div>
             <div class="panel-body">

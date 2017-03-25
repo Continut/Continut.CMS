@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-md-6">
         <div class="form-group">
-            <?= $this->helper('Wizard')->selectField(
+            <?= $this->helper('Form')->selectField(
                 'icon',
                 'Icon',
                 [
@@ -19,10 +19,10 @@
     </div>
     <div class="col-md-6">
         <div class="form-group">
-            <?= $this->helper('Wizard')->textField('link', 'Link', $this->valueOrDefault('link', '')) ?>
+            <?= $this->helper('Form')->textField('link', 'Link', $this->valueOrDefault('link', '')) ?>
         </div>
     </div>
 </div>
 <div class="form-group">
-    <?= $this->helper('Wizard')->rteField('content', 'Content', $this->valueOrDefault('content', '')) ?>
+    <?= $this->helper('Form')->rteField('content', 'Content', $this->valueOrDefault('content', '')) ?>
 </div>

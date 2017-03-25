@@ -22,7 +22,7 @@ use Continut\Core\Utility;
  * If you need to link them to a model and have automatic validation/error messages displayed, use
  * the FormObject helper instead
  *
- * @package Continut\Core\System\Helper
+ * @package Continut\Core\System\Helpers
  */
 class Form
 {
@@ -120,10 +120,20 @@ HER;
     {
         $fieldName = $this->setFieldName($name);
         $fieldId   = $this->setFieldId($name);
-        $html = <<<HER
-            <input id="$fieldId" type="hidden" class="form-control" value="$value" name="$fieldName"/>
-HER;
-        return $html;
+
+        $view = Utility::createInstance('Continut\Core\Mvc\View\BaseView');
+        $view->setTemplate(Utility::getResourcePath('Form/hiddenField', 'Backend', 'Backend', 'Helper'));
+
+        $view->assignMultiple(
+            [
+                'name'       => $name,
+                'value'      => $value,
+                'fieldName'  => $fieldName,
+                'fieldId'    => $fieldId
+            ]
+        );
+
+        return $view->render();
     }
 
     /**
@@ -173,15 +183,25 @@ HER;
      */
     public function dateTimeField($name, $label, $value = '')
     {
-        $fieldName = $this->setFieldName($name);
+        $fieldName  = $this->setFieldName($name);
         $fieldId    = $this->setFieldId($name);
         $fieldLabel = $this->setFieldLabel($name, $label);
 
-        $html = <<<HER
-            $fieldLabel
-            <input id="$fieldId" type="text" data-field="datetime" class="form-control" value="$value" name="$fieldName"/>
-HER;
-        return $html;
+        $view = Utility::createInstance('Continut\Core\Mvc\View\BaseView');
+        $view->setTemplate(Utility::getResourcePath('Form/datetimeField', 'Backend', 'Backend', 'Helper'));
+
+        $view->assignMultiple(
+            [
+                'name'       => $name,
+                'label'      => $label,
+                'value'      => $value,
+                'fieldName'  => $fieldName,
+                'fieldId'    => $fieldId,
+                'fieldLabel' => $fieldLabel
+            ]
+        );
+
+        return $view->render();
     }
 
     /**
@@ -200,27 +220,22 @@ HER;
         $fieldId    = $this->setFieldId($name);
         $fieldLabel = $this->setFieldLabel($name, $label);
 
-        $input = <<<HER
-            <input id="$fieldId" type="text" class="form-control" value="$value" name="$fieldName"/>
-HER;
+        $view = Utility::createInstance('Continut\Core\Mvc\View\BaseView');
+        $view->setTemplate(Utility::getResourcePath('Form/textField', 'Backend', 'Backend', 'Helper'));
 
-        if (isset($arguments['prefix'])) {
-            $prefix = $arguments['prefix'];
-            $input = <<<HER
-            <div class="input-group">
-                <span class="input-group-addon">$prefix</span>
-                $input
-            </div>
-HER;
-        }
+        $view->assignMultiple(
+            [
+                'name'       => $name,
+                'label'      => $label,
+                'value'      => $value,
+                'arguments'  => $arguments,
+                'fieldName'  => $fieldName,
+                'fieldId'    => $fieldId,
+                'fieldLabel' => $fieldLabel
+            ]
+        );
 
-        $html = <<<HER
-            <div class="form-group">
-                $fieldLabel
-                $input
-            </div>
-HER;
-        return $html;
+        return $view->render();
     }
 
     /**
@@ -239,32 +254,30 @@ HER;
         $fieldId    = $this->setFieldId($name);
         $fieldLabel = $this->setFieldLabel($name, $label);
 
-        $imagePreview = '<a href="#" class="btn btn-success">Add/Select image</a>';
-        if ($value) {
-            $imagePreview = '<img class="media-object" src="' . Utility::helper('Image')->crop($value, 80, 80, 'backend_wizard') . '" alt=""/>';
+        $view = Utility::createInstance('Continut\Core\Mvc\View\BaseView');
+        $view->setTemplate(Utility::getResourcePath('Form/mediaField', 'Backend', 'Backend', 'Helper'));
+
+        // if the field holds multiple images, their ids will be separated by commas
+        if (mb_strlen(trim($value)) == 0) {
+            $values = [];
+        } else {
+            $values = explode(',', $value);
         }
 
-        $input = <<<HER
-            <input id="$fieldId" type="hidden" value="$value" name="$fieldName"/>
-            <div class="media">
-                <div class="media-left">
-                    $imagePreview
-                </div>
-                <div class="media-body">
-                    <a title="Remove image" href="#" class="btn pull-right btn-danger"><span class="fa fa-fw fa-trash"></span></a>
-                    <h4 class="media-heading">$value</h4>
-                    Filename, filesize
-                </div>
-            </div>
-HER;
+        $view->assignMultiple(
+            [
+                'name'       => $name,
+                'label'      => $label,
+                'value'      => $value,
+                'values'     => $values,
+                'arguments'  => $arguments,
+                'fieldName'  => $fieldName,
+                'fieldId'    => $fieldId,
+                'fieldLabel' => $fieldLabel
+            ]
+        );
 
-        $html = <<<HER
-            <div class="form-group field-type-media">
-                $fieldLabel
-                $input
-            </div>
-HER;
-        return $html;
+        return $view->render();
     }
 
     /**
@@ -306,46 +319,21 @@ HER;
         $fieldId    = $this->setFieldId($name);
         $fieldLabel = $this->setFieldLabel($name, $label);
 
-        $html = <<<HER
-            <div class="form-group">
-            $fieldLabel
-            <div class="rte-toolbar" id="rte_toolbar_$name">
-                <div class="btn-group">
-                    <a class="btn btn-default" data-wysihtml5-command="bold"><i class="fa fa-fw fa-bold"></i></a>
-                    <a class="btn btn-default" data-wysihtml5-command="italic"><i class="fa fa-fw fa-italic"></i></a>
-                    <a class="btn btn-default" data-wysihtml5-command="underline"><i class="fa fa-fw fa-underline"></i></a>
-                </div>
-                <div class="btn-group">
-                    <a class="btn btn-default" data-wysihtml5-command="alignLeftStyle"><i class="fa fa-fw fa-align-left"></i></a>
-                    <a class="btn btn-default" data-wysihtml5-command="alignCenterStyle"><i class="fa fa-fw fa-align-center"></i></a>
-                    <a class="btn btn-default" data-wysihtml5-command="alignRightStyle"><i class="fa fa-fw fa-align-right"></i></a>
-                </div>
-                <div class="btn-group">
-                    <a class="btn btn-default" data-wysihtml5-command="insertUnorderedList"><i class="fa fa-fw fa-list"></i></a>
-                    <a class="btn btn-default" data-wysihtml5-command="insertOrderedList"><i class="fa fa-fw fa-list-ol"></i></a>
-                </div>
-                <select class="selectpicker">
-                    <option value="p" data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="p" data-icon="fa fa-fw fa-paragraph">Paragraph</option>
-                    <option value="h1" data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h1" data-icon="fa fa-fw fa-header">Heading 1</option>
-                    <option value="h2" data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h2" data-icon="fa fa-fw fa-header">Heading 2</option>
-                    <option value="h3" data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h3" data-icon="fa fa-fw fa-header">Heading 3</option>
-                    <option value="h4" data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h4" data-icon="fa fa-fw fa-header">Heading 4</option>
-                    <option value="h5" data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h5" data-icon="fa fa-fw fa-header">Heading 5</option>
-                    <option value="">-- No format block --</option>
-                </select>
-                <a class="btn btn-default" data-wysihtml5-action="change_view"><i class="fa fa-fw fa-code"></i></a>
-            </div>
-            <textarea id="$fieldId" name="$fieldName" class="form-control rte">$value</textarea>
-            <script type="text/javascript">
-            var editor_$name = new wysihtml.Editor('field_$name', {
-                toolbar: 'rte_toolbar_$name',
-                parserRules: wysihtmlParserRules
-            });
-            $('.selectpicker').selectpicker();
-            </script>
-            </div>
-HER;
-        return $html;
+        $view = Utility::createInstance('Continut\Core\Mvc\View\BaseView');
+        $view->setTemplate(Utility::getResourcePath('Form/rteField', 'Backend', 'Backend', 'Helper'));
+
+        $view->assignMultiple(
+            [
+                'name'       => $name,
+                'value'      => $value,
+                'label'      => $label,
+                'fieldName'  => $fieldName,
+                'fieldId'    => $fieldId,
+                'fieldLabel' => $fieldLabel
+            ]
+        );
+
+        return $view->render();
     }
 
     /**

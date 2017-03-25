@@ -80,7 +80,7 @@
   }
   
   /**
-   * Helper function for extending objects
+   * Helpers function for extending objects
    */
   function extend (object /*, objectN ... */) {
     if(arguments.length <= 0) {
@@ -109,7 +109,7 @@
   }
   
   /**
-   * Helper function for normalizing tolerance option to object format
+   * Helpers function for normalizing tolerance option to object format
    */
   function normalizeTolerance (t) {
     return t === Object(t) ? t : { down : t, up : t };

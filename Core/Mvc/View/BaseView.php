@@ -157,7 +157,7 @@ class BaseView
     {
         $partialView = Utility::createInstance('Continut\Core\Mvc\View\BaseView');
         $partialView->assignMultiple($variables);
-        $partialView->setTemplate(Utility::getResource($partialFilename, $extensionName, $scope, "Partial"));
+        $partialView->setTemplate(Utility::getResourcePath($partialFilename, $extensionName, $scope, "Partial"));
         return $partialView->render();
     }
 

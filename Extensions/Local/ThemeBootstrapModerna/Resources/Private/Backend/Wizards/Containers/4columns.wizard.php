@@ -3,14 +3,14 @@
     <footer><?= $this->__('backend.wizard.containers.info.footer') ?></footer>
 </blockquote>
 <div class="form-group">
-    <?= $this->helper('Wizard')->textField(
+    <?= $this->helper('Form')->textField(
             'title',
             $this->__('backend.wizard.title'),
             $this->valueOrDefault('title', '')
         ) ?>
 </div>
 <div class="form-group">
-    <?= $this->helper('Wizard')->selectField(
+    <?= $this->helper('Form')->selectField(
             'formatColumns',
             $this->__('backend.wizard.containers.spaceUsage'),
             [
