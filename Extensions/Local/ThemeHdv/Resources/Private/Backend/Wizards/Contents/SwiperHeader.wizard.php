@@ -1,1 +1,1 @@
-<?= $this->helper('Form')->textField('image', $this->__('backend.wizard.image'), $this->valueOrDefault('image', null)) ?>
+<?= $this->helper('Form')->mediaField('image', $this->__('backend.wizard.image'), $this->valueOrDefault('image', null)) ?>

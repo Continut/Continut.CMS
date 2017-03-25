@@ -60,7 +60,12 @@ html {
   border: 1px solid transparent;
 }
 #main_toolbar .navbar-nav > li > .dropdown-menu {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
   border-radius: 0;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
 }
 #main_toolbar .navbar-nav > .open > a,
 #main_toolbar .navbar-nav > .active > a {
@@ -194,6 +199,22 @@ li a.helper-icon {
 .panel-media {
   margin-top: 20px;
 }
+.panel-media .list-group {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
+.panel-media .list-group .list-group-item {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
 .panel-media h2.title {
   margin: 0 20px 0 0;
 }
@@ -201,7 +222,12 @@ li a.helper-icon {
   text-align: center;
   position: relative;
   background: #f5f5f5;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
   border-radius: 0;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
   padding: 9px;
   min-height: 200px;
   overflow: hidden;
@@ -245,11 +271,23 @@ li a.helper-icon {
   color: white;
   z-index: 2;
 }
+.stick-to-bottom {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  z-index: 5;
+}
 .folders-list {
   margin-top: 10px;
 }
 .folders-list .list-group-item {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
   border-radius: 0;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
 }
 .content-type-reference {
   opacity: 0.9;
@@ -321,7 +359,12 @@ li a.helper-icon {
 }
 .form-control,
 .input-group-addon {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
   border-radius: 0;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
 }
 .dropdown-menu {
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
@@ -360,7 +403,12 @@ li a.helper-icon {
 }
 .panel-heading {
   padding: 10px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
   border-radius: 0;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
 }
 .panel-backend-content {
   background: rgba(220, 220, 220, 0.3);
@@ -385,11 +433,21 @@ li a.helper-icon {
   font-size: 12px;
   padding: 5px 5px 5px 35px;
   margin-bottom: 3px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
   border-radius: 0;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
 }
 .btn,
 .dropdown-menu {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
   border-radius: 0;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
   margin: 0;
 }
 .btn .open {
@@ -413,7 +471,12 @@ li a.helper-icon {
 }
 .btn-sm,
 .btn-group-sm > .btn {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
   border-radius: 0;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
 }
 .img-centered {
   margin: 0 auto;
@@ -517,7 +580,12 @@ li a.helper-icon {
 }
 /* flash messages */
 .alert {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
   border-radius: 0;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
 }
 .flash-error {
   background: #b92c28;
@@ -550,6 +618,12 @@ li a.helper-icon {
 .wysihtml5-source-view {
   box-shadow: 0 0 4px gray inset;
   background: #dcdcdc;
+}
+.field-type-media .media {
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  margin: 0 0 10px 0;
+  background: white;
 }
 /** CSS actions loader **/
 .progress-loader {

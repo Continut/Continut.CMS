@@ -13,8 +13,8 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="btn-group pull-right" role="group" aria-label="Thumbnail display">
-                            <button type="button" class="btn btn-default"><i class="fa fa-fw fa-bars"></i></button>
-                            <button type="button" class="btn btn-default"><i class="fa fa-fw fa-th"></i></button>
+                            <button type="button" class="btn btn-default <?= ($listType == 'list') ? 'active': ''; ?>"><i class="fa fa-fw fa-bars"></i></button>
+                            <button type="button" class="btn btn-default <?= ($listType == 'thumbnails') ? 'active': ''; ?>"><i class="fa fa-fw fa-th"></i></button>
                         </div>
                     </div>
                 </div>
@@ -38,45 +38,25 @@
                 <div id="file_tree"></div>
             </div>
             <div class="col-sm-9">
-                <p>
-                    <small><?= $path ?></small>
-                </p>
-                <?php if ($files): ?>
-                    <div class="row">
-                        <?php foreach ($files as $file): ?>
-                            <div class="col-xs-6 col-md-3">
-                                <a href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Media', '_action' => 'fileInfo', 'file' => urlencode($file->getRelativeFilename())]) ?>" class="thumbnail filetype-<?= $file->getExtension() ?>">
-                                    <span class="extension"><?= $file->getExtension() ?>
-                                        : <?= $this->helper('Units')->formatBytes($file->getSize()); ?></span>
-                                    <?php if (in_array($file->getExtension(), array('JPG', 'PNG', 'GIF'))): ?>
-                                        <img
-                                            src="<?= $this->helper('Image')->crop($file->getRelativeFilename(), 300, 300, 'storage') ?>"
-                                            alt=""/>
-                                    <?php elseif ($file->getExtension() == 'SVG'): ?>
-                                        <img
-                                            src="<?= $file->getRelativeFilename() ?>"
-                                            alt=""/>
-                                    <?php else: ?>
-                                        <i class="fa fa-file" style="font-size: 125px"></i>
-                                    <?php endif; ?>
-                                    <div class="caption">
-                                        <p><?= $file->getFullname(); ?></p>
-                                    </div>
-                                </a>
-                            </div>
-                        <?php endforeach ?>
-                    </div>
-                <?php else: ?>
-                    <div class="alert alert-warning" role="alert">
-                        <p><?= $this->__('backend.media.files.missing') ?></p>
-                    </div>
-                <?php endif; ?>
+                <div id="content">
+                    <?= $this->partial('Media/files', 'Backend', 'Backend', ['path' => $path, 'files' => $files, 'listType' => $listType, 'handlingType' => $handlingType]); ?>
+                </div>
             </div>
         </div>
     </div>
+    <?php if ($handlingType == \Continut\Extensions\System\Backend\Classes\Controllers\MediaController::HANDLING_TYPE_SELECT): ?>
+        <div class="panel-footer stick-to-bottom text-center">
+            <input type="submit" name="submit" class="btn btn-primary pull-left"
+                   value="<?= $this->__('general.select') ?>"/>
+            <span id="media_selected_count"><?= $this->__('general.selectedXFiles', ['count' => 0]); ?></span>
+            <a class="close-button btn btn-danger pull-right"><?= $this->__('general.close') ?></a>
+        </div>
+    <?php endif; ?>
 </div>
 
 <script>
+    var totalSelectedFiles = 0;
+
     $('#file_tree').jstree({
         'core' : {
             'multiple' : false,
@@ -91,7 +71,8 @@
             },
             'data': {
                 'url': '<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Media', '_action' => 'treeGetNode']) ?>',
-                'data' : function (node) {
+                dataType: 'json',
+                    'data' : function (node) {
                     return { 'id' : node.id };
                 }
             },
@@ -114,7 +95,27 @@
         },
         'plugins' : ['dnd', 'search', 'wholerow']
         //'plugins' : ['dnd', 'search', 'wholerow', 'checkbox']
-    });
+    })
+        .on('changed.jstree', function (e, data) {
+            if(data && data.selected && data.selected.length) {
+                // once a node is clicked, load the corresponding media elements in the right side
+                var nodeId = data.node.id;
+                $.ajax({
+                    url: '<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Media', '_action' => 'getFiles']) ?>',
+                    data: { path: nodeId },
+                    beforeSend: function (xhr) {
+                        //$('#' + nodeId + ' > .jstree-anchor').append('<span class="fa fa-spinner fa-pulse"></span>');
+                    }
+                })
+                    .done(function (data) {
+                        $('#content').html(data);
+                        //$('#' + nodeId).find('.fa-spinner').remove();
+                        //previousSelectedNode = nodeId;
+                        //anchor.data('requestRunning', false);
+                    });
+            }
+
+        });
 
     // create folder button
     $('#create_folder').on('click', function (event) {

@@ -1127,21 +1127,6 @@ INSERT INTO `sys_pages` (`id`, `parent_id`, `title`, `language_iso3`, `original_
 (10606,	10034,	'Disciplines de P à S',	'',	0,	1,	1,	0,	7,	'ThemeHdv.default',	0,	'/Extensions/Local/ThemeHdv/Resources/Private/Frontend/Layouts/Default.layout.php',	'/Extensions/Local/ThemeHdv/Resources/Private/Backend/Layouts/Default.layout.php',	NULL,	5,	'disciplines-de-p-a-s',	NULL,	NULL,	NULL,	NULL),
 (10607,	10034,	'Disciplines de T à W',	'',	0,	1,	1,	0,	7,	'ThemeHdv.default',	0,	'/Extensions/Local/ThemeHdv/Resources/Private/Frontend/Layouts/Default.layout.php',	'/Extensions/Local/ThemeHdv/Resources/Private/Backend/Layouts/Default.layout.php',	NULL,	7,	'disciplines-de-t-a-w',	NULL,	NULL,	NULL,	NULL);
 
-DROP TABLE IF EXISTS `sys_registry`;
-CREATE TABLE `sys_registry` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `key` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `value` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `domain_id` int(11) unsigned DEFAULT '0',
-  `domain_url_id` int(11) unsigned DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-INSERT INTO `sys_registry` (`id`, `key`, `value`, `domain_id`, `domain_url_id`) VALUES
-(1,	'System/Locale',	'ro_RO',	0,	0),
-(2,	'Settings/Session/FeuserExpire',	'360',	0,	0),
-(3,	'Settings/Session/BeuserExpire',	'260',	0,	0);
-
 DROP TABLE IF EXISTS `sys_routes`;
 CREATE TABLE `sys_routes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

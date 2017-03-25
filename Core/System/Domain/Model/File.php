@@ -135,7 +135,7 @@ class File extends BaseModel
      */
     public function getRelativePath()
     {
-        return DS . $this->location . $this->filename;
+        return $this->location . DS . $this->filename;
     }
 
     /**

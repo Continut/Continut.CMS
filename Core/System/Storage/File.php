@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the Con?inut CMS project.
+ * This file is part of the Conținut CMS project.
  * Distributed under the GNU General Public License.
  * For more details, consult the LICENSE.txt file supplied with the project
  * Author: Radu Mogoş <radu.mogos@pixelplant.ch>
@@ -55,6 +55,18 @@ class File
      * @var string
      */
     protected $absoluteFilename;
+
+    /**
+     * @var int
+     */
+    protected $creationDate;
+
+    /**
+     * Reference id in sys_files after it has been indexed
+     *
+     * @var int
+     */
+    protected $id;
 
     /**
      * @return string
@@ -182,5 +194,37 @@ class File
     public function setAbsoluteFilename($absoluteFilename)
     {
         $this->absoluteFilename = $absoluteFilename;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCreationDate()
+    {
+        return $this->creationDate;
+    }
+
+    /**
+     * @param int $creationDate
+     */
+    public function setCreationDate($creationDate)
+    {
+        $this->creationDate = $creationDate;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 }

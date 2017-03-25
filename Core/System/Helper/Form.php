@@ -11,6 +11,7 @@
 namespace Continut\Core\System\Helper;
 
 use Continut\Core\Mvc\Model\BaseModel;
+use Continut\Core\Utility;
 
 /**
  * Class Form
@@ -223,6 +224,50 @@ HER;
     }
 
     /**
+     * Wizard helper method to show a simple text field with a label
+     *
+     * @param string $name Input name
+     * @param string $label Input label
+     * @param string $value Input default value
+     * @param array $arguments Additional parameters to pass onto the wizard (like "prefix", etc)
+     *
+     * @return string
+     */
+    public function mediaField($name, $label = '', $value = '', $arguments = array())
+    {
+        $fieldName  = $this->setFieldName($name);
+        $fieldId    = $this->setFieldId($name);
+        $fieldLabel = $this->setFieldLabel($name, $label);
+
+        $imagePreview = '<a href="#" class="btn btn-success">Add/Select image</a>';
+        if ($value) {
+            $imagePreview = '<img class="media-object" src="' . Utility::helper('Image')->crop($value, 80, 80, 'backend_wizard') . '" alt=""/>';
+        }
+
+        $input = <<<HER
+            <input id="$fieldId" type="hidden" value="$value" name="$fieldName"/>
+            <div class="media">
+                <div class="media-left">
+                    $imagePreview
+                </div>
+                <div class="media-body">
+                    <a title="Remove image" href="#" class="btn pull-right btn-danger"><span class="fa fa-fw fa-trash"></span></a>
+                    <h4 class="media-heading">$value</h4>
+                    Filename, filesize
+                </div>
+            </div>
+HER;
+
+        $html = <<<HER
+            <div class="form-group field-type-media">
+                $fieldLabel
+                $input
+            </div>
+HER;
+        return $html;
+    }
+
+    /**
      * Simple textarea field
      *
      * @param $name
@@ -238,8 +283,10 @@ HER;
         $fieldLabel = $this->setFieldLabel($name, $label);
 
         $html = <<<HER
+        <div class="form-group">
             $fieldLabel
             <textarea id="$fieldId" name="$fieldName" class="form-control" rows="5">$value</textarea>
+        </div>
 HER;
         return $html;
     }
@@ -260,6 +307,7 @@ HER;
         $fieldLabel = $this->setFieldLabel($name, $label);
 
         $html = <<<HER
+            <div class="form-group">
             $fieldLabel
             <div class="rte-toolbar" id="rte_toolbar_$name">
                 <div class="btn-group">
@@ -295,6 +343,7 @@ HER;
             });
             $('.selectpicker').selectpicker();
             </script>
+            </div>
 HER;
         return $html;
     }

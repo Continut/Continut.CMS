@@ -77,6 +77,8 @@ class Bootstrap
         Utility::$autoloader->addNamespace('Intervention', __ROOTCMS__ . DS . 'Lib' . DS . 'Intervention');
         // Validators
         Utility::$autoloader->addNamespace('Respect', __ROOTCMS__ . DS . 'Lib' . DS . 'Respect');
+        // Microsoft OneDrive @TODO : move to a config file
+        Utility::$autoloader->addNamespace('Krizalys', __ROOTCMS__ . DS . 'Lib' . DS . 'Storage' . DS . 'Krizalys');
 
         Utility::setApplicationScope($applicationScope, $environment);
         Utility::debugData('Application', 'start');

@@ -11,6 +11,7 @@
 namespace Continut\Core\System\Domain\Model;
 
 use Continut\Core\Mvc\Model\BaseModel;
+use Continut\Core\Utility;
 
 class FileReference extends BaseModel
 {
@@ -62,14 +63,14 @@ class FileReference extends BaseModel
     public function dataMapper()
     {
         $fields = [
-            "file_id"     => $this->fileId,
-            "foreign_id"  => $this->foreignId,
-            "is_visible"  => $this->isVisible,
-            "is_deleted"  => $this->isDeleted,
-            "tablename"   => $this->tablename,
-            "title"       => $this->title,
-            "alt"         => $this->alt,
-            "description" => $this->description
+            'file_id'     => $this->fileId,
+            'foreign_id'  => $this->foreignId,
+            'is_visible'  => $this->isVisible,
+            'is_deleted'  => $this->isDeleted,
+            'tablename'   => $this->tablename,
+            'title'       => $this->title,
+            'alt'         => $this->alt,
+            'description' => $this->description
         ];
 
         return array_merge($fields, parent::dataMapper());
@@ -209,6 +210,17 @@ class FileReference extends BaseModel
         $this->description = $description;
 
         return $this;
+    }
+
+    /**
+     * Returns the original File that this reference points to (the record from sys_files)
+     *
+     * @return \Continut\Core\System\Domain\Model\File
+     */
+    public function getFile()
+    {
+        $fileCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\FileCollection');
+        return $fileCollection->findById($this->getFileId());
     }
 
 }

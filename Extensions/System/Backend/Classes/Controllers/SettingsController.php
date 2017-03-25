@@ -70,10 +70,18 @@ class SettingsController extends BackendController
         $this->getView()->assign('domain', $domain);
     }
 
+    /**
+     * Save config data into sys_configuration
+     */
+    public function saveSettingsAction() {
+        $data = $this->getRequest()->getArgument('data');
+        // @TODO : Store data into the DB
+    }
+
 
     public function saveDomainAction() {
-        $data = $this->getRequest()->getArgument("data");
-        $id = (int)$data["id"];
+        $data = $this->getRequest()->getArgument('data');
+        $id = (int)$data['id'];
 
         // reference the collection
         $domainsCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection');
@@ -96,7 +104,7 @@ class SettingsController extends BackendController
                 ->save();
 
             // redirect to the "domainsAction" since all went well and data is saved
-            $this->redirect(Utility::helper("Url")->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'domains']));
+            $this->redirect(Utility::helper('Url')->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'domains']));
         }
 
         $this->getView()->assign('domain', $domain);
@@ -106,7 +114,7 @@ class SettingsController extends BackendController
      * Edit a language/domainUrl
      */
     public function editDomainUrlAction() {
-        $domainUrlId = $this->getRequest()->getArgument("id", 0);
+        $domainUrlId = $this->getRequest()->getArgument('id', 0);
 
         $domainsCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainCollection')
             ->findAll();
@@ -125,7 +133,7 @@ class SettingsController extends BackendController
      * Save domainUrl object
      */
     public function saveDomainUrlAction() {
-        $data = $this->getRequest()->getArgument("data");
+        $data = $this->getRequest()->getArgument('data');
         $id   = (int)$data["id"];
 
         $languagesCollection = Utility::createInstance('Continut\Core\System\Domain\Collection\DomainUrlCollection');

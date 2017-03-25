@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the Con?inut CMS project.
+ * This file is part of the Conținut CMS project.
  * Distributed under the GNU General Public License.
  * For more details, consult the LICENSE.txt file supplied with the project
  * Author: Radu Mogoş <radu.mogos@pixelplant.ch>
@@ -23,7 +23,7 @@ use Continut\Core\Utility;
 class LocalStorage implements StorageInterface
 {
 
-    const MEDIA_DIRECTORY = '/Media';
+    const MEDIA_DIRECTORY = 'Media';
 
     /**
      * Get root directory of the storage
@@ -32,7 +32,7 @@ class LocalStorage implements StorageInterface
      */
     public function getRoot()
     {
-        return __ROOTCMS__;
+        return self::MEDIA_DIRECTORY;
     }
 
     /**
@@ -44,11 +44,7 @@ class LocalStorage implements StorageInterface
      */
     public function getFiles($path = '')
     {
-        if ($path === '') {
-            $path = self::MEDIA_DIRECTORY;
-        }
-
-        $existingFiles = new \FilesystemIterator($this->getRoot() . $path);
+        $existingFiles = new \FilesystemIterator(__ROOTCMS__ . DS . $path);
 
         $fileObjects = array();
 
@@ -66,6 +62,7 @@ class LocalStorage implements StorageInterface
                     $fileObject->setAbsoluteFilename($existingFile->getPathname());
                     $fileObject->setFullname($existingFile->getFilename());
                     $fileObject->setSize($existingFile->getSize());
+                    $fileObject->setCreationDate($existingFile->getCTime());
                     $fileObjects[] = $fileObject;
                 }
             } catch (\RuntimeException $e) {
@@ -86,11 +83,7 @@ class LocalStorage implements StorageInterface
      */
     public function getFolders($path = '')
     {
-        if ($path === '') {
-            $path = self::MEDIA_DIRECTORY;
-        }
-
-        $existingFolders = new \FilesystemIterator($this->getRoot() . $path);
+        $existingFolders = new \FilesystemIterator(__ROOTCMS__ . DS . $path);
 
         $folderObjects = array();
 
@@ -106,7 +99,7 @@ class LocalStorage implements StorageInterface
                     // count files and folders inside this folder
                     $subfiles = new \FilesystemIterator($folderObject->getAbsolutePath(), \FilesystemIterator::SKIP_DOTS);
                     foreach ($subfiles as $sub) {
-                        if ($sub->getType() == "dir") {
+                        if ($sub->getType() == 'dir') {
                             $folderObject->setCountFolders($folderObject->getCountFolders() + 1);
                         } else {
                             $folderObject->setCountFiles($folderObject->getCountFiles() + 1);
@@ -135,7 +128,7 @@ class LocalStorage implements StorageInterface
         if ($path == '') {
             $path = DS . self::MEDIA_DIRECTORY;
         }
-        return mkdir($this->getRoot() . $path . DS . $folder);
+        return mkdir(__ROOTCMS__ . $path . DS . $folder);
     }
 
     /**
@@ -168,6 +161,7 @@ class LocalStorage implements StorageInterface
         $fileObject->setAbsoluteFilename($splFile->getPathname());
         $fileObject->setFullname($splFile->getFilename());
         $fileObject->setSize($splFile->getSize());
+        $fileObject->setCreationDate($splFile->getCTime());
 
         return $fileObject;
     }
