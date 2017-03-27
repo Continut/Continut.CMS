@@ -32,6 +32,12 @@
           "icon": "Icons/text_with_image.png",
           "template": "TextWithImage"
         },
+        "iconText": {
+          "label": "backend.themeContinutOrg.type.content.iconText.title",
+          "description": "backend.themeContinutOrg.type.content.iconText.description",
+          "icon": "Icons/icon_text.png",
+          "template": "IconText"
+        },
         "video": {
           "label": "backend.themeContinutOrg.type.content.video.title",
           "description": "backend.themeContinutOrg.type.content.video.description",
@@ -51,6 +57,28 @@
           "description": "backend.themeContinutOrg.type.container.2columns.description",
           "icon": "Icons/container_2columns.png",
           "template": "2columns"
+        },
+        "3columns": {
+          "label": "backend.themeContinutOrg.type.container.3columns.title",
+          "description": "backend.themeContinutOrg.type.container.3columns.description",
+          "icon": "Icons/container_3columns.png",
+          "template": "3columns"
+        }
+      },
+      "plugin": {
+        "notificationEmail": {
+          "label": "backend.themeContinutOrg.type.plugin.notificationEmail.title",
+          "description": "backend.themeContinutOrg.type.plugin.notificationEmail.description",
+          "icon": "Icons/notificationEmail.png",
+          "template": "notification",
+          "frontend": {
+            "controller": "Email",
+            "action": "notification"
+          },
+          "backend": {
+            "controller": "Preview",
+            "action": "notificationPreview"
+          }
         }
       }
     }

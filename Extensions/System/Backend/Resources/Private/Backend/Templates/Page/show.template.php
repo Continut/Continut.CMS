@@ -14,32 +14,32 @@
     <div class="col-xs-10">
         <div class="btn-group" role="group">
             <button type="button" class="btn btn-warning" id="page-edit">
-                <i class="fa fa-fw fa-pencil"></i> <span class="visible-lg-inline"><?= $this->__("backend.page.edit") ?></span>
+                <i class="fa fa-fw fa-pencil"></i> <span class="visible-lg-inline"><?= $this->__('backend.page.edit') ?></span>
             </button>
             <button type="button" class="btn btn-default" id="page-visibility-frontend">
-                <span class="element-visible <?= $page->getIsVisible() ? "" : "hide" ?>"><i
-                            class="fa fa-fw fa-check"></i> <span class="visible-lg-inline"><?= $this->__("backend.page.visibleInFrontend") ?></span></span>
-                <span class="element-hide <?= $page->getIsVisible() ? "hide" : "" ?>"><i
-                            class="fa fa-fw fa-close text-danger"></i> <span class="visible-lg-inline"><?= $this->__("backend.page.notVisibleInFrontend") ?></span></span>
+                <span class="element-visible <?= $page->getIsVisible() ? '' : 'hide' ?>"><i
+                            class="fa fa-fw fa-check"></i> <span class="visible-lg-inline"><?= $this->__('backend.page.visibleInFrontend') ?></span></span>
+                <span class="element-hide <?= $page->getIsVisible() ? 'hide' : '' ?>"><i
+                            class="fa fa-fw fa-close text-danger"></i> <span class="visible-lg-inline"><?= $this->__('backend.page.notVisibleInFrontend') ?></span></span>
             </button>
             <button type="button" class="btn btn-default" id="page-visibility-menu">
-                <span class="element-visible <?= $page->getIsInMenu() ? "" : "hide" ?>"><i
-                            class="fa fa-fw fa-eye"></i> <span class="visible-lg-inline"><?= $this->__("backend.page.visibleInMenu") ?></span></span>
-                <span class="element-hide <?= $page->getIsInMenu() ? "hide" : "" ?>"><i
-                            class="fa fa-fw fa-eye-slash text-danger"></i> <span class="visible-lg-inline"><?= $this->__("backend.page.notVisibleInMenu") ?></span></span>
+                <span class="element-visible <?= $page->getIsInMenu() ? '' : 'hide' ?>"><i
+                            class="fa fa-fw fa-eye"></i> <span class="visible-lg-inline"><?= $this->__('backend.page.visibleInMenu') ?></span></span>
+                <span class="element-hide <?= $page->getIsInMenu() ? 'hide' : '' ?>"><i
+                            class="fa fa-fw fa-eye-slash text-danger"></i> <span class="visible-lg-inline"><?= $this->__('backend.page.notVisibleInMenu') ?></span></span>
             </button>
         </div>
     </div>
     <div class="col-xs-2">
         <div class="btn-group pull-right" role="group">
             <button type="button" class="btn btn-danger" id="page-delete"><i
-                    class="fa fa-fw fa-trash"></i> <?= $this->__("backend.page.deletePage") ?></button>
+                    class="fa fa-fw fa-trash"></i> <?= $this->__('backend.page.deletePage') ?></button>
         </div>
     </div>
 </div>
 
 <div class="progress-loader text-center loader-page-save-properties">
-    <img src="<?= $this->helper("Image")->getPath("Images/spin.svg", "Backend") ?>" alt=""/>
+    <img src="<?= $this->helper('Image')->getPath('Images/spin.svg', 'Backend') ?>" alt=""/>
 </div>
 
 <div id="page_edit_block" class="row"></div>
@@ -53,7 +53,7 @@
 <script type="text/javascript">
     $('.page-link').on('click', function () {
         $.ajax({
-            url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'show']) ?>',
+            url: '<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'show']) ?>',
             data: {page_id: $(this).data('page-id')}
         })
             .done(function (data) {
@@ -62,7 +62,7 @@
     });
     $('#page-visibility-frontend').on('click', function () {
         $.ajax({
-            url: '<?= $this->helper("Url")->LinkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'toggleVisibility']) ?>',
+            url: '<?= $this->helper('Url')->LinkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'toggleVisibility']) ?>',
             data: {page_id: <?= $page->getId() ?> },
             dataType: 'json'
         })
@@ -82,7 +82,7 @@
     });
     $('#page-visibility-menu').on('click', function () {
         $.ajax({
-            url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'toggleMenu']) ?>',
+            url: '<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'toggleMenu']) ?>',
             data: {page_id: <?= $page->getId() ?> },
             dataType: 'json'
         })
@@ -103,7 +103,7 @@
     $('#page-edit').on('click', function () {
         if ($('#page_edit_block').is(':empty')) {
             $.ajax({
-                url: '<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'edit']) ?>',
+                url: '<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'edit']) ?>',
                 data: {page_id: <?= $page->getId() ?> }
             }).done(function (data) {
                 $('#page_edit_block').html(data);
@@ -138,7 +138,7 @@
     $('.content-wizard').on('click', function (e) {
         e.preventDefault();
         BootstrapDialog.show({
-            title: <?= json_encode($this->__("backend.content.wizard.create.title")) ?>,
+            title: <?= json_encode($this->__('backend.content.wizard.create.title')) ?>,
             message: $('<div></div>').load($(this).attr('href'))
         })
     });
@@ -180,7 +180,7 @@
                 var beforeId = target.prevObject.next(".panel-backend-content").data('id');
                 if (target) {
                     dropInto.addClass('loader');
-                    $.getJSON('<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Content', '_action' => 'updateContainer']) ?>',
+                    $.getJSON('<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Content', '_action' => 'updateContainer']) ?>',
                         {
                             parent_id: target.data('parent'),
                             column_id: target.data('id'),

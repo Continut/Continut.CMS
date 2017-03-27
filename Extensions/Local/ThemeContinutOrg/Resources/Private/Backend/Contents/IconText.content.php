@@ -1,0 +1,2 @@
+<p class="text-center"><?= $this->valueOrDefault('icon', 'icon-phone') ?><br/><strong><?= $this->valueOrDefault('title', '') ?></strong></p>
+<p><?= $this->helper('Text')->truncate($this->helper('Text')->stripTags($this->valueOrDefault('text', '')), 200) ?></p>

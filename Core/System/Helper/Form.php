@@ -32,6 +32,16 @@ class Form
     protected $prefix = 'data';
 
     /**
+     * @var bool
+     */
+    protected $repeaterMode = false;
+
+    /**
+     * @var string
+     */
+    protected $repeaterName = 'repeater';
+
+    /**
      * Sets up the input's name accordingly
      *
      * @param string $name Name of the input
@@ -42,12 +52,17 @@ class Form
         // you can also pass config keys as input names, in which case the slash needs to be replaced
         $name = str_replace('/', '_', $name);
         $fieldName = $this->prefix . "[$name]";
+
+        if ($this->repeaterMode) {
+            $fieldName = $this->prefix . "[{$this->repeaterName}][$name][]";
+        }
+
         // if the field name contains a square bracket, it means it's an array
         // so we need to set it up accordingly
         if (strpos($name, '[')) {
             // extract only the field name
             $name = substr($name, 0, strpos($name, '['));
-            $fieldName = $this->prefix . '[$name][]';
+            $fieldName = $this->prefix . "[$name][]";
         }
         return $fieldName;
     }
@@ -398,6 +413,33 @@ HER;
 HER;
 
         return $html;
+    }
 
+    public function startRepeater($repeaterName = 'repeater', $label = '')
+    {
+        $this->repeaterMode = true;
+
+        $html = <<<HER
+        <div data-type="repeater">
+            <div class="form-group">
+                <label class="control-label">Repeater test</label>
+                <div class="panel-group" class="accordion" role="tablist" aria-multiselectable="true">
+HER;
+
+        return $html;
+    }
+
+    public function stopRepeater()
+    {
+        $this->repeaterMode = false;
+
+        $html = <<<HER
+                </div>
+            </div>
+            <p><a href="#" class="btn btn-success add-repeater-element"><i class="fa fa-fw fa-plus"></i> Adăugați element nou</a></p>
+        </div>
+HER;
+
+        return $html;
     }
 }

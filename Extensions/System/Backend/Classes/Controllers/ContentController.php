@@ -250,7 +250,8 @@ class ContentController extends BackendController
             ->save();
 
         return json_encode([
-            'success' => 1
+            'success' => 1,
+            'content' => $content->dataMapper()
         ]);
     }
 
