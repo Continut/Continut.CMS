@@ -6,5 +6,3 @@ node_modules
 phpcompatinfo.json
 compatibility.txt
 vendor
-Lib
-!Lib/README.md
