@@ -1,0 +1,49 @@
+{
+    "name": "rmogos/continutcms",
+    "description": "Continut CMS is a free open source Content Management System created by Radu Mogos and licensed under a GPL 3 license",
+    "keywords": ["continut", "cms", "content management system", "mvc"],
+    "homepage": "https://www.continut.org/",
+    "type": "project",
+    "require": {
+        "php": ">=5.4.0",
+        "ext-json": "*",
+        "ext-pcre": "*",
+        "ext-session": "*",
+        "psr/log": "~1.0.0",
+        "psr/http-message": "~1.0.0",
+        "psr/cache": "~1.0.0",
+        "maximebf/debugbar": "1.13.1",
+        "krizalys/onedrive-php-sdk": "1.1.0",
+        "symfony/routing": "v3.2.7",
+        "symfony/var-dumper": "v3.2.7",
+        "respect/validation": "1.1.12",
+        "intervention/image": "2.3.11",
+        "composer/installers": "~1.0"
+    },
+    "config": {
+        "vendor-dir": "Lib/"
+    },
+    "extra": {
+        "installer-paths": {
+            "Core/{$name}": ["type:continut-core"],
+            "Extensions/Local/{$name}": ["type:continut-local-extension"],
+            "Extensions/System/{$name}": ["type:continut-system-extension"]
+        }
+    },
+    "suggest": {
+        "ext-gd": "Used to scale, crop and build images",
+        "ext-fileinfo": "Used to gather additional file info"
+    },
+    "license": "GPL-3",
+    "authors": [
+        {
+            "name": "Radu Mogos",
+            "email": "radu.mogos@continut.org"
+        }
+    ],
+    "support": {
+        "general": "https://www.continut.org/support/",
+        "issues": "https://issues.continut.org"
+    },
+    "minimum-stability": "beta"
+}

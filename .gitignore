@@ -6,3 +6,4 @@ node_modules
 phpcompatinfo.json
 compatibility.txt
 Lib/Storage
+vendor
