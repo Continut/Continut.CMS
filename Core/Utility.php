@@ -82,7 +82,7 @@ class Utility
     static $site;
 
     /**
-     * @var \Continut\Core\Tools\Autoloader Autoloader class
+     * @var mixed
      */
     static $autoloader;
 

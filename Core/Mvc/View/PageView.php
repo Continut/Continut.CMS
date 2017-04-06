@@ -149,7 +149,7 @@ class PageView extends BaseView
         if (Utility::getConfiguration('System/Debug/Enabled')) {
             $pageContent .= Utility::debug()
                 ->getJavascriptRenderer()
-                ->setBaseUrl('Lib/DebugBar/Resources')
+                ->setBaseUrl('Lib/maximebf/debugbar/src/DebugBar/Resources')
                 ->setEnableJqueryNoConflict(TRUE)
                 ->render();
             $pageHead .= Utility::debug()

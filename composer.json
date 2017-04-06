@@ -30,6 +30,11 @@
             "Extensions/System/{$name}": ["type:continut-system-extension"]
         }
     },
+    "autoload": {
+        "psr-4": {
+            "Continut\\": ""
+        }
+    },
     "suggest": {
         "ext-gd": "Used to scale, crop and build images",
         "ext-fileinfo": "Used to gather additional file info"

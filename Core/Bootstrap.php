@@ -57,28 +57,13 @@ class Bootstrap
      */
     public function setEnvironment($applicationScope, $environment)
     {
-        require_once 'Tools/Autoloader.php';
         require_once 'Utility.php';
 
         set_exception_handler([$this, 'handleException']);
         set_error_handler([$this, 'handleError']);
 
-        Utility::$autoloader = new Tools\Autoloader();
-        Utility::$autoloader->register();
-        // Main namespace for app
-        Utility::$autoloader->addNamespace('Continut', __ROOTCMS__);
-        // Debugbar: http://phpdebugbar.com
-        Utility::$autoloader->addNamespace('DebugBar', __ROOTCMS__ . DS . 'Lib' . DS . 'DebugBar');
-        // Add Symfony components support
-        Utility::$autoloader->addNamespace('Symfony', __ROOTCMS__ . DS . 'Lib' . DS . 'Symfony');
-        // Logger
-        Utility::$autoloader->addNamespace('Psr', __ROOTCMS__ . DS . 'Lib' . DS . 'Psr');
-        // Image resize capabilities: http://image.intervention.io
-        Utility::$autoloader->addNamespace('Intervention', __ROOTCMS__ . DS . 'Lib' . DS . 'Intervention');
-        // Validators
-        Utility::$autoloader->addNamespace('Respect', __ROOTCMS__ . DS . 'Lib' . DS . 'Respect');
-        // Microsoft OneDrive @TODO : move to a config file
-        Utility::$autoloader->addNamespace('Krizalys', __ROOTCMS__ . DS . 'Lib' . DS . 'Storage' . DS . 'Krizalys');
+        // Load the composer autoloader
+        Utility::$autoloader = require __ROOTCMS__ . '/Lib/autoload.php';
 
         Utility::setApplicationScope($applicationScope, $environment);
         Utility::debugData('Application', 'start');
