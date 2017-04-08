@@ -8,7 +8,7 @@
         <?php if ($listType == \Continut\Extensions\System\Backend\Classes\Controllers\MediaController::LIST_TYPE_THUMBNAILS): ?>
             <?php foreach ($files as $file): ?>
                 <div class="col-xs-6 col-md-3">
-                    <a href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Media', '_action' => 'fileInfo', 'file' => urlencode($file->getRelativeFilename())]) ?>" class="thumbnail filetype-<?= $file->getExtension() ?>">
+                    <a href="<?= $this->helper('Url')->linkToPath('admin', ['_controller' => 'Media', '_action' => 'fileInfo', 'file' => urlencode($file->getRelativeFilename())]) ?>" class="thumbnail filetype-<?= $file->getExtension() ?>">
                                             <span class="extension"><?= $file->getExtension() ?>
                                                 : <?= $this->helper('Units')->formatBytes($file->getSize()); ?></span>
                         <?php if (in_array($file->getExtension(), array('JPG', 'PNG', 'GIF'))): ?>
@@ -32,7 +32,7 @@
             <div class="col-xs-12">
                 <div class="list-group">
                 <?php foreach ($files as $file): ?>
-                        <a href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Media', '_action' => 'fileInfo', 'file' => urlencode($file->getRelativeFilename())]) ?>" class="list-group-item filetype-<?= $file->getExtension() ?>">
+                        <a href="<?= $this->helper('Url')->linkToPath('admin', ['_controller' => 'Media', '_action' => 'fileInfo', 'file' => urlencode($file->getRelativeFilename())]) ?>" class="list-group-item filetype-<?= $file->getExtension() ?>">
                         <div class="row">
                             <div class="col-xs-8 col-sm-6">
                                 <?php if (in_array($file->getExtension(), array('JPG', 'PNG', 'GIF'))): ?>

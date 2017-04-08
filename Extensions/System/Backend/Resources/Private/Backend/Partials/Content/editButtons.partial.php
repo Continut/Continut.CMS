@@ -10,7 +10,7 @@
             <ul class="dropdown-menu" role="menu">
                 <li><a href="#" class="wizard-save-close"><i
                             class="fa fa-fw fa-save"></i> <?= $this->__('backend.content.saveAndClose') ?></a></li>
-                <li><a href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'show', 'id' => $pageId]) ?>" class="wizard-close"><i
+                <li><a href="<?= $this->helper('Url')->linkToPath('admin', ['_controller' => 'Page', '_action' => 'show', 'id' => $pageId]) ?>" class="wizard-close"><i
                             class="fa fa-fw fa-close"></i> <?= $this->__('backend.content.close') ?></a></li>
                 <li class="divider"></li>
                 <li><a href="#"><i class="fa fa-fw fa-history"></i> <?= $this->__('backend.content.history') ?></a></li>

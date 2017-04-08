@@ -49,7 +49,7 @@ class BackendLayout extends BaseLayout
             $id,
             parent::showContainerColumn($id),
             $this->__('backend.content.addNew'),
-            Utility::helper('Url')->linkToPath('admin_backend', ['_controller' => 'Content', '_action' => 'wizard', 'column_id' => $id, 'page_id' => Utility::getRequest()->getArgument('id')])
+            Utility::helper('Url')->linkToPath('admin', ['_controller' => 'Content', '_action' => 'wizard', 'column_id' => $id, 'page_id' => Utility::getRequest()->getArgument('id')])
         );
     }
 }

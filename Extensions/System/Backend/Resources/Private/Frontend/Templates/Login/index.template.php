@@ -17,7 +17,7 @@
             </div>
             <div class="panel panel-body">
                 <form method="post" class="form login"
-                      action="<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Login', '_action' => 'checkLogin']) ?>">
+                      action="<?= $this->helper("Url")->linkToPath('admin', ['_controller' => 'Login', '_action' => 'checkLogin']) ?>">
                     <?= $this->helper("Session")->showFlashMessages(\Continut\Core\System\Domain\Model\UserSession::FLASH_ERROR); ?>
                     <fieldset>
                         <div class="field">

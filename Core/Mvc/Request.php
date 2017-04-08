@@ -280,7 +280,10 @@ class Request
 
         $matcher = new UrlMatcher($this->routes, $this->routeContext);
         // @TODO - fix query string data
-        $url = strtok($_SERVER['REQUEST_URI'], '?');
+        $requestUri = $_SERVER['REQUEST_URI'];
+        // remove the last slash from the URI if one is defined, this will make routes like /admin/ or /admin work the same way
+        $requestUri = preg_replace('|/$|', '', $requestUri, 1);
+        $url = strtok($requestUri, '?');
         $parameters = $matcher->match($url);
 
         foreach ($parameters as $parameterName => $parameterValue) {

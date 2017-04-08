@@ -1,4 +1,4 @@
-<form action="<?= $this->helper('Url')->linkToPath('admin_backend', ['_extension' => 'News', '_controller' => 'NewsBackend', '_action' => 'saveNews']) ?>" method="post">
+<form action="<?= $this->helper('Url')->linkToPath('admin', ['_extension' => 'News', '_controller' => 'NewsBackend', '_action' => 'saveNews']) ?>" method="post">
     <div class="row">
         <div class="col-sm-12 col-md-9 col-lg-8">
             <h2>Create new article</h2>
@@ -26,7 +26,7 @@
     <div class="form-group">
         <input type="submit" name="submit" class="btn btn-primary"
                value="<?= $this->__('general.save') ?>"/>
-        <a href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_extension' => 'News', '_controller' => 'NewsBackend', '_action' => 'index']) ?>"
+        <a href="<?= $this->helper('Url')->linkToPath('admin', ['_extension' => 'News', '_controller' => 'NewsBackend', '_action' => 'index']) ?>"
            class="close-button btn btn-danger pull-right"><?= $this->__('general.cancel') ?></a>
     </div>
 </form>

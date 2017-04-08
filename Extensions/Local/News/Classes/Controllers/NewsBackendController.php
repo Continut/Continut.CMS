@@ -32,7 +32,7 @@ class NewsBackendController extends BackendController
         $grid = Utility::createInstance('Continut\Extensions\System\Backend\Classes\View\GridView');
 
         $grid
-            ->setFormAction(Utility::helper('Url')->linkToPath('admin_backend', ['_extension' => 'News', '_controller' => 'NewsBackend', '_action' => 'index']))
+            ->setFormAction(Utility::helper('Url')->linkToPath('admin', ['_extension' => 'News', '_controller' => 'NewsBackend', '_action' => 'index']))
             ->setTemplate(Utility::getResourcePath('Grid/gridView', 'Backend', 'Backend', 'Template'))
             ->setCollection(Utility::createInstance('Continut\Extensions\Local\News\Classes\Domain\Collection\NewsCollection'))
             ->setPager(10, Utility::getRequest()->getArgument('page', 1))
@@ -151,7 +151,7 @@ class NewsBackendController extends BackendController
                 ->save();
 
             // redirect to the "domainsAction" since all went well and data is saved
-            $this->redirect(Utility::helper('Url')->linkToPath('admin_backend', ['_extension' => 'News', '_controller' => 'NewsBackend', '_action' => 'index']));
+            $this->redirect(Utility::helper('Url')->linkToPath('admin', ['_extension' => 'News', '_controller' => 'NewsBackend', '_action' => 'index']));
         }
 
         $this->getView()->assign('news', $news);

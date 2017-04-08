@@ -5,7 +5,7 @@
             <form class="form">
                 <div class="col-xs-6 col-sm-12 col-lg-6">
                     <div class="simple-margins bottom">
-                        <a class="btn btn-sm btn-default" title="<?= $this->__('backend.settings.description') ?>" href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'domains']) ?>"><i class="fa fa-cog"></i></a>
+                        <a class="btn btn-sm btn-default" title="<?= $this->__('backend.settings.description') ?>" href="<?= $this->helper('Url')->linkToPath('admin', ['_controller' => 'Settings', '_action' => 'domains']) ?>"><i class="fa fa-cog"></i></a>
                         <label for="select_website"><?= $this->__('backend.pageTree.domain.label') ?></label>
                     </div>
                     <?php if ($domains->count() > 0): ?>
@@ -18,7 +18,7 @@
                             <!-- once the current website is changed, it loads the pages for it's first domain url/language -->
                             $('#select_website').on('change', function (event) {
                                 $.ajax({
-                                    url: '<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'tree']) ?>',
+                                    url: '<?= $this->helper('Url')->linkToPath('admin', ['_controller' => 'Page', '_action' => 'tree']) ?>',
                                     dataType: 'json',
                                     data: { domain_id: this.value }
                                 })
@@ -48,7 +48,7 @@
                 </div>
                 <div class="col-xs-6 col-sm-12 col-lg-6">
                     <div class="simple-margins bottom">
-                        <a class="btn btn-sm btn-default" title="<?= $this->__('backend.settings.description') ?>" href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'domains']) ?>"><i class="fa fa-cog"></i></a>
+                        <a class="btn btn-sm btn-default" title="<?= $this->__('backend.settings.description') ?>" href="<?= $this->helper('Url')->linkToPath('admin', ['_controller' => 'Settings', '_action' => 'domains']) ?>"><i class="fa fa-cog"></i></a>
                         <label for="select_language"><?= $this->__('backend.pageTree.language.label') ?></label>
                     </div>
                     <select id="select_language" class="selectpicker" data-width="100%">
@@ -61,7 +61,7 @@
                         <!-- Once the domain url/language is changed, it loads it's pages -->
                         $('#select_language').on('change', function (event) {
                             $.ajax({
-                                url: '<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'tree']) ?>',
+                                url: '<?= $this->helper('Url')->linkToPath('admin', ['_controller' => 'Page', '_action' => 'tree']) ?>',
                                 dataType: 'json',
                                 data: {domain_id: $('#select_website').val(), domain_url_id: this.value}
                             })
@@ -146,7 +146,7 @@
             anchor.data('requestRunning', true);
             // once a node is clicked, load the corresponding page in the right side
             $.ajax({
-                url: '<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'show']) ?>',
+                url: '<?= $this->helper('Url')->linkToPath('admin', ['_controller' => 'Page', '_action' => 'show']) ?>',
                 data: { id: nodeId },
                 beforeSend: function (xhr) {
                     $('#' + nodeId + ' > .jstree-anchor').append('<span class="fa fa-spinner fa-pulse"></span>');
@@ -180,7 +180,7 @@
                 }
             }
             $.post(
-                '<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'treeMove']) ?>',
+                '<?= $this->helper('Url')->linkToPath('admin', ['_controller' => 'Page', '_action' => 'treeMove']) ?>',
                 {
                     movedId:     data.node.id,
                     position:    data.position,
@@ -191,7 +191,7 @@
         });
     // --- jsTree initialization ---
     $.ajax({
-        url: '<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'tree']) ?>',
+        url: '<?= $this->helper('Url')->linkToPath('admin', ['_controller' => 'Page', '_action' => 'tree']) ?>',
         dataType: 'json'
     })
         .done(function (json) {
@@ -236,7 +236,7 @@
         var pid = $('#cms_tree').jstree('get_selected');
         addModal = BootstrapDialog.show({
             title: <?= json_encode($this->__('backend.page.wizard.create.title')) ?>,
-            message: $('<div></div>').load('<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'wizard']) ?>?id=' + pid),
+            message: $('<div></div>').load('<?= $this->helper('Url')->linkToPath('admin', ['_controller' => 'Page', '_action' => 'wizard']) ?>?id=' + pid),
             cssClass: 'large-dialog'
         });
     });
@@ -253,7 +253,7 @@
 
         var $link = $(this);
 
-        $.getJSON('<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'toggleTouch']) ?>', function(data) {
+        $.getJSON('<?= $this->helper('Url')->linkToPath('admin', ['_controller' => 'Page', '_action' => 'toggleTouch']) ?>', function(data) {
             if (data.touchEnabled) {
                 $link.addClass('toggled');
                 $('#cms_tree, #content_wrapper .page-panel').addClass('touch-friendly');

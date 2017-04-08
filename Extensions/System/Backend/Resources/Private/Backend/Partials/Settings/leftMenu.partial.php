@@ -3,7 +3,7 @@
     <p><?= $this->__('backend.settings.description')?></p>
     <div class="row">
         <div class="col-md-12">
-            <form id="form_scope" method="post" action="<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => $data['action']]) ?>">
+            <form id="form_scope" method="post" action="<?= $this->helper("Url")->linkToPath('admin', ['_controller' => 'Settings', '_action' => $data['action']]) ?>">
             <?= $this->partial('General/domainsSelect', 'Backend', 'Backend', ['data' => $data]) ?>
             </form>
             <script type="text/javascript">
@@ -21,9 +21,9 @@
                 <p class="list-group-item-text"><?= $this->__('backend.settings.general.subtitle') ?></p>
             </a>
             <div id="settings_menu_1" class="list-group collapse" role="tabpanel">
-                <a id="link_system_domains" href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'domains']) ?>" class="<?= ($data['action'] == 'domains' ? 'active' : '')?> list-group-item"><i class="fa fa-fw fa-globe"></i> <?= $this->__('backend.settings.domains.title') ?></a>
-                <a id="link_system_sessions" href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'session']) ?>" class="<?= ($data['action'] == 'session' ? 'active' : '')?> list-group-item"><i class="fa fa-fw fa-user-secret"></i> <?= $this->__('backend.settings.session.title') ?></a>
-                <a id="link_system_media" href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'media']) ?>" class="<?= ($data['action'] == 'media' ? 'active' : '')?> list-group-item"><i class="fa fa-fw fa-cloud"></i> <?= $this->__('backend.settings.media.title')?></a>
+                <a id="link_system_domains" href="<?= $this->helper('Url')->linkToPath('admin', ['_controller' => 'Settings', '_action' => 'domains']) ?>" class="<?= ($data['action'] == 'domains' ? 'active' : '')?> list-group-item"><i class="fa fa-fw fa-globe"></i> <?= $this->__('backend.settings.domains.title') ?></a>
+                <a id="link_system_sessions" href="<?= $this->helper('Url')->linkToPath('admin', ['_controller' => 'Settings', '_action' => 'session']) ?>" class="<?= ($data['action'] == 'session' ? 'active' : '')?> list-group-item"><i class="fa fa-fw fa-user-secret"></i> <?= $this->__('backend.settings.session.title') ?></a>
+                <a id="link_system_media" href="<?= $this->helper('Url')->linkToPath('admin', ['_controller' => 'Settings', '_action' => 'media']) ?>" class="<?= ($data['action'] == 'media' ? 'active' : '')?> list-group-item"><i class="fa fa-fw fa-cloud"></i> <?= $this->__('backend.settings.media.title')?></a>
             </div>
             <a class="list-group-item collapsed" data-toggle="collapse" data-parent="#settings_menu" href="#settings_menu_2" aria-expanded="false" aria-controls="settings_menu_2">
                 <h4 class="list-group-item-heading"><i class="fa fa-fw fa-list-alt"></i> News</h4>

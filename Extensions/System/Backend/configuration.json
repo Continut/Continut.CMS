@@ -20,7 +20,7 @@
             "page": {
               "label": "backend.menu.web.page",
               "icon": "fa fa-fw fa-file-o",
-              "path": "admin_backend",
+              "path": "admin",
               "params": {"_controller": "Page", "_action": "index"}
             },
             "divider": {
@@ -29,7 +29,7 @@
             "recovery": {
               "label": "backend.menu.web.history",
               "icon": "fa fa-fw fa-recycle",
-              "path": "admin_backend",
+              "path": "admin",
               "params": {"_controller": "Recovery", "_action": "index"}
             }
           }
@@ -46,25 +46,25 @@
             "backendUsersAll": {
               "label": "backend.menu.users.backend.all",
               "icon": "fa fa-fw fa-users",
-              "path": "admin_backend",
+              "path": "admin",
               "params": {"_controller": "Users", "_action": "backendUsers"}
             },
             "backendUserAdd": {
               "label": "backend.menu.users.backend.add",
               "icon": "fa fa-fw fa-plus",
-              "path": "admin_backend",
+              "path": "admin",
               "params": {"_controller": "Users", "_action": "newBackendUser"}
             },
             "backendUsergroupAll": {
               "label": "backend.menu.usergroups.backend.all",
               "icon": "fa fa-fw fa-users",
-              "path": "admin_backend",
+              "path": "admin",
               "params": {"_controller": "Users", "_action": "backendGroups"}
             },
             "backendUsergroupAdd": {
               "label": "backend.menu.usergroups.backend.add",
               "icon": "fa fa-fw fa-plus",
-              "path": "admin_backend",
+              "path": "admin",
               "params": {"_controller": "Users", "_action": "newBackendUsergroup"}
             },
             "dividerGroups": {
@@ -77,7 +77,7 @@
             "frontendUsersAll": {
               "label": "backend.menu.users.frontend.all",
               "icon": "fa fa-fw fa-users",
-              "path": "admin_backend",
+              "path": "admin",
               "params": {"_controller": "Users", "_action": "frontendUsers"}
             },
             "frontendUserAdd": {
@@ -90,7 +90,7 @@
             "frontendUsergroupAll": {
               "label": "backend.menu.usergroups.frontend.all",
               "icon": "fa fa-fw fa-users",
-              "path": "admin_backend",
+              "path": "admin",
               "params": {"_controller": "Users", "_action": "frontendGroups"}
             },
             "frontendUsergroupAdd": {
@@ -108,7 +108,7 @@
         "moduleMedia": {
           "label": "backend.menu.media",
           "icon": "fa fa-fw fa-picture-o",
-          "path": "admin_backend",
+          "path": "admin",
           "params": {"_controller": "Media", "_action": "index"},
           "position": 40
         }

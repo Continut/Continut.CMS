@@ -27,7 +27,7 @@
                 <div class="btn-group btn-group-justified" role="group" aria-label="...">
                     <div class="btn-group" role="group">
                         <a class="btn btn-success" id="create_folder"
-                           href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Media', '_action' => 'createFolder', 'path' => urlencode($path)]) ?>"><?= $this->__("backend.media.folders.create") ?>
+                           href="<?= $this->helper('Url')->linkToPath('admin', ['_controller' => 'Media', '_action' => 'createFolder', 'path' => urlencode($path)]) ?>"><?= $this->__("backend.media.folders.create") ?>
                             <i class="fa fa-fw fa-plus"></i></a>
                     </div>
                     <div class="btn-group" role="group">
@@ -70,7 +70,7 @@
                 'Loading ...' : '<?= $this->__('backend.tree.loading') ?>',
             },
             'data': {
-                'url': '<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Media', '_action' => 'treeGetNode']) ?>',
+                'url': '<?= $this->helper('Url')->linkToPath('admin', ['_controller' => 'Media', '_action' => 'treeGetNode']) ?>',
                 dataType: 'json',
                     'data' : function (node) {
                     return { 'id' : node.id };
@@ -101,7 +101,7 @@
                 // once a node is clicked, load the corresponding media elements in the right side
                 var nodeId = data.node.id;
                 $.ajax({
-                    url: '<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Media', '_action' => 'getFiles']) ?>',
+                    url: '<?= $this->helper('Url')->linkToPath('admin', ['_controller' => 'Media', '_action' => 'getFiles']) ?>',
                     data: { path: nodeId },
                     beforeSend: function (xhr) {
                         //$('#' + nodeId + ' > .jstree-anchor').append('<span class="fa fa-spinner fa-pulse"></span>');

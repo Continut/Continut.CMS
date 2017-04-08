@@ -33,7 +33,7 @@ $this->getPageView()
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Index', '_action' => 'dashboard']); ?>">
+            <a class="navbar-brand" href="<?= $this->helper('Url')->linkToPath('admin', ['_controller' => 'Index', '_action' => 'dashboard']); ?>">
                 <h1><img src="<?= $this->helper('Image')->getPath('Images/logo_negru.svg', 'Backend'); ?>" height="32" alt="Continut CMS" class="pull-left"/> <?= $this->__('product.name') ?> <br/><small><?= $this->__('product.version', ['version' => \Continut\Core\Utility::getVersion()]) ?></small></h1>
             </a>
         </div>
@@ -50,7 +50,7 @@ $this->getPageView()
 
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'favorites']) ?>">
+                    <a href="<?= $this->helper('Url')->linkToPath('admin', ['_controller' => 'Settings', '_action' => 'favorites']) ?>">
                         <i class="fa fa-fw fa-2x fa-star-o"></i> <?= $this->__('backend.menu.favorites') ?>
                     </a>
                 </li>
@@ -58,7 +58,7 @@ $this->getPageView()
                     <?= \Continut\Core\Utility::callPlugin('Backend', 'Index', 'notifications'); ?>
                 </li>
                 <li>
-                    <a href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'index']) ?>" title="<?= $this->__('backend.menu.settings') ?>">
+                    <a href="<?= $this->helper('Url')->linkToPath('admin', ['_controller' => 'Settings', '_action' => 'index']) ?>" title="<?= $this->__('backend.menu.settings') ?>">
                         <i class="fa fa-fw fa-2x fa-cogs"></i> <?= $this->__('backend.menu.settings') ?>
                     </a>
                 </li>
@@ -67,10 +67,10 @@ $this->getPageView()
                         <img src="<?= $this->helper('Image')->getPath('Images/profile_pic.jpg', 'Backend'); ?>" height="24" alt="" class="img-circle"> <?= \Continut\Core\Utility::getSession()->getUser()->getName(); ?> <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'User', '_action' => 'profile']) ?>">User profile</a>
+                        <li><a href="<?= $this->helper('Url')->linkToPath('admin', ['_controller' => 'User', '_action' => 'profile']) ?>">User profile</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Login', '_action' => 'logout']) ?>">Logout</a></li>
+                        <li><a href="<?= $this->helper('Url')->linkToPath('admin', ['_controller' => 'Login', '_action' => 'logout']) ?>">Logout</a></li>
                     </ul>
                 </li>
             </ul>

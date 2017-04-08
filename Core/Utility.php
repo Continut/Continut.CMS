@@ -47,7 +47,7 @@ class Utility
     static $databaseHandler = NULL;
 
     /**
-     * @var \Continut\Core\System\Cache\FileCache
+     * @var \Continut\Core\System\Cache\FileCachePool
      */
     static $cacheHandler = NULL;
 
@@ -535,7 +535,7 @@ class Utility
     public static function getCache()
     {
         if (static::$cacheHandler === NULL) {
-            static::$cacheHandler = static::createInstance('Continut\Core\System\Cache\FileCache');
+            static::$cacheHandler = static::createInstance('Continut\Core\System\Cache\FileCachePool');
         }
         return static::$cacheHandler;
     }

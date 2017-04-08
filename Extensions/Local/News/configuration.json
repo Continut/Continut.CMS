@@ -25,13 +25,13 @@
               "label": "backend.news.showAll",
               "icon": "fa fa-fw fa-bars",
               "extension": "News",
-              "path": "admin_backend",
+              "path": "admin",
               "params": {"_extension": "News", "_controller": "NewsBackend", "_action": "index"}
             },
             "addNew": {
               "label": "backend.news.createNew",
               "icon": "fa fa-fw fa-plus",
-              "path": "admin_backend",
+              "path": "admin",
               "params": {"_extension": "News", "_controller": "NewsBackend", "_action": "createNews"}
             }
           }

@@ -13,14 +13,22 @@
 <?= $this->helper('Form')->stopRepeater() ?>
 
 <script type="text/javascript">
-    $('div[data-type="repeater"]').each(function (index, object) {
+    $('div[data-type="repeater"]').each(function () {
         // add the repeater on click element creation
         var $repeater = $(this);
         var lastIndex = $repeater.find('.collapse').length;
         $(this).find('.add-repeater-element').on('click', function (event) {
             event.preventDefault();
+
             lastIndex++;
-            $repeater.find('.panel-group').append('<div class="panel panel-default"><div class="panel-heading" role="tab" id="heading' + lastIndex + '"><h4 class="panel-title"><a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse' + lastIndex + '" aria-expanded="false" aria-controls="collapse' + lastIndex + '">Slide ' + lastIndex + ' </a></h4></div><div id="collapse' + lastIndex + '" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading' + lastIndex + '"> <div class="panel-body">' + $repeater.find('div[data-type="template"]').first().clone().show().html() + '</div></div></div>');
+
+            var $divTemplate = $repeater.find('div[data-type="template"]').first().clone();
+            $divTemplate.find('input').each(function () {
+                var newName = $(this).attr('name').replace('[X]', '[' + lastIndex + ']');
+                $(this).attr('name', newName);
+            });
+
+            $repeater.find('.panel-group').append('<div class="panel panel-default"><div class="panel-heading" role="tab" id="heading' + lastIndex + '"><h4 class="panel-title"><a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse' + lastIndex + '" aria-expanded="false" aria-controls="collapse' + lastIndex + '">Slide ' + lastIndex + ' </a></h4></div><div id="collapse' + lastIndex + '" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading' + lastIndex + '"> <div class="panel-body">' + $divTemplate.show().html() + '</div></div></div>');
         });
     });
 </script>

@@ -1,4 +1,4 @@
-<a href="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'notifications']) ?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+<a href="<?= $this->helper('Url')->linkToPath('admin', ['_controller' => 'Settings', '_action' => 'notifications']) ?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
     <i class="fa fa-fw fa-2x fa-envelope-o <?= ($notifications) ? 'fa-alerted' : ''; ?>"></i> <?= $this->__('backend.menu.notifications') ?>
 </a>
 <ul class="dropdown-menu media-list">

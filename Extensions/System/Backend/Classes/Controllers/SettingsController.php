@@ -104,7 +104,7 @@ class SettingsController extends BackendController
                 ->save();
 
             // redirect to the "domainsAction" since all went well and data is saved
-            $this->redirect(Utility::helper('Url')->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'domains']));
+            $this->redirect(Utility::helper('Url')->linkToPath('admin', ['_controller' => 'Settings', '_action' => 'domains']));
         }
 
         $this->getView()->assign('domain', $domain);

@@ -21,7 +21,7 @@ class AuthenticatedController extends ActionController
     {
         parent::__construct();
         if (!$this->isConnected()) {
-            $url = Utility::helper('Url')->linkToPath('admin_backend', ['_controller' => 'Login', '_action' => 'index']);
+            $url = Utility::helper('Url')->linkToPath('admin', ['_controller' => 'Login', '_action' => 'index']);
             if ($this->getRequest()->isAjax()) {
                 //echo "<script>window.location = '$url';</script>";
                 header('Continut-Redirect: ' . $url);

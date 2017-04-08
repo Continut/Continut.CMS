@@ -20,7 +20,7 @@ $elementType = (isset($settings['type'])) ? $settings['type'] : $element->getTyp
 <div class="row">
     <div class="col-sm-12">
         <form method="post" id="form_content" class="form-content"
-              action="<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Content', '_action' => $action, 'id' => $element->getId()]) ?>">
+              action="<?= $this->helper("Url")->linkToPath('admin', ['_controller' => 'Content', '_action' => $action, 'id' => $element->getId()]) ?>">
             <input type="hidden" name="id" value="<?= $id ?>"/>
             <input type="hidden" name="page_id" value="<?= $pageId ?>"/>
             <input type="hidden" name="column_id" value="<?= $columnId ?>"/>
@@ -59,7 +59,7 @@ $elementType = (isset($settings['type'])) ? $settings['type'] : $element->getTyp
                     if (saveAction == 'saveAndClose') {
                         var contentId = data.content.id;
                         $.ajax({
-                            url: '<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'show']) ?>',
+                            url: '<?= $this->helper('Url')->linkToPath('admin', ['_controller' => 'Page', '_action' => 'show']) ?>',
                             data: {id: data.content.page_id}
                         }).done(function (data) {
                             // reload page data

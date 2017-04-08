@@ -1151,7 +1151,7 @@ INSERT INTO `sys_routes` (`id`, `name`, `path`, `data`) VALUES
 (3,	'admin',	'/admin/',	'a:1:{s:8:\"defaults\";a:3:{s:10:\"_extension\";s:7:\"Backend\";s:11:\"_controller\";s:5:\"Index\";s:7:\"_action\";s:9:\"dashboard\";}}'),
 (4,	'news_backend_TO_REMOVE',	'/admin/news/{_action}',	'a:1:{s:8:\"defaults\";a:3:{s:10:\"_extension\";s:4:\"News\";s:11:\"_controller\";s:11:\"NewsBackend\";s:7:\"_action\";s:5:\"index\";}}'),
 (6,	'editor',	'/editor/{_controller}/{_action}',	'a:1:{s:8:\"defaults\";a:3:{s:10:\"_extension\";s:6:\"Editor\";s:11:\"_controller\";s:6:\"Editor\";s:7:\"_action\";s:5:\"index\";}}'),
-(7,	'admin_backend',	'/admin/{_extension}/{_controller}/{_action}',	'a:1:{s:8:\"defaults\";a:3:{s:10:\"_extension\";s:7:\"Backend\";s:11:\"_controller\";s:5:\"Index\";s:7:\"_action\";s:9:\"dashboard\";}}'),
+(7,	'admin',	'/admin/{_extension}/{_controller}/{_action}',	'a:1:{s:8:\"defaults\";a:3:{s:10:\"_extension\";s:7:\"Backend\";s:11:\"_controller\";s:5:\"Index\";s:7:\"_action\";s:9:\"dashboard\";}}'),
 (11,	'page_slug_NO_LANG',	'/{slug}',	'a:2:{s:8:\"defaults\";a:5:{s:10:\"_extension\";s:8:\"Frontend\";s:11:\"_controller\";s:5:\"Index\";s:7:\"_action\";s:5:\"index\";s:8:\"language\";s:2:\"ro\";s:2:\"id\";i:0;}s:12:\"requirements\";a:1:{s:4:\"slug\";s:2:\".*\";}}'),
 (12,	'page_slug_7',	'/{code}/{slug}',	'a:2:{s:8:\"defaults\";a:5:{s:10:\"_extension\";s:8:\"Frontend\";s:11:\"_controller\";s:5:\"Index\";s:7:\"_action\";s:5:\"index\";s:4:\"code\";s:2:\"fr\";s:2:\"id\";i:0;}s:12:\"requirements\";a:2:{s:4:\"code\";s:2:\"fr\";s:4:\"slug\";s:2:\".*\";}}');
 

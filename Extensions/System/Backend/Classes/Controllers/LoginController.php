@@ -30,7 +30,7 @@ class LoginController extends FrontendController
     public function indexAction()
     {
         if ($this->isConnected()) {
-            $this->redirect(Utility::helper('Url')->LinkToPath('admin_backend'));
+            $this->redirect(Utility::helper('Url')->LinkToPath('admin'));
         }
     }
 
@@ -54,14 +54,14 @@ class LoginController extends FrontendController
 
         if (!$backendUser || !password_verify($password, $backendUser->getPassword())) {
             $this->getSession()->addFlashMessage(Utility::helper("Localization")->translate("login.error.incorrect"), UserSession::FLASH_ERROR);
-            $this->redirect(Utility::helper("Url")->linkToPath('admin_backend', ['_controller' => 'Login', '_action' => 'index']));
+            $this->redirect(Utility::helper("Url")->linkToPath('admin', ['_controller' => 'Login', '_action' => 'index']));
         }
 
         // We set user as "connected", meaning we store their id
         $this->getSession()->set("user_id", $backendUser->getId());
 
         // and we redirect them to the dashboard
-        $this->redirect(Utility::helper("Url")->linkToPath('admin_backend'));
+        $this->redirect(Utility::helper("Url")->linkToPath('admin'));
     }
 
     /**
@@ -70,6 +70,6 @@ class LoginController extends FrontendController
     public function logoutAction()
     {
         session_destroy();
-        $this->redirect(Utility::helper("Url")->linkToPath('admin_backend', ['_controller' => 'Login', '_action' => 'index']));
+        $this->redirect(Utility::helper("Url")->linkToPath('admin', ['_controller' => 'Login', '_action' => 'index']));
     }
 }

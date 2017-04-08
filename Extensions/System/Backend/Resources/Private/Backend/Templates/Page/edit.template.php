@@ -1,5 +1,5 @@
 <form method="POST" id="page_edit_template"
-      action="<?= $this->helper('Url')->linkToPath('admin_backend', ['_controller' => 'Page', '_action' => 'saveProperties']) ?>">
+      action="<?= $this->helper('Url')->linkToPath('admin', ['_controller' => 'Page', '_action' => 'saveProperties']) ?>">
     <input type="hidden" name="id" value="<?= $page->getId(); ?>" />
     <?= $this->helper('FormObject')->hiddenField($page, 'id', $page->getId()); ?>
     <div class="col-sm-12">

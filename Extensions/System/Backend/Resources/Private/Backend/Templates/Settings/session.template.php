@@ -12,7 +12,7 @@
             <div class="panel-body">
                 <form method="POST"
                       id="content_edit"
-                      action="<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'saveSettings']) ?>">
+                      action="<?= $this->helper("Url")->linkToPath('admin', ['_controller' => 'Settings', '_action' => 'saveSettings']) ?>">
                     <div class="col-md-3">
                         <?= $this->helper('Form')->textField('Session/Frontend/Duration', 'Session duration (in seconds)', (isset($data['config']['Session/Frontend/Duration'])) ? $data['config']['Session/Frontend/Duration'] : '') ?>
                     </div>

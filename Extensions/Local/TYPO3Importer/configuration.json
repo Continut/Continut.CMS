@@ -29,13 +29,13 @@
             "import": {
               "label": "backend.menu.import.typo3.importData",
               "icon": "fa fa-fw fa-refresh",
-              "path": "admin_backend",
+              "path": "admin",
               "params": {"_extension": "TYPO3Importer", "_controller": "Import", "_action": "index"}
             },
             "status": {
               "label": "backend.menu.import.typo3.stats",
               "icon": "fa fa-fw fa-info",
-              "path": "admin_backend",
+              "path": "admin",
               "params": {"_extension": "TYPO3Importer", "_controller": "Import", "_action": "index"}
             }
           }

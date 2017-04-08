@@ -1,5 +1,5 @@
 <form method="POST" id="content_edit"
-      action="<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'saveDomainUrl', 'id' => $domainUrl->getId()]) ?>">
+      action="<?= $this->helper("Url")->linkToPath('admin', ['_controller' => 'Settings', '_action' => 'saveDomainUrl', 'id' => $domainUrl->getId()]) ?>">
     <?= $this->helper('FormObject')->hiddenField($domainUrl, 'id', $domainUrl->getId()); ?>
     <?= $this->partial('General/formValidator', 'Backend', 'Backend', ['model' => $domainUrl])?>
     <div class="col-sm-12">

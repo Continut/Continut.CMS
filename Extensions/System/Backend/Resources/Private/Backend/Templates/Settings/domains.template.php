@@ -2,7 +2,7 @@
     <?= $this->partial('Settings/leftMenu', 'Backend', 'Backend', ['data' => $data]); ?>
     <div class="col-sm-12 col-md-9">
         <div class="quick-panel pull-right">
-            <a class="btn btn-success" href="<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'newDomain']) ?>"><i class="fa fa-icon fa-plus"></i> <?= $this->__('backend.settings.domains.new') ?></a>
+            <a class="btn btn-success" href="<?= $this->helper("Url")->linkToPath('admin', ['_controller' => 'Settings', '_action' => 'newDomain']) ?>"><i class="fa fa-icon fa-plus"></i> <?= $this->__('backend.settings.domains.new') ?></a>
         </div>
         <h3><?= $this->__('backend.settings.domains.title') ?></h3>
         <?php if ($allDomains): ?>
@@ -31,7 +31,7 @@
                                 /<?= $language->getCode() ?>
                             </div>
                             <div class="col-sm-4 text-right">
-                                <a class="btn btn-sm btn-warning" href="<?= $this->helper("Url")->linkToPath('admin_backend', ['_controller' => 'Settings', '_action' => 'editDomainUrl', 'id' => $language->getId()]) ?>"><i class="fa fa-icon fa-pencil"></i> <?= $this->__('general.edit') ?></a>
+                                <a class="btn btn-sm btn-warning" href="<?= $this->helper("Url")->linkToPath('admin', ['_controller' => 'Settings', '_action' => 'editDomainUrl', 'id' => $language->getId()]) ?>"><i class="fa fa-icon fa-pencil"></i> <?= $this->__('general.edit') ?></a>
                                 <a class="btn btn-sm btn-danger" href="#"><i class="fa fa-icon fa-recycle"></i> <?= $this->__('general.delete') ?></a>
                             </div>
                         </div>

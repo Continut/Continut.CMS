@@ -498,7 +498,7 @@ INSERT INTO `sys_routes` (`id`, `name`, `path`, `data`) VALUES
 (3,	'admin',	'/unused',	'a:1:{s:8:\"defaults\";a:3:{s:10:\"_extension\";s:7:\"Backend\";s:11:\"_controller\";s:5:\"Index\";s:7:\"_action\";s:9:\"dashboard\";}}'),
 (4,	'news_backend',	'/admin/news/{_action}',	'a:1:{s:8:\"defaults\";a:3:{s:10:\"_extension\";s:4:\"News\";s:11:\"_controller\";s:11:\"NewsBackend\";s:7:\"_action\";s:5:\"index\";}}'),
 (5,	'editor',	'/editor/{_controller}/{_action}',	'a:1:{s:8:\"defaults\";a:3:{s:10:\"_extension\";s:6:\"Editor\";s:11:\"_controller\";s:6:\"Editor\";s:7:\"_action\";s:5:\"index\";}}'),
-(6,	'admin_backend',	'/admin/{_controller}/{_action}',	'a:1:{s:8:\"defaults\";a:3:{s:10:\"_extension\";s:7:\"Backend\";s:11:\"_controller\";s:5:\"Index\";s:7:\"_action\";s:9:\"dashboard\";}}');
+(6,	'admin',	'/admin/{_controller}/{_action}',	'a:1:{s:8:\"defaults\";a:3:{s:10:\"_extension\";s:7:\"Backend\";s:11:\"_controller\";s:5:\"Index\";s:7:\"_action\";s:9:\"dashboard\";}}');
 
 DROP TABLE IF EXISTS `sys_user_sessions`;
 CREATE TABLE `sys_user_sessions` (

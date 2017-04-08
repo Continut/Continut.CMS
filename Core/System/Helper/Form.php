@@ -54,7 +54,7 @@ class Form
         $fieldName = $this->prefix . "[$name]";
 
         if ($this->repeaterMode) {
-            $fieldName = $this->prefix . "[{$this->repeaterName}][$name][]";
+            $fieldName = $this->prefix . "[{$this->repeaterName}][X][$name]";
         }
 
         // if the field name contains a square bracket, it means it's an array
@@ -415,18 +415,26 @@ HER;
         return $html;
     }
 
-    public function startRepeater($repeaterName = 'repeater', $label = '')
+    public function startRepeater($repeaterName = 'repeater', $label = 'Repeater')
     {
         $this->repeaterMode = true;
 
         $html = <<<HER
         <div data-type="repeater">
             <div class="form-group">
-                <label class="control-label">Repeater test</label>
+                <label class="control-label">$label</label>
                 <div class="panel-group" class="accordion" role="tablist" aria-multiselectable="true">
 HER;
 
         return $html;
+    }
+
+    public function displayRepeater()
+    {
+        if (!$this->repeaterMode) {
+            return '';
+        }
+        $id = $this->repeaterName;
     }
 
     public function stopRepeater()

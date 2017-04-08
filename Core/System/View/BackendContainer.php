@@ -38,7 +38,7 @@ class BackendContainer extends Container
             $id,
             $htmlElements,
             $this->__('backend.content.addNew'),
-            Utility::helper('Url')->linkToPath('admin_backend', ['_controller' => 'Content', '_action' => 'wizard', 'id' => $this->getId(), 'column_id' => $id, 'page_id' => Utility::getRequest()->getArgument('id')])
+            Utility::helper('Url')->linkToPath('admin', ['_controller' => 'Content', '_action' => 'wizard', 'id' => $this->getId(), 'column_id' => $id, 'page_id' => Utility::getRequest()->getArgument('id')])
         );
     }
 }
